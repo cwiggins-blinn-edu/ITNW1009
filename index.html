@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITNW 1009: AWS Cloud &amp; AI Practitioner Prep — Course Home</title>
+<!-- Tailwind CSS CDN (layout/spacing utilities), matches other course pages -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Shared ITNW 1009 design system -->
+<link rel="stylesheet" href="itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Portal</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">AWS Cloud &amp; AI Practitioner Prep</h1>
+        </div>
+      </div>
+      <a href="#schedule" class="btn btn-secondary">Jump to Schedule</a>
+    </div>
+  </header>
+
+  <!-- HERO / COURSE INTRO -->
+  <section class="banner-header">
+    <div class="max-w-7xl mx-auto px-4 py-2">
+      <span class="banner-eyebrow">5-Week Course &bull; 19 Sessions &bull; 85.5 Contact Hours</span>
+      <h2 class="banner-title">Welcome to ITNW 1009</h2>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" class="max-w-7xl w-full mx-auto px-4 py-8 flex-grow flex flex-col gap-8">
+
+    <!-- COURSE OVERVIEW BOX (same style as the Day 1 "Instructor Delivery Insights" callout) -->
+    <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 flex gap-3 items-start w-full">
+      <span class="text-xl" aria-hidden="true">📘</span>
+      <div>
+        <h3 class="font-extrabold text-indigo-950 text-base">Course Overview</h3>
+        <p class="text-sm text-indigo-950 mt-1 leading-relaxed">
+          This course builds the knowledge and hands-on lab experience needed for two AWS certifications:
+          the <strong>AWS Certified Cloud Practitioner (CLF-C02)</strong> and the
+          <strong>AWS Certified AI Practitioner (AIF-C01)</strong>. Over five weeks you'll move
+          from core cloud concepts, security, and the shared responsibility model, through compute, storage,
+          networking, and databases, into AI/ML fundamentals and generative AI on AWS — finishing each
+          certification track with a full timed practice exam.
+        </p>
+      </div>
+    </div>
+
+    <!-- QUICK STATS -->
+    <section aria-label="Course at a glance" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="card text-center">
+        <p class="text-2xl font-extrabold text-indigo-700">19</p>
+        <p class="text-xs text-slate-500 font-semibold uppercase tracking-wide mt-1">Sessions</p>
+      </div>
+      <div class="card text-center">
+        <p class="text-2xl font-extrabold text-indigo-700">5</p>
+        <p class="text-xs text-slate-500 font-semibold uppercase tracking-wide mt-1">Weeks</p>
+      </div>
+      <div class="card text-center">
+        <p class="text-2xl font-extrabold text-indigo-700">85.5</p>
+        <p class="text-xs text-slate-500 font-semibold uppercase tracking-wide mt-1">Contact Hours</p>
+      </div>
+      <div class="card text-center">
+        <p class="text-2xl font-extrabold text-indigo-700">2</p>
+        <p class="text-xs text-slate-500 font-semibold uppercase tracking-wide mt-1">Certifications</p>
+      </div>
+    </section>
+
+    <!-- CERTIFICATION TRACK CALLOUTS -->
+    <section aria-label="Certification tracks" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="callout callout-indigo">
+        <span class="callout-badge">Weeks 1–3</span>
+        <p class="font-bold text-indigo-900">CLF-C02 — AWS Certified Cloud Practitioner</p>
+        <p class="text-sm text-slate-600 mt-1">Cloud concepts, security &amp; IAM, compute, storage, networking, databases, management &amp; billing, capped with a full-length timed practice exam.</p>
+      </div>
+      <div class="callout callout-amber">
+        <span class="callout-badge" style="background:var(--color-amber-border); color:var(--color-amber-dark);">Weeks 4–5</span>
+        <p class="callout-title" style="color:var(--color-amber-dark);">AIF-C01 — AWS Certified AI Practitioner</p>
+        <p class="text-sm text-slate-600 mt-1">AI/ML fundamentals, generative AI, prompt engineering &amp; RAG, foundation models, and responsible AI, capped with a full-length timed practice exam.</p>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule" aria-label="Course schedule" class="workspace-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Course Schedule</h2>
+        <p class="panel-subtitle">Click a day number to open that day's courseware. Days not yet linked will be added as they go live.</p>
+      </div>
+
+      <div class="flex flex-col gap-8">
+
+        <!-- WEEK 1 -->
+        <div>
+          <h3 class="text-sm font-extrabold uppercase tracking-wide text-indigo-700 mb-3">Week 1 (Jul 6–9) — Cloud Foundations &amp; Security <span class="text-slate-400 font-normal normal-case">| CLF-C02 Domains 1 &amp; 2</span></h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wide">
+                <tr>
+                  <th class="text-left px-4 py-3 w-20">Day</th>
+                  <th class="text-left px-4 py-3 w-32">Date</th>
+                  <th class="text-left px-4 py-3">Lecture</th>
+                  <th class="text-left px-4 py-3">Lab</th>
+                  <th class="text-left px-4 py-3 w-16">CH</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold"><a href="Day1/Day1.html" class="text-indigo-600 hover:text-indigo-800 hover:underline">Day 1</a></td>
+                  <td class="px-4 py-3 text-slate-500">Mon, Jul 6</td>
+                  <td class="px-4 py-3">Cloud concepts, deployment models (public, private, hybrid), AWS value proposition</td>
+                  <td class="px-4 py-3 text-slate-500">Console orientation; account setup; global infrastructure &amp; billing dashboard exploration</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold"><a href="Day2/Day2.html" class="text-indigo-600 hover:text-indigo-800 hover:underline">Day 2</a></td>
+                  <td class="px-4 py-3 text-slate-500">Tue, Jul 7</td>
+                  <td class="px-4 py-3">AWS Regions, AZs, Edge Locations; cloud economics and TCO</td>
+                  <td class="px-4 py-3 text-slate-500">AWS Pricing Calculator; compare on-premises vs. cloud cost scenarios</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 3</td>
+                  <td class="px-4 py-3 text-slate-500">Wed, Jul 8</td>
+                  <td class="px-4 py-3">Shared Responsibility Model; IAM users, groups, roles, policies, permission boundaries</td>
+                  <td class="px-4 py-3 text-slate-500">Create IAM users, roles, and custom policies; configure MFA; test least-privilege access</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 4</td>
+                  <td class="px-4 py-3 text-slate-500">Thu, Jul 9</td>
+                  <td class="px-4 py-3">AWS security services: Shield, WAF, GuardDuty, Inspector, Macie; compliance frameworks</td>
+                  <td class="px-4 py-3 text-slate-500">Enable GuardDuty; explore Security Hub and Trusted Advisor; AWS Artifact walkthrough</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WEEK 2 -->
+        <div>
+          <h3 class="text-sm font-extrabold uppercase tracking-wide text-indigo-700 mb-3">Week 2 (Jul 13–16) — Compute, Storage &amp; Networking <span class="text-slate-400 font-normal normal-case">| CLF-C02 Domain 3</span></h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wide">
+                <tr>
+                  <th class="text-left px-4 py-3 w-20">Day</th>
+                  <th class="text-left px-4 py-3 w-32">Date</th>
+                  <th class="text-left px-4 py-3">Lecture</th>
+                  <th class="text-left px-4 py-3">Lab</th>
+                  <th class="text-left px-4 py-3 w-16">CH</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 5</td>
+                  <td class="px-4 py-3 text-slate-500">Mon, Jul 13</td>
+                  <td class="px-4 py-3">EC2 instance types, pricing models (On-Demand, Reserved, Spot, Savings Plans); Auto Scaling; ELB</td>
+                  <td class="px-4 py-3 text-slate-500">Launch and configure EC2; attach EBS; create AMI; configure security groups; test load balancing</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 6</td>
+                  <td class="px-4 py-3 text-slate-500">Tue, Jul 14</td>
+                  <td class="px-4 py-3">Serverless &amp; containers: Lambda, ECS, EKS, Fargate, Elastic Beanstalk; use cases for each</td>
+                  <td class="px-4 py-3 text-slate-500">Create and invoke Lambda functions; deploy app to Elastic Beanstalk; explore ECS task definitions</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 7</td>
+                  <td class="px-4 py-3 text-slate-500">Wed, Jul 15</td>
+                  <td class="px-4 py-3">S3 storage classes, lifecycle, versioning, replication; EBS, EFS, S3 Glacier, Storage Gateway</td>
+                  <td class="px-4 py-3 text-slate-500">Configure S3 versioning, lifecycle policies, cross-region replication, and access controls</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 8</td>
+                  <td class="px-4 py-3 text-slate-500">Thu, Jul 16</td>
+                  <td class="px-4 py-3">VPC, subnets, route tables, IGW, NAT Gateway, CloudFront, Route 53, Direct Connect, VPN</td>
+                  <td class="px-4 py-3 text-slate-500">Build custom VPC with public/private subnets; configure routing and NACLs; set up CloudFront</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WEEK 3 -->
+        <div>
+          <h3 class="text-sm font-extrabold uppercase tracking-wide text-indigo-700 mb-3">Week 3 (Jul 20–23) — Databases, Management &amp; Billing <span class="text-slate-400 font-normal normal-case">| CLF-C02 Domains 3 &amp; 4</span></h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wide">
+                <tr>
+                  <th class="text-left px-4 py-3 w-20">Day</th>
+                  <th class="text-left px-4 py-3 w-32">Date</th>
+                  <th class="text-left px-4 py-3">Lecture</th>
+                  <th class="text-left px-4 py-3">Lab</th>
+                  <th class="text-left px-4 py-3 w-16">CH</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 9</td>
+                  <td class="px-4 py-3 text-slate-500">Mon, Jul 20</td>
+                  <td class="px-4 py-3">Databases: RDS, Aurora, DynamoDB, ElastiCache, Redshift; SQL vs. NoSQL decision criteria</td>
+                  <td class="px-4 py-3 text-slate-500">Launch RDS MySQL; connect and run queries; create DynamoDB table; compare read/write capacity modes</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 10</td>
+                  <td class="px-4 py-3 text-slate-500">Tue, Jul 21</td>
+                  <td class="px-4 py-3">CloudWatch, CloudTrail, Config, Systems Manager, CloudFormation, Control Tower</td>
+                  <td class="px-4 py-3 text-slate-500">Create CloudWatch dashboards and alarms; review CloudTrail logs; deploy CloudFormation stack</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 11</td>
+                  <td class="px-4 py-3 text-slate-500">Wed, Jul 22</td>
+                  <td class="px-4 py-3">Cost Explorer, Budgets, Cost Allocation Tags, AWS Organizations, Support Plans</td>
+                  <td class="px-4 py-3 text-slate-500">Configure billing alarms; explore Cost Explorer; create budget reports; explore AWS Organizations SCPs</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 12</td>
+                  <td class="px-4 py-3 text-slate-500">Thu, Jul 23</td>
+                  <td class="px-4 py-3 font-semibold">CLF-C02 full review: key services summary, exam tips, question strategies</td>
+                  <td class="px-4 py-3 text-slate-500 font-semibold">AWS Skill Builder full-length CLF-C02 timed practice exam; answer review and gap analysis</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WEEK 4 -->
+        <div>
+          <h3 class="text-sm font-extrabold uppercase tracking-wide text-indigo-700 mb-3">Week 4 (Jul 27–30) — AI/ML Fundamentals &amp; Generative AI <span class="text-slate-400 font-normal normal-case">| AIF-C01 Domains 1 &amp; 2</span></h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wide">
+                <tr>
+                  <th class="text-left px-4 py-3 w-20">Day</th>
+                  <th class="text-left px-4 py-3 w-32">Date</th>
+                  <th class="text-left px-4 py-3">Lecture</th>
+                  <th class="text-left px-4 py-3">Lab</th>
+                  <th class="text-left px-4 py-3 w-16">CH</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 13</td>
+                  <td class="px-4 py-3 text-slate-500">Mon, Jul 27</td>
+                  <td class="px-4 py-3">AI vs. ML vs. Deep Learning; supervised, unsupervised, reinforcement learning; NLP, computer vision</td>
+                  <td class="px-4 py-3 text-slate-500">Amazon SageMaker AI Studio orientation; explore pre-built ML models; Rekognition demos</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 14</td>
+                  <td class="px-4 py-3 text-slate-500">Tue, Jul 28</td>
+                  <td class="px-4 py-3">ML pipeline: data types, training vs. inference, model bias and fairness, batch vs. real-time</td>
+                  <td class="px-4 py-3 text-slate-500">Amazon Comprehend, Translate, Transcribe, and Rekognition service labs</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 15</td>
+                  <td class="px-4 py-3 text-slate-500">Wed, Jul 29</td>
+                  <td class="px-4 py-3">GenAI fundamentals: tokens, embeddings, vector stores, Foundation Models, FM lifecycle</td>
+                  <td class="px-4 py-3 text-slate-500">Amazon Bedrock console; compare FMs (Titan, Claude, Llama); build PartyRock app</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 16</td>
+                  <td class="px-4 py-3 text-slate-500">Thu, Jul 30</td>
+                  <td class="px-4 py-3">Prompt engineering, RAG (Retrieval-Augmented Generation), fine-tuning, model customization, cost</td>
+                  <td class="px-4 py-3 text-slate-500">Build RAG application in Bedrock; configure Knowledge Base with S3; compare prompt outputs</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WEEK 5 -->
+        <div>
+          <h3 class="text-sm font-extrabold uppercase tracking-wide text-indigo-700 mb-3">Week 5 (Aug 3–5) — Foundation Models, Responsible AI &amp; Final Review <span class="text-slate-400 font-normal normal-case">| AIF-C01 Domains 3–5</span></h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wide">
+                <tr>
+                  <th class="text-left px-4 py-3 w-20">Day</th>
+                  <th class="text-left px-4 py-3 w-32">Date</th>
+                  <th class="text-left px-4 py-3">Lecture</th>
+                  <th class="text-left px-4 py-3">Lab</th>
+                  <th class="text-left px-4 py-3 w-16">CH</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 17</td>
+                  <td class="px-4 py-3 text-slate-500">Mon, Aug 3</td>
+                  <td class="px-4 py-3">FM selection for use cases; Bedrock Agents; Guardrails; model evaluation (ROUGE, BLEU, BERTScore)</td>
+                  <td class="px-4 py-3 text-slate-500">Create Bedrock Agent with action group; configure Guardrails; run and compare model evaluations</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 18</td>
+                  <td class="px-4 py-3 text-slate-500">Tue, Aug 4</td>
+                  <td class="px-4 py-3">Responsible AI: bias, fairness, explainability, human oversight; AWS AI Service Cards; ethical AI</td>
+                  <td class="px-4 py-3 text-slate-500">SageMaker Clarify for bias detection; review AWS AI Service documentation; evaluate fairness metrics</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-4 py-3 font-bold text-slate-400">Day 19</td>
+                  <td class="px-4 py-3 text-slate-500">Wed, Aug 5</td>
+                  <td class="px-4 py-3 font-semibold">AIF-C01 full review: all 5 domains, exam tips, question strategies, exam registration guidance</td>
+                  <td class="px-4 py-3 text-slate-500 font-semibold">AWS Skill Builder full-length AIF-C01 timed practice exam; answer review and gap analysis</td>
+                  <td class="px-4 py-3 text-slate-500">4.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-xs text-slate-400 mt-6">Total contact hours: 85.5. Days shown in gray are on the schedule but not yet linked — check back as new sessions go live.</p>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-xs text-slate-400 py-6 border-t border-slate-200">
+    ITNW 1009 &bull; AWS Cloud &amp; AI Practitioner Prep Course
+  </footer>
+
+</body>
+</html>

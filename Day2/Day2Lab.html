@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 2 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 2: Cloud Costing &amp; Network Foundations</h1>
+        </div>
+      </div>
+
+      <a href="Day2lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 2 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">60–75 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li>
+            <button onclick="activateTab('partA')" id="tab-partA" role="tab" aria-selected="true" aria-controls="panel-partA" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Part A: Financial Blueprint
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('partB')" id="tab-partB" role="tab" aria-selected="false" aria-controls="panel-partB" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Part B: Network Sandbox
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('debrief')" id="tab-debrief" role="tab" aria-selected="false" aria-controls="panel-debrief" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Validation &amp; Debrief
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: PART A — FINANCIAL BLUEPRINTING -->
+      <section id="panel-partA" role="tabpanel" aria-labelledby="tab-partA" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">1. Part A: Financial Blueprinting via the AWS Pricing Calculator</h2>
+          <p class="text-slate-500 text-sm mt-1">Model the monthly OpEx of a 10-server web tier before you deploy anything real.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Scope</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            The <a href="https://calculator.aws/#/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-indigo-700">AWS Pricing Calculator</a> is a free, browser-based planning tool that lets you model infrastructure costs before committing any real resources. In Part A, you will estimate the monthly operational expenditure (OpEx) of a <strong>10-server web application tier</strong> with attached EBS storage — building habits that mirror real-world cloud financial governance.
+          </p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 1: Initialize the Estimation Portal</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Open the AWS Pricing Calculator.</strong> In a new browser tab, navigate to <span class="font-mono text-indigo-700">https://calculator.aws/#/</span> — the official AWS cost planning portal. No AWS account login is required to begin.</li>
+            <li><strong>Click "Create Estimate."</strong> Locate and click the prominent primary action button labeled <strong>Create estimate</strong> on the landing page. This initializes a blank project workspace where you will add and configure services.</li>
+          </ol>
+          <div class="px-4 pb-4">
+            <p class="text-[11px] text-slate-500 italic">The Pricing Calculator always reflects current AWS public pricing. Estimates are shareable via a public link — you will generate one at the end of Part A.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 2: Configure the Region &amp; EC2 Compute Tier</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>In the "Find Service" search bar, type <span class="font-mono text-indigo-700">Amazon EC2</span> and press Enter. Click <strong>Configure</strong> on the EC2 card result.</li>
+            <li>Enter <span class="font-mono text-indigo-700">Web Application Server Tier</span> in the Description field. Set the Region dropdown to <strong>US East (N. Virginia)</strong>. Ensure OS is set to <strong>Linux</strong>.</li>
+            <li>Under Workload, select <strong>Constant Usage</strong>. Set the Number of instances to exactly <strong>10</strong>.</li>
+            <li>Search for and select <span class="font-mono text-indigo-700">t2.micro</span> (1 vCPU, 1 GiB Memory). Under Pricing Strategy, select <strong>On-Demand</strong> to model true utility operational costs.</li>
+          </ol>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 3: Configure Attached EBS Storage Blocks</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>After configuring your EC2 instances, scroll down on the same configuration screen to the <strong>Amazon Elastic Block Store (EBS)</strong> section. EBS volumes provide persistent block-level storage that remains intact even if an EC2 instance is stopped or restarted.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li><strong>Volume Type:</strong> Set to <strong>General Purpose SSD (gp3)</strong> — the default free-tier baseline for most workloads.</li>
+              <li><strong>Storage Amount:</strong> Input <span class="font-mono text-indigo-700">30 GB</span> in the Storage amount field. Leave IOPS and throughput toggles at their defaults.</li>
+              <li><strong>Save Configuration:</strong> Click <strong>Save and add to my estimate</strong> at the bottom right corner of the page.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 4: Export the Financial Summary</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>View Monthly Estimate.</strong> You are redirected to the My Estimate dashboard showing a calculated monthly run rate for your 10 EC2 instances with 30 GB EBS storage each.</li>
+            <li><strong>Click "Share."</strong> Locate the Share button at the top right of the screen. A modal pop-up window will appear with sharing options.</li>
+            <li><strong>Copy Public Link.</strong> Click <strong>Copy public link</strong> inside the modal. Paste the URL into a local notepad file immediately — this link must be submitted in your final lab report.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Critical Restriction</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            Do not close the browser tab before saving your public link. Unsaved estimate URLs cannot be recovered from the session.
+          </p>
+        </div>
+      </section>
+
+      <!-- TAB 2: PART B — NETWORK SANDBOX -->
+      <section id="panel-partB" role="tabpanel" aria-labelledby="tab-partB" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">2. Part B: Foundational Network Sandbox Implementation</h2>
+          <p class="text-slate-500 text-sm mt-1">Deploy a live VPC, Subnet, and Security Group inside your AWS Academy sandbox.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Scope</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            In Part B, you shift from cost modeling to live infrastructure deployment. You will build three foundational AWS networking components — a <strong>VPC</strong>, a <strong>Subnet</strong>, and a <strong>Security Group</strong> — inside the real AWS Management Console, using your AWS Academy Learner Lab sandbox environment. Each step reinforces the structural mechanics of cloud networking in a safe, budget-controlled setting.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Sandbox Constraints</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            This lab runs inside the AWS Academy Sandbox (Learner Lab). Students operate under restricted IAM execution profiles, and Service Control Policies (SCPs) block global configuration permissions and live billing tier activations. All compute deployments must use <strong>t2.micro</strong> instances and stay within the <strong>$100 sandbox budget cap</strong>.
+          </p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 1: Accessing the AWS Academy Sandbox</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Log Into AWS Academy.</strong> Sign in to your university AWS Academy portal account and navigate to your active course: <strong>ITNW 1009: Fundamentals of Cloud and AI</strong>.</li>
+            <li><strong>Open the Learner Lab.</strong> Click <strong>Modules</strong>, then locate and select <strong>AWS Academy Learner Lab</strong>. On the initialization dashboard, click <strong>Start Lab</strong>.</li>
+            <li><strong>Wait for Green Status.</strong> The lab environment takes 2–3 minutes to spin up. Wait until the status circle changes from amber to a solid green, indicating the sandbox is active.</li>
+            <li><strong>Open the AWS Console.</strong> Click the <strong>AWS</strong> text link immediately to the left of the green status dot. This opens the live AWS Management Console in a secure secondary browser tab.</li>
+          </ol>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 2: Building the Isolated Virtual Private Cloud (VPC)</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Navigate to VPC.</strong> In the top global search bar, type <span class="font-mono text-indigo-700">VPC</span> and select <strong>VPC</strong> (Isolated Cloud Resources). Click the orange <strong>Create VPC</strong> button on the dashboard.</li>
+            <li><strong>Select "VPC Only."</strong> Under VPC settings, select the <strong>VPC only</strong> radio toggle. Do not select "VPC and more" — this violates AWS Academy SCPs.</li>
+            <li><strong>Enter Name &amp; CIDR Block:</strong>
+              <ul class="list-disc list-inside mt-1 ml-4 space-y-0.5">
+                <li>Name tag: <span class="font-mono text-indigo-700">ITNW1009-Lab2-VPC</span></li>
+                <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.0.0/16</span> (manual input)</li>
+                <li>IPv6: No IPv6 CIDR block</li>
+                <li>Tenancy: Default</li>
+              </ul>
+            </li>
+            <li><strong>Create the VPC.</strong> Scroll to the bottom of the form and click <strong>Create VPC</strong>. Confirm the status shows <strong>Available</strong> in the VPC dashboard.</li>
+          </ol>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 3: Provisioning an Isolated Testing Subnet</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>A subnet carves a smaller, addressable block from within your VPC's larger CIDR range. You will create one public-facing subnet inside the N. Virginia Availability Zone <span class="font-mono text-indigo-700">us-east-1a</span>.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li><strong>Navigate to Subnets.</strong> In the left sidebar, click <strong>Subnets</strong>. Then click <strong>Create subnet</strong> at the top right.</li>
+              <li><strong>Select Your VPC.</strong> In the VPC ID dropdown, select <span class="font-mono text-indigo-700">ITNW1009-Lab2-VPC</span> — your newly created network.</li>
+              <li><strong>Configure Subnet Details:</strong>
+                <ul class="list-disc list-inside mt-1 ml-4 space-y-0.5">
+                  <li>Subnet name: <span class="font-mono text-indigo-700">Lab2-Public-Subnet-A</span></li>
+                  <li>Availability Zone: <span class="font-mono text-indigo-700">us-east-1a</span></li>
+                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.1.0/24</span></li>
+                </ul>
+              </li>
+              <li><strong>Create the Subnet.</strong> Click <strong>Create subnet</strong> at the bottom. Verify it appears linked to ITNW1009-Lab2-VPC in the table view.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 4: Engineering the Infrastructure Security Group</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Navigate to Security Groups.</strong> In the left sidebar, scroll to Security and click <strong>Security Groups</strong>. Click <strong>Create security group</strong>.</li>
+            <li><strong>Enter Group Details:</strong>
+              <ul class="list-disc list-inside mt-1 ml-4 space-y-0.5">
+                <li>Name: <span class="font-mono text-indigo-700">Lab2-WebServer-SG</span></li>
+                <li>Description: Allow inbound HTTP traffic for testing compute tiers</li>
+                <li>VPC: Select ITNW1009-Lab2-VPC (clear the default first)</li>
+              </ul>
+            </li>
+            <li><strong>Add Inbound Rule.</strong> Click <strong>Add rule</strong> in the Inbound rules section.
+              <ul class="list-disc list-inside mt-1 ml-4 space-y-0.5">
+                <li>Type: HTTP (Port 80)</li>
+                <li>Source: Anywhere-IPv4 (0.0.0.0/0)</li>
+              </ul>
+            </li>
+            <li><strong>Create the Security Group.</strong> Click <strong>Create security group</strong> at the bottom. The 0.0.0.0/0 source allows web traffic from any global client IP address.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- TAB 3: VALIDATION, TROUBLESHOOTING & DEBRIEF -->
+      <section id="panel-debrief" role="tabpanel" aria-labelledby="tab-debrief" class="tab-content hidden space-y-8">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">3. Validation, Troubleshooting &amp; Debrief</h2>
+          <p class="text-slate-500 text-sm mt-1">Confirm your deployment, resolve common errors, and reflect on the day's concepts.</p>
+        </div>
+
+        <!-- Validation Checklist -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Lab Validation Checklist</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Before closing your console session, verify all three deployed components against the criteria below to earn full lab completion credit.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">1</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">VPC Validation</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Navigate to the VPC dashboard. Confirm <span class="font-mono text-indigo-700">ITNW1009-Lab2-VPC</span> shows status <strong>Available</strong> with CIDR address <span class="font-mono text-indigo-700">10.0.0.0/16</span> exactly as configured.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">2</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Subnet Association</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Open the Subnets table view. Confirm <span class="font-mono text-indigo-700">Lab2-Public-Subnet-A</span> is associated with ITNW1009-Lab2-VPC and locked to Availability Zone us-east-1a.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">3</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Security Group Firewall</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Open the Security Group details for <span class="font-mono text-indigo-700">Lab2-WebServer-SG</span>. Confirm an active inbound rule allowing Port 80 (HTTP) from source 0.0.0.0/0.</p>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 italic">All three checks passing confirms your sandbox deployment is structurally sound and ready for submission.</p>
+        </div>
+
+        <!-- Troubleshooting Guidance -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Technical Troubleshooting Guide</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Two common failure patterns occur in this lab. Understanding the root cause — not just the fix — is an essential cloud engineering skill.</p>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Observed Symptom</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Root Cause</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Resolution Steps</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700"><strong>"Create VPC"</strong> button greyed out, or an IAM error appears.</td>
+                  <td class="p-3 align-top text-slate-600">The student has either selected a restricted service region outside the sandbox's permitted boundaries, or attempted to use the "VPC and More" wizard toggle — which calls backend route table configurations that violate AWS Academy Service Control Policies (SCPs).</td>
+                  <td class="p-3 align-top text-slate-600">Check the top-right region dropdown in the AWS Console; it must read N. Virginia (us-east-1). On the VPC creation form, verify the <strong>VPC Only</strong> radio button is selected — never "VPC and more."</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Subnet CIDR overlap error: a red warning reads "CIDR Address overlaps with an existing component resource allocation map."</td>
+                  <td class="p-3 align-top text-slate-600">The student has entered typo values in either the parent VPC CIDR or the subnet CIDR field, causing a conflict with subnet calculation mechanics.</td>
+                  <td class="p-3 align-top text-slate-600">Delete any failed subnet inputs. Confirm the parent VPC CIDR reads exactly <span class="font-mono text-indigo-700">10.0.0.0/16</span>, and the subnet uses a 24-bit sub-divided range typed exactly as <span class="font-mono text-indigo-700">10.0.1.0/24</span>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Debrief -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Section 3: Academic Review &amp; Debrief</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">The following discussion prompts are designed to bridge hands-on lab actions to real-world cloud architecture decision-making. Work through each prompt individually or in small groups.</p>
+
+          <div class="border border-slate-200 rounded-2xl overflow-hidden">
+            <div class="bg-indigo-950 text-white px-4 py-3">
+              <h4 class="font-extrabold text-sm">Discussion Prompt 1: Connecting the Calculator to Real Networks</h4>
+            </div>
+            <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+              <p class="italic">"A business manager asks you to move those 10 servers to the AWS Tokyo region (ap-northeast-1) overnight to support a Japanese product launch. What steps do you take inside your Pricing Calculator blueprint, and how will that change your estimated monthly OpEx?"</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h5 class="font-bold text-slate-900 text-xs mb-1">Calculator Changes</h5>
+                  <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                    <li>Open your saved estimate and edit the EC2 configuration</li>
+                    <li>Change the Region dropdown from US East (N. Virginia) to Asia Pacific (Tokyo)</li>
+                    <li>Re-save and generate a new public share link for the updated estimate</li>
+                  </ul>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h5 class="font-bold text-slate-900 text-xs mb-1">Cost Implications</h5>
+                  <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                    <li>AWS pricing varies by region — Tokyo on-demand rates for t2.micro are typically higher than N. Virginia</li>
+                    <li>Data transfer costs between regions add additional OpEx</li>
+                    <li>Always re-estimate before committing to a regional migration</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-slate-200 rounded-2xl overflow-hidden">
+            <div class="bg-indigo-950 text-white px-4 py-3">
+              <h4 class="font-extrabold text-sm">Discussion Prompt 2: Evaluating the Security Layer</h4>
+            </div>
+            <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+              <p class="italic">"We opened Port 80 to 0.0.0.0/0. Why is this fine for a public web server — but a dangerous risk for a backend database holding private financial records?"</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h5 class="font-bold text-slate-900 text-xs mb-1">Public Web Tier (Port 80 Open)</h5>
+                  <p class="text-slate-600">A web server's entire purpose is to respond to browser requests from any client on the internet. Opening Port 80 to 0.0.0.0/0 is intentional and required for public HTTP access. Every legitimate visitor's request arrives via this rule.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h5 class="font-bold text-slate-900 text-xs mb-1">Backend Database (Port 80 Open = Critical Risk)</h5>
+                  <p class="text-slate-600">A database server should never be reachable from the open internet. It should only accept connections from trusted application servers within the same VPC, using tightly scoped source CIDR rules or security group references. Exposing 0.0.0.0/0 on a database invites brute-force attacks, data exfiltration, and regulatory violations.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lab Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Lab Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Cost Modeling First</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Always blueprint your architecture in the AWS Pricing Calculator before deploying live infrastructure. Region selection directly impacts monthly OpEx.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">VPC Isolates Your Network</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">A VPC with a /16 CIDR block creates a private, isolated virtual network. Subnets with /24 blocks subdivide it into logical zones tied to physical Availability Zones.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Security Groups = Firewall Rules</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Security Groups control inbound and outbound traffic at the instance level. Open only the ports and sources that your workload explicitly requires.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Sandbox Constraints Are Real</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">AWS Academy SCPs enforce region and service restrictions. Always work in us-east-1 and use VPC Only mode to stay within sandbox permissions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 2 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>
