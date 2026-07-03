@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 4 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 4: Security Hardening, Threat Tracking &amp; Compliance Auditing</h1>
+        </div>
+      </div>
+
+      <a href="Day4Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 4 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">75 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li>
+            <button onclick="activateTab('build')" id="tab-build" role="tab" aria-selected="true" aria-controls="panel-build" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Build Core Infrastructure
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('secure')" id="tab-secure" role="tab" aria-selected="false" aria-controls="panel-secure" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Activate Security Services
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('audit')" id="tab-audit" role="tab" aria-selected="false" aria-controls="panel-audit" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Audit &amp; Clean Up
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: BUILD CORE INFRASTRUCTURE -->
+      <section id="panel-build" role="tabpanel" aria-labelledby="tab-build" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">1. Sandbox Preparation &amp; Core Infrastructure Assembly</h2>
+          <p class="text-slate-500 text-sm mt-1">Verify your sandbox, then build a VPC, subnet, internet gateway, route table, security group, and target EC2 host from scratch.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            In this lab you will build a foundational security architecture from scratch, then activate and validate three core AWS security services working together: <strong>GuardDuty</strong>, <strong>Security Hub</strong>, and <strong>Trusted Advisor</strong>. Region: <span class="font-mono text-indigo-700">us-east-1</span>.
+          </p>
+        </div>
+
+        <!-- Task 1: Prerequisites -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Starting Your Learner Lab</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Log In to AWS Academy Portal.</strong> Use your student credentials to access your designated AWS Academy Portal and navigate to your course shell.</li>
+            <li><strong>Launch the Lab Environment.</strong> Click the Learner Lab link, then click <strong>Start Lab</strong> (play icon) to provision your isolated container environment.</li>
+            <li><strong>Wait for Green Status.</strong> Monitor the status circle next to the AWS console link. Do not proceed until it turns from amber to solid green — this confirms full provisioning.</li>
+            <li><strong>Verify Region: N. Virginia (us-east-1).</strong> After the console opens, check the top-right region dropdown. If it doesn't read us-east-1, switch to N. Virginia before continuing.</li>
+          </ol>
+          <div class="px-4 pb-4">
+            <div class="callout callout-amber">
+              <span class="callout-badge">Critical Checkpoint</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Never proceed past this step until the status indicator is solid green <strong>and</strong> your region reads us-east-1. Misalignment causes resource provisioning failures downstream.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2: VPC & Subnet -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create the VPC &amp; Subnet</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create Lab-VPC</h5>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>Search <span class="font-mono text-indigo-700">VPC</span> in the top global search bar and select the service.</li>
+                <li>In the left pane, choose <strong>Your VPCs</strong>, then click <strong>Create VPC</strong>.</li>
+                <li>Set Resources to create → <strong>VPC only</strong>.</li>
+                <li>Set Name tag → <span class="font-mono text-indigo-700">Lab-VPC</span>.</li>
+                <li>Set IPv4 CIDR → <span class="font-mono text-indigo-700">10.0.0.0/16</span> (manual input).</li>
+                <li>Click <strong>Create VPC</strong>.</li>
+              </ol>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create Lab-Public-Subnet</h5>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>In the left pane, choose <strong>Subnets</strong>, then click <strong>Create subnet</strong>.</li>
+                <li>For VPC ID, select your newly created <strong>Lab-VPC</strong>.</li>
+                <li>Set Subnet name → <span class="font-mono text-indigo-700">Lab-Public-Subnet</span>.</li>
+                <li>Set IPv4 CIDR block → <span class="font-mono text-indigo-700">10.0.1.0/24</span>.</li>
+                <li>Click <strong>Create subnet</strong>.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 3: IGW & Route Table -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Internet Gateway &amp; Route Table</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create &amp; Attach Lab-IGW</h5>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>In the left pane, choose <strong>Internet gateways</strong> → <strong>Create internet gateway</strong>.</li>
+                <li>Set Name tag → <span class="font-mono text-indigo-700">Lab-IGW</span>. Click <strong>Create internet gateway</strong>.</li>
+                <li>With the gateway selected, click <strong>Actions</strong> → <strong>Attach to VPC</strong>.</li>
+                <li>Select <strong>Lab-VPC</strong> and click <strong>Attach internet gateway</strong>.</li>
+              </ol>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Configure the Route Table</h5>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>In the left pane, choose <strong>Route tables</strong>. Select the main route table for Lab-VPC.</li>
+                <li>Click the <strong>Routes</strong> tab in the bottom panel → <strong>Edit routes</strong>.</li>
+                <li>Click <strong>Add route</strong>. Set Destination → <span class="font-mono text-indigo-700">0.0.0.0/0</span>.</li>
+                <li>Set Target → Internet Gateway → select <strong>Lab-IGW</strong>.</li>
+                <li>Click <strong>Save changes</strong>.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 4: Security Group -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Create the Security Group (Lab-SG)</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>A security group acts as a virtual firewall for your EC2 instance. For this lab, you'll open Port 22 (SSH) and Port 80 (HTTP) — both of which Trusted Advisor will later flag as intentional exposure risks to validate.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Basic Configuration</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Security group name: <span class="font-mono text-indigo-700">Lab-SG</span></li>
+                  <li>Description: Security group for local lab evaluation</li>
+                  <li>VPC: remove the default and select Lab-VPC</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule 1 — SSH</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Type: SSH</li>
+                  <li>Port: 22 (auto-populated)</li>
+                  <li>Source: Anywhere-IPv4 (0.0.0.0/0)</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule 2 — HTTP</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Type: HTTP</li>
+                  <li>Port: 80 (auto-populated)</li>
+                  <li>Source: Anywhere-IPv4 (0.0.0.0/0)</li>
+                </ul>
+              </div>
+            </div>
+            <p>Click <strong>Create security group</strong> at the bottom of the form to finalize.</p>
+          </div>
+        </div>
+
+        <!-- Task 5: EC2 launch -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Provisioning the Target Compute Node</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>With your network scaffolding in place, launch a cost-efficient EC2 instance inside your custom VPC to serve as the active target for your security monitoring tools. Search <span class="font-mono text-indigo-700">EC2</span> in the top global search bar, open the dashboard, and click <strong>Launch instance</strong>.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Instance Identity</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">Lab-Target-Host</span></li>
+                  <li>AMI: Amazon Linux 2023 (default)</li>
+                  <li>Instance Type: t3.micro (or t2.micro if unavailable)</li>
+                  <li>Key pair: proceed without a key pair</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC: Lab-VPC</li>
+                  <li>Subnet: Lab-Public-Subnet</li>
+                  <li>Auto-assign public IP: Enable</li>
+                  <li>Security group: select existing → Lab-SG</li>
+                </ul>
+              </div>
+            </div>
+            <p>Scroll to the bottom and click <strong>Launch instance</strong>. Wait for the success confirmation banner before proceeding.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ACTIVATE SECURITY SERVICES -->
+      <section id="panel-secure" role="tabpanel" aria-labelledby="tab-secure" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">2. Activating the Threat Intelligence &amp; Posture Management Layer</h2>
+          <p class="text-slate-500 text-sm mt-1">Turn on GuardDuty and Security Hub, and confirm each is actively watching your account.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Amazon GuardDuty</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            GuardDuty is AWS's intelligent continuous threat detection service. It analyzes CloudTrail event logs, VPC Flow Logs, and DNS logs out-of-band — without requiring you to deploy any agents — to identify malicious activity and unauthorized behavior.
+          </p>
+        </div>
+
+        <!-- Task 1: GuardDuty -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Enable Amazon GuardDuty</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Search <span class="font-mono text-indigo-700">GuardDuty</span> in the top bar and select the service.</li>
+            <li>On the landing page, click <strong>Get started</strong>.</li>
+            <li>Review the service-linked role permissions summary — GuardDuty needs read access to your logs.</li>
+            <li>Click <strong>Enable GuardDuty</strong>.</li>
+          </ol>
+          <div class="px-4 pb-4">
+            <div class="card">
+              <span class="text-xs font-bold text-slate-700 block mb-1">Validation Task 1</span>
+              <p class="text-xs text-slate-600 leading-relaxed">Confirm the left navigation pane shows <strong>Status: Running</strong>. Click <strong>Findings</strong> — the panel may be empty in a fresh sandbox. Leave this open.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2: Security Hub -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Enable AWS Security Hub</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Search <span class="font-mono text-indigo-700">Security Hub</span> in the top bar and select the service.</li>
+            <li>Click <strong>Go to Security Hub</strong>.</li>
+            <li>Review the compliance framework toggles (AWS Foundational Security Best Practices, CIS AWS Foundations Benchmark). Leave defaults as-is.</li>
+            <li>Click <strong>Enable Security Hub</strong>.</li>
+          </ol>
+          <div class="px-4 pb-4 space-y-3">
+            <div class="card">
+              <span class="text-xs font-bold text-slate-700 block mb-1">Validation Task 2</span>
+              <p class="text-xs text-slate-600 leading-relaxed">Navigate to <strong>Insights</strong> in the left pane. Verify filters exist for "Top findings by resource" and similar categories.</p>
+            </div>
+            <div class="callout callout-indigo">
+              <span class="callout-badge">Why This Matters</span>
+              <p class="text-xs text-indigo-950 leading-relaxed">Security Hub acts as your centralized security operations control plane — aggregating findings from GuardDuty and other services into a single, prioritized dashboard view.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: AUDIT & CLEAN UP -->
+      <section id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" class="tab-content hidden space-y-8">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">3. Compliance Auditing, Cleanup &amp; Troubleshooting</h2>
+          <p class="text-slate-500 text-sm mt-1">Run Trusted Advisor checks, tear down every resource you built, and resolve common lab errors.</p>
+        </div>
+
+        <!-- Trusted Advisor -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Performing Compliance Audits with AWS Trusted Advisor</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Trusted Advisor performs a holistic diagnostic scan of your cloud account across five foundational pillars. Navigate to Trusted Advisor via the top search bar and click <strong>Dashboard</strong> in the left navigation panel.</p>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Evaluation Pillar</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Typical Status</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Definition</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-semibold">Cost Optimization</td>
+                  <td class="p-3 align-top text-slate-600">Green</td>
+                  <td class="p-3 align-top text-slate-600">Resource expenditures align with recommended baseline patterns.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-semibold">Performance</td>
+                  <td class="p-3 align-top text-slate-600">Green</td>
+                  <td class="p-3 align-top text-slate-600">Computing architecture parameters are balanced for throughput.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-semibold">Security</td>
+                  <td class="p-3 align-top text-slate-600">Orange / Red</td>
+                  <td class="p-3 align-top text-slate-600">Account configurations exhibit exposure risks requiring validation review.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-semibold">Fault Tolerance</td>
+                  <td class="p-3 align-top text-slate-600">Investigation</td>
+                  <td class="p-3 align-top text-slate-600">Redundancy structures require secondary AZ load balancing additions.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-semibold">Service Limits</td>
+                  <td class="p-3 align-top text-slate-600">Green</td>
+                  <td class="p-3 align-top text-slate-600">Infrastructure usage falls well within allocated cloud thresholds.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <span class="text-xs font-bold text-slate-700 block mb-1">Validation Task 3</span>
+            <p class="text-xs text-slate-600 leading-relaxed">Click the <strong>Security</strong> tab and expand <strong>Security Groups — Specific Ports Unrestricted</strong>. You'll see Lab-SG flagged for exposing Port 22 and Port 80 to 0.0.0.0/0. This confirms Trusted Advisor is actively scanning your architecture in real time.</p>
+          </div>
+        </div>
+
+        <!-- Cleanup -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Mandatory Cleanup: Tear Down All Lab Resources</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">To protect your $100 allocated lab budget and keep your sandbox clean for future labs, you must terminate every resource you created — in the correct sequence — immediately after completing all validations.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">1</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Terminate EC2 Instance</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">EC2 Console → Instances → select Lab-Target-Host → Instance state → Terminate instance. Confirm the prompt.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">2</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Delete Security Group</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">VPC Console → Security Groups → select Lab-SG → Actions → Delete security group.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">3</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Delete the VPC</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Your VPCs → select Lab-VPC → Actions → Delete VPC. This cascades and destroys subnets, route tables, and the internet gateway automatically.</p>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-amber">
+            <span class="callout-badge">Do Not Skip</span>
+            <p class="text-xs text-amber-900 leading-relaxed">Leaving running EC2 instances or NAT Gateways active will rapidly consume your lab credit balance, which cannot be restored.</p>
+          </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Troubleshooting Common Lab Failures</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">If you encounter errors during any stage of this lab, consult the matrix below before requesting instructor assistance. Most failures have a fast, self-service resolution.</p>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Observed Symptom</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Root Cause</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Remediation Steps</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700">"Access Denied" or "Unauthorized" error banner appears.</td>
+                  <td class="p-3 align-top text-slate-600">Attempting to activate paid/premium tiers blocked by AWS Academy SCP policies.</td>
+                  <td class="p-3 align-top text-slate-600">Stop immediately. Verify you selected VPC only and standard defaults. Do not attempt to enable premium features.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">GuardDuty enable step fails with a service role dependency error.</td>
+                  <td class="p-3 align-top text-slate-600">Learner container IAM permissions have not fully synchronized yet.</td>
+                  <td class="p-3 align-top text-slate-600">Wait 60 seconds, refresh the browser tab to re-read active IAM identities, then click Enable again.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">EC2 launch wizard states the target AMI is unavailable.</td>
+                  <td class="p-3 align-top text-slate-600">The active region has drifted away from the required us-east-1 zone.</td>
+                  <td class="p-3 align-top text-slate-600">Check the top-right header dropdown. If it is not N. Virginia (us-east-1), switch back and recreate your launch settings.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 4 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html / Day2Lab.html / Day3Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>

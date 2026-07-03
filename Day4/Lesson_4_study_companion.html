@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009 Security Services &amp; Compliance Interactive Sandbox</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- Header Banner -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6l7-3z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009: Lesson 4 Study Companion</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Security Services &amp; Compliance Frameworks</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Announcement Region for Screen Readers -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main Grid Layout -->
+  <main class="flex-grow max-w-6xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6" id="main-content" role="main">
+    
+    <!-- Tab Navigation Control Panel -->
+    <nav class="lg:col-span-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col gap-2 h-fit" aria-label="Study Simulator Modes">
+      <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Learning Modes</h2>
+      
+      <button onclick="switchTab('scenario')" id="tab-scenario" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm" aria-selected="true" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+          1. Security Service Advisor
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Interactive</span>
+      </button>
+
+      <button onclick="switchTab('flashcards')" id="tab-flashcards" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200" aria-selected="false" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+          2. Term Flashcards
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Review</span>
+      </button>
+
+      <button onclick="switchTab('deployment-sorter')" id="tab-sorter" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200" aria-selected="false" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+          3. Defense Layer Sorter
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Practice</span>
+      </button>
+
+      <div class="mt-4 pt-4 border-t border-slate-100 hidden lg:block">
+        <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Keyboard Shortcuts</h3>
+        <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4" role="note">
+          <li><strong>Tab</strong>: Move selection focus</li>
+          <li><strong>Enter / Space</strong>: Activate buttons</li>
+          <li><strong>Arrow keys</strong>: Navigate flashcard deck</li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Content Workspace Container -->
+    <section class="lg:col-span-9 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 min-h-[450px] flex flex-col" aria-label="Learning Workspace">
+      
+      <!-- MODE 1: SCENARIO ANALYZER -->
+      <div id="panel-scenario" class="tab-panel block flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-black text-slate-900">AWS Security Service Advisor</h2>
+            <p class="text-slate-500 text-sm mt-1">Analyze real-world security incidents and recommend the correct AWS security service.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-500 font-bold">Progress Dashboard</span>
+            <div class="text-sm font-extrabold text-indigo-600" id="scenario-progress-indicator">Scenario 1 of 5</div>
+          </div>
+        </div>
+
+        <!-- Scenario Scenario Container -->
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-6" id="scenario-card-container">
+          <span class="text-xs bg-indigo-200 text-indigo-800 font-bold px-2.5 py-1 rounded mb-2 inline-block" id="scenario-badge">Perimeter Defense</span>
+          <p class="text-base text-slate-800 font-medium leading-relaxed" id="scenario-text">
+            A fintech company's website suddenly experiences a massive UDP flood attack from a botnet, aiming to overwhelm the network and knock the site offline for legitimate users. Which AWS service is purpose-built to absorb this kind of volumetric attack?
+          </p>
+        </div>
+
+        <!-- Multiple Choice Options -->
+        <fieldset class="space-y-3 mb-6" id="options-fieldset">
+          <legend class="sr-only">Select the best solution for the scenario</legend>
+          
+          <button onclick="submitAnswer(0)" id="opt-0" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">A) AWS WAF, configured with a custom Web ACL rule.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option A</span>
+          </button>
+
+          <button onclick="submitAnswer(1)" id="opt-1" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">B) AWS Shield, which filters volumetric floods at Layer 3 &amp; 4 automatically.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option B</span>
+          </button>
+
+          <button onclick="submitAnswer(2)" id="opt-2" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">C) Amazon Macie, scanning S3 for exposed data.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option C</span>
+          </button>
+        </fieldset>
+
+        <!-- Feedback Area -->
+        <div id="feedback-area" class="hidden p-4 rounded-xl mb-6 transition-all duration-150" role="alert">
+          <h3 class="font-bold text-lg" id="feedback-title">Correct!</h3>
+          <p class="text-sm mt-1 leading-relaxed" id="feedback-text">Explanation goes here.</p>
+        </div>
+
+        <!-- Next / Prev Controls -->
+        <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+          <button id="btn-prev-scenario" onclick="changeScenario(-1)" class="px-4 py-2 border border-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:pointer-events-none" disabled>
+            Previous Scenario
+          </button>
+          <button id="btn-next-scenario" onclick="changeScenario(1)" class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+            Next Scenario
+          </button>
+        </div>
+      </div>
+
+
+      <!-- MODE 2: TERMINOLOGY FLASHCARDS -->
+      <div id="panel-flashcards" class="tab-panel hidden flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4">
+          <h2 class="text-2xl font-black text-slate-900">Vocabulary Term Registry</h2>
+          <p class="text-slate-500 text-sm mt-1">Master the fundamental security &amp; compliance terms covered in AWS Certified Cloud Practitioner Exams.</p>
+        </div>
+
+        <!-- Interactive Flashcard Area -->
+        <div class="flex flex-col items-center justify-center my-6 flex-grow">
+          <div 
+            id="flashcard-container" 
+            onclick="flipFlashcard()" 
+            onkeydown="handleCardKeydown(event)"
+            tabindex="0"
+            role="button"
+            aria-label="Flashcard. Press Enter or Space to Flip. Shows Front: DDoS"
+            class="w-full max-w-lg bg-gradient-to-br from-slate-900 to-indigo-950 text-white min-h-[250px] p-8 rounded-3xl shadow-xl border border-slate-800 flex flex-col justify-between items-center text-center cursor-pointer transform hover:scale-[1.02] transition-all duration-150"
+          >
+            <!-- Card Front Indicator -->
+            <span class="text-xs uppercase tracking-widest text-indigo-300 font-bold bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800" id="card-side-indicator">
+              Front of Card
+            </span>
+
+            <!-- Main Dynamic Card Text -->
+            <div id="card-main-text" class="my-6">
+              <h3 class="text-2xl md:text-3xl font-extrabold tracking-wide">DDoS</h3>
+              <p class="text-sm text-indigo-200 mt-2 italic">Click card or press Enter to reveal definition</p>
+            </div>
+
+            <!-- Card Flip Instruction -->
+            <span class="text-xs text-indigo-400 font-medium">
+              Card 1 of 9 • Press space to flip
+            </span>
+          </div>
+
+          <!-- Flip Controls -->
+          <div class="flex gap-4 mt-6">
+            <button onclick="navigateFlashcard(-1)" class="p-3 border border-slate-300 rounded-full hover:bg-slate-100 text-slate-700 transition" aria-label="Previous card">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="flipFlashcard()" class="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition shadow-sm">
+              Flip Card
+            </button>
+            <button onclick="navigateFlashcard(1)" class="p-3 border border-slate-300 rounded-full hover:bg-slate-100 text-slate-700 transition" aria-label="Next card">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- MODE 3: DEFENSE LAYER SORTER -->
+      <div id="panel-sorter" class="tab-panel hidden flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4">
+          <h2 class="text-2xl font-black text-slate-900">Defense Layer Sorter</h2>
+          <p class="text-slate-500 text-sm mt-1">Assign each security situation to the AWS defense layer it belongs to: Perimeter Defense, Continuous Detection, or Compliance &amp; Governance.</p>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start mb-6">
+          <span class="text-xl" aria-hidden="true">💡</span>
+          <div>
+            <h4 class="font-bold text-indigo-900 text-sm">How to Play</h4>
+            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">Read the security situation card below. Use the category selector buttons to classify it. You'll see immediately whether your answer was correct along with an explanation naming the specific AWS service, then use the Next Item button to continue.</p>
+          </div>
+        </div>
+
+        <!-- Sorter Card -->
+        <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50 shadow-sm text-center my-4 flex-grow flex flex-col justify-center items-center">
+          <span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded font-bold uppercase tracking-wider mb-2 inline-block">Active Assignment</span>
+          <p class="text-lg font-bold text-slate-800 max-w-xl" id="sorter-card-text">
+            An EC2 instance is sending traffic to a known malicious IP address at 4 AM, and no engineer configured this connection.
+          </p>
+        </div>
+
+        <!-- Sorter Buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4" id="sorter-options-grid">
+          <button onclick="submitSort('Perimeter')" id="sort-btn-perimeter" class="px-4 py-3 bg-blue-50 text-blue-800 border-2 border-blue-200 hover:border-blue-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Perimeter Defense</span>
+            <span class="text-xs font-normal text-blue-600 mt-1">Shield &amp; WAF</span>
+          </button>
+          
+          <button onclick="submitSort('Detection')" id="sort-btn-detection" class="px-4 py-3 bg-purple-50 text-purple-800 border-2 border-purple-200 hover:border-purple-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Continuous Detection</span>
+            <span class="text-xs font-normal text-purple-600 mt-1">GuardDuty, Inspector &amp; Macie</span>
+          </button>
+
+          <button onclick="submitSort('Compliance')" id="sort-btn-compliance" class="px-4 py-3 bg-teal-50 text-teal-800 border-2 border-teal-200 hover:border-teal-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Compliance &amp; Governance</span>
+            <span class="text-xs font-normal text-teal-600 mt-1">Artifact &amp; Trusted Advisor</span>
+          </button>
+        </div>
+
+        <!-- Sorter Feedback & Explanation Area -->
+        <div id="sorter-feedback-area" class="hidden p-4 rounded-xl mt-4 transition-all duration-150" role="alert">
+          <h3 class="font-bold text-lg" id="sorter-feedback-title">Correct!</h3>
+          <p class="text-sm mt-1 leading-relaxed" id="sorter-feedback-text">Explanation goes here.</p>
+        </div>
+
+        <!-- Next Item Control -->
+        <div id="sorter-next-container" class="hidden mt-4 flex justify-end">
+          <button type="button" onclick="advanceSorter()" id="btn-next-sort" class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+            Next Item
+          </button>
+        </div>
+
+        <!-- Sorter Score Footer -->
+        <div class="mt-6 pt-4 border-t border-slate-200 flex justify-between items-center text-sm font-bold text-slate-600">
+          <div>Solved: <span id="sorter-solved-count" class="text-indigo-600">0 / 4</span></div>
+          <button onclick="resetSorter()" class="text-xs text-slate-500 hover:text-slate-800 underline">Reset Challenge</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer Info -->
+  <footer class="max-w-6xl w-full mx-auto px-4 py-4 mt-auto flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2" role="contentinfo">
+    <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+    <p class="flex items-center gap-1.5 font-bold text-slate-500">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+      WCAG 2.1 AA Compliant Active Textbook
+    </p>
+  </footer>
+
+  <script>
+    // Global Accessibility Announcer Helper
+    function announce(text) {
+      const announcer = document.getElementById('sr-announcer');
+      if (announcer) {
+        announcer.textContent = text;
+      }
+    }
+
+    // Tab Navigation Logic
+    function switchTab(mode) {
+      // Hide all panels
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(tab => {
+        tab.className = "w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        tab.setAttribute('aria-selected', 'false');
+        const dot = tab.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      const idMap = { scenario: 'tab-scenario', flashcards: 'tab-flashcards', 'deployment-sorter': 'tab-sorter' };
+      const panelMap = { scenario: 'panel-scenario', flashcards: 'panel-flashcards', 'deployment-sorter': 'panel-sorter' };
+      const announceMap = {
+        scenario: "Switched to Security Service Advisor mode.",
+        flashcards: "Switched to Flashcards review mode.",
+        'deployment-sorter': "Switched to Defense Layer Sorter game mode."
+      };
+
+      document.getElementById(panelMap[mode]).classList.remove('hidden');
+      const activeTab = document.getElementById(idMap[mode]);
+      activeTab.className = "w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeTab.setAttribute('aria-selected', 'true');
+      const activeDot = activeTab.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+      announce(announceMap[mode]);
+
+      if (mode === 'flashcards') renderFlashcard();
+      if (mode === 'deployment-sorter') renderSorterCard();
+    }
+
+    /* ==========================================
+       1. SCENARIO ANALYZER DATA & LOGIC
+       ========================================== */
+    const scenarios = [
+      {
+        badge: "Perimeter Defense",
+        text: "A fintech company's website suddenly experiences a massive UDP flood attack from a botnet, aiming to overwhelm the network and knock the site offline for legitimate users. Which AWS service is purpose-built to absorb this kind of volumetric attack?",
+        options: [
+          "A) AWS WAF, configured with a custom Web ACL rule.",
+          "B) AWS Shield, which filters volumetric floods at Layer 3 & 4 automatically.",
+          "C) Amazon Macie, scanning S3 for exposed data."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! AWS Shield protects at Layer 3 and 4 against volumetric floods like DDoS and UDP amplification. Shield Standard is free and automatic for every AWS customer."
+      },
+      {
+        badge: "Layer 7 Attack",
+        text: "Attackers are quietly inserting rogue SQL commands into a website's login form, attempting to dump the customer database. This traffic looks like normal HTTP requests, not a flood. Which service should the technician deploy immediately?",
+        options: [
+          "A) AWS Shield Advanced for volumetric protection.",
+          "B) AWS WAF, blocking the malicious pattern with a Web ACL rule.",
+          "C) AWS Trusted Advisor, to check cost optimization."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! AWS WAF inspects HTTP content at Layer 7 and can block SQL Injection and XSS patterns via a Web ACL — exactly the tool used in the Apex Fintech case study to stop an active exploit in under ten minutes."
+      },
+      {
+        badge: "Behavioral Anomaly",
+        text: "At 4:00 AM, an EC2 instance suddenly starts communicating with a known cryptocurrency-mining command-and-control server. No one configured this — it's a strange deviation from the account's normal baseline. Which service is designed to catch this kind of anomaly automatically?",
+        options: [
+          "A) Amazon GuardDuty, which uses machine learning to flag anomalous account and network behavior.",
+          "B) AWS Artifact, to download a compliance report.",
+          "C) AWS Inspector, to patch the vulnerable library."
+        ],
+        correctIndex: 0,
+        explanation: "Correct! GuardDuty continuously analyzes VPC Flow Logs, CloudTrail, and DNS query logs out-of-band to detect abnormal behavior like unexpected crypto-mining traffic, without installing any agent."
+      },
+      {
+        badge: "Audit Deadline",
+        text: "An auditor is requesting official SOC 2 and ISO 27001 compliance reports from your organization by tomorrow morning. There's no time to commission a new audit. Where should you go to retrieve pre-certified documentation instantly?",
+        options: [
+          "A) AWS Trusted Advisor's Security pillar.",
+          "B) AWS Artifact's self-service compliance portal.",
+          "C) AWS Security Hub's findings dashboard."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! AWS Artifact is a free, self-service portal for downloading official AWS compliance documentation — SOC reports, ISO certifications, and PCI-DSS documentation — on demand, no new audit required."
+      },
+      {
+        badge: "Account Hygiene",
+        text: "A junior technician wants a quick, color-coded health check of the AWS account's overall security posture — including whether the root account has MFA enabled and whether any security group allows unrestricted SSH access. Which service gives this at-a-glance report?",
+        options: [
+          "A) AWS Trusted Advisor, using its Green / Orange / Red system across best-practice checks.",
+          "B) Amazon Macie, scanning S3 for PII.",
+          "C) AWS Shield, monitoring for DDoS floods."
+        ],
+        correctIndex: 0,
+        explanation: "Correct! Trusted Advisor scans the account against best practices and reports findings with a simple traffic-light system — flagging issues like a root account with no MFA or an open SSH port."
+      }
+    ];
+
+    let currentScenarioIdx = 0;
+
+    function renderScenario() {
+      const s = scenarios[currentScenarioIdx];
+      document.getElementById('scenario-progress-indicator').textContent = `Scenario ${currentScenarioIdx + 1} of ${scenarios.length}`;
+      document.getElementById('scenario-badge').textContent = s.badge;
+      document.getElementById('scenario-text').textContent = s.text;
+
+      // Re-populate multiple choice options
+      for (let i = 0; i < 3; i++) {
+        const btn = document.getElementById(`opt-${i}`);
+        btn.className = "w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-blue-500 focus:border-blue-600 font-semibold text-slate-700 hover:bg-blue-50/50 transition-all duration-150 flex justify-between items-center";
+        btn.querySelector('.option-text').textContent = s.options[i];
+        btn.querySelector('.indicator').textContent = `Select Option ${String.fromCharCode(65 + i)}`;
+        btn.disabled = false;
+      }
+
+      // Hide feedback
+      const feedback = document.getElementById('feedback-area');
+      feedback.classList.add('hidden');
+
+      // Update next/prev buttons
+      document.getElementById('btn-prev-scenario').disabled = currentScenarioIdx === 0;
+      document.getElementById('btn-next-scenario').textContent = currentScenarioIdx === scenarios.length - 1 ? "Finish Test" : "Next Scenario";
+
+      announce(`Loaded Scenario ${currentScenarioIdx + 1}: ${s.text}`);
+    }
+
+    function submitAnswer(idx) {
+      const s = scenarios[currentScenarioIdx];
+      const feedback = document.getElementById('feedback-area');
+      
+      // Lock buttons
+      for (let i = 0; i < 3; i++) {
+        document.getElementById(`opt-${i}`).disabled = true;
+      }
+
+      if (idx === s.correctIndex) {
+        document.getElementById(`opt-${idx}`).className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold transition-all flex justify-between items-center";
+        feedback.className = "p-4 rounded-xl mb-6 bg-emerald-100 text-emerald-900 border-l-4 border-emerald-600 block";
+        document.getElementById('feedback-title').textContent = "Correct Recommendation!";
+        document.getElementById('feedback-text').textContent = s.explanation;
+        announce(`Correct Answer Submitted! ${s.explanation}`);
+      } else {
+        document.getElementById(`opt-${idx}`).className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-semibold transition-all flex justify-between items-center";
+        document.getElementById(`opt-${s.correctIndex}`).className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold transition-all flex justify-between items-center";
+        feedback.className = "p-4 rounded-xl mb-6 bg-rose-100 text-rose-900 border-l-4 border-rose-600 block";
+        document.getElementById('feedback-title').textContent = "Incorrect Choice";
+        document.getElementById('feedback-text').textContent = s.explanation;
+        announce(`Incorrect Option. The correct answer is ${String.fromCharCode(65 + s.correctIndex)}. ${s.explanation}`);
+      }
+    }
+
+    function changeScenario(direction) {
+      currentScenarioIdx += direction;
+      if (currentScenarioIdx >= scenarios.length) {
+        currentScenarioIdx = 0; // wrap-around reset
+        announce("Congratulations! You completed the Security Services & Compliance test scenarios.");
+      }
+      renderScenario();
+    }
+
+
+    /* ==========================================
+       2. VOCABULARY FLASHCARDS DATA & LOGIC
+       ========================================== */
+    const flashcards = [
+      { term: "DDoS", definition: "Distributed Denial of Service — a massive flood of fake traffic from thousands of compromised machines sent all at once to overwhelm a server until it crashes or becomes unavailable to real users." },
+      { term: "WAF", definition: "Web Application Firewall — inspects HTTP requests at Layer 7 (headers, body, query strings) to block malicious code like SQL Injection and Cross-Site Scripting before it reaches your app." },
+      { term: "CVE", definition: "Common Vulnerabilities & Exposures — the public catalog of known software security bugs that services like AWS Inspector scan for inside EC2 instances and container images." },
+      { term: "PII", definition: "Personally Identifiable Information — data like Social Security Numbers or credit card numbers that requires special protection and is what Amazon Macie is built to discover inside S3." },
+      { term: "Compliance", definition: "Meeting industry regulatory standards such as HIPAA, PCI-DSS, and ISO certifications, proven with official documentation delivered through AWS Artifact." },
+      { term: "Amazon GuardDuty", definition: "An intelligent threat detection service that reads VPC Flow Logs, CloudTrail, and DNS logs out-of-band to flag anomalous account and network behavior — no agent required." },
+      { term: "AWS Inspector", definition: "A vulnerability scanner that looks inside EC2 instances and container images for known CVEs and risky network exposure, then hands back a prioritized remediation checklist." },
+      { term: "Amazon Macie", definition: "A machine-learning service that automatically scans S3 buckets to discover sensitive data like PII and alerts you if a bucket holding it becomes publicly accessible." },
+      { term: "AWS Security Hub", definition: "A single pane of glass that aggregates findings from GuardDuty, Inspector, Macie, WAF, Trusted Advisor, and third-party tools into one normalized feed with an overall security score." }
+    ];
+
+    let currentCardIdx = 0;
+    let isFlipped = false;
+
+    function renderFlashcard() {
+      const card = flashcards[currentCardIdx];
+      const container = document.getElementById('flashcard-container');
+      const sideInd = document.getElementById('card-side-indicator');
+      const mainText = document.getElementById('card-main-text');
+
+      if (!isFlipped) {
+        sideInd.textContent = "Concept / Term (Front)";
+        sideInd.className = "text-xs uppercase tracking-widest text-indigo-300 font-bold bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800";
+        mainText.innerHTML = `<h3 class="text-2xl md:text-3xl font-extrabold tracking-wide">${card.term}</h3><p class="text-xs text-indigo-200 mt-2 italic">Select to flip (Enter / Space)</p>`;
+        container.setAttribute('aria-label', `Flashcard ${currentCardIdx + 1} of ${flashcards.length}. Side: Front. The term is: ${card.term}. Press spacebar or click to show definition.`);
+      } else {
+        sideInd.textContent = "Vocational Definition (Back)";
+        sideInd.className = "text-xs uppercase tracking-widest text-emerald-300 font-bold bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800";
+        mainText.innerHTML = `<p class="text-base font-semibold leading-relaxed px-4">${card.definition}</p>`;
+        container.setAttribute('aria-label', `Flashcard ${currentCardIdx + 1} of ${flashcards.length}. Side: Back. The definition is: ${card.definition}. Press spacebar or click to show term.`);
+      }
+    }
+
+    function flipFlashcard() {
+      isFlipped = !isFlipped;
+      renderFlashcard();
+      const currentSide = isFlipped ? "Back: Definition" : "Front: Term";
+      announce(`Flipped to ${currentSide}.`);
+    }
+
+    function navigateFlashcard(direction) {
+      currentCardIdx += direction;
+      if (currentCardIdx >= flashcards.length) currentCardIdx = 0;
+      if (currentCardIdx < 0) currentCardIdx = flashcards.length - 1;
+      isFlipped = false;
+      renderFlashcard();
+      announce(`Showing Card ${currentCardIdx + 1} of ${flashcards.length}: ${flashcards[currentCardIdx].term}`);
+    }
+
+    function handleCardKeydown(event) {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        flipFlashcard();
+      }
+    }
+
+
+    /* ==========================================
+       3. DEFENSE LAYER SORTER DATA & LOGIC
+       ========================================== */
+    const sorterItems = [
+      {
+        text: "An EC2 instance is sending traffic to a known malicious IP address at 4 AM, and no engineer configured this connection.",
+        type: "Detection",
+        explanation: "This falls under Continuous Detection — Amazon GuardDuty continuously watches account behavior and network traffic for anomalies like unexpected outbound connections to malicious IPs."
+      },
+      {
+        text: "A web app is under a SQL injection attack through a public-facing login form, with malicious database commands hidden inside normal-looking HTTP requests.",
+        type: "Perimeter",
+        explanation: "This falls under Perimeter Defense — AWS WAF inspects Layer 7 HTTP content and blocks SQL Injection and XSS patterns before they ever reach the application."
+      },
+      {
+        text: "An auditor needs official AWS SOC 2 and ISO 27001 certification documents to complete a regulatory review by tomorrow.",
+        type: "Compliance",
+        explanation: "This falls under Compliance & Governance — AWS Artifact is the self-service portal for downloading official audit and compliance documentation on demand."
+      },
+      {
+        text: "Your site is getting hit with a massive volumetric UDP flood attack from a botnet trying to knock it offline entirely.",
+        type: "Perimeter",
+        explanation: "This falls under Perimeter Defense — AWS Shield filters Layer 3 & 4 volumetric floods like DDoS and UDP amplification automatically for every AWS customer."
+      }
+    ];
+
+    let currentSortIdx = 0;
+    let solvedCount = 0;
+
+    function renderSorterCard() {
+      const optionsGrid = document.getElementById('sorter-options-grid');
+      const feedbackArea = document.getElementById('sorter-feedback-area');
+      const nextContainer = document.getElementById('sorter-next-container');
+
+      if (currentSortIdx >= sorterItems.length) {
+        const missedCount = sorterItems.length - solvedCount;
+        document.getElementById('sorter-card-text').textContent = `Challenge complete! You classified ${solvedCount} of ${sorterItems.length} correctly (${solvedCount} correct, ${missedCount} incorrect).`;
+        optionsGrid.classList.add('hidden');
+        feedbackArea.classList.add('hidden');
+        nextContainer.classList.add('hidden');
+        document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+        announce(`Challenge complete! You classified ${solvedCount} of ${sorterItems.length} correctly, with ${missedCount} incorrect.`);
+        return;
+      }
+
+      const item = sorterItems[currentSortIdx];
+      document.getElementById('sorter-card-text').textContent = item.text;
+      document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+
+      // Reset UI state for the new item
+      optionsGrid.classList.remove('hidden');
+      ['sort-btn-perimeter', 'sort-btn-detection', 'sort-btn-compliance'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+      });
+      feedbackArea.classList.add('hidden');
+      nextContainer.classList.add('hidden');
+
+      announce(`New sorting scenario: ${item.text}`);
+    }
+
+    function submitSort(userChoice) {
+      if (currentSortIdx >= sorterItems.length) return;
+
+      const item = sorterItems[currentSortIdx];
+      const correctChoice = item.type;
+      const isCorrect = userChoice === correctChoice;
+
+      // Lock the option buttons once an answer has been submitted
+      ['sort-btn-perimeter', 'sort-btn-detection', 'sort-btn-compliance'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'pointer-events-none');
+      });
+
+      if (isCorrect) {
+        solvedCount++;
+      }
+      document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+
+      const feedbackArea = document.getElementById('sorter-feedback-area');
+      const feedbackTitle = document.getElementById('sorter-feedback-title');
+      const feedbackText = document.getElementById('sorter-feedback-text');
+
+      feedbackArea.classList.remove('hidden');
+      if (isCorrect) {
+        feedbackArea.className = "p-4 rounded-xl mt-4 bg-emerald-100 text-emerald-900 border-l-4 border-emerald-600 block";
+        feedbackTitle.textContent = "Correct!";
+        feedbackText.textContent = item.explanation;
+        announce(`Correct! Sorted as ${userChoice}! ${item.explanation}`);
+      } else {
+        feedbackArea.className = "p-4 rounded-xl mt-4 bg-rose-100 text-rose-900 border-l-4 border-rose-600 block";
+        feedbackTitle.textContent = `Incorrect — the correct answer is ${correctChoice}`;
+        feedbackText.textContent = item.explanation;
+        announce(`Incorrect. You selected ${userChoice}, but this belongs in ${correctChoice}. ${item.explanation}`);
+      }
+
+      // Reveal the Next Item control so the learner reads the explanation before moving on
+      document.getElementById('sorter-next-container').classList.remove('hidden');
+    }
+
+    function advanceSorter() {
+      currentSortIdx++;
+      renderSorterCard();
+    }
+
+    function resetSorter() {
+      currentSortIdx = 0;
+      solvedCount = 0;
+      renderSorterCard();
+      announce("Sorter challenge has been reset.");
+    }
+
+
+    // Initialization routines on window loads
+    window.onload = function() {
+      renderScenario();
+    };
+  </script>
+</body>
+</html>
