@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 3 Courseware & Interactive Portal</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Shield/Lock Icon representing identity & access security -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-12V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 3: AWS Identity, Access &amp; Shared Responsibility</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE TEXTBOOK PORTAL CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: MASTER NAVIGATION PATHWAY -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Student Learning Modules">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+
+        <ul class="space-y-1" role="tablist" aria-label="Course Sections">
+          <li>
+            <button onclick="activateTab('overview')" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Lesson Overview
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('lecture')" id="tab-lecture" role="tab" aria-selected="false" aria-controls="panel-lecture" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Lecture Deck Link
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('analogies')" id="tab-analogies" role="tab" aria-selected="false" aria-controls="panel-analogies" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Metaphors &amp; Analogies
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('flashcards')" id="tab-flashcards" role="tab" aria-selected="false" aria-controls="panel-flashcards" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Study Flashcards
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              5. Hands-On Lab Link
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              6. Vocational Case Study
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              7. Study Companion
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              8. Mock Exam Link
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Target Exam Domain</p>
+            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 2 (Security)</p>
+            <div class="w-full bg-indigo-950 rounded-full h-1.5 mt-2">
+              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 50%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- ============================================================ -->
+      <!-- TAB 1: OVERVIEW & PROFILE -->
+      <!-- ============================================================ -->
+      <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Day 3 Lesson Overview: Who's Allowed to Do What?</h2>
+          <p class="text-slate-500 text-sm mt-1">AWS Identity and Access Management (IAM), the Shared Responsibility Model, and the Principle of Least Privilege.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Objective 1 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Categorize Shared Responsibility Obligations</h3>
+              <p class="text-xs text-slate-600 mt-1">Sort security duties into "Security OF the cloud" (AWS's job) versus "Security IN the cloud" (the customer's job).</p>
+            </div>
+          </div>
+          <!-- Objective 2 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Configure IAM Users, Groups &amp; Roles</h3>
+              <p class="text-xs text-slate-600 mt-1">Build custom IAM Users, Groups, and Roles with attached JSON policy documents that define exact permissions.</p>
+            </div>
+          </div>
+          <!-- Objective 3 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Apply the Principle of Least Privilege</h3>
+              <p class="text-xs text-slate-600 mt-1">Restrict administrative permissions so every user, role, or service only holds the access it truly needs.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Vocabulary Preview -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill pill-light">Shared Responsibility</span>
+            <span class="pill pill-light">IAM User</span>
+            <span class="pill pill-light">IAM Group</span>
+            <span class="pill pill-light">IAM Role</span>
+            <span class="pill pill-light">Policy Document (JSON)</span>
+            <span class="pill pill-light">MFA</span>
+            <span class="pill pill-light">Least Privilege</span>
+            <span class="pill pill-light">Principal</span>
+          </div>
+        </div>
+
+        <!-- Zoom Recordings Placeholder Block -->
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl" aria-hidden="true">🎥</span>
+            <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
+          </div>
+          <p class="text-xs text-indigo-900">
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify IAM configuration steps and policy JSON walkthroughs.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lecture video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
+              <span>Day 3: Part 1 &ndash; Shared Responsibility &amp; IAM Fundamentals</span>
+              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
+            </a>
+            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lab briefing video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
+              <span>Day 3: Part 2 &ndash; IAM Lab 1 Briefing (Users, Groups &amp; Roles)</span>
+              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Instructor Guidance & Tips callout -->
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start">
+          <span class="text-xl" aria-hidden="true">💡</span>
+          <div>
+            <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
+            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
+              This session targets adult non-traditional learners. Open with the Shared Responsibility "apartment building" split (landlord vs. tenant) before showing the AWS documentation diagram — it removes the fear that "one mistake breaks all of AWS." When introducing IAM Policy JSON, walk through a single simple policy line-by-line on the board before asking students to write their own. Emphasize that Least Privilege is not paranoia — it is standard professional practice.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 2: LECTURE DECK GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-lecture" role="tabpanel" aria-labelledby="tab-lecture" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lecture Slide Deck Repository</h2>
+          <p class="text-slate-500 text-sm mt-1">Access presentation slides and materials for class review.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🔐</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Day 3 Presentation Lecture Deck</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Unlock the official Shared Responsibility Model, IAM Users/Groups/Roles, Policy JSON, MFA, and Least Privilege slide presentation.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 3 lecture slide deck is live and ready for download or review.</span>
+          </div>
+          <a href="Day-3.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Presentation Slides</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 3: ANALOGIES LIBRARY -->
+      <!-- ============================================================ -->
+      <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Identity &amp; Access Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down Shared Responsibility, IAM, and least-privilege access concepts for learners with no prior IT background.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative max-w-md">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical identity and access terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., IAM Role, MFA, Least Privilege...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
+          <!-- Metaphor Card 1: Apartment Building -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="shared responsibility iam user iam group iam role policy document json mfa least privilege principal apartment building landlord tenant">
+            <div class="bg-indigo-900 text-white p-4">
+              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
+              <h3 class="font-extrabold text-base">The Apartment Building</h3>
+            </div>
+            <div class="p-5 flex-grow space-y-4">
+              <p class="text-xs text-slate-600 leading-relaxed">
+                A large apartment complex has a landlord who maintains the building's structure, wiring, plumbing, and front-gate security system. Each tenant is responsible for locking their own apartment door, deciding who gets a copy of their key, and reporting any suspicious activity inside their own unit. Neither party can do the other's job for them.
+              </p>
+              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
+                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
+                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
+                  <li class="pt-1.5"><strong class="text-indigo-700">Shared Responsibility:</strong> The landlord (AWS) secures the building's foundation and shared systems; the tenant (customer) secures everything inside their own apartment.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">IAM User:</strong> One named tenant with their own personal key to their own apartment.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Group:</strong> All tenants on the same floor sharing the same floor-access privileges, rather than each having a uniquely negotiated deal.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Role:</strong> A temporary valet key handed to a repair technician for the afternoon, which stops working once the job is done.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Policy Document (JSON):</strong> The written lease agreement that spells out exactly which doors, hallways, and amenities a tenant's key is allowed to open.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">MFA:</strong> Requiring both a key card swipe and a PIN code before the lobby door will unlock.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Least Privilege:</strong> Giving the cleaning crew a key that only opens hallway closets, not a master key to every unit in the building.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Principal:</strong> Whoever is actually holding the key and requesting entry &mdash; a tenant, a guest, or a maintenance worker.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metaphor Card 2: Corporate Office Badge System -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="shared responsibility iam user iam group iam role policy document json mfa least privilege principal office badge security">
+            <div class="bg-indigo-900 text-white p-4">
+              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
+              <h3 class="font-extrabold text-base">The Corporate Badge Access System</h3>
+            </div>
+            <div class="p-5 flex-grow space-y-4">
+              <p class="text-xs text-slate-600 leading-relaxed">
+                A large office tower has a private security company that guards the building's main entrances, elevators, and fire systems. Once inside, it is every department's own job to decide which employee badges can open which internal doors, and to lock up their own file cabinets and server closets at night.
+              </p>
+              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
+                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
+                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
+                  <li class="pt-1.5"><strong class="text-indigo-700">Shared Responsibility:</strong> The building's security company (AWS) protects the shared perimeter and infrastructure; each department (the customer) is responsible for locking its own internal doors and cabinets.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">IAM User:</strong> One employee's personal photo ID badge, issued to them specifically.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Group:</strong> The "Accounting Department" badge tier, where every accountant automatically gets the same set of door permissions.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Role:</strong> A one-day visitor pass issued to an outside contractor, which expires automatically at the end of their visit.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Policy Document (JSON):</strong> The access-control list on file with security stating precisely which doors a given badge is permitted to open.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">MFA:</strong> Requiring a badge swipe plus a fingerprint scan before the server room door will open.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Least Privilege:</strong> Giving a summer intern a badge that opens the break room and their own desk area, but not the executive floor or the server room.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Principal:</strong> Whoever is presenting the badge and requesting access &mdash; an employee, a contractor, or even an automated delivery robot with its own access credential.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p id="analogy-empty-state" class="text-center text-sm text-slate-400 py-8 hidden">No analogies match that search term. Try a different keyword.</p>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 4: STUDY FLASHCARDS -->
+      <!-- ============================================================ -->
+      <section id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Terminology Study Flashcards</h2>
+          <p class="text-slate-500 text-sm mt-1">Click or press Space/Enter on the card to flip between the term and its full definition.</p>
+        </div>
+
+        <div class="flex flex-col items-center gap-4">
+          <p id="card-index-count" class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true"></p>
+
+          <!-- Single normal-flow card: content is swapped on flip rather than
+               relying on absolutely-positioned overlay faces, so the card always
+               has a real, visible height regardless of parent sizing context. -->
+          <div
+            id="active-card-flipper"
+            role="button"
+            tabindex="0"
+            onclick="flipCard()"
+            aria-label="Vocabulary Flashcard"
+            class="w-full max-w-lg min-h-[280px] rounded-3xl shadow-xl p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-150"
+            style="background: linear-gradient(to bottom right, #0f172a, #1e1b4b); color: #fff; border: 1px solid #1e293b;"
+          >
+            <span id="card-side-badge" class="pill pill-dark w-fit">Front &middot; Term</span>
+
+            <div id="card-face-content" class="flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim">
+              <h3 id="flash-card-term" class="text-3xl font-black"></h3>
+              <p id="card-flip-hint" class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
+            </div>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="flex items-center gap-4 mt-2">
+            <button type="button" onclick="prevCard()" class="btn-icon-circle" aria-label="Previous flashcard">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button type="button" onclick="flipCard()" class="btn btn-primary">Flip Card</button>
+            <button type="button" onclick="nextCard()" class="btn-icon-circle" aria-label="Next flashcard">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">AWS Academy IAM Lab Gateway</h2>
+          <p class="text-slate-500 text-sm mt-1">Explore IAM Users, Groups, and Roles hands-on inside your AWS Academy Learner Lab sandbox.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Day 3 Hands-On Lab: AWS Academy Cloud Foundations Lab 1 &ndash; Introduction to AWS IAM</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Launch your AWS Academy Sandbox, click Start Lab, and wait for the green status circle before beginning. You'll build custom IAM Users, Groups, and Roles, attach JSON policy documents, and validate access using the Principle of Least Privilege.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">The Day 3 IAM hands-on lab guide is live, covering Users, Groups, Roles, and policy JSON.</span>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="Day3Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+              <span>Launch Day 3 Hands-On Lab Guide</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+            <a href="Day3Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
+              <span>Download Day 3 Lab Guide (PDF)</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 6: VOCATIONAL CASE STUDY -->
+      <!-- ============================================================ -->
+      <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: The Leaked Admin Keys</h2>
+          <p class="text-slate-500 text-sm mt-1">An incident analysis of a developer who accidentally published admin API access keys on a public GitHub repository.</p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+          <h3 class="font-extrabold text-slate-900 text-lg">The Weekend Cryptomining Bill</h3>
+          <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
+            <p>
+              Marcus, a junior developer at a small logistics startup, was rushing to finish a personal side project on a Friday night. To save time, he hardcoded his company AWS account's long-term admin access key and secret key directly into a Python script, then pushed the whole project &mdash; including that script &mdash; to a brand-new public GitHub repository so he could show it to a friend. He meant to make the repository private later that weekend, but forgot.
+            </p>
+            <p>
+              Automated bots constantly scan public GitHub repositories for exposed credential patterns, and within roughly twenty minutes of the push, Marcus's admin access key had already been scraped and tested by an attacker. Because the leaked key belonged to a long-lived IAM User with full administrator permissions rather than a narrowly scoped Role, the attacker was able to spin up dozens of large EC2 instances across multiple Regions to mine cryptocurrency. By the time the company's finance team noticed an alarming spike in their AWS bill on Monday morning, the unauthorized charges had already climbed into the thousands of dollars.
+            </p>
+            <p>
+              The company's cloud administrator, Priya, immediately deactivated the leaked access key, deleted the rogue EC2 instances, and enabled AWS Budgets alerts and MFA enforcement on every IAM User going forward. In the post-incident review, the team concluded that the real root cause was not the GitHub mistake alone, but a deeper policy gap: developers had been issued permanent admin-level access keys instead of temporary, least-privilege IAM Roles scoped to only what each project actually required.
+            </p>
+          </div>
+        </div>
+
+        <!-- Interactive Case Analysis & Dropdown selector -->
+        <div class="border border-slate-200 rounded-2xl p-5 space-y-4">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wider">Interactive Analysis Checkpoint</h4>
+
+          <div class="space-y-4 text-xs">
+            <div class="space-y-1.5">
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. What was the single biggest structural mistake that turned a simple GitHub slip-up into a costly incident?</label>
+              <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">Marcus was issued a long-term admin access key instead of a scoped, temporary IAM Role</option>
+                <option value="B">GitHub itself does not support private repositories</option>
+                <option value="C">The company's AWS bill was simply too low to notice a spike</option>
+              </select>
+              <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
+            </div>
+
+            <div class="space-y-1.5 border-t pt-3">
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. Which control would have limited the damage fastest, even if the key had still leaked?</label>
+              <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">Applying the Principle of Least Privilege so the key could only touch a narrow set of resources</option>
+                <option value="B">Choosing a longer, more complex admin password</option>
+                <option value="C">Renaming the S3 buckets to something harder to guess</option>
+              </select>
+              <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
+            </div>
+
+            <div class="space-y-1.5 border-t pt-3">
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. Under the AWS Shared Responsibility Model, whose obligation was it to prevent this specific incident?</label>
+              <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">AWS's obligation, since it is responsible for all security of any kind</option>
+                <option value="B">The customer's obligation, since managing IAM credentials falls under Security IN the cloud</option>
+                <option value="C">GitHub's obligation, since the leak happened on their platform</option>
+              </select>
+              <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instructor Grading Criteria checklist dropdown -->
+        <div class="bg-indigo-50 border border-indigo-150 p-4 rounded-xl text-xs">
+          <button type="button" onclick="toggleGradingRubric()" class="flex justify-between items-center w-full font-bold text-indigo-900 focus:outline-none" aria-expanded="false" aria-controls="case-grading-rubric">
+            <span>📋 Click to Reveal Instructor Grading Rubric &amp; Answer Key</span>
+            <span id="rubric-arrow">&darr;</span>
+          </button>
+
+          <div id="case-grading-rubric" class="hidden mt-3 space-y-3 leading-relaxed text-indigo-950">
+            <p><strong>Correct answers:</strong> 1-A, 2-A, 3-B.</p>
+            <p><strong>Evaluation Criteria for Grading Essay/Oral Answers:</strong></p>
+            <ul class="list-disc pl-4 space-y-1">
+              <li><strong>Excellent (5 pts):</strong> Correctly identifies the long-term admin key (not the GitHub mistake alone) as the root structural flaw, explains how Least Privilege and short-lived Roles limit blast radius, and correctly places credential management under the customer's Security IN the cloud responsibility.</li>
+              <li><strong>Developing (3 pts):</strong> Identifies that leaking a key is bad, but is fuzzy on why an admin-level long-term key is worse than a scoped Role, or is unsure who is responsible for the mistake under the Shared Responsibility Model.</li>
+              <li><strong>Unsatisfactory (0-1 pts):</strong> Blames GitHub or AWS entirely and cannot explain any preventative IAM control.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 7: LESSON 3 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lesson 3 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 3 IAM, Shared Responsibility, and Least Privilege material.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 3: Identity, Access &amp; Shared Responsibility</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Review key terms, policy-scenario practice, IAM component sorting, and self-check exercises tailored to reinforce Day 3 material.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Study companion is live and ready for review.</span>
+          </div>
+          <a href="Lesson_3_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Study Companion</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 8: MOCK EXAM PORTAL GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">AWS Practice Certification Hub</h2>
+          <p class="text-slate-500 text-sm mt-1">Review core exam patterns and practice testing domains online.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📝</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Test your proficiency in the Shared Responsibility Model, IAM Users/Groups/Roles, Policy JSON, MFA, and Least Privilege.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 3 mock quiz is live and ready to take.</span>
+          </div>
+          <a href="Day3_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Certification Exam Simulator</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+
+      <!-- PORTAL SHARED WORKSPACE FOOTER -->
+      <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
+        <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+        <p class="flex items-center gap-1.5 font-bold text-slate-500">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          WCAG 2.1 AA Compliant Active Textbook
+        </p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- JAVASCRIPT CONTROL MECHANISMS -->
+  <script>
+    /* ==========================================================
+       TAB CONTROLLER
+       ========================================================== */
+    function activateTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched course text viewer to: " + sectionName;
+    }
+
+    /* ==========================================================
+       ANALOGIES SEARCH FILTER
+       ========================================================== */
+    function filterAnalogies() {
+      const val = document.getElementById('analogy-search').value.toLowerCase();
+      const cards = document.querySelectorAll('#analogies-grid > div');
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const terms = card.getAttribute('data-terms').toLowerCase();
+        if (terms.includes(val)) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      document.getElementById('analogy-empty-state').classList.toggle('hidden', visibleCount !== 0);
+    }
+
+    /* ==========================================================
+       TERMINOLOGY FLASHCARDS DATABASE
+       ========================================================== */
+    const cardData = [
+      {
+        term: "Shared Responsibility",
+        definition: "The security model dividing duties between AWS, which secures the underlying cloud infrastructure ('Security OF the cloud'), and the customer, who secures what they build and configure on top of it ('Security IN the cloud').",
+        analogy: "A landlord maintains the building's structure and locks on the front gate; each tenant locks their own apartment door.",
+        scenario: "A cloud administrator explains to leadership that AWS patches the physical server hardware, but the company itself is responsible for configuring IAM permissions correctly.",
+        quiz: "Is AWS responsible for configuring a customer's IAM policies correctly?",
+        answer: "No. Configuring IAM users, groups, roles, and policies falls under the customer's 'Security IN the cloud' responsibility, not AWS's."
+      },
+      {
+        term: "IAM User",
+        definition: "An identity created within an AWS account that represents a single person or application, with its own long-term credentials used to sign in or make API calls.",
+        analogy: "One named tenant's personal key to their own apartment.",
+        scenario: "An administrator creates an individual IAM User for each new employee rather than sharing one login among the whole team.",
+        quiz: "Should multiple employees share a single IAM User login?",
+        answer: "No. Each person should have their own IAM User so that actions can be individually tracked and access can be revoked without affecting others."
+      },
+      {
+        term: "IAM Group",
+        definition: "A collection of IAM Users that share the same set of permissions, allowing administrators to manage access for many people at once instead of one at a time.",
+        analogy: "All tenants on the same floor automatically sharing the same floor-access privileges.",
+        scenario: "An administrator places all members of the finance team into a 'Finance-ReadOnly' Group instead of attaching the same policy to each person individually.",
+        quiz: "What is the main benefit of assigning permissions through a Group instead of per-user?",
+        answer: "It lets an administrator manage permissions for many users at once, reducing repetitive work and configuration mistakes."
+      },
+      {
+        term: "IAM Role",
+        definition: "A temporary identity with its own permissions that can be assumed by a user, application, or AWS service as needed, rather than being permanently tied to one person.",
+        analogy: "A one-day visitor pass issued to an outside contractor, which expires automatically at the end of their visit.",
+        scenario: "A Lambda function assumes an IAM Role that grants it temporary permission to write to a specific S3 bucket, rather than being issued permanent access keys.",
+        quiz: "Why are IAM Roles generally safer than long-term access keys for applications?",
+        answer: "Roles issue temporary credentials that automatically expire, so if they are exposed, the exposure window and blast radius are much smaller than a permanent key."
+      },
+      {
+        term: "Policy Document (JSON)",
+        definition: "A JSON-formatted document attached to an IAM User, Group, or Role that explicitly states which actions are allowed or denied on which AWS resources.",
+        analogy: "The written lease agreement that spells out exactly which doors, hallways, and amenities a tenant's key is allowed to open.",
+        scenario: "A technician writes a Policy Document that allows an IAM Role to read from one specific S3 bucket, but explicitly denies delete permissions.",
+        quiz: "Can a Policy Document both allow and explicitly deny actions?",
+        answer: "Yes. Policies can include both 'Allow' and 'Deny' statements, and an explicit Deny always overrides any Allow."
+      },
+      {
+        term: "MFA",
+        definition: "Multi-Factor Authentication: a security process requiring two or more independent proofs of identity, such as a password plus a one-time code from a mobile device, before granting access.",
+        analogy: "Requiring both a key card swipe and a PIN code before the lobby door will unlock.",
+        scenario: "An administrator enforces an MFA policy requiring every IAM User with console access to register an authenticator app before they can sign in.",
+        quiz: "Does a strong password alone satisfy Multi-Factor Authentication?",
+        answer: "No. MFA requires at least two independent factors, so a password by itself, no matter how strong, is only one factor."
+      },
+      {
+        term: "Least Privilege",
+        definition: "A security principle stating that every user, role, or service should be granted only the minimum permissions necessary to perform its required tasks, and nothing more.",
+        analogy: "Giving the cleaning crew a key that only opens hallway closets, not a master key to every unit in the building.",
+        scenario: "A technician scopes a developer's IAM policy down from full administrator access to only the specific services that project actually requires.",
+        quiz: "Why is issuing broad admin access 'just to be safe' actually a Least Privilege violation?",
+        answer: "Because it grants far more permissions than are needed for the task, increasing the damage possible if that identity's credentials are ever compromised."
+      },
+      {
+        term: "Principal",
+        definition: "The entity making a request to AWS for access to a resource, which can be a person, an IAM User, an IAM Role, or another AWS service.",
+        analogy: "Whoever is presenting the badge and requesting access, whether that's an employee, a contractor, or an automated system.",
+        scenario: "In a policy document, the Principal element specifies exactly which IAM User or Role is being granted or denied permission to a given resource.",
+        quiz: "Can an AWS service itself act as a Principal, not just a human user?",
+        answer: "Yes. Services like AWS Lambda can assume Roles and act as a Principal when making requests to other AWS resources."
+      }
+    ];
+
+    let currentCardIndex = 0;
+    let cardIsFlipped = false;
+
+    function renderFlashcardUI() {
+      const card = cardData[currentCardIndex];
+      const flipper = document.getElementById('active-card-flipper');
+      const badge = document.getElementById('card-side-badge');
+      const content = document.getElementById('card-face-content');
+
+      document.getElementById('card-index-count').textContent = `Card ${currentCardIndex + 1} of ${cardData.length}`;
+
+      if (cardIsFlipped) {
+        badge.className = "pill pill-light w-fit mb-2";
+        badge.textContent = "Back \u00B7 Details";
+        content.className = "flex-grow text-left w-full flip-face-anim";
+        content.innerHTML = `
+          <table class="w-full text-xs">
+            <caption class="sr-only">Full vocabulary detail for ${card.term}</caption>
+            <tbody>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Term</th>
+                <td class="py-1 font-bold text-white">${card.term}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Definition</th>
+                <td class="py-1 text-indigo-50">${card.definition}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Analogy</th>
+                <td class="py-1 italic text-indigo-100">${card.analogy}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Workplace Use</th>
+                <td class="py-1 text-indigo-50">${card.scenario}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="flash-card-quiz" class="text-xs bg-amber-50 text-slate-800 border border-amber-200 rounded-lg p-2 mt-3">
+            <span class="font-extrabold text-slate-700">Quiz Checkpoint:</span> <span class="block text-slate-600 italic">${card.quiz}</span>
+          </div>
+          <button type="button" onclick="revealCardQuizAnswer(event)" class="btn btn-secondary text-[11px] mt-2">Reveal Quiz Answer</button>
+        `;
+        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Back side showing definition for: ${card.term}. Definition: ${card.definition}. Click or press space to flip back.`);
+      } else {
+        badge.className = "pill pill-dark w-fit";
+        badge.textContent = "Front \u00B7 Term";
+        content.className = "flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim";
+        content.innerHTML = `
+          <h3 class="text-3xl font-black">${card.term}</h3>
+          <p class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
+        `;
+        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Front side. Term: ${card.term}. Click or press space to flip and see details.`);
+      }
+    }
+
+    function flipCard() {
+      cardIsFlipped = !cardIsFlipped;
+      renderFlashcardUI();
+    }
+
+    function prevCard() {
+      currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : cardData.length - 1;
+      cardIsFlipped = false;
+      renderFlashcardUI();
+    }
+
+    function nextCard() {
+      currentCardIndex = (currentCardIndex < cardData.length - 1) ? currentCardIndex + 1 : 0;
+      cardIsFlipped = false;
+      renderFlashcardUI();
+    }
+
+    function revealCardQuizAnswer(e) {
+      e.stopPropagation();
+      const card = cardData[currentCardIndex];
+      document.getElementById('sr-alert-announcer').textContent = "Quiz answer revealed: " + card.answer;
+      const blockText = document.getElementById('flash-card-quiz');
+      if (blockText) {
+        blockText.innerHTML = `<span class="text-indigo-800 font-bold block">Correct Answer:</span> ${card.answer}`;
+      }
+    }
+
+    document.getElementById('active-card-flipper').addEventListener('keydown', function(event) {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        flipCard();
+      }
+    });
+
+    renderFlashcardUI();
+
+    /* ==========================================================
+       CASE STUDY LOGIC
+       ========================================================== */
+    function evaluateCaseChoice(qNum) {
+      const drop = document.getElementById(`case-dropdown-${qNum}`);
+      const feedback = document.getElementById(`case-feedback-${qNum}`);
+      feedback.classList.remove('hidden');
+
+      if (qNum === 1) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! The deeper structural flaw was issuing a permanent, admin-level access key instead of a scoped, temporary IAM Role — the GitHub leak was just the trigger.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Reread the third paragraph and focus on what the post-incident review identified as the real root cause.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      } else if (qNum === 2) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! Least Privilege limits the 'blast radius' of any single leaked credential, so even a leaked key could only touch a narrow set of resources.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Consider which control specifically limits what a compromised credential can actually do, rather than preventing the leak itself.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      } else if (qNum === 3) {
+        if (drop.value === 'B') {
+          feedback.textContent = "Correct! Managing IAM credentials, keys, and permissions is squarely 'Security IN the cloud' — a customer responsibility, not AWS's.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Revisit the Shared Responsibility Model split between Security OF the cloud and Security IN the cloud.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      }
+    }
+
+    function toggleGradingRubric() {
+      const rubric = document.getElementById('case-grading-rubric');
+      const arrow = document.getElementById('rubric-arrow');
+      const btn = rubric.previousElementSibling;
+      if (rubric.classList.contains('hidden')) {
+        rubric.classList.remove('hidden');
+        arrow.innerHTML = "&uarr;";
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        rubric.classList.add('hidden');
+        arrow.innerHTML = "&darr;";
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  </script>
+</body>
+</html>

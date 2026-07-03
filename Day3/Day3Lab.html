@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 3 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 3: Introduction to AWS IAM</h1>
+        </div>
+      </div>
+
+      <a href="Day3Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 3 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">40 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li>
+            <button onclick="activateTab('explore')" id="tab-explore" role="tab" aria-selected="true" aria-controls="panel-explore" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Explore Users &amp; Policies
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('assign')" id="tab-assign" role="tab" aria-selected="false" aria-controls="panel-assign" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Assign Groups &amp; Test Access
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('wrapup')" id="tab-wrapup" role="tab" aria-selected="false" aria-controls="panel-wrapup" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Submit &amp; Review
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: EXPLORE USERS, GROUPS & POLICIES -->
+      <section id="panel-explore" role="tabpanel" aria-labelledby="tab-explore" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">1. Exploring IAM Users, Groups &amp; Policies</h2>
+          <p class="text-slate-500 text-sm mt-1">Audit the pre-built Identity and Access Management setup before making any changes.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            AWS Identity and Access Management (<strong>IAM</strong>) lets you centrally manage users, security credentials, and the permissions that control which AWS resources those users can access. Today you will inspect pre-created IAM users and groups, read the JSON policies attached to each group, then work through a business scenario that assigns users to the correct group and verifies their access is exactly as intended.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Service Restrictions</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            This sandbox restricts access to only the AWS services and actions needed for this lab. If you try to explore something outside these instructions, expect an <strong>Access Denied</strong>–style error. "Not authorized" messages that appear while assigning users to groups are expected and will not affect your grade.
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Accessing the AWS Console &amp; Opening IAM</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Choose <strong>Start Lab</strong> at the top of your lab portal. A countdown timer appears showing your remaining session time — click <strong>Start Lab</strong> again anytime before it hits 0:00 to extend your session.</li>
+            <li>Wait until the status circle to the right of the <strong>AWS</strong> link in the upper-left corner turns solid green, confirming your sandbox is ready.</li>
+            <li>Click the <strong>AWS</strong> link to open the AWS Management Console in a new browser tab. Arrange it alongside these instructions so you can follow along without constantly switching windows.</li>
+            <li>In the search box next to <strong>Services</strong>, type <span class="font-mono text-indigo-700">IAM</span> and select it to open the Identity and Access Management dashboard.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Reviewing the Pre-Created Users</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>In the left navigation pane, choose <strong>Users</strong>. Three accounts have already been created for you: <span class="font-mono text-indigo-700">user-1</span>, <span class="font-mono text-indigo-700">user-2</span>, and <span class="font-mono text-indigo-700">user-3</span>.</li>
+            <li>Choose the <strong>user-1</strong> link to open its summary page. On the <strong>Permissions</strong> tab, notice this user has no permissions attached yet.</li>
+            <li>Choose the <strong>Groups</strong> tab — user-1 is not a member of any group.</li>
+            <li>Choose the <strong>Security credentials</strong> tab. Note that user-1 already has a <strong>Console password</strong> configured, so it can sign in once it gains permissions.</li>
+          </ol>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Inspecting the Group Policies</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>In the left pane, choose <strong>User groups</strong>. Three groups already exist: <strong>EC2-Admin</strong>, <strong>EC2-Support</strong>, and <strong>S3-Support</strong>. Open each one's <strong>Permissions</strong> tab and expand its policy with the <strong>+</strong> icon to see what it allows.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="card">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">EC2-Support</h5>
+                <p class="text-slate-600">Attached to the AWS Managed Policy <span class="font-mono text-indigo-700">AmazonEC2ReadOnlyAccess</span>. Grants permission to list and describe EC2, Elastic Load Balancing, CloudWatch, and Auto Scaling resources — view only, no changes.</p>
+              </div>
+              <div class="card">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">S3-Support</h5>
+                <p class="text-slate-600">Attached to the AWS Managed Policy <span class="font-mono text-indigo-700">AmazonS3ReadOnlyAccess</span>. Grants Get and List actions on S3 buckets and objects — a textbook example of least privilege.</p>
+              </div>
+              <div class="card">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">EC2-Admin</h5>
+                <p class="text-slate-600">Uses an <strong>Inline Policy</strong> (bound to this one group only, not reusable) that grants Describe access plus the ability to Start and Stop EC2 instances.</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>{
+  "Effect": "Allow",
+  "Action": [
+    "ec2:Describe*",
+    "ec2:StartInstances",
+    "ec2:StopInstances"
+  ],
+  "Resource": "*"
+}</pre>
+            </div>
+            <p class="text-slate-500 italic">Every IAM policy statement follows the same structure: <strong>Effect</strong> (Allow or Deny), <strong>Action</strong> (which API calls are covered), and <strong>Resource</strong> (which AWS resources the rule applies to, with <span class="font-mono">*</span> meaning "any resource").</p>
+          </div>
+        </div>
+
+        <!-- Business Scenario -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Business Scenario</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Your company is growing its use of AWS and needs to grant new staff access based on their job function. For the rest of this lab, you'll enable exactly this access:</p>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">User</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Target Group</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Resulting Permissions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-mono">user-1</td>
+                  <td class="p-3 align-top text-slate-600">S3-Support</td>
+                  <td class="p-3 align-top text-slate-600">Read-only access to Amazon S3</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-mono">user-2</td>
+                  <td class="p-3 align-top text-slate-600">EC2-Support</td>
+                  <td class="p-3 align-top text-slate-600">Read-only access to Amazon EC2</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700 font-mono">user-3</td>
+                  <td class="p-3 align-top text-slate-600">EC2-Admin</td>
+                  <td class="p-3 align-top text-slate-600">View, start, and stop Amazon EC2 instances</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ASSIGN GROUPS & TEST ACCESS -->
+      <section id="panel-assign" role="tabpanel" aria-labelledby="tab-assign" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">2. Assigning Users to Groups &amp; Validating Access</h2>
+          <p class="text-slate-500 text-sm mt-1">Put each user into their group, then sign in as each one to confirm the permission boundaries actually hold.</p>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Add Each User to Their Group</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>In the left pane, choose <strong>User groups</strong> and open <strong>S3-Support</strong>. Choose the <strong>Users</strong> tab, then click <strong>Add users</strong>. Select <span class="font-mono text-indigo-700">user-1</span> and click <strong>Add users</strong> again to confirm.</li>
+              <li>Return to <strong>User groups</strong> and repeat the same steps to add <span class="font-mono text-indigo-700">user-2</span> to <strong>EC2-Support</strong>.</li>
+              <li>Return to <strong>User groups</strong> once more and add <span class="font-mono text-indigo-700">user-3</span> to <strong>EC2-Admin</strong>.</li>
+              <li>Back on the main <strong>User groups</strong> view, confirm each group now shows a count of <strong>1</strong> in its Users column. If any group doesn't show 1, revisit the steps above for that user.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Retrieve the IAM Sign-In URL</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>In the left pane, choose <strong>Dashboard</strong>. On the right, locate the <strong>Sign-in URL for IAM users in this account</strong> link — it looks similar to <span class="font-mono text-indigo-700">https://123456789012.signin.aws.amazon.com/console</span>.</li>
+            <li>Copy this URL into a text editor; you'll reuse it to sign in as all three test users.</li>
+            <li>Open a private/incognito browser window (<span class="font-mono">Ctrl+Shift+N</span> in Chrome/Edge, or the equivalent "New Private Window" option in Firefox) so cached credentials from one user don't leak into the next login.</li>
+          </ol>
+        </div>
+
+        <!-- Task 6 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 6: Sign In as Each User &amp; Verify Boundaries</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>Paste the sign-in URL into your private window each time, sign out between users (click the username at the top-right, then <strong>Sign Out</strong>), and run the checks below.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">user-1 · Password: Lab-Password1</h5>
+                <p class="text-emerald-700 font-semibold">S3 — Allowed</p>
+                <p class="text-slate-600 mb-2">Open the S3 console and browse the existing bucket's contents successfully (it will be empty).</p>
+                <p class="text-rose-700 font-semibold">EC2 — Blocked</p>
+                <p class="text-slate-600">Opening Instances under EC2 returns "You are not authorized to perform this operation."</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">user-2 · Password: Lab-Password2</h5>
+                <p class="text-emerald-700 font-semibold">EC2 View — Allowed</p>
+                <p class="text-slate-600 mb-2">The <span class="font-mono text-indigo-700">LabHost</span> instance is visible (check the region is N. Virginia if it isn't).</p>
+                <p class="text-rose-700 font-semibold">Stop Instance &amp; S3 — Blocked</p>
+                <p class="text-slate-600">Attempting Instance state → Stop instance fails with "not authorized"; opening S3 shows "You don't have permissions to list buckets."</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">user-3 · Password: Lab-Password3</h5>
+                <p class="text-emerald-700 font-semibold">EC2 Admin — Allowed</p>
+                <p class="text-slate-600">Select <span class="font-mono text-indigo-700">LabHost</span>, choose Instance state → Stop instance, then confirm Stop. The instance enters the <em>stopping</em> state, proving the EC2-Admin inline policy is active.</p>
+              </div>
+            </div>
+            <p class="text-slate-500 italic">Close the private browser window once user-3's test is complete.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: SUBMIT & REVIEW -->
+      <section id="panel-wrapup" role="tabpanel" aria-labelledby="tab-wrapup" class="tab-content hidden space-y-8">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">3. Submitting Your Work &amp; Reviewing Key Concepts</h2>
+          <p class="text-slate-500 text-sm mt-1">Record your grade, close out the sandbox, and troubleshoot anything that didn't go as expected.</p>
+        </div>
+
+        <!-- Submitting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Submitting Your Work</h3>
+          <ol class="space-y-3 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>Return to your original lab instructions tab and choose <strong>Submit</strong> at the top to record your progress. When prompted, choose <strong>Yes</strong>.</li>
+            <li>After a couple of minutes, a grades panel appears showing points earned per task. If it doesn't, choose <strong>Grades</strong> at the top of the page.</li>
+            <li>You can submit multiple times — only your last submission counts. If a check doesn't award credit right away, wait a few minutes (some checks require 5 minutes to pass since the action) and submit again.</li>
+            <li>For details on any missed points, choose <strong>Submission Report</strong>.</li>
+            <li>When finished, choose <strong>End Lab</strong> at the top of the page and confirm with <strong>Yes</strong> to terminate your sandbox. Don't close your browser tab before doing this, or your session time keeps running.</li>
+          </ol>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Common Lab Troubleshooting Guidance</h3>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Observed Symptom</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Root Cause</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Fix</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700">"Failed to stop instance: Not authorized"</td>
+                  <td class="p-3 align-top text-slate-600">Logged in as user-1 or user-2 — neither has Stop permissions.</td>
+                  <td class="p-3 align-top text-slate-600">Expected behavior. Sign out and sign in as user-3 to stop the instance.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">"You don't have permissions to list buckets"</td>
+                  <td class="p-3 align-top text-slate-600">Logged in as user-2 or user-3 — S3 is outside their policy scope.</td>
+                  <td class="p-3 align-top text-slate-600">Expected behavior. Use user-1 to access S3.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Blank instance grid / LabHost not visible</td>
+                  <td class="p-3 align-top text-slate-600">The console region has defaulted away from the lab's deployment zone.</td>
+                  <td class="p-3 align-top text-slate-600">Open the region dropdown (top-right) and switch to N. Virginia.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Sign-in URL loads blank or errors</td>
+                  <td class="p-3 align-top text-slate-600">A browser extension or proxy is blocking the IAM redirect path.</td>
+                  <td class="p-3 align-top text-slate-600">Clear cache, use a fresh incognito window, or try a different browser.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Lab Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Permissions Flow Through Groups</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Users inherit permissions by joining a group — they aren't granted permissions directly. Groups are how enterprise access control scales.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Managed vs. Inline Policies</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Managed policies are reusable and centrally maintained; inline policies are custom and bound to a single user or group for one-off needs.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Principle of Least Privilege</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Each user could only do what their policy explicitly allowed — every attempt to exceed that was blocked immediately, exactly as designed.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Test in Isolation</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Signing in as each user from a private/incognito window keeps credentials from bleeding between sessions — a real-world habit for validating IAM policy behavior.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 3 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html / Day2Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>
