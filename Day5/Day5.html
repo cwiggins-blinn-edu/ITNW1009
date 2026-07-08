@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITNW 1009: Day 3 Courseware & Interactive Portal</title>
+  <title>ITNW 1009: Day 5 Courseware & Interactive Portal</title>
   <!-- Tailwind CSS CDN (layout/spacing utilities) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
-  <link rel="stylesheet" href="../itnw1009-theme.css">
+  <link rel="stylesheet" href="itnw1009-theme.css">
 </head>
 <body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
@@ -24,23 +24,16 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
-          <!-- Inline Shield/Lock Icon representing identity & access security -->
+          <!-- Inline Server Stack / Scaling Icon -->
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-12V7a4 4 0 00-8 0v4h8z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-14 4h.01M19 16h.01"></path>
           </svg>
         </div>
         <div>
           <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 3: AWS Identity, Access &amp; Shared Responsibility</h1>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 5: Compute, Storage &amp; Elastic Scaling</h1>
         </div>
       </div>
-
-      <a href="../index.html" class="inline-flex items-center gap-2 bg-indigo-900 hover:bg-indigo-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl border border-indigo-800 shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-indigo-950">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Back to Course
-      </a>
     </div>
   </header>
 
@@ -105,9 +98,9 @@
         <div class="pt-4 border-t border-slate-100">
           <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
             <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Target Exam Domain</p>
-            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 2 (Security)</p>
+            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 3 (Cloud Technology &amp; Services)</p>
             <div class="w-full bg-indigo-950 rounded-full h-1.5 mt-2">
-              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 50%"></div>
+              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 80%"></div>
             </div>
           </div>
         </div>
@@ -124,8 +117,8 @@
       <!-- ============================================================ -->
       <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Day 3 Lesson Overview: Who's Allowed to Do What?</h2>
-          <p class="text-slate-500 text-sm mt-1">AWS Identity and Access Management (IAM), the Shared Responsibility Model, and the Principle of Least Privilege.</p>
+          <h2 class="text-2xl font-black text-slate-900">Day 5 Lesson Overview: Building Servers That Bend, Not Break</h2>
+          <p class="text-slate-500 text-sm mt-1">Amazon EC2 pricing models, EBS storage, AMIs, Auto Scaling Groups, and Elastic Load Balancing.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -133,24 +126,24 @@
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Categorize Shared Responsibility Obligations</h3>
-              <p class="text-xs text-slate-600 mt-1">Sort security duties into "Security OF the cloud" (AWS's job) versus "Security IN the cloud" (the customer's job).</p>
+              <h3 class="font-bold text-slate-900 text-sm">Select the Right EC2 Pricing Plan</h3>
+              <p class="text-xs text-slate-600 mt-1">Select the most cost-efficient EC2 pricing plan (On-Demand, Spot, Reserved, or Savings Plans) based on runtime requirements.</p>
             </div>
           </div>
           <!-- Objective 2 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Configure IAM Users, Groups &amp; Roles</h3>
-              <p class="text-xs text-slate-600 mt-1">Build custom IAM Users, Groups, and Roles with attached JSON policy documents that define exact permissions.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Create a Dynamic Auto Scaling Policy</h3>
+              <p class="text-xs text-slate-600 mt-1">Create an Auto Scaling policy that adjusts server capacity dynamically with workload demand.</p>
             </div>
           </div>
           <!-- Objective 3 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Apply the Principle of Least Privilege</h3>
-              <p class="text-xs text-slate-600 mt-1">Restrict administrative permissions so every user, role, or service only holds the access it truly needs.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Configure an Application Load Balancer</h3>
+              <p class="text-xs text-slate-600 mt-1">Configure an Application Load Balancer (ALB) to distribute web traffic across multiple EC2 targets.</p>
             </div>
           </div>
         </div>
@@ -159,14 +152,14 @@
         <div class="bg-white border border-slate-200 rounded-xl p-5">
           <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
           <div class="flex flex-wrap gap-2">
-            <span class="pill pill-light">Shared Responsibility</span>
-            <span class="pill pill-light">IAM User</span>
-            <span class="pill pill-light">IAM Group</span>
-            <span class="pill pill-light">IAM Role</span>
-            <span class="pill pill-light">Policy Document (JSON)</span>
-            <span class="pill pill-light">MFA</span>
-            <span class="pill pill-light">Least Privilege</span>
-            <span class="pill pill-light">Principal</span>
+            <span class="pill pill-light">EC2</span>
+            <span class="pill pill-light">EBS</span>
+            <span class="pill pill-light">Spot Instance</span>
+            <span class="pill pill-light">Savings Plans</span>
+            <span class="pill pill-light">AMI</span>
+            <span class="pill pill-light">Elastic Load Balancer (ELB)</span>
+            <span class="pill pill-light">Auto Scaling Group</span>
+            <span class="pill pill-light">Launch Template</span>
           </div>
         </div>
 
@@ -177,15 +170,15 @@
             <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
           </div>
           <p class="text-xs text-indigo-900">
-            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify IAM configuration steps and policy JSON walkthroughs.
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify Auto Scaling Group configuration and Load Balancer target group walkthroughs.
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
             <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lecture video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 3: Part 1 &ndash; Shared Responsibility &amp; IAM Fundamentals</span>
+              <span>Day 5: Part 1 &ndash; EC2 Pricing Models &amp; EBS Storage</span>
               <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
             </a>
             <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lab briefing video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 3: Part 2 &ndash; IAM Lab 1 Briefing (Users, Groups &amp; Roles)</span>
+              <span>Day 5: Part 2 &ndash; Auto Scaling &amp; Load Balancer Lab Briefing</span>
               <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
             </a>
           </div>
@@ -197,7 +190,7 @@
           <div>
             <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
             <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
-              This session targets adult non-traditional learners. Open with the Shared Responsibility "apartment building" split (landlord vs. tenant) before showing the AWS documentation diagram — it removes the fear that "one mistake breaks all of AWS." When introducing IAM Policy JSON, walk through a single simple policy line-by-line on the board before asking students to write their own. Emphasize that Least Privilege is not paranoia — it is standard professional practice.
+              This session targets adult non-traditional learners. Open with the "renting versus owning" framing for EC2 pricing models before naming Spot, Reserved, or Savings Plans &mdash; students should feel the cost tradeoff intuitively first. When introducing Auto Scaling and Load Balancing together, use a single running example (a food truck rally, a pop-up shop) so students see both concepts solving the same real problem from two different angles: capacity and traffic distribution.
             </p>
           </div>
         </div>
@@ -213,18 +206,18 @@
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🔐</div>
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🖥️</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 3 Presentation Lecture Deck</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Day 5 Presentation Lecture Deck</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Unlock the official Shared Responsibility Model, IAM Users/Groups/Roles, Policy JSON, MFA, and Least Privilege slide presentation.
+              Unlock the official EC2 pricing models, EBS, AMI, Auto Scaling Group, and Elastic Load Balancing slide presentation.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 3 lecture slide deck is live and ready for download or review.</span>
+            <span class="text-emerald-600">Day 5 lecture slide deck is live and ready for download or review.</span>
           </div>
-          <a href="Day3-Lecture-Deck.html" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day5.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Presentation Slides</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -236,67 +229,67 @@
       <!-- ============================================================ -->
       <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Identity &amp; Access Analogy Library</h2>
-          <p class="text-slate-500 text-sm mt-1">Breaking down Shared Responsibility, IAM, and least-privilege access concepts for learners with no prior IT background.</p>
+          <h2 class="text-2xl font-black text-slate-900">Compute &amp; Scaling Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down EC2 pricing, storage, and elastic scaling concepts for learners with no prior IT background.</p>
         </div>
 
         <!-- Search Bar -->
         <div class="relative max-w-md">
-          <label for="analogy-search" class="sr-only">Search metaphors and technical identity and access terms</label>
-          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., IAM Role, MFA, Least Privilege...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical compute and scaling terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., Spot Instance, Auto Scaling, ELB...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
           <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
-          <!-- Metaphor Card 1: Apartment Building -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="shared responsibility iam user iam group iam role policy document json mfa least privilege principal apartment building landlord tenant">
+          <!-- Metaphor Card 1: Catering Company Kitchen Stations -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="ec2 ebs spot instance savings plans ami elastic load balancer elb auto scaling group launch template catering kitchen commercial">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
-              <h3 class="font-extrabold text-base">The Apartment Building</h3>
+              <h3 class="font-extrabold text-base">The Catering Company's Kitchen Stations</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A large apartment complex has a landlord who maintains the building's structure, wiring, plumbing, and front-gate security system. Each tenant is responsible for locking their own apartment door, deciding who gets a copy of their key, and reporting any suspicious activity inside their own unit. Neither party can do the other's job for them.
+                A catering company doesn't own a giant private kitchen. Instead, it rents individual cooking stations inside a shared commercial kitchen space, scaling the number of stations up or down depending on how big the event is, and routing incoming food orders to whichever station has room.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Shared Responsibility:</strong> The landlord (AWS) secures the building's foundation and shared systems; the tenant (customer) secures everything inside their own apartment.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">IAM User:</strong> One named tenant with their own personal key to their own apartment.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Group:</strong> All tenants on the same floor sharing the same floor-access privileges, rather than each having a uniquely negotiated deal.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Role:</strong> A temporary valet key handed to a repair technician for the afternoon, which stops working once the job is done.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Policy Document (JSON):</strong> The written lease agreement that spells out exactly which doors, hallways, and amenities a tenant's key is allowed to open.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">MFA:</strong> Requiring both a key card swipe and a PIN code before the lobby door will unlock.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Least Privilege:</strong> Giving the cleaning crew a key that only opens hallway closets, not a master key to every unit in the building.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Principal:</strong> Whoever is actually holding the key and requesting entry &mdash; a tenant, a guest, or a maintenance worker.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EC2:</strong> One rented cooking station in the shared kitchen, paid for by the hour it's in use.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EBS:</strong> The rolling storage cart of ingredients and prepped food attached to that specific station, which stays with it and can be moved to a new station if needed.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AMI:</strong> A pre-packaged "starter kit" box of the exact same knives, pans, and prepped ingredients, so any new station can be set up identically and instantly.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Spot Instance:</strong> Renting a station at a steep last-minute discount during off-peak hours, with the understanding that if a full-paying event needs that station, you must vacate almost immediately.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Savings Plans:</strong> Signing a long-term contract guaranteeing a certain amount of station-time every month in exchange for a much lower hourly rate.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Launch Template:</strong> The standardized setup checklist specifying exactly which starter kit, how much counter space, and what cart size to use every time a new station is spun up.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Auto Scaling Group:</strong> The catering manager's standing policy to automatically rent more stations the moment a big order comes in, and release them once the rush ends.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Elastic Load Balancer (ELB):</strong> The head expediter at the pass who evenly routes each incoming order ticket to whichever cooking station has room, so no single station gets overwhelmed.</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Metaphor Card 2: Corporate Office Badge System -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="shared responsibility iam user iam group iam role policy document json mfa least privilege principal office badge security">
+          <!-- Metaphor Card 2: Holiday Pop-Up Mall Kiosks -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="ec2 ebs spot instance savings plans ami elastic load balancer elb auto scaling group launch template mall kiosk retail pop-up">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
-              <h3 class="font-extrabold text-base">The Corporate Badge Access System</h3>
+              <h3 class="font-extrabold text-base">The Holiday Pop-Up Mall Kiosks</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A large office tower has a private security company that guards the building's main entrances, elevators, and fire systems. Once inside, it is every department's own job to decide which employee badges can open which internal doors, and to lock up their own file cabinets and server closets at night.
+                A mall rents out small retail kiosk carts to vendors. During the holiday rush, mall management opens extra kiosks automatically to handle the crowd, and a directory board spreads shoppers evenly across every open kiosk selling the same product.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Shared Responsibility:</strong> The building's security company (AWS) protects the shared perimeter and infrastructure; each department (the customer) is responsible for locking its own internal doors and cabinets.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">IAM User:</strong> One employee's personal photo ID badge, issued to them specifically.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Group:</strong> The "Accounting Department" badge tier, where every accountant automatically gets the same set of door permissions.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">IAM Role:</strong> A one-day visitor pass issued to an outside contractor, which expires automatically at the end of their visit.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Policy Document (JSON):</strong> The access-control list on file with security stating precisely which doors a given badge is permitted to open.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">MFA:</strong> Requiring a badge swipe plus a fingerprint scan before the server room door will open.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Least Privilege:</strong> Giving a summer intern a badge that opens the break room and their own desk area, but not the executive floor or the server room.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Principal:</strong> Whoever is presenting the badge and requesting access &mdash; an employee, a contractor, or even an automated delivery robot with its own access credential.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EC2:</strong> Renting one individual retail kiosk cart in the mall for as long as you need it, paying by the day.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EBS:</strong> The locked storage cabinet attached to that specific kiosk holding your inventory and cash register records.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AMI:</strong> A ready-made "kiosk starter kit" &mdash; identical signage, shelving layout, and starting inventory &mdash; so every new kiosk looks and functions exactly the same from day one.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Spot Instance:</strong> Grabbing an empty kiosk space at a steep last-minute discount, knowing management can reclaim it on short notice if a full-price renter wants it.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Savings Plans:</strong> Pre-committing to rent a certain number of kiosk-days over the year for a locked-in discounted rate.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Launch Template:</strong> The standard onboarding packet mall management hands new kiosk vendors, specifying exactly which starter kit, cabinet size, and signage package to use.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Auto Scaling Group:</strong> Mall management's policy to automatically open extra kiosks during the holiday rush and close them in the slow season, without anyone manually deciding each time.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Elastic Load Balancer (ELB):</strong> The mall's directory board that spreads incoming shoppers evenly across every open kiosk selling the same product, so none get swarmed while others sit empty.</li>
                 </ul>
               </div>
             </div>
@@ -356,24 +349,24 @@
       <!-- ============================================================ -->
       <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">AWS Academy IAM Lab Gateway</h2>
-          <p class="text-slate-500 text-sm mt-1">Explore IAM Users, Groups, and Roles hands-on inside your AWS Academy Learner Lab sandbox.</p>
+          <h2 class="text-2xl font-black text-slate-900">Auto Scaling &amp; Load Balancer Lab Gateway</h2>
+          <p class="text-slate-500 text-sm mt-1">Build a Launch Template, an Auto Scaling Group, and an Application Load Balancer hands-on inside your AWS Academy sandbox.</p>
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
           <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 3 Hands-On Lab: AWS Academy Cloud Foundations Lab 1 &ndash; Introduction to AWS IAM</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Day 5 Hands-On Lab: Elastic Scaling in Practice</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Launch your AWS Academy Sandbox, click Start Lab, and wait for the green status circle before beginning. You'll build custom IAM Users, Groups, and Roles, attach JSON policy documents, and validate access using the Principle of Least Privilege.
+              Launch your AWS Academy Sandbox, create a Launch Template from a custom AMI, attach it to an Auto Scaling Group, and configure an Application Load Balancer to distribute traffic across your running EC2 targets.
             </p>
           </div>
-          <div class="notice notice-pending text-left">
-            <span class="notice-title">Awaiting Upload</span>
-            Day 3 hands-on lab guide link has not been configured yet. Check back before class.
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">The Day 5 compute scaling lab guide is live, covering AMIs, Launch Templates, Auto Scaling Groups, and Elastic Load Balancing.</span>
           </div>
-          <a href="Day3Lab.html" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-            <span>Launch Day 3 Hands-On Lab Guide</span>
+          <a href="Day5Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Download Day 5 Hands-On Lab Guide (PDF)</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
         </div>
@@ -384,21 +377,21 @@
       <!-- ============================================================ -->
       <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: The Leaked Admin Keys</h2>
-          <p class="text-slate-500 text-sm mt-1">An incident analysis of a developer who accidentally published admin API access keys on a public GitHub repository.</p>
+          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: Live Through the Big Show</h2>
+          <p class="text-slate-500 text-sm mt-1">How a media company's website stayed online during a massive Oscar-night traffic spike.</p>
         </div>
 
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
-          <h3 class="font-extrabold text-slate-900 text-lg">The Weekend Cryptomining Bill</h3>
+          <h3 class="font-extrabold text-slate-900 text-lg">Streaming Through the Spike</h3>
           <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
             <p>
-              Marcus, a junior developer at a small logistics startup, was rushing to finish a personal side project on a Friday night. To save time, he hardcoded his company AWS account's long-term admin access key and secret key directly into a Python script, then pushed the whole project &mdash; including that script &mdash; to a brand-new public GitHub repository so he could show it to a friend. He meant to make the repository private later that weekend, but forgot.
+              CineBuzz Media runs a popular entertainment news website that normally handles a modest, predictable stream of daily visitors. Once a year, however, during the live Oscars broadcast, traffic explodes without warning the instant a major award category is announced &mdash; readers rush to the site for instant reactions, photo galleries, and winner updates. In a previous year, CineBuzz had run the entire site on a single fixed-size EC2 instance, and the site crashed completely for nearly twenty minutes during the Best Picture announcement, missing the single biggest traffic moment of their entire year.
             </p>
             <p>
-              Automated bots constantly scan public GitHub repositories for exposed credential patterns, and within roughly twenty minutes of the push, Marcus's admin access key had already been scraped and tested by an attacker. Because the leaked key belonged to a long-lived IAM User with full administrator permissions rather than a narrowly scoped Role, the attacker was able to spin up dozens of large EC2 instances across multiple Regions to mine cryptocurrency. By the time the company's finance team noticed an alarming spike in their AWS bill on Monday morning, the unauthorized charges had already climbed into the thousands of dollars.
+              This year, the engineering team redesigned the architecture before broadcast night. They built a Launch Template referencing a custom AMI preloaded with the site's software stack, then attached it to an Auto Scaling Group configured to launch a mix of cost-efficient Spot Instances alongside a small baseline of Reserved capacity. An Application Load Balancer sat in front of the whole fleet, distributing incoming visitor requests evenly so no single server ever bore the full brunt of a traffic surge. As award announcements landed throughout the night, the Auto Scaling Group's target-tracking policy detected rising CPU utilization within moments and automatically launched dozens of additional Spot Instances from the same Launch Template.
             </p>
             <p>
-              The company's cloud administrator, Priya, immediately deactivated the leaked access key, deleted the rogue EC2 instances, and enabled AWS Budgets alerts and MFA enforcement on every IAM User going forward. In the post-incident review, the team concluded that the real root cause was not the GitHub mistake alone, but a deeper policy gap: developers had been issued permanent admin-level access keys instead of temporary, least-privilege IAM Roles scoped to only what each project actually required.
+              When the Best Picture winner was announced, traffic spiked to nearly twelve times CineBuzz's normal peak load. The Application Load Balancer kept spreading requests smoothly across the rapidly growing fleet, and the Auto Scaling Group scaled back down automatically once the post-show traffic wave receded a few hours later. The site stayed fully online through the entire broadcast, and because most of the extra capacity ran on discounted Spot Instances only for the hours they were actually needed, CineBuzz's total infrastructure cost for the night came in far lower than if they had provisioned that same peak capacity on On-Demand instances running around the clock.
             </p>
           </div>
         </div>
@@ -409,34 +402,34 @@
 
           <div class="space-y-4 text-xs">
             <div class="space-y-1.5">
-              <label for="case-dropdown-1" class="font-bold text-slate-800">1. What was the single biggest structural mistake that turned a simple GitHub slip-up into a costly incident?</label>
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why did mixing Spot Instances with a small baseline of Reserved capacity make more financial sense than running everything On-Demand all night?</label>
               <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">Marcus was issued a long-term admin access key instead of a scoped, temporary IAM Role</option>
-                <option value="B">GitHub itself does not support private repositories</option>
-                <option value="C">The company's AWS bill was simply too low to notice a spike</option>
+                <option value="A">Spot Instances offer steep discounts for interruptible extra capacity that's only needed for a few hours, while Reserved capacity covers the predictable baseline load cheaply</option>
+                <option value="B">On-Demand pricing is always more expensive than every other pricing model regardless of usage pattern</option>
+                <option value="C">Spot Instances guarantee they will never be interrupted once launched</option>
               </select>
               <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-2" class="font-bold text-slate-800">2. Which control would have limited the damage fastest, even if the key had still leaked?</label>
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. What was the specific job of the Application Load Balancer the moment traffic spiked during the Best Picture announcement?</label>
               <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">Applying the Principle of Least Privilege so the key could only touch a narrow set of resources</option>
-                <option value="B">Choosing a longer, more complex admin password</option>
-                <option value="C">Renaming the S3 buckets to something harder to guess</option>
+                <option value="A">Distributing the surge of incoming requests evenly across all the running EC2 targets so no single server was overwhelmed</option>
+                <option value="B">Launching new EC2 instances to increase server capacity</option>
+                <option value="C">Storing session data so users would not need to refresh the page</option>
               </select>
               <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-3" class="font-bold text-slate-800">3. Under the AWS Shared Responsibility Model, whose obligation was it to prevent this specific incident?</label>
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. What would likely have happened if CineBuzz's Auto Scaling Group had a very long cooldown period preventing it from launching new instances quickly?</label>
               <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">AWS's obligation, since it is responsible for all security of any kind</option>
-                <option value="B">The customer's obligation, since managing IAM credentials falls under Security IN the cloud</option>
-                <option value="C">GitHub's obligation, since the leak happened on their platform</option>
+                <option value="A">The site would have been protected from any possible downtime</option>
+                <option value="B">New capacity would have lagged behind the traffic spike, risking the same kind of crash CineBuzz suffered the previous year</option>
+                <option value="C">The Load Balancer would have automatically compensated with no impact at all</option>
               </select>
               <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
             </div>
@@ -452,38 +445,40 @@
 
           <div id="case-grading-rubric" class="hidden mt-3 space-y-3 leading-relaxed text-indigo-950">
             <p><strong>Correct answers:</strong> 1-A, 2-A, 3-B.</p>
-            <p><strong>Evaluation Criteria for Grading Essay/Oral Answers:</strong></p>
+            <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
             <ul class="list-disc pl-4 space-y-1">
-              <li><strong>Excellent (5 pts):</strong> Correctly identifies the long-term admin key (not the GitHub mistake alone) as the root structural flaw, explains how Least Privilege and short-lived Roles limit blast radius, and correctly places credential management under the customer's Security IN the cloud responsibility.</li>
-              <li><strong>Developing (3 pts):</strong> Identifies that leaking a key is bad, but is fuzzy on why an admin-level long-term key is worse than a scoped Role, or is unsure who is responsible for the mistake under the Shared Responsibility Model.</li>
-              <li><strong>Unsatisfactory (0-1 pts):</strong> Blames GitHub or AWS entirely and cannot explain any preventative IAM control.</li>
+              <li><strong>Pricing Strategy Justification:</strong> Student correctly explains that Spot Instances are best suited for short-lived, interruption-tolerant surge capacity, while Reserved capacity or Savings Plans efficiently cover predictable baseline load.</li>
+              <li><strong>Load Balancer Role Clarity:</strong> Student distinguishes the ALB's job (distributing traffic across existing targets) from the Auto Scaling Group's job (creating or removing targets), rather than conflating the two services.</li>
+              <li><strong>Scaling Responsiveness:</strong> Student identifies that a long cooldown period would delay new capacity from coming online, risking the same overload/crash scenario from the previous year.</li>
+              <li><strong>Architecture Integration:</strong> Student explains how the Launch Template, custom AMI, Auto Scaling Group, and Application Load Balancer work together as one coordinated system rather than as isolated, unrelated services.</li>
+              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., target-tracking policy, baseline capacity, interruption, cooldown).</li>
             </ul>
           </div>
         </div>
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 7: LESSON 3 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- TAB 7: LESSON 5 STUDY COMPANION (LINK PLACEHOLDER) -->
       <!-- ============================================================ -->
       <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lesson 3 Study Companion</h2>
-          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 3 IAM, Shared Responsibility, and Least Privilege material.</p>
+          <h2 class="text-2xl font-black text-slate-900">Lesson 5 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 5 compute, storage, and elastic scaling material.</p>
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
           <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Lesson 3: Identity, Access &amp; Shared Responsibility</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 5: Compute, Storage &amp; Elastic Scaling</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Review key terms, policy-scenario practice, IAM component sorting, and self-check exercises tailored to reinforce Day 3 material.
+              Review key terms, EC2 pricing-model scenario practice, and a scaling-component sorting game tailored to reinforce Day 5 material.
             </p>
           </div>
-          <div class="notice notice-pending text-left">
-            <span class="notice-title">Awaiting Upload</span>
-            Lesson 3 study companion link has not been configured yet. Check back before class.
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Study companion is live and ready for review.</span>
           </div>
-          <a href="Lesson_3_study_companion.html" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Lesson_5_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Study Companion</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -504,14 +499,14 @@
           <div class="space-y-2">
             <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Test your proficiency in the Shared Responsibility Model, IAM Users/Groups/Roles, Policy JSON, MFA, and Least Privilege.
+              Test your proficiency in EC2 pricing models, EBS, AMI, Auto Scaling Groups, Launch Templates, and Elastic Load Balancing.
             </p>
           </div>
-          <div class="notice notice-pending text-left">
-            <span class="notice-title">Awaiting Upload</span>
-            Day 3 mock quiz link has not been configured yet. Check back before the class debrief.
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 5 mock quiz is live and ready to take.</span>
           </div>
-          <a href="Day3_quiz.html" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day5_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Certification Exam Simulator</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -585,68 +580,68 @@
        ========================================================== */
     const cardData = [
       {
-        term: "Shared Responsibility",
-        definition: "The security model dividing duties between AWS, which secures the underlying cloud infrastructure ('Security OF the cloud'), and the customer, who secures what they build and configure on top of it ('Security IN the cloud').",
-        analogy: "A landlord maintains the building's structure and locks on the front gate; each tenant locks their own apartment door.",
-        scenario: "A cloud administrator explains to leadership that AWS patches the physical server hardware, but the company itself is responsible for configuring IAM permissions correctly.",
-        quiz: "Is AWS responsible for configuring a customer's IAM policies correctly?",
-        answer: "No. Configuring IAM users, groups, roles, and policies falls under the customer's 'Security IN the cloud' responsibility, not AWS's."
+        term: "EC2",
+        definition: "Amazon Elastic Compute Cloud: a resizable virtual server that runs your applications, billed according to whichever pricing model you choose.",
+        analogy: "A rented cooking station in a shared commercial kitchen, paid for only while it's in use.",
+        scenario: "A technician launches an EC2 instance to host a company's internal web application, choosing an instance size based on expected traffic.",
+        quiz: "Is an EC2 instance a physical computer dedicated permanently to one customer?",
+        answer: "No. An EC2 instance is a virtual server running on shared AWS hardware, which can be resized, stopped, or terminated on demand."
       },
       {
-        term: "IAM User",
-        definition: "An identity created within an AWS account that represents a single person or application, with its own long-term credentials used to sign in or make API calls.",
-        analogy: "One named tenant's personal key to their own apartment.",
-        scenario: "An administrator creates an individual IAM User for each new employee rather than sharing one login among the whole team.",
-        quiz: "Should multiple employees share a single IAM User login?",
-        answer: "No. Each person should have their own IAM User so that actions can be individually tracked and access can be revoked without affecting others."
+        term: "EBS",
+        definition: "Amazon Elastic Block Store: persistent, durable block-level storage volumes that attach to an EC2 instance and retain data independently of the instance's own lifecycle.",
+        analogy: "The rolling storage cart of ingredients attached to a cooking station, which can be detached and moved to a new station if needed.",
+        scenario: "A technician detaches an EBS volume from a failed EC2 instance and reattaches it to a new instance to recover the stored data without loss.",
+        quiz: "Does data on an EBS volume disappear when its attached EC2 instance is stopped?",
+        answer: "No. EBS volumes are persistent and retain their data independently of the EC2 instance's running state."
       },
       {
-        term: "IAM Group",
-        definition: "A collection of IAM Users that share the same set of permissions, allowing administrators to manage access for many people at once instead of one at a time.",
-        analogy: "All tenants on the same floor automatically sharing the same floor-access privileges.",
-        scenario: "An administrator places all members of the finance team into a 'Finance-ReadOnly' Group instead of attaching the same policy to each person individually.",
-        quiz: "What is the main benefit of assigning permissions through a Group instead of per-user?",
-        answer: "It lets an administrator manage permissions for many users at once, reducing repetitive work and configuration mistakes."
+        term: "Spot Instance",
+        definition: "An EC2 pricing model that offers steep discounts on spare AWS compute capacity, with the tradeoff that AWS can reclaim the instance with little notice when that capacity is needed elsewhere.",
+        analogy: "Grabbing an empty kiosk space at a steep last-minute discount, knowing management can reclaim it on short notice.",
+        scenario: "An engineering team runs extra Auto Scaling capacity on Spot Instances during a predictable traffic spike, since the workload can tolerate brief interruptions.",
+        quiz: "Are Spot Instances a good fit for a workload that absolutely cannot tolerate any interruption?",
+        answer: "No. Spot Instances can be reclaimed by AWS with little notice, so they are best suited for flexible, interruption-tolerant workloads."
       },
       {
-        term: "IAM Role",
-        definition: "A temporary identity with its own permissions that can be assumed by a user, application, or AWS service as needed, rather than being permanently tied to one person.",
-        analogy: "A one-day visitor pass issued to an outside contractor, which expires automatically at the end of their visit.",
-        scenario: "A Lambda function assumes an IAM Role that grants it temporary permission to write to a specific S3 bucket, rather than being issued permanent access keys.",
-        quiz: "Why are IAM Roles generally safer than long-term access keys for applications?",
-        answer: "Roles issue temporary credentials that automatically expire, so if they are exposed, the exposure window and blast radius are much smaller than a permanent key."
+        term: "Savings Plans",
+        definition: "A flexible EC2 pricing model where a customer commits to a consistent amount of compute usage (measured in dollars per hour) over a 1- or 3-year term in exchange for significantly lower rates than On-Demand pricing.",
+        analogy: "Pre-committing to rent a certain number of kiosk-days over the year for a locked-in discounted rate.",
+        scenario: "A finance manager signs a 1-year Savings Plan after confirming the company's baseline server usage has stayed consistent for the past year.",
+        quiz: "What must a customer commit to when purchasing a Savings Plan?",
+        answer: "A consistent amount of compute usage over a 1- or 3-year term, in exchange for a lower hourly rate than On-Demand pricing."
       },
       {
-        term: "Policy Document (JSON)",
-        definition: "A JSON-formatted document attached to an IAM User, Group, or Role that explicitly states which actions are allowed or denied on which AWS resources.",
-        analogy: "The written lease agreement that spells out exactly which doors, hallways, and amenities a tenant's key is allowed to open.",
-        scenario: "A technician writes a Policy Document that allows an IAM Role to read from one specific S3 bucket, but explicitly denies delete permissions.",
-        quiz: "Can a Policy Document both allow and explicitly deny actions?",
-        answer: "Yes. Policies can include both 'Allow' and 'Deny' statements, and an explicit Deny always overrides any Allow."
+        term: "AMI",
+        definition: "Amazon Machine Image: a pre-configured template containing the operating system, application code, and settings needed to launch a new EC2 instance identically and instantly.",
+        analogy: "A pre-packaged 'starter kit' box of the exact same knives, pans, and prepped ingredients, so any new station can be set up identically.",
+        scenario: "A technician builds a custom AMI with the company's web server software pre-installed, so every new Auto Scaling instance launches ready to serve traffic immediately.",
+        quiz: "What is the main benefit of launching new EC2 instances from the same custom AMI?",
+        answer: "Every new instance launches with an identical, pre-configured setup, removing the need to manually reinstall software each time."
       },
       {
-        term: "MFA",
-        definition: "Multi-Factor Authentication: a security process requiring two or more independent proofs of identity, such as a password plus a one-time code from a mobile device, before granting access.",
-        analogy: "Requiring both a key card swipe and a PIN code before the lobby door will unlock.",
-        scenario: "An administrator enforces an MFA policy requiring every IAM User with console access to register an authenticator app before they can sign in.",
-        quiz: "Does a strong password alone satisfy Multi-Factor Authentication?",
-        answer: "No. MFA requires at least two independent factors, so a password by itself, no matter how strong, is only one factor."
+        term: "Elastic Load Balancer (ELB)",
+        definition: "A service that automatically distributes incoming application traffic across multiple EC2 targets, improving fault tolerance and preventing any single server from being overwhelmed.",
+        analogy: "The head expediter at the pass who evenly routes each incoming order to whichever cooking station has room.",
+        scenario: "A technician configures an Application Load Balancer in front of an Auto Scaling Group so incoming web traffic is spread evenly across every healthy instance.",
+        quiz: "What happens to traffic destined for an EC2 instance that fails a Load Balancer's health check?",
+        answer: "The Load Balancer stops routing traffic to that unhealthy instance and sends requests only to the remaining healthy targets instead."
       },
       {
-        term: "Least Privilege",
-        definition: "A security principle stating that every user, role, or service should be granted only the minimum permissions necessary to perform its required tasks, and nothing more.",
-        analogy: "Giving the cleaning crew a key that only opens hallway closets, not a master key to every unit in the building.",
-        scenario: "A technician scopes a developer's IAM policy down from full administrator access to only the specific services that project actually requires.",
-        quiz: "Why is issuing broad admin access 'just to be safe' actually a Least Privilege violation?",
-        answer: "Because it grants far more permissions than are needed for the task, increasing the damage possible if that identity's credentials are ever compromised."
+        term: "Auto Scaling Group",
+        definition: "A collection of EC2 instances managed together so that AWS automatically adds or removes instances based on defined scaling policies and real-time demand.",
+        analogy: "The catering manager's standing policy to automatically rent more stations the moment a big order comes in, and release them once the rush ends.",
+        scenario: "An Auto Scaling Group's target-tracking policy detects rising CPU utilization during a traffic spike and automatically launches additional instances.",
+        quiz: "Does an Auto Scaling Group only add instances, or can it also remove them automatically?",
+        answer: "It does both. An Auto Scaling Group can add instances during high demand and automatically remove them once demand drops, based on its scaling policy."
       },
       {
-        term: "Principal",
-        definition: "The entity making a request to AWS for access to a resource, which can be a person, an IAM User, an IAM Role, or another AWS service.",
-        analogy: "Whoever is presenting the badge and requesting access, whether that's an employee, a contractor, or an automated system.",
-        scenario: "In a policy document, the Principal element specifies exactly which IAM User or Role is being granted or denied permission to a given resource.",
-        quiz: "Can an AWS service itself act as a Principal, not just a human user?",
-        answer: "Yes. Services like AWS Lambda can assume Roles and act as a Principal when making requests to other AWS resources."
+        term: "Launch Template",
+        definition: "A saved configuration specifying exactly which AMI, instance type, storage, and network settings to use every time a new EC2 instance is launched, often used by an Auto Scaling Group.",
+        analogy: "The standardized setup checklist specifying exactly which starter kit, how much counter space, and what cart size to use every time a new station is spun up.",
+        scenario: "A technician updates a Launch Template to reference a newer AMI version, so every future Auto Scaling instance launches with the latest patched software.",
+        quiz: "What does a Launch Template ensure about every new instance launched from it?",
+        answer: "It ensures every new instance launches with the exact same configuration — same AMI, instance type, storage, and network settings — every time."
       }
     ];
 
@@ -751,26 +746,26 @@
 
       if (qNum === 1) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! The deeper structural flaw was issuing a permanent, admin-level access key instead of a scoped, temporary IAM Role — the GitHub leak was just the trigger.";
+          feedback.textContent = "Correct! Spot Instances handle the short-lived surge capacity cheaply, while Reserved capacity covers the predictable baseline load efficiently.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Reread the third paragraph and focus on what the post-incident review identified as the real root cause.";
+          feedback.textContent = "Incorrect. Reread the second paragraph and consider what Spot Instances are actually best suited for versus On-Demand.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 2) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Least Privilege limits the 'blast radius' of any single leaked credential, so even a leaked key could only touch a narrow set of resources.";
+          feedback.textContent = "Correct! The Application Load Balancer's job is distributing incoming traffic across the existing fleet of EC2 targets, not creating new capacity.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider which control specifically limits what a compromised credential can actually do, rather than preventing the leak itself.";
+          feedback.textContent = "Incorrect. Remember that launching new instances is the Auto Scaling Group's job, while the Load Balancer distributes traffic across whatever targets currently exist.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 3) {
         if (drop.value === 'B') {
-          feedback.textContent = "Correct! Managing IAM credentials, keys, and permissions is squarely 'Security IN the cloud' — a customer responsibility, not AWS's.";
+          feedback.textContent = "Correct! A long cooldown period would delay new capacity from launching in time, risking the same kind of crash CineBuzz experienced the previous year.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Revisit the Shared Responsibility Model split between Security OF the cloud and Security IN the cloud.";
+          feedback.textContent = "Incorrect. Consider what happens if new server capacity cannot come online quickly enough during a sudden traffic spike.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       }

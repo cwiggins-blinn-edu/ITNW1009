@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 5 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 5: EC2 Fundamentals &amp; Elastic Load Balancing</h1>
+        </div>
+      </div>
+
+      <a href="Day5Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 5 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">65 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li class="pt-1 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 3 · EC2</li>
+          <li>
+            <button onclick="activateTab('ec2launch')" id="tab-ec2launch" role="tab" aria-selected="true" aria-controls="panel-ec2launch" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Launch &amp; Monitor
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('ec2resize')" id="tab-ec2resize" role="tab" aria-selected="false" aria-controls="panel-ec2resize" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Secure, Resize &amp; Protect
+            </button>
+          </li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 6 · ELB &amp; Auto Scaling</li>
+          <li>
+            <button onclick="activateTab('elbbuild')" id="tab-elbbuild" role="tab" aria-selected="false" aria-controls="panel-elbbuild" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Build the Load Balancer
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('elbscale')" id="tab-elbscale" role="tab" aria-selected="false" aria-controls="panel-elbscale" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Test &amp; Scale
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: EC2 LAUNCH & MONITOR -->
+      <section id="panel-ec2launch" role="tabpanel" aria-labelledby="tab-ec2launch" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 3, Part 1: Launching &amp; Monitoring Your First EC2 Instance</h2>
+          <p class="text-slate-500 text-sm mt-1">Launch a protected web server, then explore the tools AWS gives you to monitor it.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Amazon Elastic Compute Cloud (EC2)</strong> is a web service that provides resizable compute capacity in the cloud, letting you obtain and configure virtual servers in minutes and pay only for what you use. In this lab you'll launch a web server with termination and stop protection enabled, monitor it, open it up to HTTP traffic, resize it, and explore account-level EC2 limits. <span class="font-semibold">Estimated time: 35 minutes.</span>
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Launch Your Amazon EC2 Instance</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>In the AWS Management Console, choose <strong>Services</strong> → <strong>Compute</strong> → <strong>EC2</strong>. Confirm the region dropdown reads <strong>N. Virginia (us-east-1)</strong>, then choose <strong>Launch instance</strong> → <strong>Launch instance</strong>.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Name &amp; Image</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">Web Server</span></li>
+                  <li>AMI: keep default Amazon Linux → Amazon Linux 2023</li>
+                  <li>Instance type: keep default <span class="font-mono text-indigo-700">t2.micro</span> (1 vCPU, 1 GiB RAM)</li>
+                  <li>Key pair: choose <span class="font-mono text-indigo-700">vockey</span> (not actually used to log in during this lab)</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Click <strong>Edit</strong> next to Network settings</li>
+                  <li>VPC: select <strong>Lab VPC</strong>; keep subnet <strong>PublicSubnet1</strong></li>
+                  <li>Under Firewall, choose <strong>Create security group</strong>: name it <span class="font-mono text-indigo-700">Web Server security group</span>, description "Security group for my web server"</li>
+                  <li><strong>Remove</strong> the one default inbound rule that appears</li>
+                </ul>
+              </div>
+            </div>
+            <p>Keep the default <strong>Configure storage</strong> settings (an 8 GiB root EBS volume). Expand <strong>Advanced details</strong> and set <strong>Termination protection</strong> to <strong>Enable</strong> — this prevents the instance from being accidentally deleted.</p>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">User Data Bootstrap Script</h5>
+              <p class="mb-2">Scroll to the bottom of Advanced details and paste this into the <strong>User data</strong> box — it installs and starts Apache, then creates a simple test page:</p>
+              <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>#!/bin/bash
+dnf install -y httpd
+systemctl enable httpd
+systemctl start httpd
+echo '&lt;html&gt;&lt;h1&gt;Hello From Your Web Server!&lt;/h1&gt;&lt;/html&gt;' > /var/www/html/index.html</pre>
+              </div>
+            </div>
+            <p>Scroll to the bottom of the Summary panel and choose <strong>Launch instance</strong>, then <strong>View all instances</strong>. Wait for <strong>Instance State: Running</strong> and <strong>Status Checks: 2/2 checks passed</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Monitor Your Instance</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Choose the <strong>Status checks</strong> tab — confirm both <strong>System reachability</strong> and <strong>Instance reachability</strong> have passed.</li>
+            <li>Choose the <strong>Monitoring</strong> tab to view Amazon CloudWatch metrics for the instance (basic 5-minute monitoring is enabled by default).</li>
+            <li>In the <strong>Actions</strong> menu, choose <strong>Monitor and troubleshoot → Get system log</strong> to view console output — a valuable tool for diagnosing kernel or service startup problems. Note that the httpd package install shows up here from your user data script. Choose <strong>Cancel</strong> when done.</li>
+            <li>With Web Server still selected, choose <strong>Monitor and troubleshoot → Get instance screenshot</strong> to see what a display attached to the instance would show. Choose <strong>Cancel</strong> when done.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- TAB 2: SECURE, RESIZE & PROTECT -->
+      <section id="panel-ec2resize" role="tabpanel" aria-labelledby="tab-ec2resize" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 3, Part 2: Opening HTTP Access, Resizing &amp; Stop Protection</h2>
+          <p class="text-slate-500 text-sm mt-1">Fix the firewall so your web page loads, then scale the instance up and test its safety switches.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Update Your Security Group &amp; Access the Web Server</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>On the <strong>Details</strong> tab, copy the instance's <strong>Public IPv4 address</strong>. Open a new browser tab, paste it, and press Enter — <strong>the page won't load</strong>, because the security group doesn't yet allow inbound traffic on port 80.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>Back in the EC2 console, choose <strong>Security Groups</strong> in the left pane and select <strong>Web Server security group</strong>.</li>
+              <li>Open the <strong>Inbound rules</strong> tab (currently empty) and choose <strong>Edit inbound rules → Add rule</strong>.</li>
+              <li>Set Type: <strong>HTTP</strong>, Source: <strong>Anywhere-IPv4</strong>, then choose <strong>Save rules</strong>.</li>
+              <li>Return to the web server browser tab and refresh — you should now see <em>"Hello From Your Web Server!"</em></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Resize the Instance Type &amp; EBS Volume</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>An instance must be <strong>stopped</strong> before you can change its type. Select <strong>Web Server</strong>, choose <strong>Instance state → Stop instance</strong>, confirm, and wait for state <strong>Stopped</strong> (there's no runtime charge while stopped, though EBS storage charges continue).</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>With Web Server selected, go to <strong>Actions → Instance settings → Change instance type</strong>, set Instance Type to <span class="font-mono text-indigo-700">t2.small</span> (double the memory of t2.micro), and choose <strong>Apply</strong>.</li>
+              <li>Go to <strong>Actions → Instance settings → Change stop protection</strong>, select <strong>Enable</strong>, and <strong>Save</strong>.</li>
+              <li>Open the <strong>Storage</strong> tab, select the Volume ID checkbox, then <strong>Actions → Modify volume</strong>. Change the size from 8 to <span class="font-mono text-indigo-700">10</span> GiB and choose <strong>Modify</strong> twice to confirm.</li>
+              <li>Back in <strong>Instances</strong>, select Web Server and choose <strong>Instance state → Start instance</strong>.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Explore EC2 Limits</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Search for and open <strong>Service Quotas</strong> in the console.</li>
+            <li>Choose <strong>AWS services</strong>, search for <span class="font-mono text-indigo-700">ec2</span>, and select <strong>Amazon Elastic Compute Cloud (Amazon EC2)</strong>.</li>
+            <li>In <strong>Find quotas</strong>, search for <span class="font-mono text-indigo-700">running on-demand</span> (without selecting anything) and observe the filtered list — each AWS account has default, per-region limits on the number of running instances of each type. Account owners can request increases to many of these.</li>
+          </ol>
+        </div>
+
+        <!-- Task 6 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 6: Test Stop Protection &amp; Stop the Instance</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Return to <strong>Instances</strong>, select <strong>Web Server</strong>, and choose <strong>Instance state → Stop instance → Stop</strong>.</li>
+            <li>You'll see a failure message about the <span class="font-mono text-indigo-700">disableApiStop</span> attribute — this confirms the stop protection you enabled earlier is working.</li>
+            <li>To actually stop it, go to <strong>Actions → Instance settings → Change stop protection</strong>, uncheck <strong>Enable</strong>, and choose <strong>Save</strong>.</li>
+            <li>Select Web Server again, choose <strong>Instance state → Stop instance → Stop</strong> — this time it succeeds.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab 3 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Submit your progress using the <strong>Submit</strong> button at the top of your lab instructions, then move on to Lab 6 in the next tab.</p>
+        </div>
+      </section>
+
+      <!-- TAB 3: ELB BUILD -->
+      <section id="panel-elbbuild" role="tabpanel" aria-labelledby="tab-elbbuild" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 6, Part 1: Building an AMI, Target Group &amp; Load Balancer</h2>
+          <p class="text-slate-500 text-sm mt-1">Package your web server into a reusable image, then front it with an Application Load Balancer.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Elastic Load Balancing</strong> automatically distributes incoming traffic across multiple EC2 instances for fault tolerance. <strong>Auto Scaling</strong> keeps your desired number of instances running, adding capacity during demand spikes and removing it during lulls. In this lab you'll create an AMI, a load balancer, a launch template, and an Auto Scaling group — then trigger and observe a real scaling event. <span class="font-semibold">Estimated time: 30 minutes.</span>
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Account Safety Limit</span>
+          <p class="text-xs text-amber-900 leading-relaxed">Any attempt to run 20 or more concurrent instances (regardless of size) will result in immediate deactivation of the AWS account and deletion of all resources in it. The Auto Scaling group in this lab is capped well below that limit.</p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Create an AMI from Web Server 1</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Open the EC2 console, choose <strong>Instances</strong>, and confirm <strong>Web Server 1</strong> shows <strong>2/2 status checks passed</strong>.</li>
+            <li>Select it, then choose <strong>Actions → Image and templates → Create image</strong>.</li>
+            <li>Set Image name: <span class="font-mono text-indigo-700">WebServerAMI</span>, Image description: "Lab AMI for Web Server", then choose <strong>Create image</strong>. You'll use this AMI to launch the Auto Scaling group's instances later.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create a Target Group &amp; Application Load Balancer</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create the Target Group</h5>
+              <p class="mb-2">Target groups define where the load balancer sends traffic. In the left pane, choose <strong>Target Groups → Create target group</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Target type: <strong>Instances</strong></li>
+                <li>Target group name: <span class="font-mono text-indigo-700">LabGroup</span></li>
+                <li>VPC: <strong>Lab VPC</strong></li>
+                <li>Choose <strong>Next</strong>, skip registering targets (none exist yet), then <strong>Create target group</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create the Application Load Balancer</h5>
+              <p class="mb-2">In the left pane, choose <strong>Load Balancers → Create load balancer</strong>. Under <strong>Application Load Balancer</strong> (layer 7, request-level routing), choose <strong>Create</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Load balancer name: <span class="font-mono text-indigo-700">LabELB</span></li>
+                <li>Network mapping VPC: <strong>Lab VPC</strong></li>
+                <li>Availability Zone 1: <strong>Public Subnet 1</strong>; Availability Zone 2: <strong>Public Subnet 2</strong></li>
+                <li>Security groups: select <strong>Web Security Group</strong>, then remove the default security group so only Web Security Group remains</li>
+                <li>Listener HTTP:80 → Default action: forward to <strong>LabGroup</strong></li>
+                <li>Choose <strong>Create load balancer</strong>, then <strong>View load balancer</strong> — it will show <em>provisioning</em>; no need to wait before moving on</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ELB TEST & SCALE -->
+      <section id="panel-elbscale" role="tabpanel" aria-labelledby="tab-elbscale" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 6, Part 2: Launch Template, Auto Scaling &amp; Live Load Testing</h2>
+          <p class="text-slate-500 text-sm mt-1">Wire up Auto Scaling, confirm the load balancer is healthy, then trigger a real scale-out event.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Create a Launch Template &amp; Auto Scaling Group</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Launch Template</h5>
+              <p class="mb-2">In the left pane, choose <strong>Launch Templates → Create launch template</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Name: <span class="font-mono text-indigo-700">LabConfig</span>; enable Auto Scaling guidance</li>
+                <li>AMI: choose <strong>My AMIs</strong> → <strong>Web Server AMI</strong></li>
+                <li>Instance type: <span class="font-mono text-indigo-700">t2.micro</span>; Key pair: <span class="font-mono text-indigo-700">vockey</span></li>
+                <li>Firewall: select existing → <strong>Web Security Group</strong></li>
+                <li>Expand <strong>Advanced details</strong>, enable <strong>Detailed CloudWatch monitoring</strong> so Auto Scaling can react quickly to changing load</li>
+                <li>Choose <strong>Create launch template</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Auto Scaling Group</h5>
+              <p class="mb-2">From the Success dialog, select LabConfig, then <strong>Actions → Create Auto Scaling group</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Name: <span class="font-mono text-indigo-700">Lab Auto Scaling Group</span></li>
+                <li>VPC: <strong>Lab VPC</strong>; Subnets: <strong>Private Subnet 1</strong> and <strong>Private Subnet 2</strong></li>
+                <li>Attach to existing load balancer target group: <strong>LabGroup</strong>; enable group metrics collection in CloudWatch</li>
+                <li>Group size — Desired: <span class="font-mono text-indigo-700">2</span>, Minimum: <span class="font-mono text-indigo-700">2</span>, Maximum: <span class="font-mono text-indigo-700">6</span></li>
+                <li>Scaling policy: Target tracking, name <span class="font-mono text-indigo-700">LabScalingPolicy</span>, metric Average CPU Utilization, target value <span class="font-mono text-indigo-700">60</span></li>
+                <li>Tags: Key <span class="font-mono text-indigo-700">Name</span>, Value <span class="font-mono text-indigo-700">Lab Instance</span></li>
+                <li>Review and choose <strong>Create Auto Scaling group</strong> — it will grow from 0 toward the desired count of 2</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Verify Load Balancing Is Working</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Under <strong>Instances</strong>, confirm two new instances named <strong>Lab Instance</strong> have launched (refresh after ~30 seconds if not yet visible).</li>
+            <li>Go to <strong>Target Groups → LabGroup → Targets</strong> tab, and wait until both instances show status <strong>healthy</strong>.</li>
+            <li>Go to <strong>Load Balancers → LabELB</strong>, copy its <strong>DNS name</strong> (omit "(A Record)"), open a new tab, paste it, and press Enter — the web application should load, confirming the load balancer is routing traffic correctly.</li>
+          </ol>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Trigger &amp; Observe Auto Scaling</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Open <strong>CloudWatch → All alarms</strong>. Two alarms were auto-created by the Auto Scaling group to keep average CPU near 60% within the 2–6 instance range. If they aren't visible within 60 seconds, edit <strong>LabScalingPolicy</strong> (under the Auto Scaling group's Automatic Scaling tab) and set Target Value to <span class="font-mono text-indigo-700">50</span> to help trigger them.</li>
+            <li>Choose the alarm with <strong>AlarmHigh</strong> in its name — it should read <strong>OK</strong>, meaning CPU is currently low.</li>
+            <li>Return to the web application browser tab and choose <strong>Load Test</strong> next to the AWS logo. The page auto-refreshes and drives CPU load across the Auto Scaling group's instances. Leave this tab open.</li>
+            <li>Back in CloudWatch (refresh every ~60 seconds), within about 5 minutes <strong>AlarmLow</strong> should read <strong>OK</strong> and <strong>AlarmHigh</strong> should switch to <strong>In alarm</strong> once CPU crosses 60% for more than 3 minutes.</li>
+            <li>Return to EC2 <strong>Instances</strong> — you should now see more than two <strong>Lab Instance</strong> entries, added automatically in response to the alarm.</li>
+          </ol>
+        </div>
+
+        <!-- Task 6 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 6: Terminate Web Server 1</h4>
+          </div>
+          <p class="p-4 text-xs text-slate-700 leading-relaxed">Web Server 1 was only needed to build the AMI — it's no longer required. Select <strong>only</strong> Web Server 1, choose <strong>Instance state → Terminate Instance</strong>, and confirm <strong>Terminate</strong>.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab 6 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Choose <strong>Submit</strong> at the top of your lab instructions to record your score, then <strong>End Lab</strong> and confirm to tear down the sandbox and its resources.</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Day 5 Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Protection Settings Prevent Accidents</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Termination protection and stop protection are independent safeguards that block accidental deletion or shutdown — both must be disabled deliberately before the action succeeds.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Security Groups Gate Everything</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">No inbound rule means no traffic — even a fully running, healthy web server is unreachable until its security group explicitly allows the port.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">AMIs Make Instances Reproducible</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Capturing a configured instance as an AMI lets Auto Scaling launch identical, pre-configured servers on demand.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Target Tracking Keeps Load Balanced</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">A CloudWatch-driven target tracking policy automatically adds or removes instances to hold average CPU near a defined target, scaling within a safe min/max range.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 5 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html / Day2Lab.html / Day3Lab.html / Day4Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>
