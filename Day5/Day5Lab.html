@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITNW 1009: Day 5 Courseware & Interactive Portal</title>
+  <title>ITNW 1009: Day 5 Hands-On Lab Guide</title>
   <!-- Tailwind CSS CDN (layout/spacing utilities) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
-  <link rel="stylesheet" href="itnw1009-theme.css">
+  <link rel="stylesheet" href="../itnw1009-theme.css">
 </head>
 <body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
@@ -24,84 +24,71 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
-          <!-- Inline Server Stack / Scaling Icon -->
+          <!-- Inline Toolbox / Lab Icon -->
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-14 4h.01M19 16h.01"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
           </svg>
         </div>
         <div>
-          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 5: Compute, Storage &amp; Elastic Scaling</h1>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 5: EC2 Fundamentals &amp; Elastic Load Balancing</h1>
         </div>
       </div>
+
+      <a href="Day5Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
     </div>
   </header>
 
-  <!-- MAIN INTERACTIVE TEXTBOOK PORTAL CONTAINER -->
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
   <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
 
-    <!-- LEFT SIDEBAR: MASTER NAVIGATION PATHWAY -->
-    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Student Learning Modules">
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 5 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">65 min</span>
+          </div>
+        </div>
 
-        <ul class="space-y-1" role="tablist" aria-label="Course Sections">
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li class="pt-1 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 3 · EC2</li>
           <li>
-            <button onclick="activateTab('overview')" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+            <button onclick="activateTab('ec2launch')" id="tab-ec2launch" role="tab" aria-selected="true" aria-controls="panel-ec2launch" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
               <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
-              1. Lesson Overview
+              1. Launch &amp; Monitor
             </button>
           </li>
           <li>
-            <button onclick="activateTab('lecture')" id="tab-lecture" role="tab" aria-selected="false" aria-controls="panel-lecture" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+            <button onclick="activateTab('ec2resize')" id="tab-ec2resize" role="tab" aria-selected="false" aria-controls="panel-ec2resize" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              2. Lecture Deck Link
+              2. Secure, Resize &amp; Protect
+            </button>
+          </li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 6 · ELB &amp; Auto Scaling</li>
+          <li>
+            <button onclick="activateTab('elbbuild')" id="tab-elbbuild" role="tab" aria-selected="false" aria-controls="panel-elbbuild" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Build the Load Balancer
             </button>
           </li>
           <li>
-            <button onclick="activateTab('analogies')" id="tab-analogies" role="tab" aria-selected="false" aria-controls="panel-analogies" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+            <button onclick="activateTab('elbscale')" id="tab-elbscale" role="tab" aria-selected="false" aria-controls="panel-elbscale" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              3. Metaphors &amp; Analogies
-            </button>
-          </li>
-          <li>
-            <button onclick="activateTab('flashcards')" id="tab-flashcards" role="tab" aria-selected="false" aria-controls="panel-flashcards" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              4. Study Flashcards
-            </button>
-          </li>
-          <li>
-            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              5. Hands-On Lab Link
-            </button>
-          </li>
-          <li>
-            <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              6. Vocational Case Study
-            </button>
-          </li>
-          <li>
-            <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              7. Study Companion
-            </button>
-          </li>
-          <li>
-            <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              8. Mock Exam Link
+              4. Test &amp; Scale
             </button>
           </li>
         </ul>
 
         <div class="pt-4 border-t border-slate-100">
           <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
-            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Target Exam Domain</p>
-            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 3 (Cloud Technology &amp; Services)</p>
-            <div class="w-full bg-indigo-950 rounded-full h-1.5 mt-2">
-              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 80%"></div>
-            </div>
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
           </div>
         </div>
       </div>
@@ -112,433 +99,345 @@
 
       <div id="panels-container" class="flex-grow">
 
-      <!-- ============================================================ -->
-      <!-- TAB 1: OVERVIEW & PROFILE -->
-      <!-- ============================================================ -->
-      <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
+      <!-- TAB 1: EC2 LAUNCH & MONITOR -->
+      <section id="panel-ec2launch" role="tabpanel" aria-labelledby="tab-ec2launch" class="tab-content space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Day 5 Lesson Overview: Building Servers That Bend, Not Break</h2>
-          <p class="text-slate-500 text-sm mt-1">Amazon EC2 pricing models, EBS storage, AMIs, Auto Scaling Groups, and Elastic Load Balancing.</p>
+          <h2 class="text-2xl font-black text-slate-900">Lab 3, Part 1: Launching &amp; Monitoring Your First EC2 Instance</h2>
+          <p class="text-slate-500 text-sm mt-1">Launch a protected web server, then explore the tools AWS gives you to monitor it.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Objective 1 -->
-          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
-            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
-            <div>
-              <h3 class="font-bold text-slate-900 text-sm">Select the Right EC2 Pricing Plan</h3>
-              <p class="text-xs text-slate-600 mt-1">Select the most cost-efficient EC2 pricing plan (On-Demand, Spot, Reserved, or Savings Plans) based on runtime requirements.</p>
-            </div>
-          </div>
-          <!-- Objective 2 -->
-          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
-            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
-            <div>
-              <h3 class="font-bold text-slate-900 text-sm">Create a Dynamic Auto Scaling Policy</h3>
-              <p class="text-xs text-slate-600 mt-1">Create an Auto Scaling policy that adjusts server capacity dynamically with workload demand.</p>
-            </div>
-          </div>
-          <!-- Objective 3 -->
-          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
-            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
-            <div>
-              <h3 class="font-bold text-slate-900 text-sm">Configure an Application Load Balancer</h3>
-              <p class="text-xs text-slate-600 mt-1">Configure an Application Load Balancer (ALB) to distribute web traffic across multiple EC2 targets.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Key Vocabulary Preview -->
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-          <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill pill-light">EC2</span>
-            <span class="pill pill-light">EBS</span>
-            <span class="pill pill-light">Spot Instance</span>
-            <span class="pill pill-light">Savings Plans</span>
-            <span class="pill pill-light">AMI</span>
-            <span class="pill pill-light">Elastic Load Balancer (ELB)</span>
-            <span class="pill pill-light">Auto Scaling Group</span>
-            <span class="pill pill-light">Launch Template</span>
-          </div>
-        </div>
-
-        <!-- Zoom Recordings Placeholder Block -->
-        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 space-y-3">
-          <div class="flex items-center gap-2">
-            <span class="text-xl" aria-hidden="true">🎥</span>
-            <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
-          </div>
-          <p class="text-xs text-indigo-900">
-            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify Auto Scaling Group configuration and Load Balancer target group walkthroughs.
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Amazon Elastic Compute Cloud (EC2)</strong> is a web service that provides resizable compute capacity in the cloud, letting you obtain and configure virtual servers in minutes and pay only for what you use. In this lab you'll launch a web server with termination and stop protection enabled, monitor it, open it up to HTTP traffic, resize it, and explore account-level EC2 limits. <span class="font-semibold">Estimated time: 35 minutes.</span>
           </p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lecture video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 5: Part 1 &ndash; EC2 Pricing Models &amp; EBS Storage</span>
-              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
-            </a>
-            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lab briefing video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 5: Part 2 &ndash; Auto Scaling &amp; Load Balancer Lab Briefing</span>
-              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
-            </a>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Launch Your Amazon EC2 Instance</h4>
           </div>
-        </div>
-
-        <!-- Instructor Guidance & Tips callout -->
-        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start">
-          <span class="text-xl" aria-hidden="true">💡</span>
-          <div>
-            <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
-            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
-              This session targets adult non-traditional learners. Open with the "renting versus owning" framing for EC2 pricing models before naming Spot, Reserved, or Savings Plans &mdash; students should feel the cost tradeoff intuitively first. When introducing Auto Scaling and Load Balancing together, use a single running example (a food truck rally, a pop-up shop) so students see both concepts solving the same real problem from two different angles: capacity and traffic distribution.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 2: LECTURE DECK GATEWAY (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-lecture" role="tabpanel" aria-labelledby="tab-lecture" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lecture Slide Deck Repository</h2>
-          <p class="text-slate-500 text-sm mt-1">Access presentation slides and materials for class review.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🖥️</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 5 Presentation Lecture Deck</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Unlock the official EC2 pricing models, EBS, AMI, Auto Scaling Group, and Elastic Load Balancing slide presentation.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 5 lecture slide deck is live and ready for download or review.</span>
-          </div>
-          <a href="Day5.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-            <span>Launch Presentation Slides</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-          </a>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 3: ANALOGIES LIBRARY -->
-      <!-- ============================================================ -->
-      <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Compute &amp; Scaling Analogy Library</h2>
-          <p class="text-slate-500 text-sm mt-1">Breaking down EC2 pricing, storage, and elastic scaling concepts for learners with no prior IT background.</p>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="relative max-w-md">
-          <label for="analogy-search" class="sr-only">Search metaphors and technical compute and scaling terms</label>
-          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., Spot Instance, Auto Scaling, ELB...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
-          <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
-          <!-- Metaphor Card 1: Catering Company Kitchen Stations -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="ec2 ebs spot instance savings plans ami elastic load balancer elb auto scaling group launch template catering kitchen commercial">
-            <div class="bg-indigo-900 text-white p-4">
-              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
-              <h3 class="font-extrabold text-base">The Catering Company's Kitchen Stations</h3>
-            </div>
-            <div class="p-5 flex-grow space-y-4">
-              <p class="text-xs text-slate-600 leading-relaxed">
-                A catering company doesn't own a giant private kitchen. Instead, it rents individual cooking stations inside a shared commercial kitchen space, scaling the number of stations up or down depending on how big the event is, and routing incoming food orders to whichever station has room.
-              </p>
-              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
-                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
-                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">EC2:</strong> One rented cooking station in the shared kitchen, paid for by the hour it's in use.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">EBS:</strong> The rolling storage cart of ingredients and prepped food attached to that specific station, which stays with it and can be moved to a new station if needed.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">AMI:</strong> A pre-packaged "starter kit" box of the exact same knives, pans, and prepped ingredients, so any new station can be set up identically and instantly.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Spot Instance:</strong> Renting a station at a steep last-minute discount during off-peak hours, with the understanding that if a full-paying event needs that station, you must vacate almost immediately.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Savings Plans:</strong> Signing a long-term contract guaranteeing a certain amount of station-time every month in exchange for a much lower hourly rate.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Launch Template:</strong> The standardized setup checklist specifying exactly which starter kit, how much counter space, and what cart size to use every time a new station is spun up.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Auto Scaling Group:</strong> The catering manager's standing policy to automatically rent more stations the moment a big order comes in, and release them once the rush ends.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Elastic Load Balancer (ELB):</strong> The head expediter at the pass who evenly routes each incoming order ticket to whichever cooking station has room, so no single station gets overwhelmed.</li>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>In the AWS Management Console, choose <strong>Services</strong> → <strong>Compute</strong> → <strong>EC2</strong>. Confirm the region dropdown reads <strong>N. Virginia (us-east-1)</strong>, then choose <strong>Launch instance</strong> → <strong>Launch instance</strong>.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Name &amp; Image</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">Web Server</span></li>
+                  <li>AMI: keep default Amazon Linux → Amazon Linux 2023</li>
+                  <li>Instance type: keep default <span class="font-mono text-indigo-700">t2.micro</span> (1 vCPU, 1 GiB RAM)</li>
+                  <li>Key pair: choose <span class="font-mono text-indigo-700">vockey</span> (not actually used to log in during this lab)</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Click <strong>Edit</strong> next to Network settings</li>
+                  <li>VPC: select <strong>Lab VPC</strong>; keep subnet <strong>PublicSubnet1</strong></li>
+                  <li>Under Firewall, choose <strong>Create security group</strong>: name it <span class="font-mono text-indigo-700">Web Server security group</span>, description "Security group for my web server"</li>
+                  <li><strong>Remove</strong> the one default inbound rule that appears</li>
                 </ul>
               </div>
             </div>
-          </div>
-
-          <!-- Metaphor Card 2: Holiday Pop-Up Mall Kiosks -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="ec2 ebs spot instance savings plans ami elastic load balancer elb auto scaling group launch template mall kiosk retail pop-up">
-            <div class="bg-indigo-900 text-white p-4">
-              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
-              <h3 class="font-extrabold text-base">The Holiday Pop-Up Mall Kiosks</h3>
+            <p>Keep the default <strong>Configure storage</strong> settings (an 8 GiB root EBS volume). Expand <strong>Advanced details</strong> and set <strong>Termination protection</strong> to <strong>Enable</strong> — this prevents the instance from being accidentally deleted.</p>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">User Data Bootstrap Script</h5>
+              <p class="mb-2">Scroll to the bottom of Advanced details and paste this into the <strong>User data</strong> box — it installs and starts Apache, then creates a simple test page:</p>
+              <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>#!/bin/bash
+dnf install -y httpd
+systemctl enable httpd
+systemctl start httpd
+echo '&lt;html&gt;&lt;h1&gt;Hello From Your Web Server!&lt;/h1&gt;&lt;/html&gt;' > /var/www/html/index.html</pre>
+              </div>
             </div>
-            <div class="p-5 flex-grow space-y-4">
-              <p class="text-xs text-slate-600 leading-relaxed">
-                A mall rents out small retail kiosk carts to vendors. During the holiday rush, mall management opens extra kiosks automatically to handle the crowd, and a directory board spreads shoppers evenly across every open kiosk selling the same product.
-              </p>
-              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
-                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
-                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">EC2:</strong> Renting one individual retail kiosk cart in the mall for as long as you need it, paying by the day.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">EBS:</strong> The locked storage cabinet attached to that specific kiosk holding your inventory and cash register records.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">AMI:</strong> A ready-made "kiosk starter kit" &mdash; identical signage, shelving layout, and starting inventory &mdash; so every new kiosk looks and functions exactly the same from day one.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Spot Instance:</strong> Grabbing an empty kiosk space at a steep last-minute discount, knowing management can reclaim it on short notice if a full-price renter wants it.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Savings Plans:</strong> Pre-committing to rent a certain number of kiosk-days over the year for a locked-in discounted rate.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Launch Template:</strong> The standard onboarding packet mall management hands new kiosk vendors, specifying exactly which starter kit, cabinet size, and signage package to use.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Auto Scaling Group:</strong> Mall management's policy to automatically open extra kiosks during the holiday rush and close them in the slow season, without anyone manually deciding each time.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Elastic Load Balancer (ELB):</strong> The mall's directory board that spreads incoming shoppers evenly across every open kiosk selling the same product, so none get swarmed while others sit empty.</li>
-                </ul>
+            <p>Scroll to the bottom of the Summary panel and choose <strong>Launch instance</strong>, then <strong>View all instances</strong>. Wait for <strong>Instance State: Running</strong> and <strong>Status Checks: 2/2 checks passed</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Monitor Your Instance</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Choose the <strong>Status checks</strong> tab — confirm both <strong>System reachability</strong> and <strong>Instance reachability</strong> have passed.</li>
+            <li>Choose the <strong>Monitoring</strong> tab to view Amazon CloudWatch metrics for the instance (basic 5-minute monitoring is enabled by default).</li>
+            <li>In the <strong>Actions</strong> menu, choose <strong>Monitor and troubleshoot → Get system log</strong> to view console output — a valuable tool for diagnosing kernel or service startup problems. Note that the httpd package install shows up here from your user data script. Choose <strong>Cancel</strong> when done.</li>
+            <li>With Web Server still selected, choose <strong>Monitor and troubleshoot → Get instance screenshot</strong> to see what a display attached to the instance would show. Choose <strong>Cancel</strong> when done.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- TAB 2: SECURE, RESIZE & PROTECT -->
+      <section id="panel-ec2resize" role="tabpanel" aria-labelledby="tab-ec2resize" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 3, Part 2: Opening HTTP Access, Resizing &amp; Stop Protection</h2>
+          <p class="text-slate-500 text-sm mt-1">Fix the firewall so your web page loads, then scale the instance up and test its safety switches.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Update Your Security Group &amp; Access the Web Server</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>On the <strong>Details</strong> tab, copy the instance's <strong>Public IPv4 address</strong>. Open a new browser tab, paste it, and press Enter — <strong>the page won't load</strong>, because the security group doesn't yet allow inbound traffic on port 80.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>Back in the EC2 console, choose <strong>Security Groups</strong> in the left pane and select <strong>Web Server security group</strong>.</li>
+              <li>Open the <strong>Inbound rules</strong> tab (currently empty) and choose <strong>Edit inbound rules → Add rule</strong>.</li>
+              <li>Set Type: <strong>HTTP</strong>, Source: <strong>Anywhere-IPv4</strong>, then choose <strong>Save rules</strong>.</li>
+              <li>Return to the web server browser tab and refresh — you should now see <em>"Hello From Your Web Server!"</em></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Resize the Instance Type &amp; EBS Volume</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>An instance must be <strong>stopped</strong> before you can change its type. Select <strong>Web Server</strong>, choose <strong>Instance state → Stop instance</strong>, confirm, and wait for state <strong>Stopped</strong> (there's no runtime charge while stopped, though EBS storage charges continue).</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>With Web Server selected, go to <strong>Actions → Instance settings → Change instance type</strong>, set Instance Type to <span class="font-mono text-indigo-700">t2.small</span> (double the memory of t2.micro), and choose <strong>Apply</strong>.</li>
+              <li>Go to <strong>Actions → Instance settings → Change stop protection</strong>, select <strong>Enable</strong>, and <strong>Save</strong>.</li>
+              <li>Open the <strong>Storage</strong> tab, select the Volume ID checkbox, then <strong>Actions → Modify volume</strong>. Change the size from 8 to <span class="font-mono text-indigo-700">10</span> GiB and choose <strong>Modify</strong> twice to confirm.</li>
+              <li>Back in <strong>Instances</strong>, select Web Server and choose <strong>Instance state → Start instance</strong>.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Explore EC2 Limits</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Search for and open <strong>Service Quotas</strong> in the console.</li>
+            <li>Choose <strong>AWS services</strong>, search for <span class="font-mono text-indigo-700">ec2</span>, and select <strong>Amazon Elastic Compute Cloud (Amazon EC2)</strong>.</li>
+            <li>In <strong>Find quotas</strong>, search for <span class="font-mono text-indigo-700">running on-demand</span> (without selecting anything) and observe the filtered list — each AWS account has default, per-region limits on the number of running instances of each type. Account owners can request increases to many of these.</li>
+          </ol>
+        </div>
+
+        <!-- Task 6 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 6: Test Stop Protection &amp; Stop the Instance</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Return to <strong>Instances</strong>, select <strong>Web Server</strong>, and choose <strong>Instance state → Stop instance → Stop</strong>.</li>
+            <li>You'll see a failure message about the <span class="font-mono text-indigo-700">disableApiStop</span> attribute — this confirms the stop protection you enabled earlier is working.</li>
+            <li>To actually stop it, go to <strong>Actions → Instance settings → Change stop protection</strong>, uncheck <strong>Enable</strong>, and choose <strong>Save</strong>.</li>
+            <li>Select Web Server again, choose <strong>Instance state → Stop instance → Stop</strong> — this time it succeeds.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab 3 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Submit your progress using the <strong>Submit</strong> button at the top of your lab instructions, then move on to Lab 6 in the next tab.</p>
+        </div>
+      </section>
+
+      <!-- TAB 3: ELB BUILD -->
+      <section id="panel-elbbuild" role="tabpanel" aria-labelledby="tab-elbbuild" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 6, Part 1: Building an AMI, Target Group &amp; Load Balancer</h2>
+          <p class="text-slate-500 text-sm mt-1">Package your web server into a reusable image, then front it with an Application Load Balancer.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Elastic Load Balancing</strong> automatically distributes incoming traffic across multiple EC2 instances for fault tolerance. <strong>Auto Scaling</strong> keeps your desired number of instances running, adding capacity during demand spikes and removing it during lulls. In this lab you'll create an AMI, a load balancer, a launch template, and an Auto Scaling group — then trigger and observe a real scaling event. <span class="font-semibold">Estimated time: 30 minutes.</span>
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Account Safety Limit</span>
+          <p class="text-xs text-amber-900 leading-relaxed">Any attempt to run 20 or more concurrent instances (regardless of size) will result in immediate deactivation of the AWS account and deletion of all resources in it. The Auto Scaling group in this lab is capped well below that limit.</p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Create an AMI from Web Server 1</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Open the EC2 console, choose <strong>Instances</strong>, and confirm <strong>Web Server 1</strong> shows <strong>2/2 status checks passed</strong>.</li>
+            <li>Select it, then choose <strong>Actions → Image and templates → Create image</strong>.</li>
+            <li>Set Image name: <span class="font-mono text-indigo-700">WebServerAMI</span>, Image description: "Lab AMI for Web Server", then choose <strong>Create image</strong>. You'll use this AMI to launch the Auto Scaling group's instances later.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create a Target Group &amp; Application Load Balancer</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create the Target Group</h5>
+              <p class="mb-2">Target groups define where the load balancer sends traffic. In the left pane, choose <strong>Target Groups → Create target group</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Target type: <strong>Instances</strong></li>
+                <li>Target group name: <span class="font-mono text-indigo-700">LabGroup</span></li>
+                <li>VPC: <strong>Lab VPC</strong></li>
+                <li>Choose <strong>Next</strong>, skip registering targets (none exist yet), then <strong>Create target group</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create the Application Load Balancer</h5>
+              <p class="mb-2">In the left pane, choose <strong>Load Balancers → Create load balancer</strong>. Under <strong>Application Load Balancer</strong> (layer 7, request-level routing), choose <strong>Create</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Load balancer name: <span class="font-mono text-indigo-700">LabELB</span></li>
+                <li>Network mapping VPC: <strong>Lab VPC</strong></li>
+                <li>Availability Zone 1: <strong>Public Subnet 1</strong>; Availability Zone 2: <strong>Public Subnet 2</strong></li>
+                <li>Security groups: select <strong>Web Security Group</strong>, then remove the default security group so only Web Security Group remains</li>
+                <li>Listener HTTP:80 → Default action: forward to <strong>LabGroup</strong></li>
+                <li>Choose <strong>Create load balancer</strong>, then <strong>View load balancer</strong> — it will show <em>provisioning</em>; no need to wait before moving on</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ELB TEST & SCALE -->
+      <section id="panel-elbscale" role="tabpanel" aria-labelledby="tab-elbscale" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 6, Part 2: Launch Template, Auto Scaling &amp; Live Load Testing</h2>
+          <p class="text-slate-500 text-sm mt-1">Wire up Auto Scaling, confirm the load balancer is healthy, then trigger a real scale-out event.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Create a Launch Template &amp; Auto Scaling Group</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Launch Template</h5>
+              <p class="mb-2">In the left pane, choose <strong>Launch Templates → Create launch template</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Name: <span class="font-mono text-indigo-700">LabConfig</span>; enable Auto Scaling guidance</li>
+                <li>AMI: choose <strong>My AMIs</strong> → <strong>Web Server AMI</strong></li>
+                <li>Instance type: <span class="font-mono text-indigo-700">t2.micro</span>; Key pair: <span class="font-mono text-indigo-700">vockey</span></li>
+                <li>Firewall: select existing → <strong>Web Security Group</strong></li>
+                <li>Expand <strong>Advanced details</strong>, enable <strong>Detailed CloudWatch monitoring</strong> so Auto Scaling can react quickly to changing load</li>
+                <li>Choose <strong>Create launch template</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Auto Scaling Group</h5>
+              <p class="mb-2">From the Success dialog, select LabConfig, then <strong>Actions → Create Auto Scaling group</strong>:</p>
+              <ul class="list-disc list-inside space-y-0.5 text-slate-600 ml-1">
+                <li>Name: <span class="font-mono text-indigo-700">Lab Auto Scaling Group</span></li>
+                <li>VPC: <strong>Lab VPC</strong>; Subnets: <strong>Private Subnet 1</strong> and <strong>Private Subnet 2</strong></li>
+                <li>Attach to existing load balancer target group: <strong>LabGroup</strong>; enable group metrics collection in CloudWatch</li>
+                <li>Group size — Desired: <span class="font-mono text-indigo-700">2</span>, Minimum: <span class="font-mono text-indigo-700">2</span>, Maximum: <span class="font-mono text-indigo-700">6</span></li>
+                <li>Scaling policy: Target tracking, name <span class="font-mono text-indigo-700">LabScalingPolicy</span>, metric Average CPU Utilization, target value <span class="font-mono text-indigo-700">60</span></li>
+                <li>Tags: Key <span class="font-mono text-indigo-700">Name</span>, Value <span class="font-mono text-indigo-700">Lab Instance</span></li>
+                <li>Review and choose <strong>Create Auto Scaling group</strong> — it will grow from 0 toward the desired count of 2</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Verify Load Balancing Is Working</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Under <strong>Instances</strong>, confirm two new instances named <strong>Lab Instance</strong> have launched (refresh after ~30 seconds if not yet visible).</li>
+            <li>Go to <strong>Target Groups → LabGroup → Targets</strong> tab, and wait until both instances show status <strong>healthy</strong>.</li>
+            <li>Go to <strong>Load Balancers → LabELB</strong>, copy its <strong>DNS name</strong> (omit "(A Record)"), open a new tab, paste it, and press Enter — the web application should load, confirming the load balancer is routing traffic correctly.</li>
+          </ol>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Trigger &amp; Observe Auto Scaling</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Open <strong>CloudWatch → All alarms</strong>. Two alarms were auto-created by the Auto Scaling group to keep average CPU near 60% within the 2–6 instance range. If they aren't visible within 60 seconds, edit <strong>LabScalingPolicy</strong> (under the Auto Scaling group's Automatic Scaling tab) and set Target Value to <span class="font-mono text-indigo-700">50</span> to help trigger them.</li>
+            <li>Choose the alarm with <strong>AlarmHigh</strong> in its name — it should read <strong>OK</strong>, meaning CPU is currently low.</li>
+            <li>Return to the web application browser tab and choose <strong>Load Test</strong> next to the AWS logo. The page auto-refreshes and drives CPU load across the Auto Scaling group's instances. Leave this tab open.</li>
+            <li>Back in CloudWatch (refresh every ~60 seconds), within about 5 minutes <strong>AlarmLow</strong> should read <strong>OK</strong> and <strong>AlarmHigh</strong> should switch to <strong>In alarm</strong> once CPU crosses 60% for more than 3 minutes.</li>
+            <li>Return to EC2 <strong>Instances</strong> — you should now see more than two <strong>Lab Instance</strong> entries, added automatically in response to the alarm.</li>
+          </ol>
+        </div>
+
+        <!-- Task 6 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 6: Terminate Web Server 1</h4>
+          </div>
+          <p class="p-4 text-xs text-slate-700 leading-relaxed">Web Server 1 was only needed to build the AMI — it's no longer required. Select <strong>only</strong> Web Server 1, choose <strong>Instance state → Terminate Instance</strong>, and confirm <strong>Terminate</strong>.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab 6 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Choose <strong>Submit</strong> at the top of your lab instructions to record your score, then <strong>End Lab</strong> and confirm to tear down the sandbox and its resources.</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Day 5 Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Protection Settings Prevent Accidents</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Termination protection and stop protection are independent safeguards that block accidental deletion or shutdown — both must be disabled deliberately before the action succeeds.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Security Groups Gate Everything</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">No inbound rule means no traffic — even a fully running, healthy web server is unreachable until its security group explicitly allows the port.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">AMIs Make Instances Reproducible</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Capturing a configured instance as an AMI lets Auto Scaling launch identical, pre-configured servers on demand.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Target Tracking Keeps Load Balanced</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">A CloudWatch-driven target tracking policy automatically adds or removes instances to hold average CPU near a defined target, scaling within a safe min/max range.</p>
               </div>
             </div>
           </div>
-        </div>
-
-        <p id="analogy-empty-state" class="text-center text-sm text-slate-400 py-8 hidden">No analogies match that search term. Try a different keyword.</p>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 4: STUDY FLASHCARDS -->
-      <!-- ============================================================ -->
-      <section id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Terminology Study Flashcards</h2>
-          <p class="text-slate-500 text-sm mt-1">Click or press Space/Enter on the card to flip between the term and its full definition.</p>
-        </div>
-
-        <div class="flex flex-col items-center gap-4">
-          <p id="card-index-count" class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true"></p>
-
-          <!-- Single normal-flow card: content is swapped on flip rather than
-               relying on absolutely-positioned overlay faces, so the card always
-               has a real, visible height regardless of parent sizing context. -->
-          <div
-            id="active-card-flipper"
-            role="button"
-            tabindex="0"
-            onclick="flipCard()"
-            aria-label="Vocabulary Flashcard"
-            class="w-full max-w-lg min-h-[280px] rounded-3xl shadow-xl p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-150"
-            style="background: linear-gradient(to bottom right, #0f172a, #1e1b4b); color: #fff; border: 1px solid #1e293b;"
-          >
-            <span id="card-side-badge" class="pill pill-dark w-fit">Front &middot; Term</span>
-
-            <div id="card-face-content" class="flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim">
-              <h3 id="flash-card-term" class="text-3xl font-black"></h3>
-              <p id="card-flip-hint" class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
-            </div>
-          </div>
-
-          <!-- Navigation Controls -->
-          <div class="flex items-center gap-4 mt-2">
-            <button type="button" onclick="prevCard()" class="btn-icon-circle" aria-label="Previous flashcard">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-            </button>
-            <button type="button" onclick="flipCard()" class="btn btn-primary">Flip Card</button>
-            <button type="button" onclick="nextCard()" class="btn-icon-circle" aria-label="Next flashcard">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Auto Scaling &amp; Load Balancer Lab Gateway</h2>
-          <p class="text-slate-500 text-sm mt-1">Build a Launch Template, an Auto Scaling Group, and an Application Load Balancer hands-on inside your AWS Academy sandbox.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 5 Hands-On Lab: Elastic Scaling in Practice</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Launch your AWS Academy Sandbox, create a Launch Template from a custom AMI, attach it to an Auto Scaling Group, and configure an Application Load Balancer to distribute traffic across your running EC2 targets.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">The Day 5 compute scaling lab guide is live, covering AMIs, Launch Templates, Auto Scaling Groups, and Elastic Load Balancing.</span>
-          </div>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="Day5Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-              <span>Launch Day 5 Hands-On Lab Guide</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </a>
-            <a href="Day5Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
-              <span>Download Day 5 Lab Guide (PDF)</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 6: VOCATIONAL CASE STUDY -->
-      <!-- ============================================================ -->
-      <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: Live Through the Big Show</h2>
-          <p class="text-slate-500 text-sm mt-1">How a media company's website stayed online during a massive Oscar-night traffic spike.</p>
-        </div>
-
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
-          <h3 class="font-extrabold text-slate-900 text-lg">Streaming Through the Spike</h3>
-          <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
-            <p>
-              CineBuzz Media runs a popular entertainment news website that normally handles a modest, predictable stream of daily visitors. Once a year, however, during the live Oscars broadcast, traffic explodes without warning the instant a major award category is announced &mdash; readers rush to the site for instant reactions, photo galleries, and winner updates. In a previous year, CineBuzz had run the entire site on a single fixed-size EC2 instance, and the site crashed completely for nearly twenty minutes during the Best Picture announcement, missing the single biggest traffic moment of their entire year.
-            </p>
-            <p>
-              This year, the engineering team redesigned the architecture before broadcast night. They built a Launch Template referencing a custom AMI preloaded with the site's software stack, then attached it to an Auto Scaling Group configured to launch a mix of cost-efficient Spot Instances alongside a small baseline of Reserved capacity. An Application Load Balancer sat in front of the whole fleet, distributing incoming visitor requests evenly so no single server ever bore the full brunt of a traffic surge. As award announcements landed throughout the night, the Auto Scaling Group's target-tracking policy detected rising CPU utilization within moments and automatically launched dozens of additional Spot Instances from the same Launch Template.
-            </p>
-            <p>
-              When the Best Picture winner was announced, traffic spiked to nearly twelve times CineBuzz's normal peak load. The Application Load Balancer kept spreading requests smoothly across the rapidly growing fleet, and the Auto Scaling Group scaled back down automatically once the post-show traffic wave receded a few hours later. The site stayed fully online through the entire broadcast, and because most of the extra capacity ran on discounted Spot Instances only for the hours they were actually needed, CineBuzz's total infrastructure cost for the night came in far lower than if they had provisioned that same peak capacity on On-Demand instances running around the clock.
-            </p>
-          </div>
-        </div>
-
-        <!-- Interactive Case Analysis & Dropdown selector -->
-        <div class="border border-slate-200 rounded-2xl p-5 space-y-4">
-          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wider">Interactive Analysis Checkpoint</h4>
-
-          <div class="space-y-4 text-xs">
-            <div class="space-y-1.5">
-              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why did mixing Spot Instances with a small baseline of Reserved capacity make more financial sense than running everything On-Demand all night?</label>
-              <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
-                <option value="">Select your diagnostic answer...</option>
-                <option value="A">Spot Instances offer steep discounts for interruptible extra capacity that's only needed for a few hours, while Reserved capacity covers the predictable baseline load cheaply</option>
-                <option value="B">On-Demand pricing is always more expensive than every other pricing model regardless of usage pattern</option>
-                <option value="C">Spot Instances guarantee they will never be interrupted once launched</option>
-              </select>
-              <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
-            </div>
-
-            <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-2" class="font-bold text-slate-800">2. What was the specific job of the Application Load Balancer the moment traffic spiked during the Best Picture announcement?</label>
-              <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
-                <option value="">Select your diagnostic answer...</option>
-                <option value="A">Distributing the surge of incoming requests evenly across all the running EC2 targets so no single server was overwhelmed</option>
-                <option value="B">Launching new EC2 instances to increase server capacity</option>
-                <option value="C">Storing session data so users would not need to refresh the page</option>
-              </select>
-              <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
-            </div>
-
-            <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-3" class="font-bold text-slate-800">3. What would likely have happened if CineBuzz's Auto Scaling Group had a very long cooldown period preventing it from launching new instances quickly?</label>
-              <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
-                <option value="">Select your diagnostic answer...</option>
-                <option value="A">The site would have been protected from any possible downtime</option>
-                <option value="B">New capacity would have lagged behind the traffic spike, risking the same kind of crash CineBuzz suffered the previous year</option>
-                <option value="C">The Load Balancer would have automatically compensated with no impact at all</option>
-              </select>
-              <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Instructor Grading Criteria checklist dropdown -->
-        <div class="bg-indigo-50 border border-indigo-150 p-4 rounded-xl text-xs">
-          <button type="button" onclick="toggleGradingRubric()" class="flex justify-between items-center w-full font-bold text-indigo-900 focus:outline-none" aria-expanded="false" aria-controls="case-grading-rubric">
-            <span>📋 Click to Reveal Instructor Grading Rubric &amp; Answer Key</span>
-            <span id="rubric-arrow">&darr;</span>
-          </button>
-
-          <div id="case-grading-rubric" class="hidden mt-3 space-y-3 leading-relaxed text-indigo-950">
-            <p><strong>Correct answers:</strong> 1-A, 2-A, 3-B.</p>
-            <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
-            <ul class="list-disc pl-4 space-y-1">
-              <li><strong>Pricing Strategy Justification:</strong> Student correctly explains that Spot Instances are best suited for short-lived, interruption-tolerant surge capacity, while Reserved capacity or Savings Plans efficiently cover predictable baseline load.</li>
-              <li><strong>Load Balancer Role Clarity:</strong> Student distinguishes the ALB's job (distributing traffic across existing targets) from the Auto Scaling Group's job (creating or removing targets), rather than conflating the two services.</li>
-              <li><strong>Scaling Responsiveness:</strong> Student identifies that a long cooldown period would delay new capacity from coming online, risking the same overload/crash scenario from the previous year.</li>
-              <li><strong>Architecture Integration:</strong> Student explains how the Launch Template, custom AMI, Auto Scaling Group, and Application Load Balancer work together as one coordinated system rather than as isolated, unrelated services.</li>
-              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., target-tracking policy, baseline capacity, interruption, cooldown).</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 7: LESSON 5 STUDY COMPANION (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lesson 5 Study Companion</h2>
-          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 5 compute, storage, and elastic scaling material.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Lesson 5: Compute, Storage &amp; Elastic Scaling</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Review key terms, EC2 pricing-model scenario practice, and a scaling-component sorting game tailored to reinforce Day 5 material.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Study companion is live and ready for review.</span>
-          </div>
-          <a href="Lesson_5_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-            <span>Launch Study Companion</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-          </a>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 8: MOCK EXAM PORTAL GATEWAY (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">AWS Practice Certification Hub</h2>
-          <p class="text-slate-500 text-sm mt-1">Review core exam patterns and practice testing domains online.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📝</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Test your proficiency in EC2 pricing models, EBS, AMI, Auto Scaling Groups, Launch Templates, and Elastic Load Balancing.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 5 mock quiz is live and ready to take.</span>
-          </div>
-          <a href="Day5_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-            <span>Launch Certification Exam Simulator</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-          </a>
         </div>
       </section>
 
       </div><!-- end panels-container -->
-
-      <!-- PORTAL SHARED WORKSPACE FOOTER -->
-      <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
-        <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
-        <p class="flex items-center gap-1.5 font-bold text-slate-500">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-          WCAG 2.1 AA Compliant Active Textbook
-        </p>
-      </footer>
-
     </main>
   </div>
 
-  <!-- JAVASCRIPT CONTROL MECHANISMS -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 5 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    /* ==========================================================
-       TAB CONTROLLER
-       ========================================================== */
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html / Day2Lab.html / Day3Lab.html / Day4Lab.html course player)
     function activateTab(tabId) {
+      // Deactivate all panels
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('[role="tab"]').forEach(el => {
         el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
@@ -549,6 +448,7 @@
         }
       });
 
+      // Activate clicked panel
       document.getElementById('panel-' + tabId).classList.remove('hidden');
       const activeBtn = document.getElementById('tab-' + tabId);
       activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
@@ -558,238 +458,9 @@
         activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
       }
 
+      // Accessibility announcement trigger
       const sectionName = activeBtn.textContent.trim();
-      document.getElementById('sr-alert-announcer').textContent = "Switched course text viewer to: " + sectionName;
-    }
-
-    /* ==========================================================
-       ANALOGIES SEARCH FILTER
-       ========================================================== */
-    function filterAnalogies() {
-      const val = document.getElementById('analogy-search').value.toLowerCase();
-      const cards = document.querySelectorAll('#analogies-grid > div');
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const terms = card.getAttribute('data-terms').toLowerCase();
-        if (terms.includes(val)) {
-          card.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-      document.getElementById('analogy-empty-state').classList.toggle('hidden', visibleCount !== 0);
-    }
-
-    /* ==========================================================
-       TERMINOLOGY FLASHCARDS DATABASE
-       ========================================================== */
-    const cardData = [
-      {
-        term: "EC2",
-        definition: "Amazon Elastic Compute Cloud: a resizable virtual server that runs your applications, billed according to whichever pricing model you choose.",
-        analogy: "A rented cooking station in a shared commercial kitchen, paid for only while it's in use.",
-        scenario: "A technician launches an EC2 instance to host a company's internal web application, choosing an instance size based on expected traffic.",
-        quiz: "Is an EC2 instance a physical computer dedicated permanently to one customer?",
-        answer: "No. An EC2 instance is a virtual server running on shared AWS hardware, which can be resized, stopped, or terminated on demand."
-      },
-      {
-        term: "EBS",
-        definition: "Amazon Elastic Block Store: persistent, durable block-level storage volumes that attach to an EC2 instance and retain data independently of the instance's own lifecycle.",
-        analogy: "The rolling storage cart of ingredients attached to a cooking station, which can be detached and moved to a new station if needed.",
-        scenario: "A technician detaches an EBS volume from a failed EC2 instance and reattaches it to a new instance to recover the stored data without loss.",
-        quiz: "Does data on an EBS volume disappear when its attached EC2 instance is stopped?",
-        answer: "No. EBS volumes are persistent and retain their data independently of the EC2 instance's running state."
-      },
-      {
-        term: "Spot Instance",
-        definition: "An EC2 pricing model that offers steep discounts on spare AWS compute capacity, with the tradeoff that AWS can reclaim the instance with little notice when that capacity is needed elsewhere.",
-        analogy: "Grabbing an empty kiosk space at a steep last-minute discount, knowing management can reclaim it on short notice.",
-        scenario: "An engineering team runs extra Auto Scaling capacity on Spot Instances during a predictable traffic spike, since the workload can tolerate brief interruptions.",
-        quiz: "Are Spot Instances a good fit for a workload that absolutely cannot tolerate any interruption?",
-        answer: "No. Spot Instances can be reclaimed by AWS with little notice, so they are best suited for flexible, interruption-tolerant workloads."
-      },
-      {
-        term: "Savings Plans",
-        definition: "A flexible EC2 pricing model where a customer commits to a consistent amount of compute usage (measured in dollars per hour) over a 1- or 3-year term in exchange for significantly lower rates than On-Demand pricing.",
-        analogy: "Pre-committing to rent a certain number of kiosk-days over the year for a locked-in discounted rate.",
-        scenario: "A finance manager signs a 1-year Savings Plan after confirming the company's baseline server usage has stayed consistent for the past year.",
-        quiz: "What must a customer commit to when purchasing a Savings Plan?",
-        answer: "A consistent amount of compute usage over a 1- or 3-year term, in exchange for a lower hourly rate than On-Demand pricing."
-      },
-      {
-        term: "AMI",
-        definition: "Amazon Machine Image: a pre-configured template containing the operating system, application code, and settings needed to launch a new EC2 instance identically and instantly.",
-        analogy: "A pre-packaged 'starter kit' box of the exact same knives, pans, and prepped ingredients, so any new station can be set up identically.",
-        scenario: "A technician builds a custom AMI with the company's web server software pre-installed, so every new Auto Scaling instance launches ready to serve traffic immediately.",
-        quiz: "What is the main benefit of launching new EC2 instances from the same custom AMI?",
-        answer: "Every new instance launches with an identical, pre-configured setup, removing the need to manually reinstall software each time."
-      },
-      {
-        term: "Elastic Load Balancer (ELB)",
-        definition: "A service that automatically distributes incoming application traffic across multiple EC2 targets, improving fault tolerance and preventing any single server from being overwhelmed.",
-        analogy: "The head expediter at the pass who evenly routes each incoming order to whichever cooking station has room.",
-        scenario: "A technician configures an Application Load Balancer in front of an Auto Scaling Group so incoming web traffic is spread evenly across every healthy instance.",
-        quiz: "What happens to traffic destined for an EC2 instance that fails a Load Balancer's health check?",
-        answer: "The Load Balancer stops routing traffic to that unhealthy instance and sends requests only to the remaining healthy targets instead."
-      },
-      {
-        term: "Auto Scaling Group",
-        definition: "A collection of EC2 instances managed together so that AWS automatically adds or removes instances based on defined scaling policies and real-time demand.",
-        analogy: "The catering manager's standing policy to automatically rent more stations the moment a big order comes in, and release them once the rush ends.",
-        scenario: "An Auto Scaling Group's target-tracking policy detects rising CPU utilization during a traffic spike and automatically launches additional instances.",
-        quiz: "Does an Auto Scaling Group only add instances, or can it also remove them automatically?",
-        answer: "It does both. An Auto Scaling Group can add instances during high demand and automatically remove them once demand drops, based on its scaling policy."
-      },
-      {
-        term: "Launch Template",
-        definition: "A saved configuration specifying exactly which AMI, instance type, storage, and network settings to use every time a new EC2 instance is launched, often used by an Auto Scaling Group.",
-        analogy: "The standardized setup checklist specifying exactly which starter kit, how much counter space, and what cart size to use every time a new station is spun up.",
-        scenario: "A technician updates a Launch Template to reference a newer AMI version, so every future Auto Scaling instance launches with the latest patched software.",
-        quiz: "What does a Launch Template ensure about every new instance launched from it?",
-        answer: "It ensures every new instance launches with the exact same configuration — same AMI, instance type, storage, and network settings — every time."
-      }
-    ];
-
-    let currentCardIndex = 0;
-    let cardIsFlipped = false;
-
-    function renderFlashcardUI() {
-      const card = cardData[currentCardIndex];
-      const flipper = document.getElementById('active-card-flipper');
-      const badge = document.getElementById('card-side-badge');
-      const content = document.getElementById('card-face-content');
-
-      document.getElementById('card-index-count').textContent = `Card ${currentCardIndex + 1} of ${cardData.length}`;
-
-      if (cardIsFlipped) {
-        badge.className = "pill pill-light w-fit mb-2";
-        badge.textContent = "Back \u00B7 Details";
-        content.className = "flex-grow text-left w-full flip-face-anim";
-        content.innerHTML = `
-          <table class="w-full text-xs">
-            <caption class="sr-only">Full vocabulary detail for ${card.term}</caption>
-            <tbody>
-              <tr>
-                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Term</th>
-                <td class="py-1 font-bold text-white">${card.term}</td>
-              </tr>
-              <tr>
-                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Definition</th>
-                <td class="py-1 text-indigo-50">${card.definition}</td>
-              </tr>
-              <tr>
-                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Analogy</th>
-                <td class="py-1 italic text-indigo-100">${card.analogy}</td>
-              </tr>
-              <tr>
-                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Workplace Use</th>
-                <td class="py-1 text-indigo-50">${card.scenario}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div id="flash-card-quiz" class="text-xs bg-amber-50 text-slate-800 border border-amber-200 rounded-lg p-2 mt-3">
-            <span class="font-extrabold text-slate-700">Quiz Checkpoint:</span> <span class="block text-slate-600 italic">${card.quiz}</span>
-          </div>
-          <button type="button" onclick="revealCardQuizAnswer(event)" class="btn btn-secondary text-[11px] mt-2">Reveal Quiz Answer</button>
-        `;
-        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Back side showing definition for: ${card.term}. Definition: ${card.definition}. Click or press space to flip back.`);
-      } else {
-        badge.className = "pill pill-dark w-fit";
-        badge.textContent = "Front \u00B7 Term";
-        content.className = "flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim";
-        content.innerHTML = `
-          <h3 class="text-3xl font-black">${card.term}</h3>
-          <p class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
-        `;
-        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Front side. Term: ${card.term}. Click or press space to flip and see details.`);
-      }
-    }
-
-    function flipCard() {
-      cardIsFlipped = !cardIsFlipped;
-      renderFlashcardUI();
-    }
-
-    function prevCard() {
-      currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : cardData.length - 1;
-      cardIsFlipped = false;
-      renderFlashcardUI();
-    }
-
-    function nextCard() {
-      currentCardIndex = (currentCardIndex < cardData.length - 1) ? currentCardIndex + 1 : 0;
-      cardIsFlipped = false;
-      renderFlashcardUI();
-    }
-
-    function revealCardQuizAnswer(e) {
-      e.stopPropagation();
-      const card = cardData[currentCardIndex];
-      document.getElementById('sr-alert-announcer').textContent = "Quiz answer revealed: " + card.answer;
-      const blockText = document.getElementById('flash-card-quiz');
-      if (blockText) {
-        blockText.innerHTML = `<span class="text-indigo-800 font-bold block">Correct Answer:</span> ${card.answer}`;
-      }
-    }
-
-    document.getElementById('active-card-flipper').addEventListener('keydown', function(event) {
-      if (event.key === ' ' || event.key === 'Enter') {
-        event.preventDefault();
-        flipCard();
-      }
-    });
-
-    renderFlashcardUI();
-
-    /* ==========================================================
-       CASE STUDY LOGIC
-       ========================================================== */
-    function evaluateCaseChoice(qNum) {
-      const drop = document.getElementById(`case-dropdown-${qNum}`);
-      const feedback = document.getElementById(`case-feedback-${qNum}`);
-      feedback.classList.remove('hidden');
-
-      if (qNum === 1) {
-        if (drop.value === 'A') {
-          feedback.textContent = "Correct! Spot Instances handle the short-lived surge capacity cheaply, while Reserved capacity covers the predictable baseline load efficiently.";
-          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
-        } else {
-          feedback.textContent = "Incorrect. Reread the second paragraph and consider what Spot Instances are actually best suited for versus On-Demand.";
-          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
-        }
-      } else if (qNum === 2) {
-        if (drop.value === 'A') {
-          feedback.textContent = "Correct! The Application Load Balancer's job is distributing incoming traffic across the existing fleet of EC2 targets, not creating new capacity.";
-          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
-        } else {
-          feedback.textContent = "Incorrect. Remember that launching new instances is the Auto Scaling Group's job, while the Load Balancer distributes traffic across whatever targets currently exist.";
-          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
-        }
-      } else if (qNum === 3) {
-        if (drop.value === 'B') {
-          feedback.textContent = "Correct! A long cooldown period would delay new capacity from launching in time, risking the same kind of crash CineBuzz experienced the previous year.";
-          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
-        } else {
-          feedback.textContent = "Incorrect. Consider what happens if new server capacity cannot come online quickly enough during a sudden traffic spike.";
-          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
-        }
-      }
-    }
-
-    function toggleGradingRubric() {
-      const rubric = document.getElementById('case-grading-rubric');
-      const arrow = document.getElementById('rubric-arrow');
-      const btn = rubric.previousElementSibling;
-      if (rubric.classList.contains('hidden')) {
-        rubric.classList.remove('hidden');
-        arrow.innerHTML = "&uarr;";
-        btn.setAttribute('aria-expanded', 'true');
-      } else {
-        rubric.classList.add('hidden');
-        arrow.innerHTML = "&darr;";
-        btn.setAttribute('aria-expanded', 'false');
-      }
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
     }
   </script>
 </body>
