@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 6 Courseware & Interactive Portal</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Serverless Bolt / Container Box Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 6: Serverless Compute &amp; Containers</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE TEXTBOOK PORTAL CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: MASTER NAVIGATION PATHWAY -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Student Learning Modules">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+
+        <ul class="space-y-1" role="tablist" aria-label="Course Sections">
+          <li>
+            <button onclick="activateTab('overview')" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Lesson Overview
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('lecture')" id="tab-lecture" role="tab" aria-selected="false" aria-controls="panel-lecture" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Lecture Deck Link
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('analogies')" id="tab-analogies" role="tab" aria-selected="false" aria-controls="panel-analogies" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Metaphors &amp; Analogies
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('flashcards')" id="tab-flashcards" role="tab" aria-selected="false" aria-controls="panel-flashcards" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Study Flashcards
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              5. Hands-On Lab Link
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              6. Vocational Case Study
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              7. Study Companion
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              8. Mock Exam Link
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Target Exam Domain</p>
+            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 3 (Cloud Technology &amp; Services)</p>
+            <div class="w-full bg-indigo-950 rounded-full h-1.5 mt-2">
+              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- ============================================================ -->
+      <!-- TAB 1: OVERVIEW & PROFILE -->
+      <!-- ============================================================ -->
+      <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Day 6 Lesson Overview: Compute Without the Servers</h2>
+          <p class="text-slate-500 text-sm mt-1">Serverless architectures with AWS Lambda, container orchestration with ECS and EKS, and serverless containers with AWS Fargate.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Objective 1 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Differentiate Server-Based vs. Serverless Execution</h3>
+              <p class="text-xs text-slate-600 mt-1">Differentiate between server-based (EC2) and serverless (Lambda) execution models.</p>
+            </div>
+          </div>
+          <!-- Objective 2 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Explain Container Orchestration</h3>
+              <p class="text-xs text-slate-600 mt-1">Explain container orchestration with Amazon ECS and Amazon EKS.</p>
+            </div>
+          </div>
+          <!-- Objective 3 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Recommend Fargate Configurations</h3>
+              <p class="text-xs text-slate-600 mt-1">Recommend serverless container configurations using AWS Fargate to eliminate server host patching.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Vocabulary Preview -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill pill-light">Serverless</span>
+            <span class="pill pill-light">Event-Driven</span>
+            <span class="pill pill-light">AWS Lambda</span>
+            <span class="pill pill-light">Container</span>
+            <span class="pill pill-light">Docker</span>
+            <span class="pill pill-light">ECS</span>
+            <span class="pill pill-light">EKS</span>
+            <span class="pill pill-light">AWS Fargate</span>
+            <span class="pill pill-light">Microservices</span>
+          </div>
+        </div>
+
+        <!-- Zoom Recordings Placeholder Block -->
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl" aria-hidden="true">🎥</span>
+            <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
+          </div>
+          <p class="text-xs text-indigo-900">
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify Lambda trigger configuration and container task deployment walkthroughs.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lecture video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
+              <span>Day 6: Part 1 &ndash; Serverless with AWS Lambda</span>
+              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
+            </a>
+            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lab briefing video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
+              <span>Day 6: Part 2 &ndash; Containers &amp; Fargate Lab Briefing</span>
+              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Instructor Guidance & Tips callout -->
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start">
+          <span class="text-xl" aria-hidden="true">💡</span>
+          <div>
+            <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
+            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
+              This session targets adult non-traditional learners. Open with the "paying for idle staff versus paying per job" framing before naming Lambda &mdash; students should feel the cost problem serverless computing solves before meeting the tool. When contrasting ECS and EKS, emphasize that both orchestrate containers; the real distinction is a proprietary AWS scheduler versus the open-source Kubernetes standard used across many cloud providers.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 2: LECTURE DECK GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-lecture" role="tabpanel" aria-labelledby="tab-lecture" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lecture Slide Deck Repository</h2>
+          <p class="text-slate-500 text-sm mt-1">Access presentation slides and materials for class review.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">⚡</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Day 6 Presentation Lecture Deck</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Unlock the official Serverless, Lambda, Docker, ECS, EKS, and Fargate slide presentation with full scripted narration notes.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 6 lecture slide deck is live and ready for download or review.</span>
+          </div>
+          <a href="Day6.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Presentation Slides</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 3: ANALOGIES LIBRARY -->
+      <!-- ============================================================ -->
+      <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Serverless &amp; Container Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down serverless compute, containers, and orchestration concepts for learners with no prior IT background.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative max-w-md">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical serverless and container terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., Lambda, Docker, Fargate...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
+          <!-- Metaphor Card 1: On-Call Locksmith Dispatch -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="serverless event-driven aws lambda container docker ecs eks aws fargate microservices locksmith dispatch">
+            <div class="bg-indigo-900 text-white p-4">
+              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
+              <h3 class="font-extrabold text-base">The On-Call Locksmith Dispatch Service</h3>
+            </div>
+            <div class="p-5 flex-grow space-y-4">
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Instead of paying a locksmith to sit in a shop all day waiting &mdash; earning wages even on days with zero customers &mdash; a dispatch service sends a freelance technician only the moment someone actually calls with a lockout. No call, no cost.
+              </p>
+              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
+                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
+                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
+                  <li class="pt-1.5"><strong class="text-indigo-700">Serverless:</strong> Never paying for a locksmith to sit idle in a shop; you only pay when a technician is actually dispatched to do a job.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Event-Driven:</strong> A technician is dispatched only when a specific event happens &mdash; a phone call comes in &mdash; never on a fixed schedule.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Lambda:</strong> The individual freelance locksmith who shows up, does the one job, and leaves; you pay only for that single completed job.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Container:</strong> A locksmith's fully-equipped toolkit bag holding every tool needed to do the job the same way every time, no matter which technician picks it up.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Docker:</strong> The standardized toolkit-packing system that guarantees every bag is packed identically, so any technician can grab any bag and perform the job the same way, anywhere.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Microservices:</strong> Instead of one master locksmith who does everything, separate specialized technicians each handle one specialty &mdash; lock-picking, key-cutting, safes &mdash; and can each be dispatched, replaced, or scaled up independently.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">ECS:</strong> The dispatch company's own proprietary scheduling system that assigns toolkit bags to available technician vans within its own private fleet.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EKS:</strong> An industry-standard scheduling framework used across many different dispatch companies, so technicians and toolkits can move between companies using the same shared rules.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Fargate:</strong> A premium dispatch plan where you don't even own or maintain the vans yourself &mdash; the dispatch service handles the vehicle entirely; you just say "get this toolkit bag to this address."</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metaphor Card 2: Automated Vending Machine Network -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="serverless event-driven aws lambda container docker ecs eks aws fargate microservices vending machine">
+            <div class="bg-indigo-900 text-white p-4">
+              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
+              <h3 class="font-extrabold text-base">The Automated Vending Machine Network</h3>
+            </div>
+            <div class="p-5 flex-grow space-y-4">
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Instead of staffing a snack shop with an employee paid all day even when no one buys anything, a company installs automated vending machines that only activate and dispense when a customer inserts money and presses a button.
+              </p>
+              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
+                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
+                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
+                  <li class="pt-1.5"><strong class="text-indigo-700">Serverless:</strong> No employee is ever paid to stand around waiting; the machine only "runs" and costs money the moment a customer makes a purchase.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Event-Driven:</strong> The machine does nothing until the specific event of a coin insertion and button press happens.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Lambda:</strong> The machine's internal mechanism that runs one time, dispenses exactly one snack, and shuts back down; you're billed only for that single dispense action.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Container:</strong> A pre-packaged snack cartridge loaded with everything needed &mdash; the snack, the wrapper, the barcode &mdash; so it works identically no matter which machine it's loaded into.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Docker:</strong> The standardized cartridge manufacturing system used to produce identical, interchangeable cartridges that fit into any compliant machine.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Microservices:</strong> Instead of one giant machine trying to sell snacks, drinks, and hot food from one complicated mechanism, three separate specialized machines each independently handle one product line.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">ECS:</strong> The vending company's own private fleet-management software that decides which of its own machines get restocked and where new ones get placed.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EKS:</strong> An industry-wide, standardized vending machine management platform that many different vending operators can all use to manage their fleets the same way.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Fargate:</strong> A machine-management service where the vending company doesn't own or maintain the physical cabinets at all &mdash; a bigger network handles the hardware upkeep entirely.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p id="analogy-empty-state" class="text-center text-sm text-slate-400 py-8 hidden">No analogies match that search term. Try a different keyword.</p>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 4: STUDY FLASHCARDS -->
+      <!-- ============================================================ -->
+      <section id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Terminology Study Flashcards</h2>
+          <p class="text-slate-500 text-sm mt-1">Click or press Space/Enter on the card to flip between the term and its full definition.</p>
+        </div>
+
+        <div class="flex flex-col items-center gap-4">
+          <p id="card-index-count" class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true"></p>
+
+          <!-- Single normal-flow card: content is swapped on flip rather than
+               relying on absolutely-positioned overlay faces, so the card always
+               has a real, visible height regardless of parent sizing context. -->
+          <div
+            id="active-card-flipper"
+            role="button"
+            tabindex="0"
+            onclick="flipCard()"
+            aria-label="Vocabulary Flashcard"
+            class="w-full max-w-lg min-h-[280px] rounded-3xl shadow-xl p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-150"
+            style="background: linear-gradient(to bottom right, #0f172a, #1e1b4b); color: #fff; border: 1px solid #1e293b;"
+          >
+            <span id="card-side-badge" class="pill pill-dark w-fit">Front &middot; Term</span>
+
+            <div id="card-face-content" class="flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim">
+              <h3 id="flash-card-term" class="text-3xl font-black"></h3>
+              <p id="card-flip-hint" class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
+            </div>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="flex items-center gap-4 mt-2">
+            <button type="button" onclick="prevCard()" class="btn-icon-circle" aria-label="Previous flashcard">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button type="button" onclick="flipCard()" class="btn btn-primary">Flip Card</button>
+            <button type="button" onclick="nextCard()" class="btn-icon-circle" aria-label="Next flashcard">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lambda &amp; Container Lab Gateway</h2>
+          <p class="text-slate-500 text-sm mt-1">Deploy an event-driven Lambda function and a containerized task hands-on inside your AWS Academy sandbox.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Day 6 Hands-On Lab: Serverless Functions &amp; Containers</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Launch your AWS Academy Sandbox, create a Lambda function triggered by an S3 upload event, then deploy a simple containerized task on AWS Fargate without provisioning or patching any EC2 hosts.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">The Day 6 serverless lab guide is live, covering Lambda, S3 event triggers, and AWS Fargate.</span>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="Day6Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+              <span>Launch Day 6 Hands-On Lab Guide</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+            <a href="Day6Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
+              <span>Download Day 6 Lab Guide (PDF)</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 6: VOCATIONAL CASE STUDY -->
+      <!-- ============================================================ -->
+      <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: The Zero-Idle-Cost Startup</h2>
+          <p class="text-slate-500 text-sm mt-1">How QuickConvert built an entire document converter backend without paying for a single idle server.</p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+          <h3 class="font-extrabold text-slate-900 text-lg">QuickConvert's Serverless Bet</h3>
+          <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
+            <p>
+              QuickConvert is a two-person startup offering a simple online tool that converts uploaded documents &mdash; PDFs, Word files, and images &mdash; into whatever format a customer needs. With almost no funding and no idea whether the product would ever attract paying customers, the founders could not afford to provision and pay for dedicated EC2 servers running around the clock on the off-chance someone used the service. Instead, they built the entire backend around AWS Lambda: when a customer uploads a file to an Amazon S3 bucket, that upload event automatically triggers a Lambda function that performs the conversion, saves the result, and shuts back down. No file upload, no function execution, no cost.
+            </p>
+            <p>
+              For the first three months, QuickConvert had almost no customers, and their AWS bill for the conversion backend came to just a few cents a day &mdash; there were no idle EC2 instances quietly racking up charges while waiting for traffic that never came. Then a popular productivity blogger featured QuickConvert in a roundup post, and traffic exploded overnight. Thousands of file uploads poured in within hours. Because the system was event-driven, AWS Lambda automatically spun up as many concurrent execution environments as needed to keep up with the sudden flood of conversion requests, without either founder ever touching a server console or manually provisioning new capacity.
+            </p>
+            <p>
+              As QuickConvert grew, the team noticed that a small number of very large video-to-format conversion requests were timing out, since they required more processing time and memory than a single Lambda invocation could provide. Rather than abandoning the serverless approach entirely, the team packaged that specific heavy conversion logic into a Docker container and deployed it on AWS Fargate, which ran the container only while a job was active and required no EC2 host patching or management at all. The result was a hybrid backend: simple, fast conversions still ran instantly on Lambda, while heavier jobs ran in short-lived Fargate containers &mdash; and QuickConvert never once had to pay for a server sitting idle.
+            </p>
+          </div>
+        </div>
+
+        <!-- Interactive Case Analysis & Dropdown selector -->
+        <div class="border border-slate-200 rounded-2xl p-5 space-y-4">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wider">Interactive Analysis Checkpoint</h4>
+
+          <div class="space-y-4 text-xs">
+            <div class="space-y-1.5">
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why did paying per-invocation through Lambda make more financial sense for QuickConvert's earliest days than provisioning dedicated EC2 servers up front?</label>
+              <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">With completely unpredictable, near-zero early traffic, Lambda's per-invocation billing meant they paid almost nothing until customers actually showed up</option>
+                <option value="B">EC2 instances are always more expensive than Lambda regardless of usage pattern</option>
+                <option value="C">Lambda functions can run continuously for weeks without ever shutting down</option>
+              </select>
+              <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
+            </div>
+
+            <div class="space-y-1.5 border-t pt-3">
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. When traffic exploded overnight after the blogger's feature, what event-driven mechanism let QuickConvert handle the surge without a human manually provisioning servers?</label>
+              <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">Each S3 upload event automatically triggered its own Lambda execution, and AWS spun up as many concurrent executions as needed</option>
+                <option value="B">The founders had to log in and manually launch new EC2 instances as traffic increased</option>
+                <option value="C">Amazon S3 itself performed the file conversions without invoking any compute service</option>
+              </select>
+              <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
+            </div>
+
+            <div class="space-y-1.5 border-t pt-3">
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. Why was moving the heavy video conversions to a Fargate-run container a better fix than simply increasing the Lambda function's memory setting?</label>
+              <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">Those jobs exceeded Lambda's maximum execution time and resource limits, and Fargate runs containers with more flexible duration and resources while still avoiding EC2 host management</option>
+                <option value="B">Increasing Lambda's memory setting always removes any execution time limit entirely</option>
+                <option value="C">Fargate requires the same manual server patching that EC2 does, so it offered no real advantage</option>
+              </select>
+              <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instructor Grading Criteria checklist dropdown -->
+        <div class="bg-indigo-50 border border-indigo-150 p-4 rounded-xl text-xs">
+          <button type="button" onclick="toggleGradingRubric()" class="flex justify-between items-center w-full font-bold text-indigo-900 focus:outline-none" aria-expanded="false" aria-controls="case-grading-rubric">
+            <span>📋 Click to Reveal Instructor Grading Rubric &amp; Answer Key</span>
+            <span id="rubric-arrow">&darr;</span>
+          </button>
+
+          <div id="case-grading-rubric" class="hidden mt-3 space-y-3 leading-relaxed text-indigo-950">
+            <p><strong>Correct answers:</strong> 1-A, 2-A, 3-A.</p>
+            <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
+            <ul class="list-disc pl-4 space-y-1">
+              <li><strong>Cost Model Justification:</strong> Student correctly explains that Lambda's per-invocation billing eliminates idle server costs, making it ideal for unpredictable early-stage traffic.</li>
+              <li><strong>Event-Driven Mechanics:</strong> Student explains that an S3 upload event automatically triggers a Lambda execution, and that AWS handles concurrency scaling without manual provisioning.</li>
+              <li><strong>Serverless Limits Awareness:</strong> Student identifies that Lambda has maximum execution time and memory limits, and that workloads exceeding those limits need a different serverless option.</li>
+              <li><strong>Container/Fargate Reasoning:</strong> Student explains that packaging the heavy job into a Docker container and running it on Fargate preserves the "no server management" benefit while allowing more flexible resource limits than Lambda alone.</li>
+              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., event-driven, invocation, container, concurrency, host patching).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 7: LESSON 6 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lesson 6 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 6 serverless compute and container material.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 6: Serverless Compute &amp; Containers</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Review key terms, serverless-vs-container scenario practice, and a service-sorting game tailored to reinforce Day 6 material.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Study companion is live and ready for review.</span>
+          </div>
+          <a href="Lesson_6_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Study Companion</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 8: MOCK EXAM PORTAL GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">AWS Practice Certification Hub</h2>
+          <p class="text-slate-500 text-sm mt-1">Review core exam patterns and practice testing domains online.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📝</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Test your proficiency in Serverless, Event-Driven design, AWS Lambda, Containers, Docker, ECS, EKS, AWS Fargate, and Microservices.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 6 mock quiz is live and ready to take.</span>
+          </div>
+          <a href="Day6_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Certification Exam Simulator</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+
+      <!-- PORTAL SHARED WORKSPACE FOOTER -->
+      <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
+        <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+        <p class="flex items-center gap-1.5 font-bold text-slate-500">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          WCAG 2.1 AA Compliant Active Textbook
+        </p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- JAVASCRIPT CONTROL MECHANISMS -->
+  <script>
+    /* ==========================================================
+       TAB CONTROLLER
+       ========================================================== */
+    function activateTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched course text viewer to: " + sectionName;
+    }
+
+    /* ==========================================================
+       ANALOGIES SEARCH FILTER
+       ========================================================== */
+    function filterAnalogies() {
+      const val = document.getElementById('analogy-search').value.toLowerCase();
+      const cards = document.querySelectorAll('#analogies-grid > div');
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const terms = card.getAttribute('data-terms').toLowerCase();
+        if (terms.includes(val)) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      document.getElementById('analogy-empty-state').classList.toggle('hidden', visibleCount !== 0);
+    }
+
+    /* ==========================================================
+       TERMINOLOGY FLASHCARDS DATABASE
+       ========================================================== */
+    const cardData = [
+      {
+        term: "Serverless",
+        definition: "A cloud computing model where AWS manages all the underlying server infrastructure automatically, and the customer is billed based on actual usage instead of paying for idle server time.",
+        analogy: "Never paying for a locksmith to sit idle in a shop; you only pay when a technician is actually dispatched to do a job.",
+        scenario: "A startup builds its entire backend on serverless services so it never pays for idle EC2 capacity during its unpredictable early growth phase.",
+        quiz: "Does 'serverless' mean there are no servers involved at all?",
+        answer: "No. Servers still run behind the scenes, but AWS manages them entirely, and the customer never has to provision or maintain them directly."
+      },
+      {
+        term: "Event-Driven",
+        definition: "An architecture pattern where code executes automatically in response to a specific trigger, such as a file upload, a database change, or an API call, rather than running continuously.",
+        analogy: "A technician is dispatched only when a specific event happens — a phone call comes in — never on a fixed schedule.",
+        scenario: "An S3 file upload automatically triggers a Lambda function to process the new file the instant it arrives, with no polling or manual check required.",
+        quiz: "In an event-driven system, what causes code to run?",
+        answer: "A specific trigger or event, such as a file upload or an API request, rather than the code running continuously or on a fixed timer."
+      },
+      {
+        term: "AWS Lambda",
+        definition: "AWS's serverless compute service that runs your code only in response to triggers, automatically scaling and billing per invocation with no servers to manage.",
+        analogy: "The individual freelance locksmith who shows up, does the one job, and leaves; you pay only for that single completed job.",
+        scenario: "A developer writes a Lambda function that resizes an image the moment it's uploaded to S3, and pays only for the milliseconds that function actually runs.",
+        quiz: "How is AWS Lambda typically billed?",
+        answer: "Per invocation and execution duration — you pay only for the compute time actually consumed, not for idle capacity."
+      },
+      {
+        term: "Container",
+        definition: "A lightweight, standalone package that bundles an application's code together with all its dependencies, so it runs identically across any environment that supports containers.",
+        analogy: "A locksmith's fully-equipped toolkit bag holding every tool needed to do the job the same way every time, no matter which technician picks it up.",
+        scenario: "A team packages their application and all its libraries into a container so it behaves identically on a developer's laptop and in production.",
+        quiz: "Why do containers behave consistently across different computers?",
+        answer: "Because they bundle the application together with all of its dependencies, so the same package runs the same way regardless of the underlying host."
+      },
+      {
+        term: "Docker",
+        definition: "The most widely used platform for building, packaging, and running containers, providing the standard format that makes containers portable across different systems.",
+        analogy: "The standardized toolkit-packing system that guarantees every bag is packed identically, so any technician can grab any bag and perform the job the same way, anywhere.",
+        scenario: "A developer uses Docker to build a container image locally, then pushes that same image to run unchanged on an AWS container service.",
+        quiz: "What role does Docker play in the container ecosystem?",
+        answer: "Docker provides the standard tools and format for building and packaging containers, making them portable across different environments."
+      },
+      {
+        term: "ECS",
+        definition: "Amazon Elastic Container Service: AWS's own proprietary container orchestration service that schedules, runs, and manages containers across a cluster of compute resources.",
+        analogy: "The dispatch company's own proprietary scheduling system that assigns toolkit bags to available technician vans within its own private fleet.",
+        scenario: "A technician deploys a fleet of containers using ECS, letting AWS's own scheduler decide which underlying compute resources run each container.",
+        quiz: "Is ECS an open industry standard, or an AWS-specific service?",
+        answer: "It is AWS-specific. ECS is Amazon's own proprietary container orchestration service, unlike the open-source Kubernetes standard."
+      },
+      {
+        term: "EKS",
+        definition: "Amazon Elastic Kubernetes Service: a managed service for running Kubernetes, the open-source container orchestration standard used across many cloud providers, on AWS infrastructure.",
+        analogy: "An industry-standard scheduling framework used across many different dispatch companies, so technicians and toolkits can move between companies using the same shared rules.",
+        scenario: "A company already using Kubernetes on-premises migrates its containers to EKS so its existing Kubernetes skills and configurations carry over directly to AWS.",
+        quiz: "Why might a company choose EKS over ECS?",
+        answer: "EKS runs the open-source Kubernetes standard, which is portable across many cloud providers, rather than AWS's own proprietary ECS scheduler."
+      },
+      {
+        term: "AWS Fargate",
+        definition: "A serverless compute engine for containers that works with ECS and EKS, running containerized tasks without requiring the customer to provision, manage, or patch any underlying EC2 servers.",
+        analogy: "A premium dispatch plan where you don't even own or maintain the vans yourself; the dispatch service handles the vehicle entirely.",
+        scenario: "A team moves their container workloads to Fargate specifically to eliminate the ongoing burden of patching and maintaining the EC2 hosts that used to run those containers.",
+        quiz: "What server management task does AWS Fargate eliminate for its customers?",
+        answer: "Fargate eliminates the need to provision, manage, or patch the underlying EC2 hosts that run the containers."
+      },
+      {
+        term: "Microservices",
+        definition: "An architectural approach that breaks a large application into small, independent services, each handling one specific function, that can be developed, deployed, and scaled separately.",
+        analogy: "Instead of one master locksmith who does everything, separate specialized technicians each handle one specialty and can be dispatched, replaced, or scaled up independently.",
+        scenario: "A development team splits a monolithic e-commerce application into separate microservices for inventory, payments, and shipping, so each can be updated without redeploying the entire app.",
+        quiz: "What is the main advantage of splitting an application into microservices instead of one large monolith?",
+        answer: "Each service can be developed, deployed, scaled, and updated independently, without requiring changes to the entire application at once."
+      }
+    ];
+
+    let currentCardIndex = 0;
+    let cardIsFlipped = false;
+
+    function renderFlashcardUI() {
+      const card = cardData[currentCardIndex];
+      const flipper = document.getElementById('active-card-flipper');
+      const badge = document.getElementById('card-side-badge');
+      const content = document.getElementById('card-face-content');
+
+      document.getElementById('card-index-count').textContent = `Card ${currentCardIndex + 1} of ${cardData.length}`;
+
+      if (cardIsFlipped) {
+        badge.className = "pill pill-light w-fit mb-2";
+        badge.textContent = "Back \u00B7 Details";
+        content.className = "flex-grow text-left w-full flip-face-anim";
+        content.innerHTML = `
+          <table class="w-full text-xs">
+            <caption class="sr-only">Full vocabulary detail for ${card.term}</caption>
+            <tbody>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Term</th>
+                <td class="py-1 font-bold text-white">${card.term}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Definition</th>
+                <td class="py-1 text-indigo-50">${card.definition}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Analogy</th>
+                <td class="py-1 italic text-indigo-100">${card.analogy}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Workplace Use</th>
+                <td class="py-1 text-indigo-50">${card.scenario}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="flash-card-quiz" class="text-xs bg-amber-50 text-slate-800 border border-amber-200 rounded-lg p-2 mt-3">
+            <span class="font-extrabold text-slate-700">Quiz Checkpoint:</span> <span class="block text-slate-600 italic">${card.quiz}</span>
+          </div>
+          <button type="button" onclick="revealCardQuizAnswer(event)" class="btn btn-secondary text-[11px] mt-2">Reveal Quiz Answer</button>
+        `;
+        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Back side showing definition for: ${card.term}. Definition: ${card.definition}. Click or press space to flip back.`);
+      } else {
+        badge.className = "pill pill-dark w-fit";
+        badge.textContent = "Front \u00B7 Term";
+        content.className = "flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim";
+        content.innerHTML = `
+          <h3 class="text-3xl font-black">${card.term}</h3>
+          <p class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
+        `;
+        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Front side. Term: ${card.term}. Click or press space to flip and see details.`);
+      }
+    }
+
+    function flipCard() {
+      cardIsFlipped = !cardIsFlipped;
+      renderFlashcardUI();
+    }
+
+    function prevCard() {
+      currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : cardData.length - 1;
+      cardIsFlipped = false;
+      renderFlashcardUI();
+    }
+
+    function nextCard() {
+      currentCardIndex = (currentCardIndex < cardData.length - 1) ? currentCardIndex + 1 : 0;
+      cardIsFlipped = false;
+      renderFlashcardUI();
+    }
+
+    function revealCardQuizAnswer(e) {
+      e.stopPropagation();
+      const card = cardData[currentCardIndex];
+      document.getElementById('sr-alert-announcer').textContent = "Quiz answer revealed: " + card.answer;
+      const blockText = document.getElementById('flash-card-quiz');
+      if (blockText) {
+        blockText.innerHTML = `<span class="text-indigo-800 font-bold block">Correct Answer:</span> ${card.answer}`;
+      }
+    }
+
+    document.getElementById('active-card-flipper').addEventListener('keydown', function(event) {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        flipCard();
+      }
+    });
+
+    renderFlashcardUI();
+
+    /* ==========================================================
+       CASE STUDY LOGIC
+       ========================================================== */
+    function evaluateCaseChoice(qNum) {
+      const drop = document.getElementById(`case-dropdown-${qNum}`);
+      const feedback = document.getElementById(`case-feedback-${qNum}`);
+      feedback.classList.remove('hidden');
+
+      if (qNum === 1) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! With unpredictable, near-zero early traffic, Lambda's per-invocation billing meant QuickConvert paid almost nothing until customers actually showed up.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Reread the first paragraph and consider what QuickConvert's traffic pattern looked like in its earliest days.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      } else if (qNum === 2) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! Each S3 upload automatically triggered its own Lambda execution, and AWS automatically scaled concurrent executions without any manual server provisioning.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Consider what happens automatically the moment a file is uploaded to S3 in an event-driven system.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      } else if (qNum === 3) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! Those jobs exceeded Lambda's execution time and resource limits, and Fargate runs containers with more flexible duration and resources while still avoiding EC2 host management.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Think about why a workload might need more time or memory than Lambda alone can provide.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      }
+    }
+
+    function toggleGradingRubric() {
+      const rubric = document.getElementById('case-grading-rubric');
+      const arrow = document.getElementById('rubric-arrow');
+      const btn = rubric.previousElementSibling;
+      if (rubric.classList.contains('hidden')) {
+        rubric.classList.remove('hidden');
+        arrow.innerHTML = "&uarr;";
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        rubric.classList.add('hidden');
+        arrow.innerHTML = "&darr;";
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 6 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 6: Serverless Compute — Lambda, API Gateway, Beanstalk &amp; EventBridge</h1>
+        </div>
+      </div>
+
+      <a href="Day6Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 6 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">90 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li class="pt-1 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 1 · API Gateway + Lambda</li>
+          <li>
+            <button onclick="activateTab('apilambda')" id="tab-apilambda" role="tab" aria-selected="true" aria-controls="panel-apilambda" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Build the Serverless API
+            </button>
+          </li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 2 · Elastic Beanstalk</li>
+          <li>
+            <button onclick="activateTab('beanstalk')" id="tab-beanstalk" role="tab" aria-selected="false" aria-controls="panel-beanstalk" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Deploy &amp; Explore a PaaS App
+            </button>
+          </li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 3 · Lambda + EventBridge</li>
+          <li>
+            <button onclick="activateTab('stopinator')" id="tab-stopinator" role="tab" aria-selected="false" aria-controls="panel-stopinator" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Automate EC2 Shutdown
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: API GATEWAY + LAMBDA -->
+      <section id="panel-apilambda" role="tabpanel" aria-labelledby="tab-apilambda" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">1. Building a Serverless API with API Gateway &amp; Lambda</h2>
+          <p class="text-slate-500 text-sm mt-1">Author a live Node.js function and expose it through a public REST endpoint — no servers involved.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            An <strong>Amazon API Gateway</strong> REST endpoint acts as the public-facing front door, routing incoming HTTP client traffic directly to a custom Node.js function running inside <strong>AWS Lambda</strong> — no EC2 instances, no web servers, no infrastructure to maintain. You will author the function, wire it to a POST method, deploy it to a live stage, and validate it end-to-end with a real HTTP request.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">The LabRole Rule</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            Never create custom IAM users, groups, or roles, and never modify root billing settings — doing so triggers an AWS Academy SCP restriction and may lock your learner account. Every resource in this lab must use the pre-provisioned IAM role named <strong>LabRole</strong>, which already has the permissions this lab needs. Do not create a new role or select any other option from the dropdown.
+          </p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 1: Initialize the Sandbox</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Sign in to the AWS Academy Learning Management Portal and navigate to your current course enrollment.</li>
+            <li>Select <strong>Day 6: Compute Services Infrastructure Sandbox</strong> and click <strong>Start Lab</strong> in the top control header.</li>
+            <li>Wait until the status circle turns from blinking amber to steady green, confirming your isolated environment is ready.</li>
+            <li>Click the <strong>AWS</strong> link next to the green indicator to open the Management Console in a new tab.</li>
+          </ol>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 2: Create the Lambda Function</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>In the console search bar, type <span class="font-mono text-indigo-700">Lambda</span> and open the service. Click <strong>Create function</strong>, select <strong>Author from scratch</strong>, and enter these exact settings:</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/3">Function name</td><td class="p-2.5 font-mono text-indigo-700">BriefTextConverterService</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Runtime</td><td class="p-2.5 font-mono text-indigo-700">Node.js 18.x (or latest active LTS)</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Architecture</td><td class="p-2.5 font-mono text-indigo-700">x86_64 (default)</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Execution role</td><td class="p-2.5 font-mono text-indigo-700">Use an existing role → LabRole</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Expand <strong>Change default execution role</strong>, select <strong>Use an existing role</strong>, and choose <strong>LabRole</strong> from the dropdown. Click <strong>Create function</strong> and wait 10–15 seconds for provisioning.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 3: Author the Node.js Application Code</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>In the Code source panel, double-click <span class="font-mono text-indigo-700">index.mjs</span>, delete the existing boilerplate, and paste:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>export const handler = async (event) => {
+  console.log("Event Received:", JSON.stringify(event, null, 2));
+
+  let clientUserName = "Guest Professional Analyst";
+  if (event.body) {
+    try {
+      const parsedBody = JSON.parse(event.body);
+      if (parsedBody.name) { clientUserName = parsedBody.name; }
+    } catch (error) {
+      console.log("Non-JSON payload. Using defaults.");
+    }
+  }
+
+  const operationalResponsePayload = {
+    status: "SUCCESS_VALIDATION_COMPLETE",
+    message: `Hello, ${clientUserName}! Your event executed in AWS Lambda.`,
+    timestamp: new Date().toISOString(),
+    environment: "AWS_Academy_ITNW1009_Sandbox"
+  };
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+    body: JSON.stringify(operationalResponsePayload)
+  };
+};</pre>
+            </div>
+            <p>Click the orange <strong>Deploy</strong> button above the code editor and wait for the confirmation overlay — your function is now live.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Logging &amp; Parsing</h5>
+                <p class="text-slate-600"><span class="font-mono">console.log</span> writes the full raw event to CloudWatch Logs. The handler then tries to parse a JSON body — if a <span class="font-mono">name</span> key is present, it replaces the default "Guest Professional Analyst" value with the caller's supplied name.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Building the Response</h5>
+                <p class="text-slate-600">A structured JSON payload is assembled with a status flag, personalized message, timestamp, and environment label, then returned as an HTTP 200 response with CORS support via <span class="font-mono">Access-Control-Allow-Origin: *</span>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 4: Create the API Gateway REST API</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Search <span class="font-mono text-indigo-700">API Gateway</span>, click <strong>Build</strong> next to <strong>REST API</strong> (not the Private or HTTP variants):</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/3">Create</td><td class="p-2.5 font-mono text-indigo-700">New API</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">API name</td><td class="p-2.5 font-mono text-indigo-700">LegalServicePublicIngressAPI</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Description</td><td class="p-2.5 text-slate-600">Public gateway endpoint routing traffic serverlessly to Lambda</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Endpoint Type</td><td class="p-2.5 font-mono text-indigo-700">Regional (default)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Click <strong>Create API</strong>. Your API's Resources tree view loads, ready for method configuration.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Create Method</h5>
+                <p class="text-slate-600">In the Resources tree, click <strong>Actions → Create Method</strong>. Select <strong>POST</strong> from the dropdown and click the checkmark.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Set Integration Type</h5>
+                <p class="text-slate-600">Choose <strong>Lambda Function</strong> as the integration type. Set your Lambda Region (e.g., us-east-1).</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Enable Proxy Integration</h5>
+                <p class="text-slate-600">Check <strong>Use Lambda Proxy integration</strong>. This passes the full raw HTTP request into your Node.js event object — critical for body parsing.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Link the Function</h5>
+                <p class="text-slate-600">Type <span class="font-mono text-indigo-700">BriefTextConverterService</span> in the Lambda Function field, confirm the autocomplete match, and click <strong>Create Method</strong>.</p>
+              </div>
+            </div>
+            <div class="callout callout-amber">
+              <span class="callout-badge">Critical</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Lambda Proxy Integration is mandatory. Without it, the raw HTTP body will not reach your Node.js handler and the API will return a 502 error.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Step 5: Deploy the API to a Live Production Stage</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/3">Deployment stage</td><td class="p-2.5 font-mono text-indigo-700">[New Stage]</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Stage name</td><td class="p-2.5 font-mono text-indigo-700">prod</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Stage description</td><td class="p-2.5 text-slate-600">Active vocational learner lab production stage</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>After deploying, the Stage Editor loads. At the top of the panel, locate the <strong>Invoke URL</strong> field — it looks like <span class="font-mono text-indigo-700">https://a1b2c3d4e5.execute-api.us-east-1.amazonaws.com/prod</span>. Copy this URL; you'll use it for the validation test next.</p>
+          </div>
+        </div>
+
+        <!-- Validation -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Task A — Live API Payload Test</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Open a second browser tab and navigate to an HTTP testing tool (an online curl executor, webhook playground, or your local terminal). Configure a POST request:</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Target URL</h5><p class="text-slate-600">Paste your copied Invoke URL into the destination address field.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Content Type</h5><p class="text-slate-600">Set the body data type to <span class="font-mono text-indigo-700">application/json</span>.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Request Body</h5><p class="text-slate-600 font-mono text-[11px]">{"name": "Professor Vance"}</p></div>
+          </div>
+          <div class="callout callout-indigo">
+            <span class="callout-badge">Expected Result</span>
+            <p class="text-xs text-indigo-950 leading-relaxed">The response status must be <strong>200 OK</strong> with a JSON body containing <span class="font-mono">"status": "SUCCESS_VALIDATION_COMPLETE"</span> and a personalized greeting confirming the event executed inside AWS Lambda without an active server host.</p>
+          </div>
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider pt-2">Task B — Lab Environment Checkpoint Verification</h3>
+          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>Return to your primary AWS Academy course instructions tab.</li>
+            <li>Locate the <strong>Lab Environment Progress Verifier</strong> sidebar panel on the right.</li>
+            <li>Click <strong>Run Active Checkpoint Environment Evaluation Script</strong> and wait for the automated checker to finish.</li>
+            <li>Confirm green checkmarks for your Lambda function, IAM role assignment, and API Gateway POST method configuration.</li>
+          </ol>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Troubleshooting Guide</h3>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Observed Error</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Root Cause</th>
+                  <th scope="col" class="p-3 font-bold border-b border-slate-200">Remediation</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Access Denied banner during function creation</td>
+                  <td class="p-3 align-top text-slate-600">Attempted to create a custom IAM role instead of using LabRole</td>
+                  <td class="p-3 align-top text-slate-600">Reopen Lambda config → expand Change default execution role → select Use an existing role → choose LabRole</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">API returns 502 Bad Gateway</td>
+                  <td class="p-3 align-top text-slate-600">Lambda Proxy Integration checkbox was not enabled on the POST method</td>
+                  <td class="p-3 align-top text-slate-600">API Gateway → Resources → POST → Integration Request → enable Use Lambda Proxy integration → save → redeploy to prod</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">API returns 504 Timeout or hangs</td>
+                  <td class="p-3 align-top text-slate-600">Code syntax error, or function was not deployed after editing</td>
+                  <td class="p-3 align-top text-slate-600">Lambda Code editor → verify index.mjs matches the guide exactly → click Deploy above the editor</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ELASTIC BEANSTALK -->
+      <section id="panel-beanstalk" role="tabpanel" aria-labelledby="tab-beanstalk" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">2. Deploying &amp; Exploring a Managed PaaS Environment with Elastic Beanstalk</h2>
+          <p class="text-slate-500 text-sm mt-1">Deploy real code to a pre-built environment and see the EC2, load balancer, and Auto Scaling resources running underneath it.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            An <strong>AWS Elastic Beanstalk</strong> environment has already been created for you. You will deploy application code to it, test that it's live, and inspect the AWS resources Beanstalk provisioned on your behalf — a security group, a load balancer, and an Auto Scaling group — all without configuring any of them by hand. <span class="font-semibold">Estimated time: 30 minutes.</span>
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Access the Elastic Beanstalk Environment</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>In the console search box, search for and choose <strong>Elastic Beanstalk</strong>. An <strong>Environments</strong> page opens listing an existing application (if Health isn't yet <strong>Ok</strong>, wait a few moments).</li>
+              <li>Choose the environment name to open its <strong>Dashboard</strong> — health should show <strong>Ok</strong>. The environment is ready to host an application, but doesn't yet have running code.</li>
+              <li>Near the top of the page, choose the <strong>Domain</strong> link (ends in <span class="font-mono text-indigo-700">elasticbeanstalk.com</span>). You should see <strong>HTTP Status 404 — Not Found</strong>.</li>
+            </ol>
+            <p class="text-slate-500 italic">This 404 is expected — the application server doesn't have an application running on it yet. Return to the Elastic Beanstalk console for the next step.</p>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Deploy a Sample Application</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Download the sample Tomcat application from AWS's documentation sample archive (<span class="font-mono text-indigo-700">tomcat.zip</span>).</li>
+            <li>Back in the Elastic Beanstalk Dashboard, choose <strong>Upload and Deploy</strong>, choose <strong>Choose File</strong>, and select the downloaded zip.</li>
+            <li>Choose <strong>Deploy</strong>. It takes a minute or two for Beanstalk to update the environment.</li>
+            <li>Once complete, revisit (or refresh) the Domain URL — the deployed web application should now display.</li>
+          </ol>
+          <div class="px-4 pb-4 space-y-3">
+            <div class="card">
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Explore Configuration</h5>
+              <p class="text-xs text-slate-600 leading-relaxed">Choose <strong>Configuration</strong> in the left pane. The <strong>Instance traffic and scaling</strong> panel shows the EC2 security groups, minimum/maximum instance counts, and instance type backing your app. The <strong>Networking, database, and tags</strong> panel is empty since this environment has no database — opening <strong>Edit</strong> there shows how easily one could be added, but this activity doesn't require it (choose <strong>Cancel</strong> to back out).</p>
+            </div>
+            <div class="card">
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Explore Monitoring</h5>
+              <p class="text-xs text-slate-600 leading-relaxed">Under <strong>Environment</strong>, choose <strong>Monitoring</strong> and browse the available charts to see what visibility Beanstalk gives you into your running application.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Explore the Resources Supporting Your Application</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Search for and open <strong>EC2</strong>, then choose <strong>Instances</strong> — two instances containing <em>samp</em> in their names are running your web application. Feel free to keep exploring; Beanstalk created these resources on your behalf, but you still have direct access to them:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Security Group</h5>
+                <p class="text-slate-600">Port 80 open to allow inbound web traffic.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Load Balancer</h5>
+                <p class="text-slate-600">Both instances are registered as targets behind it.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Auto Scaling Group</h5>
+                <p class="text-slate-600">Runs 2–6 instances depending on network load.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab 2 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Choose <strong>Submit</strong> at the top of your lab instructions to record your progress, then move on to Lab 3.</p>
+        </div>
+      </section>
+
+      <!-- TAB 3: LAMBDA + EVENTBRIDGE STOPINATOR -->
+      <section id="panel-stopinator" role="tabpanel" aria-labelledby="tab-stopinator" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">3. Automating EC2 Shutdown with Lambda &amp; EventBridge</h2>
+          <p class="text-slate-500 text-sm mt-1">Write a Python automation script and trigger it on a schedule — a real "stopinator" for runaway instances.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            In this activity you will create an AWS Lambda function and an <strong>Amazon EventBridge</strong> rule that triggers it every minute. The function uses an IAM role that allows it to stop a running EC2 instance in your account — a small but complete example of scheduled, serverless infrastructure automation. <span class="font-semibold">Estimated time: 30 minutes.</span>
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Create a Lambda Function</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Search for and open <strong>Lambda</strong>, choose <strong>Create a function</strong>, select <strong>Author from scratch</strong>, and configure:</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/3">Function name</td><td class="p-2.5 font-mono text-indigo-700">myStopinator</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Runtime</td><td class="p-2.5 font-mono text-indigo-700">Python 3.11</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Execution role</td><td class="p-2.5 font-mono text-indigo-700">Use an existing role → myStopinatorRole</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Expand <strong>Change default execution role</strong>, select <strong>Use an existing role</strong>, choose <strong>myStopinatorRole</strong> from the dropdown, then choose <strong>Create function</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Configure the EventBridge Trigger</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Configuring an EventBridge rule as the function's trigger lets it behave like a cron job or scheduled task — without needing a server to host it.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>Choose <strong>Add trigger</strong>, then select <strong>EventBridge (CloudWatch Events)</strong> from the trigger dropdown.</li>
+              <li>For the rule, choose <strong>Create a new rule</strong> and configure: Rule name <span class="font-mono text-indigo-700">everyMinute</span>; Rule type <strong>Schedule expression</strong>; Schedule expression <span class="font-mono text-indigo-700">rate(1 minute)</span>.</li>
+              <li>Choose <strong>Add</strong>.</li>
+            </ol>
+            <p class="text-slate-500 italic">A real-world "stopinator" would more likely use a cron expression. A tight 1-minute rate expression is used here purely so you can see results quickly.</p>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Configure the Lambda Function Code</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Below Function overview, choose <strong>Code</strong>, open <span class="font-mono text-indigo-700">lambda_function.py</span>, delete the existing code, and paste:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>import boto3
+region = '&lt;REPLACE_WITH_REGION&gt;'
+instances = ['&lt;REPLACE_WITH_INSTANCE_ID&gt;']
+ec2 = boto3.client('ec2', region_name=region)
+
+def lambda_handler(event, context):
+    ec2.stop_instances(InstanceIds=instances)
+    print('stopped your instances: ' + str(instances))</pre>
+            </div>
+            <p class="text-slate-500 italic">After pasting, double-check line 5 for a stray period that sometimes gets added — delete it if present.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>Replace <span class="font-mono text-indigo-700">&lt;REPLACE_WITH_REGION&gt;</span> with your actual region code (e.g., <span class="font-mono text-indigo-700">us-east-1</span> for N. Virginia — visible in the top-right region dropdown). Keep the single quotes around it.</li>
+              <li><strong>Challenge:</strong> confirm an EC2 instance named <em>instance1</em> is running, and copy its instance ID (starts with <span class="font-mono">i-</span>) from the EC2 console's Instances list / Details tab.</li>
+              <li>Back in the Lambda console, replace <span class="font-mono text-indigo-700">&lt;REPLACE_WITH_INSTANCE_ID&gt;</span> with that instance ID, keeping the single quotes.</li>
+              <li>Choose <strong>File → Save</strong>, then choose <strong>Deploy</strong> in the Code source box. The function is now fully configured and will attempt to stop your instance every minute.</li>
+              <li>Choose the <strong>Monitor</strong> tab to see invocation count, error count, and success-rate charts for your function.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Verify That the Lambda Function Worked</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>Return to the EC2 console browser tab and check whether your instance was stopped (refresh if needed).</li>
+              <li>Try starting the instance again — within about a minute, the scheduled Lambda invocation will stop it again, since the EventBridge rule keeps firing every minute regardless of who (re)started it.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab 3 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Choose <strong>Submit</strong> at the top of your lab instructions to record your progress, then <strong>End Lab</strong> and confirm to tear down the sandbox.</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Day 6 Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Serverless Means No Managed Infrastructure</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">API Gateway + Lambda deliver a full public API without provisioning a single EC2 instance, load balancer, or OS to patch.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Lambda Proxy Integration Is Load-Bearing</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Skipping it is the single most common cause of a 502 error — it's what lets the raw HTTP request reach your handler's event object.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Beanstalk Is PaaS, Not Magic</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Under the hood, Beanstalk is still creating ordinary EC2 instances, a security group, a load balancer, and an Auto Scaling group — it just manages them for you.</p>
+              </div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">EventBridge Turns Lambda into a Scheduler</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">A rate or cron-based EventBridge rule gives you serverless "cron job" behavior — automating tasks like cost-saving EC2 shutdowns with no server required to host the schedule.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 6 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html – Day5Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>
