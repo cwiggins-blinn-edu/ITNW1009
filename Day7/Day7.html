@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 7 Courseware & Interactive Portal</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Archive Box / Storage Layers Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8M10 12h4"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 7: Storage Strategies &mdash; S3, EBS, EFS &amp; Glacier</h1>
+        </div>
+      </div>
+
+      <a href="../index.html" class="inline-flex items-center gap-2 bg-indigo-900 hover:bg-indigo-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl border border-indigo-800 shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-indigo-950">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to Course
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE TEXTBOOK PORTAL CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: MASTER NAVIGATION PATHWAY -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Student Learning Modules">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+
+        <ul class="space-y-1" role="tablist" aria-label="Course Sections">
+          <li>
+            <button onclick="activateTab('overview')" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Lesson Overview
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('lecture')" id="tab-lecture" role="tab" aria-selected="false" aria-controls="panel-lecture" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Lecture Deck Link
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('analogies')" id="tab-analogies" role="tab" aria-selected="false" aria-controls="panel-analogies" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Metaphors &amp; Analogies
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('flashcards')" id="tab-flashcards" role="tab" aria-selected="false" aria-controls="panel-flashcards" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Study Flashcards
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              5. Hands-On Lab Link
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              6. Vocational Case Study
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              7. Study Companion
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              8. Mock Exam Link
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Target Exam Domain</p>
+            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 3 (Cloud Technology &amp; Services)</p>
+            <div class="w-full bg-indigo-950 rounded-full h-1.5 mt-2">
+              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- ============================================================ -->
+      <!-- TAB 1: OVERVIEW & PROFILE -->
+      <!-- ============================================================ -->
+      <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Day 7 Lesson Overview: Where Does Your Data Actually Live?</h2>
+          <p class="text-slate-500 text-sm mt-1">Object storage with Amazon S3, block storage with EBS, shared file storage with EFS, and long-term archival with S3 Glacier.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Objective 1 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Compare Object, Block &amp; File Storage</h3>
+              <p class="text-xs text-slate-600 mt-1">Compare structural differences between object storage (S3), block storage (EBS), and file storage (EFS).</p>
+            </div>
+          </div>
+          <!-- Objective 2 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Design an S3 Lifecycle Policy</h3>
+              <p class="text-xs text-slate-600 mt-1">Design an S3 lifecycle configuration policy to transition data automatically to S3 Glacier.</p>
+            </div>
+          </div>
+          <!-- Objective 3 -->
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
+            <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Evaluate Shared File Access with EFS</h3>
+              <p class="text-xs text-slate-600 mt-1">Evaluate access models for shared file environments using Amazon EFS.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Vocabulary Preview -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill pill-light">Object Storage</span>
+            <span class="pill pill-light">S3 Bucket</span>
+            <span class="pill pill-light">Lifecycle Policy</span>
+            <span class="pill pill-light">EBS Volume</span>
+            <span class="pill pill-light">EFS (Elastic File System)</span>
+            <span class="pill pill-light">Glacier Deep Archive</span>
+            <span class="pill pill-light">Durability</span>
+          </div>
+        </div>
+
+        <!-- Zoom Recordings Placeholder Block -->
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl" aria-hidden="true">🎥</span>
+            <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
+          </div>
+          <p class="text-xs text-indigo-900">
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify S3 lifecycle rule configuration and EBS snapshot walkthroughs.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lecture video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
+              <span>Day 7: Part 1 &ndash; Object, Block &amp; File Storage</span>
+              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
+            </a>
+            <a href="#" onclick="alert('This Zoom link is currently being processed. It will be configured with your custom lab briefing video recording URL soon.'); return false;" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
+              <span>Day 7: Part 2 &ndash; AWS Academy Lab 4 (EBS) Briefing</span>
+              <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Link Processing</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Instructor Guidance & Tips callout -->
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start">
+          <span class="text-xl" aria-hidden="true">💡</span>
+          <div>
+            <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
+            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
+              This session targets adult non-traditional learners. Open with the "self-storage warehouse of individual boxes" analogy for S3 before naming "object storage" &mdash; students should grasp that each object is a complete, independently labeled item, not a page in a filing folder. When contrasting EBS and EFS, emphasize the single-desk-cabinet versus shared-filing-room distinction, since that's the most commonly confused pairing on the certification exam.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 2: LECTURE DECK GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-lecture" role="tabpanel" aria-labelledby="tab-lecture" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lecture Slide Deck Repository</h2>
+          <p class="text-slate-500 text-sm mt-1">Access presentation slides and materials for class review.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🗄️</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Day 7 Presentation Lecture Deck</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Unlock the official S3, lifecycle policies, EBS, EFS, and Glacier Deep Archive slide presentation with full scripted narration notes.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 7 lecture slide deck is live and ready for download or review.</span>
+          </div>
+          <a href="Day7.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Presentation Slides</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 3: ANALOGIES LIBRARY -->
+      <!-- ============================================================ -->
+      <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Storage Strategy Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down object, block, and file storage concepts for learners with no prior IT background.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative max-w-md">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical storage terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., Glacier, EFS, Lifecycle Policy...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
+          <!-- Metaphor Card 1: Self-Storage Warehouse -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="object storage s3 bucket lifecycle policy ebs volume efs elastic file system glacier deep archive durability self-storage warehouse">
+            <div class="bg-indigo-900 text-white p-4">
+              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
+              <h3 class="font-extrabold text-base">The Self-Storage Warehouse Company</h3>
+            </div>
+            <div class="p-5 flex-grow space-y-4">
+              <p class="text-xs text-slate-600 leading-relaxed">
+                A self-storage company lets customers drop off individually labeled boxes at a warehouse, offers dedicated filing cabinets bolted to specific office desks, runs a shared filing room down the hall, and operates a deep-freeze vault for things nobody needs to touch for years.
+              </p>
+              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
+                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
+                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
+                  <li class="pt-1.5"><strong class="text-indigo-700">Object Storage:</strong> Dropping off individually labeled boxes at the warehouse, where each box is a complete, independent item with its own tag describing what's inside, rather than a page filed inside a folder.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">S3 Bucket:</strong> One assigned warehouse building where all of a customer's boxes are dropped off and organized.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Lifecycle Policy:</strong> A standing instruction filed with the warehouse manager: "any box untouched for 90 days, move it to the cheap slow-access barn out back; after a year, move it to the frozen long-term vault."</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EBS Volume:</strong> A dedicated filing cabinet bolted directly to one specific office desk &mdash; it belongs to that one desk and moves with it if reassigned.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EFS (Elastic File System):</strong> A shared central filing room down the hall that many different offices can all open and pull folders from at the same time.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Glacier Deep Archive:</strong> The frozen long-term vault buried deep in a mountain &mdash; extremely cheap to store things in, but it takes real time to retrieve a box once requested.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Durability:</strong> The warehouse company's guarantee, backed by keeping multiple identical copies of every box across separate buildings, that your box will essentially never be lost even if one building burns down.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metaphor Card 2: Regional Package Shipping Network -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="object storage s3 bucket lifecycle policy ebs volume efs elastic file system glacier deep archive durability shipping depot package">
+            <div class="bg-indigo-900 text-white p-4">
+              <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
+              <h3 class="font-extrabold text-base">The Regional Package Shipping &amp; Storage Network</h3>
+            </div>
+            <div class="p-5 flex-grow space-y-4">
+              <p class="text-xs text-slate-600 leading-relaxed">
+                A regional shipping company stores customer packages at depots, keeps a personal locker bolted to one delivery truck, shares a community storage room among multiple trucks, and runs a remote deep-freeze archive facility for long-forgotten items.
+              </p>
+              <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
+                <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
+                <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
+                  <li class="pt-1.5"><strong class="text-indigo-700">Object Storage:</strong> A regional parcel depot where every package is a self-contained unit with its own shipping label and tracking number, stored as one complete item rather than pages in a binder.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">S3 Bucket:</strong> One specific depot location assigned to hold all of a customer's packages.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Lifecycle Policy:</strong> A standing shipping company rule: "any package not requested in 30 days moves to the discount long-term storage yard; after 180 days, move it to the deep-freeze archive facility."</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EBS Volume:</strong> A personal storage locker bolted to one specific delivery truck &mdash; it belongs to that one truck and travels only with it.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">EFS (Elastic File System):</strong> A shared community storage room at the depot that many different delivery trucks can open and use at the same time.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Glacier Deep Archive:</strong> The remote deep-freeze archive facility hours away by truck &mdash; extremely cheap for long-term storage, but it takes real time to physically retrieve a package once requested.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Durability:</strong> The shipping company's guarantee that your package is duplicated across multiple separate warehouses, so even if one warehouse floods, your package is not lost.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p id="analogy-empty-state" class="text-center text-sm text-slate-400 py-8 hidden">No analogies match that search term. Try a different keyword.</p>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 4: STUDY FLASHCARDS -->
+      <!-- ============================================================ -->
+      <section id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Terminology Study Flashcards</h2>
+          <p class="text-slate-500 text-sm mt-1">Click or press Space/Enter on the card to flip between the term and its full definition.</p>
+        </div>
+
+        <div class="flex flex-col items-center gap-4">
+          <p id="card-index-count" class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true"></p>
+
+          <!-- Single normal-flow card: content is swapped on flip rather than
+               relying on absolutely-positioned overlay faces, so the card always
+               has a real, visible height regardless of parent sizing context. -->
+          <div
+            id="active-card-flipper"
+            role="button"
+            tabindex="0"
+            onclick="flipCard()"
+            aria-label="Vocabulary Flashcard"
+            class="w-full max-w-lg min-h-[280px] rounded-3xl shadow-xl p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-150"
+            style="background: linear-gradient(to bottom right, #0f172a, #1e1b4b); color: #fff; border: 1px solid #1e293b;"
+          >
+            <span id="card-side-badge" class="pill pill-dark w-fit">Front &middot; Term</span>
+
+            <div id="card-face-content" class="flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim">
+              <h3 id="flash-card-term" class="text-3xl font-black"></h3>
+              <p id="card-flip-hint" class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
+            </div>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="flex items-center gap-4 mt-2">
+            <button type="button" onclick="prevCard()" class="btn-icon-circle" aria-label="Previous flashcard">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button type="button" onclick="flipCard()" class="btn btn-primary">Flip Card</button>
+            <button type="button" onclick="nextCard()" class="btn-icon-circle" aria-label="Next flashcard">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">AWS Academy Lab 4 Gateway: Working with EBS</h2>
+          <p class="text-slate-500 text-sm mt-1">Connect block storage attachments, build partition layouts, and complete EBS snapshots using the pre-provisioned LabRole profile.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Day 7 Hands-On Lab: AWS Academy Cloud Foundations Lab 4 &ndash; Working with EBS</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Using the pre-provisioned LabRole security profile, attach and partition an EBS volume, verify it with the curriculum's automatic checkpoint checks, and complete a volume snapshot.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">The Day 7 storage lab guide is live, covering EBS volumes, partitioning, and snapshots.</span>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="Day7Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+              <span>Launch Day 7 Hands-On Lab Guide</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+            <a href="Day7Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
+              <span>Download Day 7 Lab Guide (PDF)</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 6: VOCATIONAL CASE STUDY -->
+      <!-- ============================================================ -->
+      <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: Ten Years in Deep Freeze</h2>
+          <p class="text-slate-500 text-sm mt-1">A medical records compliance case built on an S3-to-Glacier Deep Archive lifecycle pipeline.</p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+          <h3 class="font-extrabold text-slate-900 text-lg">MedArchive Health Systems' Ten-Year Retention Rule</h3>
+          <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
+            <p>
+              MedArchive Health Systems operates several regional clinics, and state law requires the organization to retain every patient record for a full ten years after a patient's last visit, even though the overwhelming majority of records are never accessed again after the first ninety days. When MedArchive first migrated to AWS, the IT team stored every single record &mdash; active and decade-old alike &mdash; in the S3 Standard storage class, since it was simple to set up and required no ongoing maintenance. Within two years, the storage bill had grown enormous, driven almost entirely by old records that were legally required to exist but were essentially never opened.
+            </p>
+            <p>
+              A newly hired cloud administrator proposed a tiered lifecycle policy instead of keeping every object in the same expensive storage class forever. Records would remain in S3 Standard for the first 90 days while clinical staff might still need frequent access, automatically transition to S3 Standard-Infrequent Access for the next several months, and then automatically transition into S3 Glacier Deep Archive once a record passed one year without any access &mdash; all the way through the remainder of the mandatory ten-year retention window. This single lifecycle configuration cut MedArchive's long-term storage costs dramatically, since Glacier Deep Archive charges only a small fraction of Standard storage pricing for data nobody expects to touch again soon.
+            </p>
+            <p>
+              The tradeoff surfaced eighteen months later, when a malpractice lawsuit required MedArchive's legal team to produce a six-year-old patient record within a matter of days. The compliance officer discovered that Glacier Deep Archive retrievals are not instant &mdash; standard retrieval can take many hours to complete, and legal deadlines don't always allow for that kind of delay. The team learned to build litigation-hold procedures around expedited retrieval requests and to flag any record connected to an active legal matter before it fully aged into Deep Archive, ensuring compliance with both the retention law and any future court deadlines.
+            </p>
+          </div>
+        </div>
+
+        <!-- Interactive Case Analysis & Dropdown selector -->
+        <div class="border border-slate-200 rounded-2xl p-5 space-y-4">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wider">Interactive Analysis Checkpoint</h4>
+
+          <div class="space-y-4 text-xs">
+            <div class="space-y-1.5">
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why did a tiered lifecycle policy make more financial sense than storing all ten years of records in S3 Standard the whole time?</label>
+              <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">Glacier Deep Archive charges a small fraction of Standard pricing for data almost never accessed, matching cost to how rarely old records are actually opened</option>
+                <option value="B">S3 Standard cannot legally store medical records at all</option>
+                <option value="C">Lifecycle policies make data completely inaccessible after 90 days regardless of legal requirements</option>
+              </select>
+              <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
+            </div>
+
+            <div class="space-y-1.5 border-t pt-3">
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. What operational risk did storing legally-required records in Glacier Deep Archive introduce for MedArchive?</label>
+              <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">Standard Glacier Deep Archive retrieval can take many hours, which can conflict with fast-moving legal deadlines</option>
+                <option value="B">Data in Glacier Deep Archive is permanently deleted after one year</option>
+                <option value="C">Glacier Deep Archive cannot store any data related to an active lawsuit</option>
+              </select>
+              <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
+            </div>
+
+            <div class="space-y-1.5 border-t pt-3">
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. Would it make sense for MedArchive to place brand-new patient records directly into Glacier Deep Archive from day one instead of S3 Standard?</label>
+              <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
+                <option value="">Select your diagnostic answer...</option>
+                <option value="A">No — new records are often accessed frequently in the first 90 days, and Deep Archive's slow retrieval times would disrupt normal clinical workflows</option>
+                <option value="B">Yes — Glacier Deep Archive offers instant retrieval, so there is never a downside to storing everything there from day one</option>
+                <option value="C">Yes — clinical staff never need to access a patient's record after their visit ends</option>
+              </select>
+              <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instructor Grading Criteria checklist dropdown -->
+        <div class="bg-indigo-50 border border-indigo-150 p-4 rounded-xl text-xs">
+          <button type="button" onclick="toggleGradingRubric()" class="flex justify-between items-center w-full font-bold text-indigo-900 focus:outline-none" aria-expanded="false" aria-controls="case-grading-rubric">
+            <span>📋 Click to Reveal Instructor Grading Rubric &amp; Answer Key</span>
+            <span id="rubric-arrow">&darr;</span>
+          </button>
+
+          <div id="case-grading-rubric" class="hidden mt-3 space-y-3 leading-relaxed text-indigo-950">
+            <p><strong>Correct answers:</strong> 1-A, 2-A, 3-A.</p>
+            <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
+            <ul class="list-disc pl-4 space-y-1">
+              <li><strong>Cost Model Justification:</strong> Student correctly explains that tiered lifecycle transitions match storage cost to actual access frequency, dramatically reducing long-term expense for rarely-accessed compliance data.</li>
+              <li><strong>Retrieval Risk Awareness:</strong> Student identifies that Glacier Deep Archive's multi-hour standard retrieval time can conflict with time-sensitive legal or clinical needs, and explains why proactive planning (litigation holds, expedited retrieval) matters.</li>
+              <li><strong>Appropriate Tiering Strategy:</strong> Student explains why brand-new records should not go directly into Deep Archive, correctly reasoning from expected early access frequency rather than assuming Deep Archive is always superior or always instant.</li>
+              <li><strong>Compliance Integration:</strong> Student connects the lifecycle policy design directly to the ten-year legal retention requirement, rather than treating cost savings and legal compliance as unrelated concerns.</li>
+              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., lifecycle policy, storage class transition, retrieval time, retention requirement).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 7: LESSON 7 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lesson 7 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 7 object, block, file, and archival storage material.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 7: Storage Strategies &mdash; S3, EBS, EFS &amp; Glacier</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Review key terms, lifecycle-policy scenario practice, and a storage-type sorting game tailored to reinforce Day 7 material.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Study companion is live and ready for review.</span>
+          </div>
+          <a href="Lesson_7_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Study Companion</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 8: MOCK EXAM PORTAL GATEWAY (LINK PLACEHOLDER) -->
+      <!-- ============================================================ -->
+      <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">AWS Practice Certification Hub</h2>
+          <p class="text-slate-500 text-sm mt-1">Review core exam patterns and practice testing domains online.</p>
+        </div>
+
+        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📝</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Test your proficiency in Object Storage, S3 Buckets, Lifecycle Policies, EBS Volumes, EFS, Glacier Deep Archive, and Durability.
+            </p>
+          </div>
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+            <span class="text-emerald-600">Day 7 mock quiz is live and ready to take.</span>
+          </div>
+          <a href="Day7_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+            <span>Launch Certification Exam Simulator</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+
+      <!-- PORTAL SHARED WORKSPACE FOOTER -->
+      <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
+        <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+        <p class="flex items-center gap-1.5 font-bold text-slate-500">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          WCAG 2.1 AA Compliant Active Textbook
+        </p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- JAVASCRIPT CONTROL MECHANISMS -->
+  <script>
+    /* ==========================================================
+       TAB CONTROLLER
+       ========================================================== */
+    function activateTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched course text viewer to: " + sectionName;
+    }
+
+    /* ==========================================================
+       ANALOGIES SEARCH FILTER
+       ========================================================== */
+    function filterAnalogies() {
+      const val = document.getElementById('analogy-search').value.toLowerCase();
+      const cards = document.querySelectorAll('#analogies-grid > div');
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const terms = card.getAttribute('data-terms').toLowerCase();
+        if (terms.includes(val)) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      document.getElementById('analogy-empty-state').classList.toggle('hidden', visibleCount !== 0);
+    }
+
+    /* ==========================================================
+       TERMINOLOGY FLASHCARDS DATABASE
+       ========================================================== */
+    const cardData = [
+      {
+        term: "Object Storage",
+        definition: "A storage architecture that saves data as complete, self-contained units called objects, each with its own unique identifier and metadata, rather than organizing data into folder hierarchies.",
+        analogy: "Dropping off individually labeled boxes at a warehouse, where each box is a complete, independent item with its own descriptive tag.",
+        scenario: "A developer stores website images as objects in S3, each retrievable directly by its unique key rather than navigating a folder tree.",
+        quiz: "Does object storage organize data using traditional nested folders like a desktop computer?",
+        answer: "No. Object storage saves each item as a complete, independent object with metadata and a unique key, rather than nested folders."
+      },
+      {
+        term: "S3 Bucket",
+        definition: "A container in Amazon S3 that holds objects; every object stored in S3 must belong to exactly one bucket, which has a globally unique name.",
+        analogy: "One assigned warehouse building where all of a customer's boxes are dropped off and organized.",
+        scenario: "A technician creates a dedicated S3 bucket for a company's marketing assets, separate from another bucket used for application logs.",
+        quiz: "Can two different AWS customers create S3 buckets with the exact same name?",
+        answer: "No. S3 bucket names must be globally unique across all of AWS, not just within one account."
+      },
+      {
+        term: "Lifecycle Policy",
+        definition: "A set of rules configured on an S3 bucket that automatically transitions objects between storage classes, or deletes them, based on the age of the data.",
+        analogy: "A standing instruction filed with the warehouse manager to automatically move untouched boxes to cheaper storage the older they get.",
+        scenario: "A cloud administrator configures a lifecycle policy that moves records to S3 Standard-IA after 90 days and into Glacier Deep Archive after one year.",
+        quiz: "What triggers a lifecycle policy to move an object between storage classes?",
+        answer: "The age of the object (how long it has existed or gone unaccessed), based on rules the administrator configures in the policy."
+      },
+      {
+        term: "EBS Volume",
+        definition: "Amazon Elastic Block Store: a persistent block-level storage volume that attaches to a single EC2 instance, functioning like a virtual hard drive dedicated to that one server.",
+        analogy: "A dedicated filing cabinet bolted directly to one specific office desk — it belongs to that one desk and moves with it if reassigned.",
+        scenario: "A technician attaches an EBS volume to an EC2 instance to give it additional persistent disk space for a database.",
+        quiz: "Can a single EBS volume be attached to many EC2 instances at the same time for normal read/write use?",
+        answer: "No. A standard EBS volume is designed to attach to one EC2 instance at a time, unlike a shared file system."
+      },
+      {
+        term: "EFS (Elastic File System)",
+        definition: "Amazon Elastic File System: a scalable, shared file storage service that can be mounted simultaneously by many EC2 instances at once, functioning like a shared network drive.",
+        analogy: "A shared central filing room down the hall that many different offices can all open and pull folders from at the same time.",
+        scenario: "A team mounts the same EFS file system across a fleet of EC2 instances so every web server can access the same shared upload folder.",
+        quiz: "What is the key difference between EFS and a standard EBS volume?",
+        answer: "EFS can be mounted and accessed by many EC2 instances simultaneously, while a standard EBS volume attaches to only one instance at a time."
+      },
+      {
+        term: "Glacier Deep Archive",
+        definition: "The lowest-cost Amazon S3 storage class, designed for long-term data archival that is rarely if ever accessed, with retrieval times typically measured in hours rather than milliseconds.",
+        analogy: "The frozen long-term vault buried deep in a mountain — extremely cheap to store things in, but it takes real time to retrieve a box once requested.",
+        scenario: "A compliance officer configures a lifecycle policy that moves decade-old patient records into Glacier Deep Archive to minimize long-term storage costs.",
+        quiz: "Is Glacier Deep Archive a good fit for data that needs to be retrieved instantly at any moment?",
+        answer: "No. Glacier Deep Archive standard retrieval can take many hours, so it is best suited for rarely-accessed, long-term archival data."
+      },
+      {
+        term: "Durability",
+        definition: "A measure of how reliably a storage service protects data against loss over time, typically expressed as a percentage (such as 99.999999999%) describing the extremely low likelihood of losing a stored object.",
+        analogy: "The warehouse company's guarantee, backed by keeping multiple identical copies of every box across separate buildings, that your box will essentially never be lost.",
+        scenario: "A technician explains to a client that S3's extremely high durability rating means their stored objects are protected even if an entire data center facility were lost.",
+        quiz: "Does high durability mean data is retrieved quickly, or that data is unlikely to be lost?",
+        answer: "Durability describes how unlikely data is to be lost over time — it does not describe retrieval speed, which is a separate performance characteristic."
+      }
+    ];
+
+    let currentCardIndex = 0;
+    let cardIsFlipped = false;
+
+    function renderFlashcardUI() {
+      const card = cardData[currentCardIndex];
+      const flipper = document.getElementById('active-card-flipper');
+      const badge = document.getElementById('card-side-badge');
+      const content = document.getElementById('card-face-content');
+
+      document.getElementById('card-index-count').textContent = `Card ${currentCardIndex + 1} of ${cardData.length}`;
+
+      if (cardIsFlipped) {
+        badge.className = "pill pill-light w-fit mb-2";
+        badge.textContent = "Back \u00B7 Details";
+        content.className = "flex-grow text-left w-full flip-face-anim";
+        content.innerHTML = `
+          <table class="w-full text-xs">
+            <caption class="sr-only">Full vocabulary detail for ${card.term}</caption>
+            <tbody>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Term</th>
+                <td class="py-1 font-bold text-white">${card.term}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Definition</th>
+                <td class="py-1 text-indigo-50">${card.definition}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Analogy</th>
+                <td class="py-1 italic text-indigo-100">${card.analogy}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left align-top pr-2 py-1 font-extrabold text-indigo-200 whitespace-nowrap">Workplace Use</th>
+                <td class="py-1 text-indigo-50">${card.scenario}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="flash-card-quiz" class="text-xs bg-amber-50 text-slate-800 border border-amber-200 rounded-lg p-2 mt-3">
+            <span class="font-extrabold text-slate-700">Quiz Checkpoint:</span> <span class="block text-slate-600 italic">${card.quiz}</span>
+          </div>
+          <button type="button" onclick="revealCardQuizAnswer(event)" class="btn btn-secondary text-[11px] mt-2">Reveal Quiz Answer</button>
+        `;
+        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Back side showing definition for: ${card.term}. Definition: ${card.definition}. Click or press space to flip back.`);
+      } else {
+        badge.className = "pill pill-dark w-fit";
+        badge.textContent = "Front \u00B7 Term";
+        content.className = "flex-grow flex flex-col items-center justify-center text-center px-2 flip-face-anim";
+        content.innerHTML = `
+          <h3 class="text-3xl font-black">${card.term}</h3>
+          <p class="text-[11px] text-indigo-200 mt-3">Click card or press Space to reveal definition</p>
+        `;
+        flipper.setAttribute('aria-label', `Vocabulary Flashcard. Front side. Term: ${card.term}. Click or press space to flip and see details.`);
+      }
+    }
+
+    function flipCard() {
+      cardIsFlipped = !cardIsFlipped;
+      renderFlashcardUI();
+    }
+
+    function prevCard() {
+      currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : cardData.length - 1;
+      cardIsFlipped = false;
+      renderFlashcardUI();
+    }
+
+    function nextCard() {
+      currentCardIndex = (currentCardIndex < cardData.length - 1) ? currentCardIndex + 1 : 0;
+      cardIsFlipped = false;
+      renderFlashcardUI();
+    }
+
+    function revealCardQuizAnswer(e) {
+      e.stopPropagation();
+      const card = cardData[currentCardIndex];
+      document.getElementById('sr-alert-announcer').textContent = "Quiz answer revealed: " + card.answer;
+      const blockText = document.getElementById('flash-card-quiz');
+      if (blockText) {
+        blockText.innerHTML = `<span class="text-indigo-800 font-bold block">Correct Answer:</span> ${card.answer}`;
+      }
+    }
+
+    document.getElementById('active-card-flipper').addEventListener('keydown', function(event) {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        flipCard();
+      }
+    });
+
+    renderFlashcardUI();
+
+    /* ==========================================================
+       CASE STUDY LOGIC
+       ========================================================== */
+    function evaluateCaseChoice(qNum) {
+      const drop = document.getElementById(`case-dropdown-${qNum}`);
+      const feedback = document.getElementById(`case-feedback-${qNum}`);
+      feedback.classList.remove('hidden');
+
+      if (qNum === 1) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! Glacier Deep Archive charges a small fraction of Standard pricing, matching storage cost to how rarely decade-old records are actually accessed.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Reread the second paragraph and consider how pricing differs across S3 storage classes.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      } else if (qNum === 2) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! Glacier Deep Archive's multi-hour standard retrieval time can conflict with fast-moving legal deadlines, which is exactly what happened during the lawsuit.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Consider what happened when the legal team needed a six-year-old record quickly.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      } else if (qNum === 3) {
+        if (drop.value === 'A') {
+          feedback.textContent = "Correct! New records are often accessed frequently in the first 90 days, so Deep Archive's slow retrieval times would disrupt normal clinical workflows if used immediately.";
+          feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
+        } else {
+          feedback.textContent = "Incorrect. Consider how often a brand-new patient record is actually accessed compared to a ten-year-old one.";
+          feedback.className = "text-xs mt-1 text-rose-700 font-bold";
+        }
+      }
+    }
+
+    function toggleGradingRubric() {
+      const rubric = document.getElementById('case-grading-rubric');
+      const arrow = document.getElementById('rubric-arrow');
+      const btn = rubric.previousElementSibling;
+      if (rubric.classList.contains('hidden')) {
+        rubric.classList.remove('hidden');
+        arrow.innerHTML = "&uarr;";
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        rubric.classList.add('hidden');
+        arrow.innerHTML = "&darr;";
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  </script>
+</body>
+</html>

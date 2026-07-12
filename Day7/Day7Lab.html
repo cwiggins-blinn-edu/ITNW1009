@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 7 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 7: Cloud Storage &amp; Networking Solutions</h1>
+        </div>
+      </div>
+
+      <a href="Day7Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 7 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">135 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li class="pt-1 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 1 · EBS &amp; Storage Sandbox</li>
+          <li>
+            <button onclick="activateTab('ebs')" id="tab-ebs" role="tab" aria-selected="true" aria-controls="panel-ebs" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Part A: Guided EBS Lab
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('sandbox')" id="tab-sandbox" role="tab" aria-selected="false" aria-controls="panel-sandbox" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Part B: S3 &amp; Glacier Sandbox
+            </button>
+          </li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 2 · VPC &amp; Web Server</li>
+          <li>
+            <button onclick="activateTab('vpcbuild')" id="tab-vpcbuild" role="tab" aria-selected="false" aria-controls="panel-vpcbuild" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Build the Multi-AZ VPC
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('vpcweb')" id="tab-vpcweb" role="tab" aria-selected="false" aria-controls="panel-vpcweb" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Security Group &amp; Web Server
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: PART A - GUIDED EBS LAB -->
+      <section id="panel-ebs" role="tabpanel" aria-labelledby="tab-ebs" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 1, Part A: Working with Amazon Elastic Block Store (EBS)</h2>
+          <p class="text-slate-500 text-sm mt-1">Provision, attach, format, mount, and snapshot a persistent block storage volume on a live EC2 instance.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Amazon EBS</strong> provides persistent, high-performance raw block storage that behaves exactly like a physical internal hard disk attached to your server. In this 75-minute guided lab, you'll gain career-ready skills in provisioning, formatting, mounting, and backing up EBS volumes on a running compute instance.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Critical Permission Rules</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            AWS Academy environments are governed by Service Control Policies (SCPs). Never create custom IAM Users, Groups, or root billing notifications. Always use the pre-provisioned security profile named <strong>LabRole</strong> when authorizing instances or writing policies. Violating these triggers immediate "Access Denied" errors.
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Initialize the Pre-Packaged Environment</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Log into your AWS Academy Learning Portal (Canvas) and locate <strong>Lab 4: Working with EBS</strong> in the navigation links.</li>
+            <li>Click <strong>Start Lab</strong>. A countdown timer and status circle appear — wait until the circle turns from amber to solid green.</li>
+            <li>Click the <strong>AWS</strong> text link directly to the left of the green status light to open an authenticated Management Console session.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create a Standalone EBS Volume</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Navigate to <strong>EC2 → Elastic Block Store → Volumes</strong> using the top search bar. Click <strong>Create volume</strong> and configure:</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                  <tr><th class="p-2.5 font-bold">Setting</th><th class="p-2.5 font-bold">Required Value</th><th class="p-2.5 font-bold">Why It Matters</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Volume type</td><td class="p-2.5 font-mono text-indigo-700">General Purpose SSD (gp3)</td><td class="p-2.5 text-slate-600">Default; within Academy sandbox cost limits</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Size</td><td class="p-2.5 font-mono text-indigo-700">10 GiB exactly</td><td class="p-2.5 text-slate-600">Larger sizes are blocked by SCPs</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Availability Zone</td><td class="p-2.5 font-mono text-indigo-700">Match your running EC2 instance</td><td class="p-2.5 text-slate-600">EBS volumes cannot attach across AZs</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout callout-amber">
+              <span class="callout-badge">AZ Alignment Is Critical</span>
+              <p class="text-xs text-amber-900 leading-relaxed">An EBS volume works like an internal hard disk over a low-latency local bus — it is structurally impossible to attach to an EC2 instance in a different Availability Zone. Always verify your AZ before clicking Create volume.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Attach the Volume to LabHost</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>In the Volumes table, check the box next to your new 10 GiB volume and confirm its state reads <strong>Available</strong>.</li>
+            <li>Click <strong>Actions → Attach volume</strong>. In the Instance field, select the pre-provisioned virtual machine named <strong>LabHost</strong>.</li>
+            <li>Leave the default device path (e.g., <span class="font-mono text-indigo-700">/dev/sdf</span> or <span class="font-mono text-indigo-700">/dev/xvdf</span>) unchanged and click <strong>Attach volume</strong>.</li>
+            <li>Watch the status column refresh from <strong>Available</strong> to <strong>In-use</strong>, confirming successful attachment.</li>
+          </ol>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Connect via CLI &amp; Mount the Disk</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Go to <strong>EC2 → Instances</strong>, select LabHost, click <strong>Connect</strong>, choose the <strong>EC2 Instance Connect</strong> tab (username <span class="font-mono text-indigo-700">ec2-user</span>), and click <strong>Connect</strong> to open a browser-based Linux terminal. Run each command in sequence:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Step 1 — Verify Disk Attachment</h5>
+                <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mb-1">lsblk</div>
+                <p class="text-slate-600">You should see a secondary device (xvdf, ~10G) alongside the root disk.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Step 2 — Format with XFS</h5>
+                <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mb-1">sudo mkfs -t xfs /dev/xvdf</div>
+                <p class="text-slate-600">Applies an XFS file system to the raw disk. Do not skip — mounting unformatted storage will fail.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Steps 3–4 — Mount Point &amp; Mount</h5>
+                <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mb-1">sudo mkdir /mnt/data-store<br>sudo mount /dev/xvdf /mnt/data-store</div>
+                <p class="text-slate-600">Creates the directory and binds the formatted disk to it.</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Step 5 — Verify &amp; Write Test File</h5>
+                <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mb-1">df -h<br>echo "ITNW 1009 EBS Lab Verification Complete" | sudo tee /mnt/data-store/lab-check.txt</div>
+                <p class="text-slate-600">The <span class="font-mono">df -h</span> output must show /dev/xvdf mounted at /mnt/data-store with ~10G capacity.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Create an EBS Snapshot Backup</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Snapshots are point-in-time backups stored in Amazon S3, essential for enterprise data durability. Without closing your terminal tab, navigate to <strong>Snapshots</strong> and choose <strong>Create Snapshot</strong>. In the Description field, enter exactly:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px]">EBS Automated Class Backup Snapshot Target</div>
+            <p>Monitor status until it changes from <strong>Pending</strong> to <strong>Completed</strong>, then return to the Academy dashboard and click <strong>Submit / Check Progress</strong> to lock in your grade points.</p>
+          </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Part A — Troubleshooting Reference</h3>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr><th class="p-3 font-bold border-b border-slate-200">Error Symptom</th><th class="p-3 font-bold border-b border-slate-200">Root Cause</th><th class="p-3 font-bold border-b border-slate-200">Remediation Steps</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700">"UnauthorizedOperation" during volume creation</td>
+                  <td class="p-3 align-top text-slate-600">Selected a restricted volume type (e.g., io2) or a size greater than 10 GiB — both blocked by Academy SCPs</td>
+                  <td class="p-3 align-top text-slate-600">Delete the draft. Restart Task 2 using gp3 type and exactly 10 GiB</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Mount command prints "wrong fs type, bad option, bad superblock on /dev/xvdf"</td>
+                  <td class="p-3 align-top text-slate-600">The formatting step (mkfs) was skipped — attempting to mount a raw, empty block device</td>
+                  <td class="p-3 align-top text-slate-600">Run <span class="font-mono">sudo mkfs -t xfs /dev/xvdf</span> first, then re-run the mount command</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PART B - SANDBOX S3 & GLACIER -->
+      <section id="panel-sandbox" role="tabpanel" aria-labelledby="tab-sandbox" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 1, Part B: Sandbox Scratch Build — VPC, EC2, S3 &amp; Glacier Deep Archive</h2>
+          <p class="text-slate-500 text-sm mt-1">Act as Lead Cloud Engineer: build the network, deploy a host, and automate long-term archival — all from scratch.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            In Part B you step into the role of a Lead Cloud Systems Engineer, building a complete infrastructure environment from absolute scratch — no templates, no pre-made resources — inside the unguided AWS Academy Learner Lab Sandbox.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">$100 Budget — Hard Limit</span>
+          <p class="text-xs text-amber-900 leading-relaxed">Your cumulative sandbox operations are strictly capped at $100 total. Never leave unused Elastic IP allocations running, do not provision oversized EBS volumes, and always terminate resources at the end of every session. Restrict all builds to t2.micro or t3.micro, using the default Amazon Linux 2023 AMI only.</p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Initialize the Sandbox Environment</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Open your Canvas course portal and click the <strong>AWS Academy Learner Lab Sandbox</strong> module link.</li>
+            <li>Click <strong>Start Lab</strong>. The engine builds a completely blank cloud sandbox account — wait for the status circle to turn solid green.</li>
+            <li>Click <strong>AWS Console</strong> to open a new tab and confirm the top-right region dropdown reads N. Virginia (us-east-1) or your designated regional sector.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Build the Virtual Private Network</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Each component must be created in order — the subnet references the VPC, the internet gateway attaches to the VPC, and the route table entry must point to the gateway before any EC2 instance can reach the internet.</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                  <tr><th class="p-2.5 font-bold">Resource</th><th class="p-2.5 font-bold">Name / Value</th><th class="p-2.5 font-bold">Notes</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700">VPC</td><td class="p-2.5 font-mono text-indigo-700">CustomStorageSandboxVPC</td><td class="p-2.5 text-slate-600">IPv4 CIDR: 10.0.0.0/16 · Select "VPC only"</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Subnet</td><td class="p-2.5 font-mono text-indigo-700">PublicStorageSubnet</td><td class="p-2.5 text-slate-600">AZ: us-east-1a · IPv4 CIDR: 10.0.1.0/24</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Internet Gateway</td><td class="p-2.5 font-mono text-indigo-700">SandboxIGW</td><td class="p-2.5 text-slate-600">After creation, use Actions → Attach to VPC</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Route Table Rule</td><td class="p-2.5 font-mono text-indigo-700">Destination: 0.0.0.0/0</td><td class="p-2.5 text-slate-600">Target: Internet Gateway → SandboxIGW</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Configure the Security Group</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Navigate to <strong>VPC → Security → Security groups</strong> and click <strong>Create security group</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Basic Identity</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">StorageServerSG</span></li>
+                  <li>Description: Authorize localized incoming SSH transport operations</li>
+                  <li>VPC: select CustomStorageSandboxVPC (remove the default)</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Type: SSH (auto-sets port to 22)</li>
+                  <li>Source: Anywhere-IPv4 (0.0.0.0/0)</li>
+                </ul>
+              </div>
+            </div>
+            <p class="text-slate-500 italic">In a real production environment you would restrict SSH to specific IP ranges rather than 0.0.0.0/0 — for this sandbox, Anywhere-IPv4 is acceptable for simplicity.</p>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Deploy a Cost-Efficient EC2 Instance</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Navigate to <strong>EC2 → Instances → Launch instances</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Instance Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">SandboxStorageHost</span></li>
+                  <li>AMI: Amazon Linux 2023 (default)</li>
+                  <li>Instance type: t2.micro or t3.micro</li>
+                  <li>Key pair: select vockey</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC: CustomStorageSandboxVPC</li>
+                  <li>Subnet: PublicStorageSubnet</li>
+                  <li>Auto-assign public IP: Enable</li>
+                  <li>Security group: existing → StorageServerSG</li>
+                </ul>
+              </div>
+            </div>
+            <p>Click <strong>Launch instance</strong>. Your instance begins initializing within your custom VPC.</p>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Provision an S3 Bucket &amp; Glacier Lifecycle Policy</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>In the console search bar, type <span class="font-mono text-indigo-700">S3</span> and click <strong>Create bucket</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Name Your Bucket (Critical)</h5>
+                <p class="text-slate-600">S3 bucket names are globally unique. Use this exact format, all lowercase, no spaces: <span class="font-mono text-indigo-700">itnw1009-sandboxoutage-yourname-2026</span></p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Object Ownership &amp; Public Access</h5>
+                <p class="text-slate-600">Leave Object Ownership at <strong>ACLs disabled</strong>. Keep all <strong>Block Public Access</strong> checkboxes checked to prevent accidental exposure.</p>
+              </div>
+            </div>
+            <p>Scroll down and click <strong>Create bucket</strong>, then click into it. Choose the <strong>Management</strong> tab → <strong>Create lifecycle rule</strong>:</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/3">Lifecycle rule name</td><td class="p-2.5 font-mono text-indigo-700">AutomatedGlacierDeepArchiveTransitionPolicy</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Rule scope</td><td class="p-2.5 text-slate-600">Apply to all objects in the bucket (check the confirmation warning)</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Lifecycle rule action</td><td class="p-2.5 text-slate-600">Move current versions of objects between storage classes</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Storage class transition</td><td class="p-2.5 font-mono text-indigo-700">Glacier Deep Archive</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Days after object creation</td><td class="p-2.5 font-mono text-indigo-700">30</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Click <strong>Create rule</strong>. Exactly 30 calendar days after any object's upload timestamp, this policy automatically moves it from active S3 storage into the rock-bottom-cost Glacier Deep Archive vault, with zero manual intervention.</p>
+          </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Part B — Troubleshooting Reference</h3>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr><th class="p-3 font-bold border-b border-slate-200">Error Symptom</th><th class="p-3 font-bold border-b border-slate-200">Root Cause</th><th class="p-3 font-bold border-b border-slate-200">Remediation Steps</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700">S3 creation fails: "Bucket name already exists"</td>
+                  <td class="p-3 align-top text-slate-600">Your chosen name is already in use by another AWS account globally — bucket names must be universally unique</td>
+                  <td class="p-3 align-top text-slate-600">Return to Task 5. Append random digits or your student ID to the bucket name and resubmit</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">EC2 instance boots but terminal returns a connection timeout error</td>
+                  <td class="p-3 align-top text-slate-600">The VPC route table is missing the 0.0.0.0/0 → SandboxIGW entry, or the subnet isn't associated with the route table</td>
+                  <td class="p-3 align-top text-slate-600">Revisit Task 2. Verify the destination 0.0.0.0/0 targets SandboxIGW and confirm subnet association under Subnet Associations</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Cleanup -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Mandatory Teardown — Protect Your $100 Budget</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">1</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Terminate EC2</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">EC2 → Instances → select SandboxStorageHost → Instance state → Terminate instance.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">2</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Delete the VPC</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">VPC → select CustomStorageSandboxVPC → Actions → Delete VPC. This cascades to subnets, security groups, and the gateway.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">3</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Verify Clean State</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Confirm no running instances, allocated Elastic IPs, or unexpected EBS volumes remain before ending your session.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concepts Review -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Key Concepts: Storage Services Compared</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Amazon EBS</h5><p class="text-xs text-slate-600 leading-relaxed">Persistent block storage attached to a single EC2 instance. Behaves like a physical internal hard disk. Must be in the same AZ as its instance. Ideal for OS volumes, databases, and low-latency I/O.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Amazon S3</h5><p class="text-xs text-slate-600 leading-relaxed">Scalable object storage accessible from anywhere. Stores files inside globally-named buckets. Ideal for backups, static websites, data lakes, and media delivery.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">S3 Glacier Deep Archive</h5><p class="text-xs text-slate-600 leading-relaxed">The lowest-cost AWS storage class for long-term compliance archiving. Retrieval takes up to 12 hours. Best for regulatory records and audit logs retained for 7–10+ years.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: BUILD THE VPC (LAB 2) -->
+      <section id="panel-vpcbuild" role="tabpanel" aria-labelledby="tab-vpcbuild" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 1: Build Your VPC</h2>
+          <p class="text-slate-500 text-sm mt-1">Use the "VPC and more" wizard to stand up a multi-AZ network with public and private subnets, route tables, and a NAT Gateway.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Amazon VPC</strong> lets you launch AWS resources into a virtual network you define — closely resembling a traditional data center network, with the scalability of AWS. This lab creates a VPC spanning two Availability Zones, then configures a security group and launches an EC2 web server into it. <span class="font-semibold">Estimated time: 30 minutes.</span>
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Create Your VPC with "VPC and More"</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Search for and open <strong>VPC</strong>, confirm the region reads <strong>N. Virginia (us-east-1)</strong>, choose the <strong>VPC dashboard</strong> link, then choose <strong>Create VPC</strong> (or <strong>Launch VPC Wizard</strong> if that's what appears). Select <strong>VPC and more</strong> and configure:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Core Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name tag auto-generation: keep Auto-generate, change value from "project" to <span class="font-mono text-indigo-700">lab</span></li>
+                  <li>IPv4 CIDR block: keep <span class="font-mono text-indigo-700">10.0.0.0/16</span></li>
+                  <li>Number of Availability Zones: <span class="font-mono text-indigo-700">1</span></li>
+                  <li>Number of public subnets: keep <span class="font-mono text-indigo-700">1</span>; private subnets: keep <span class="font-mono text-indigo-700">1</span></li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Subnet CIDRs &amp; NAT</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Expand Customize subnets CIDR blocks</li>
+                  <li>Public subnet CIDR (us-east-1a): <span class="font-mono text-indigo-700">10.0.0.0/24</span></li>
+                  <li>Private subnet CIDR (us-east-1a): <span class="font-mono text-indigo-700">10.0.1.0/24</span></li>
+                  <li>NAT gateways: <span class="font-mono text-indigo-700">In 1 AZ</span>; VPC endpoints: <span class="font-mono text-indigo-700">None</span></li>
+                  <li>Keep DNS hostnames and DNS resolution both enabled</li>
+                </ul>
+              </div>
+            </div>
+            <p>Confirm the Preview panel shows VPC <span class="font-mono text-indigo-700">lab-vpc</span>, subnets <span class="font-mono text-indigo-700">lab-subnet-public1-us-east-1a</span> / <span class="font-mono text-indigo-700">lab-subnet-private1-us-east-1a</span>, route tables <span class="font-mono text-indigo-700">lab-rtb-public</span> / <span class="font-mono text-indigo-700">lab-rtb-private1-us-east-1a</span>, and network connections <span class="font-mono text-indigo-700">lab-igw</span> / <span class="font-mono text-indigo-700">lab-nat-public1-us-east-1a</span>. Choose <strong>Create VPC</strong> and wait for all resources — including the NAT Gateway — to finish provisioning before choosing <strong>View VPC</strong>.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Internet Gateway</h5>
+                <p class="text-slate-600">Allows communication between EC2 instances in your VPC and the internet. The public subnet's route table sends 0.0.0.0/0 traffic here — that's what makes it "public."</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">NAT Gateway</h5>
+                <p class="text-slate-600">Provides internet connectivity to instances in private subnets without giving them a direct connection to the internet gateway.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create Additional Subnets in a Second AZ</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Subnets in multiple Availability Zones support High Availability designs. In <strong>Subnets</strong>, choose <strong>Create subnet</strong> twice:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Second Public Subnet</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC ID: lab-vpc</li>
+                  <li>Subnet name: <span class="font-mono text-indigo-700">lab-subnet-public2</span></li>
+                  <li>Availability Zone: second AZ (e.g., us-east-1b)</li>
+                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.2.0/24</span></li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Second Private Subnet</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC ID: lab-vpc</li>
+                  <li>Subnet name: <span class="font-mono text-indigo-700">lab-subnet-private2</span></li>
+                  <li>Availability Zone: second AZ (e.g., us-east-1b)</li>
+                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.3.0/24</span></li>
+                </ul>
+              </div>
+            </div>
+            <p>Next, associate route tables with the new subnets. In <strong>Route tables</strong>, select <span class="font-mono text-indigo-700">lab-rtb-private1-us-east-1a</span> → <strong>Routes</strong> tab — note Destination 0.0.0.0/0 targets the NAT Gateway. Choose <strong>Subnet associations → Edit subnet associations</strong>, leave <span class="font-mono text-indigo-700">lab-subnet-private1-us-east-1a</span> selected, also select <span class="font-mono text-indigo-700">lab-subnet-private2</span>, then <strong>Save associations</strong>.</p>
+            <p>Repeat for the public side: select <span class="font-mono text-indigo-700">lab-rtb-public</span> → confirm its Routes tab shows Destination 0.0.0.0/0 targeting the Internet Gateway → Subnet associations → Edit → keep <span class="font-mono text-indigo-700">lab-subnet-public1-us-east-1a</span> selected, also select <span class="font-mono text-indigo-700">lab-subnet-public2</span>, then <strong>Save associations</strong>.</p>
+            <p class="text-slate-500 italic">Your VPC now has public and private subnets configured across two Availability Zones, with both route tables properly updated.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SECURITY GROUP & WEB SERVER (LAB 2) -->
+      <section id="panel-vpcweb" role="tabpanel" aria-labelledby="tab-vpcweb" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 2: Security Group &amp; Web Server Launch</h2>
+          <p class="text-slate-500 text-sm mt-1">Open HTTP access, then launch a fully bootstrapped PHP web application into your new VPC.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Create a VPC Security Group</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>A security group acts as a virtual firewall for any instance it's attached to. In <strong>Security groups</strong>, choose <strong>Create security group</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Basic Configuration</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Security group name: <span class="font-mono text-indigo-700">Web Security Group</span></li>
+                  <li>Description: Enable HTTP access</li>
+                  <li>VPC: remove the default, select lab-vpc</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Type: HTTP</li>
+                  <li>Source: Anywhere-IPv4</li>
+                  <li>Description: Permit web requests</li>
+                </ul>
+              </div>
+            </div>
+            <p>Scroll down and choose <strong>Create security group</strong>. You'll attach it to your EC2 instance next.</p>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Launch a Web Server Instance</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>Search for and open <strong>EC2</strong>, then choose <strong>Launch instance</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Identity &amp; Compute</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">Web Server 1</span></li>
+                  <li>AMI: keep default Amazon Linux → Amazon Linux 2023</li>
+                  <li>Instance type: keep default t2.micro</li>
+                  <li>Key pair: select vockey</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Network: lab-vpc</li>
+                  <li>Subnet: <span class="font-mono text-indigo-700">lab-subnet-public2</span> (not Private!)</li>
+                  <li>Auto-assign public IP: Enable</li>
+                  <li>Firewall: select existing → Web Security Group</li>
+                </ul>
+              </div>
+            </div>
+            <p>Keep the default storage settings (8 GiB gp3 root volume). Expand <strong>Advanced details</strong>, scroll to <strong>User data</strong>, and paste:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>#!/bin/bash
+# Install Apache Web Server and PHP
+dnf install -y httpd wget php mariadb105-server
+# Download Lab files
+wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
+unzip lab-app.zip -d /var/www/html/
+# Turn on web server
+chkconfig httpd on
+service httpd start</pre>
+            </div>
+            <p class="text-slate-500 italic">This script runs once at first boot with root permissions — it installs Apache, PHP, and MariaDB libraries, then downloads and installs a sample PHP web application.</p>
+            <p>Choose <strong>Launch instance</strong>, then <strong>View all instances</strong>. Wait until Web Server 1 shows <strong>2/2 checks passed</strong> (refresh every ~30 seconds).</p>
+          </div>
+        </div>
+
+        <!-- Verify -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Verify the Web Server</h3>
+          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>Select <strong>Web Server 1</strong> and copy the <strong>Public IPv4 DNS</strong> value from the Details tab.</li>
+            <li>Open a new browser tab, paste the Public DNS value, and press Enter.</li>
+            <li>You should see a web page displaying the AWS logo and instance metadata values — confirming your VPC, security group, and bootstrap script all worked together correctly.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Day 7 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Choose <strong>Submit</strong> at the top of your lab instructions to record your progress, then <strong>End Lab</strong> and confirm to tear down the sandbox.</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Day 7 Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">EBS Is AZ-Locked</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">A volume can only attach to an instance in the exact same Availability Zone — there's no cross-AZ attachment path.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Format Before You Mount</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">A raw block device must be formatted with a file system (like XFS) before it can be mounted — skipping this is the most common lab failure.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Lifecycle Policies Automate Cost Savings</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">S3 lifecycle rules can silently migrate aging data into Glacier Deep Archive, cutting storage costs with zero ongoing manual effort.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Public vs. Private Subnets Are Just Routing</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">What makes a subnet "public" or "private" is entirely defined by its route table — pointing to an Internet Gateway versus a NAT Gateway.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 7 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html – Day6Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>

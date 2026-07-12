@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009 Cloud Storage Solutions Interactive Sandbox</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- Header Banner -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 1.1 3.6 2 8 2s8-.9 8-2V7M4 12c0 1.1 3.6 2 8 2s8-.9 8-2"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009: Lesson 7 Study Companion</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Cloud Storage Solutions: S3, EBS, EFS &amp; Glacier</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Announcement Region for Screen Readers -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main Grid Layout -->
+  <main class="flex-grow max-w-6xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6" id="main-content" role="main">
+    
+    <!-- Tab Navigation Control Panel -->
+    <nav class="lg:col-span-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col gap-2 h-fit" aria-label="Study Simulator Modes">
+      <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Learning Modes</h2>
+      
+      <button onclick="switchTab('scenario')" id="tab-scenario" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm" aria-selected="true" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+          1. Storage Architecture Advisor
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Interactive</span>
+      </button>
+
+      <button onclick="switchTab('flashcards')" id="tab-flashcards" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200" aria-selected="false" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+          2. Term Flashcards
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Review</span>
+      </button>
+
+      <button onclick="switchTab('deployment-sorter')" id="tab-sorter" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200" aria-selected="false" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+          3. Storage Service Sorter
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Practice</span>
+      </button>
+
+      <div class="mt-4 pt-4 border-t border-slate-100 hidden lg:block">
+        <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Keyboard Shortcuts</h3>
+        <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4" role="note">
+          <li><strong>Tab</strong>: Move selection focus</li>
+          <li><strong>Enter / Space</strong>: Activate buttons</li>
+          <li><strong>Arrow keys</strong>: Navigate flashcard deck</li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Content Workspace Container -->
+    <section class="lg:col-span-9 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 min-h-[450px] flex flex-col" aria-label="Learning Workspace">
+      
+      <!-- MODE 1: SCENARIO ANALYZER -->
+      <div id="panel-scenario" class="tab-panel block flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-black text-slate-900">AWS Storage Architecture Advisor</h2>
+            <p class="text-slate-500 text-sm mt-1">Analyze real-world storage scenarios and recommend the correct S3, EBS, EFS, or Glacier solution.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-500 font-bold">Progress Dashboard</span>
+            <div class="text-sm font-extrabold text-indigo-600" id="scenario-progress-indicator">Scenario 1 of 5</div>
+          </div>
+        </div>
+
+        <!-- Scenario Scenario Container -->
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-6" id="scenario-card-container">
+          <span class="text-xs bg-indigo-200 text-indigo-800 font-bold px-2.5 py-1 rounded mb-2 inline-block" id="scenario-badge">Storage Model Fit</span>
+          <p class="text-base text-slate-800 font-medium leading-relaxed" id="scenario-text">
+            A team needs to run a relational database that requires millisecond-latency random read/write access at the file system level, functioning like a local hard drive attached to a single server. Which storage model fits?
+          </p>
+        </div>
+
+        <!-- Multiple Choice Options -->
+        <fieldset class="space-y-3 mb-6" id="options-fieldset">
+          <legend class="sr-only">Select the best solution for the scenario</legend>
+          
+          <button onclick="submitAnswer(0)" id="opt-0" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">A) Amazon S3, for infinite object storage scale.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option A</span>
+          </button>
+
+          <button onclick="submitAnswer(1)" id="opt-1" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">B) Amazon EBS, for low-latency block storage attached to one instance.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option B</span>
+          </button>
+
+          <button onclick="submitAnswer(2)" id="opt-2" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">C) Amazon EFS, for shared multi-instance file access.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option C</span>
+          </button>
+        </fieldset>
+
+        <!-- Feedback Area -->
+        <div id="feedback-area" class="hidden p-4 rounded-xl mb-6 transition-all duration-150" role="alert">
+          <h3 class="font-bold text-lg" id="feedback-title">Correct!</h3>
+          <p class="text-sm mt-1 leading-relaxed" id="feedback-text">Explanation goes here.</p>
+        </div>
+
+        <!-- Next / Prev Controls -->
+        <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+          <button id="btn-prev-scenario" onclick="changeScenario(-1)" class="px-4 py-2 border border-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:pointer-events-none" disabled>
+            Previous Scenario
+          </button>
+          <button id="btn-next-scenario" onclick="changeScenario(1)" class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+            Next Scenario
+          </button>
+        </div>
+      </div>
+
+
+      <!-- MODE 2: TERMINOLOGY FLASHCARDS -->
+      <div id="panel-flashcards" class="tab-panel hidden flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4">
+          <h2 class="text-2xl font-black text-slate-900">Vocabulary Term Registry</h2>
+          <p class="text-slate-500 text-sm mt-1">Master the fundamental storage terms covered in AWS Certified Cloud Practitioner Exams.</p>
+        </div>
+
+        <!-- Interactive Flashcard Area -->
+        <div class="flex flex-col items-center justify-center my-6 flex-grow">
+          <div 
+            id="flashcard-container" 
+            onclick="flipFlashcard()" 
+            onkeydown="handleCardKeydown(event)"
+            tabindex="0"
+            role="button"
+            aria-label="Flashcard. Press Enter or Space to Flip. Shows Front: Block Storage"
+            class="w-full max-w-lg bg-gradient-to-br from-slate-900 to-indigo-950 text-white min-h-[250px] p-8 rounded-3xl shadow-xl border border-slate-800 flex flex-col justify-between items-center text-center cursor-pointer transform hover:scale-[1.02] transition-all duration-150"
+          >
+            <!-- Card Front Indicator -->
+            <span class="text-xs uppercase tracking-widest text-indigo-300 font-bold bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800" id="card-side-indicator">
+              Front of Card
+            </span>
+
+            <!-- Main Dynamic Card Text -->
+            <div id="card-main-text" class="my-6">
+              <h3 class="text-2xl md:text-3xl font-extrabold tracking-wide">Block Storage</h3>
+              <p class="text-sm text-indigo-200 mt-2 italic">Click card or press Enter to reveal definition</p>
+            </div>
+
+            <!-- Card Flip Instruction -->
+            <span class="text-xs text-indigo-400 font-medium">
+              Card 1 of 9 • Press space to flip
+            </span>
+          </div>
+
+          <!-- Flip Controls -->
+          <div class="flex gap-4 mt-6">
+            <button onclick="navigateFlashcard(-1)" class="p-3 border border-slate-300 rounded-full hover:bg-slate-100 text-slate-700 transition" aria-label="Previous card">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="flipFlashcard()" class="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition shadow-sm">
+              Flip Card
+            </button>
+            <button onclick="navigateFlashcard(1)" class="p-3 border border-slate-300 rounded-full hover:bg-slate-100 text-slate-700 transition" aria-label="Next card">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- MODE 3: STORAGE SERVICE SORTER -->
+      <div id="panel-sorter" class="tab-panel hidden flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4">
+          <h2 class="text-2xl font-black text-slate-900">Storage Service Sorter</h2>
+          <p class="text-slate-500 text-sm mt-1">Assign each workload description to the AWS storage service that fits it best: Amazon EBS, Amazon S3, or Amazon EFS.</p>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start mb-6">
+          <span class="text-xl" aria-hidden="true">💡</span>
+          <div>
+            <h4 class="font-bold text-indigo-900 text-sm">How to Play</h4>
+            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">Read the workload description card below. Use the category selector buttons to classify it. You'll see immediately whether your answer was correct along with an explanation, then use the Next Item button to continue.</p>
+          </div>
+        </div>
+
+        <!-- Sorter Card -->
+        <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50 shadow-sm text-center my-4 flex-grow flex flex-col justify-center items-center">
+          <span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded font-bold uppercase tracking-wider mb-2 inline-block">Active Assignment</span>
+          <p class="text-lg font-bold text-slate-800 max-w-xl" id="sorter-card-text">
+            A single EC2 instance running a MySQL database needs a fast, persistent virtual hard drive that only it can access.
+          </p>
+        </div>
+
+        <!-- Sorter Buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4" id="sorter-options-grid">
+          <button onclick="submitSort('EBS')" id="sort-btn-ebs" class="px-4 py-3 bg-blue-50 text-blue-800 border-2 border-blue-200 hover:border-blue-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Amazon EBS</span>
+            <span class="text-xs font-normal text-blue-600 mt-1">Block Storage</span>
+          </button>
+          
+          <button onclick="submitSort('S3')" id="sort-btn-s3" class="px-4 py-3 bg-purple-50 text-purple-800 border-2 border-purple-200 hover:border-purple-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Amazon S3</span>
+            <span class="text-xs font-normal text-purple-600 mt-1">Object Storage</span>
+          </button>
+
+          <button onclick="submitSort('EFS')" id="sort-btn-efs" class="px-4 py-3 bg-teal-50 text-teal-800 border-2 border-teal-200 hover:border-teal-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Amazon EFS</span>
+            <span class="text-xs font-normal text-teal-600 mt-1">Shared File Storage</span>
+          </button>
+        </div>
+
+        <!-- Sorter Feedback & Explanation Area -->
+        <div id="sorter-feedback-area" class="hidden p-4 rounded-xl mt-4 transition-all duration-150" role="alert">
+          <h3 class="font-bold text-lg" id="sorter-feedback-title">Correct!</h3>
+          <p class="text-sm mt-1 leading-relaxed" id="sorter-feedback-text">Explanation goes here.</p>
+        </div>
+
+        <!-- Next Item Control -->
+        <div id="sorter-next-container" class="hidden mt-4 flex justify-end">
+          <button type="button" onclick="advanceSorter()" id="btn-next-sort" class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+            Next Item
+          </button>
+        </div>
+
+        <!-- Sorter Score Footer -->
+        <div class="mt-6 pt-4 border-t border-slate-200 flex justify-between items-center text-sm font-bold text-slate-600">
+          <div>Solved: <span id="sorter-solved-count" class="text-indigo-600">0 / 4</span></div>
+          <button onclick="resetSorter()" class="text-xs text-slate-500 hover:text-slate-800 underline">Reset Challenge</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer Info -->
+  <footer class="max-w-6xl w-full mx-auto px-4 py-4 mt-auto flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2" role="contentinfo">
+    <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+    <p class="flex items-center gap-1.5 font-bold text-slate-500">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+      WCAG 2.1 AA Compliant Active Textbook
+    </p>
+  </footer>
+
+  <script>
+    // Global Accessibility Announcer Helper
+    function announce(text) {
+      const announcer = document.getElementById('sr-announcer');
+      if (announcer) {
+        announcer.textContent = text;
+      }
+    }
+
+    // Tab Navigation Logic
+    function switchTab(mode) {
+      // Hide all panels
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(tab => {
+        tab.className = "w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        tab.setAttribute('aria-selected', 'false');
+        const dot = tab.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      const idMap = { scenario: 'tab-scenario', flashcards: 'tab-flashcards', 'deployment-sorter': 'tab-sorter' };
+      const panelMap = { scenario: 'panel-scenario', flashcards: 'panel-flashcards', 'deployment-sorter': 'panel-sorter' };
+      const announceMap = {
+        scenario: "Switched to Storage Architecture Advisor mode.",
+        flashcards: "Switched to Flashcards review mode.",
+        'deployment-sorter': "Switched to Storage Service Sorter game mode."
+      };
+
+      document.getElementById(panelMap[mode]).classList.remove('hidden');
+      const activeTab = document.getElementById(idMap[mode]);
+      activeTab.className = "w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeTab.setAttribute('aria-selected', 'true');
+      const activeDot = activeTab.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+      announce(announceMap[mode]);
+
+      if (mode === 'flashcards') renderFlashcard();
+      if (mode === 'deployment-sorter') renderSorterCard();
+    }
+
+    /* ==========================================
+       1. SCENARIO ANALYZER DATA & LOGIC
+       ========================================== */
+    const scenarios = [
+      {
+        badge: "Storage Model Fit",
+        text: "A team needs to run a relational database that requires millisecond-latency random read/write access at the file system level, functioning like a local hard drive attached to a single server. Which storage model fits?",
+        options: [
+          "A) Amazon S3, for infinite object storage scale.",
+          "B) Amazon EBS, for low-latency block storage attached to one instance.",
+          "C) Amazon EFS, for shared multi-instance file access."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! Databases need block-level, low-latency random access — exactly what Amazon EBS provides as a network-attached virtual hard drive for a single EC2 instance."
+      },
+      {
+        badge: "Shared Access",
+        text: "Ten web servers behind a load balancer all need to simultaneously read and write to the same uploaded user images folder. Which storage service supports this without risking data corruption?",
+        options: [
+          "A) Amazon EBS, attached to just one of the servers.",
+          "B) Amazon EFS, a shared NFS file system accessible by all instances at once.",
+          "C) An EBS Snapshot restored to each server individually."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! EFS is a fully managed NFS file system that thousands of EC2 instances across multiple Availability Zones can mount and write to simultaneously — EBS would risk corruption in this shared-write scenario."
+      },
+      {
+        badge: "Cost Optimization",
+        text: "A hospital network has accumulated 1.6 petabytes of patient imaging data sitting in S3 Standard for three years, with access probability dropping over 96% after the first 30 days. What is the correct fix?",
+        options: [
+          "A) Manually download and migrate files to an on-premises NAS drive to save money.",
+          "B) Configure an S3 Lifecycle Policy to automatically transition aging objects to S3 Standard-IA, then Glacier.",
+          "C) Delete the older files immediately to reduce storage costs."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! An S3 Lifecycle Policy automatically transitions objects between storage classes based on age — exactly the fix that took MedVanguard's bill from $38,000 to about $3,200/month, without the data-loss risk of a manual migration script."
+      },
+      {
+        badge: "Durability Guarantee",
+        text: "A network intern in the MedVanguard case study wrote a manual script to migrate older files to a local NAS drive, which then suffered a hard sector crash and permanently destroyed 400 patient files. What AWS-native alternative would have prevented this data loss entirely?",
+        options: [
+          "A) Keeping the files in S3, which is designed for 99.999999999% (11 Nines) durability across multiple Availability Zones.",
+          "B) Copying the files to a second local NAS drive as a backup.",
+          "C) Compressing the files to reduce the risk of corruption."
+        ],
+        correctIndex: 0,
+        explanation: "Correct! S3's 11 Nines of durability comes from automatically replicating every object across a minimum of three physically separated Availability Zones — a guarantee a single local NAS drive can never match."
+      },
+      {
+        badge: "Compliance Archive",
+        text: "A HIPAA-regulated healthcare organization must retain diagnostic images for a minimum of 7 years, with access after 90 days being extremely rare and a multi-hour retrieval delay being clinically acceptable. Which storage class is the most cost-effective fit?",
+        options: [
+          "A) S3 Standard, for guaranteed millisecond access at all times.",
+          "B) S3 Glacier Flexible Retrieval or Deep Archive, for the lowest long-term cost with acceptable retrieval delay.",
+          "C) Amazon EBS, since it persists independently from EC2 instance lifecycle."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! Glacier Flexible Retrieval and Deep Archive offer the lowest possible storage cost for rarely accessed compliance data, with retrieval delays of hours that are entirely acceptable for annual audits — unlike EBS or S3 Standard, which are designed for active, low-latency access."
+      }
+    ];
+
+    let currentScenarioIdx = 0;
+
+    function renderScenario() {
+      const s = scenarios[currentScenarioIdx];
+      document.getElementById('scenario-progress-indicator').textContent = `Scenario ${currentScenarioIdx + 1} of ${scenarios.length}`;
+      document.getElementById('scenario-badge').textContent = s.badge;
+      document.getElementById('scenario-text').textContent = s.text;
+
+      // Re-populate multiple choice options
+      for (let i = 0; i < 3; i++) {
+        const btn = document.getElementById(`opt-${i}`);
+        btn.className = "w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-blue-500 focus:border-blue-600 font-semibold text-slate-700 hover:bg-blue-50/50 transition-all duration-150 flex justify-between items-center";
+        btn.querySelector('.option-text').textContent = s.options[i];
+        btn.querySelector('.indicator').textContent = `Select Option ${String.fromCharCode(65 + i)}`;
+        btn.disabled = false;
+      }
+
+      // Hide feedback
+      const feedback = document.getElementById('feedback-area');
+      feedback.classList.add('hidden');
+
+      // Update next/prev buttons
+      document.getElementById('btn-prev-scenario').disabled = currentScenarioIdx === 0;
+      document.getElementById('btn-next-scenario').textContent = currentScenarioIdx === scenarios.length - 1 ? "Finish Test" : "Next Scenario";
+
+      announce(`Loaded Scenario ${currentScenarioIdx + 1}: ${s.text}`);
+    }
+
+    function submitAnswer(idx) {
+      const s = scenarios[currentScenarioIdx];
+      const feedback = document.getElementById('feedback-area');
+      
+      // Lock buttons
+      for (let i = 0; i < 3; i++) {
+        document.getElementById(`opt-${i}`).disabled = true;
+      }
+
+      if (idx === s.correctIndex) {
+        document.getElementById(`opt-${idx}`).className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold transition-all flex justify-between items-center";
+        feedback.className = "p-4 rounded-xl mb-6 bg-emerald-100 text-emerald-900 border-l-4 border-emerald-600 block";
+        document.getElementById('feedback-title').textContent = "Correct Recommendation!";
+        document.getElementById('feedback-text').textContent = s.explanation;
+        announce(`Correct Answer Submitted! ${s.explanation}`);
+      } else {
+        document.getElementById(`opt-${idx}`).className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-semibold transition-all flex justify-between items-center";
+        document.getElementById(`opt-${s.correctIndex}`).className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold transition-all flex justify-between items-center";
+        feedback.className = "p-4 rounded-xl mb-6 bg-rose-100 text-rose-900 border-l-4 border-rose-600 block";
+        document.getElementById('feedback-title').textContent = "Incorrect Choice";
+        document.getElementById('feedback-text').textContent = s.explanation;
+        announce(`Incorrect Option. The correct answer is ${String.fromCharCode(65 + s.correctIndex)}. ${s.explanation}`);
+      }
+    }
+
+    function changeScenario(direction) {
+      currentScenarioIdx += direction;
+      if (currentScenarioIdx >= scenarios.length) {
+        currentScenarioIdx = 0; // wrap-around reset
+        announce("Congratulations! You completed the AWS Storage Solutions test scenarios.");
+      }
+      renderScenario();
+    }
+
+
+    /* ==========================================
+       2. VOCABULARY FLASHCARDS DATA & LOGIC
+       ========================================== */
+    const flashcards = [
+      { term: "Block Storage", definition: "Data divided into fixed-size sector blocks at the hardware level, allowing byte-level reads and writes — like a local hard drive. AWS implementation: Amazon EBS." },
+      { term: "Object Storage", definition: "A flat structure where each file is a discrete object with a unique key, raw data payload, and rich metadata. AWS implementation: Amazon S3." },
+      { term: "Amazon S3", definition: "Simple Storage Service — a flat, infinitely scalable object storage layer accessible via HTTPS from anywhere, offering 99.999999999% (11 Nines) durability." },
+      { term: "Amazon EBS", definition: "Elastic Block Store — network-attached block storage for a single EC2 instance, providing raw sector-level storage that persists independently from the instance lifecycle." },
+      { term: "Amazon EFS", definition: "Elastic File System — a fully managed, shared NFS file system that thousands of EC2 instances across multiple Availability Zones can read and write to simultaneously." },
+      { term: "S3 Bucket", definition: "A globally unique container that holds S3 objects, functioning as the root namespace for storage — objects live inside a bucket, addressed by their key string." },
+      { term: "S3 Lifecycle Policy", definition: "A programmatic rule set that automatically transitions objects between storage classes based on age, eliminating manual data migration and its associated risk." },
+      { term: "EBS Snapshot", definition: "A point-in-time, incremental backup of an EBS volume stored durably in S3, used for disaster recovery, cross-region migration, and pre-change checkpoints." },
+      { term: "Glacier Deep Archive", definition: "The lowest-cost AWS storage tier, priced at fractions of a cent per GB/month, with retrieval times up to 12 hours — designed for 7–10+ year regulatory compliance data." }
+    ];
+
+    let currentCardIdx = 0;
+    let isFlipped = false;
+
+    function renderFlashcard() {
+      const card = flashcards[currentCardIdx];
+      const container = document.getElementById('flashcard-container');
+      const sideInd = document.getElementById('card-side-indicator');
+      const mainText = document.getElementById('card-main-text');
+
+      if (!isFlipped) {
+        sideInd.textContent = "Concept / Term (Front)";
+        sideInd.className = "text-xs uppercase tracking-widest text-indigo-300 font-bold bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800";
+        mainText.innerHTML = `<h3 class="text-2xl md:text-3xl font-extrabold tracking-wide">${card.term}</h3><p class="text-xs text-indigo-200 mt-2 italic">Select to flip (Enter / Space)</p>`;
+        container.setAttribute('aria-label', `Flashcard ${currentCardIdx + 1} of ${flashcards.length}. Side: Front. The term is: ${card.term}. Press spacebar or click to show definition.`);
+      } else {
+        sideInd.textContent = "Vocational Definition (Back)";
+        sideInd.className = "text-xs uppercase tracking-widest text-emerald-300 font-bold bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800";
+        mainText.innerHTML = `<p class="text-base font-semibold leading-relaxed px-4">${card.definition}</p>`;
+        container.setAttribute('aria-label', `Flashcard ${currentCardIdx + 1} of ${flashcards.length}. Side: Back. The definition is: ${card.definition}. Press spacebar or click to show term.`);
+      }
+    }
+
+    function flipFlashcard() {
+      isFlipped = !isFlipped;
+      renderFlashcard();
+      const currentSide = isFlipped ? "Back: Definition" : "Front: Term";
+      announce(`Flipped to ${currentSide}.`);
+    }
+
+    function navigateFlashcard(direction) {
+      currentCardIdx += direction;
+      if (currentCardIdx >= flashcards.length) currentCardIdx = 0;
+      if (currentCardIdx < 0) currentCardIdx = flashcards.length - 1;
+      isFlipped = false;
+      renderFlashcard();
+      announce(`Showing Card ${currentCardIdx + 1} of ${flashcards.length}: ${flashcards[currentCardIdx].term}`);
+    }
+
+    function handleCardKeydown(event) {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        flipFlashcard();
+      }
+    }
+
+
+    /* ==========================================
+       3. STORAGE SERVICE SORTER DATA & LOGIC
+       ========================================== */
+    const sorterItems = [
+      {
+        text: "A single EC2 instance running a MySQL database needs a fast, persistent virtual hard drive that only it can access.",
+        type: "EBS",
+        explanation: "This calls for Amazon EBS. Block storage attached to exactly one instance at a time gives databases the low-latency, random-access performance they require."
+      },
+      {
+        text: "A company wants to host static website images and videos, accessible globally over HTTPS, with virtually unlimited scalability.",
+        type: "S3",
+        explanation: "This calls for Amazon S3. Object storage with global HTTPS access and infinite scale is exactly what static web assets need."
+      },
+      {
+        text: "A fleet of Docker containers running on ECS needs a shared persistent volume that all containers can read and write to concurrently across multiple Availability Zones.",
+        type: "EFS",
+        explanation: "This calls for Amazon EFS. Its NFS protocol supports concurrent multi-instance access across AZs, making it the recommended persistent volume option for containerized applications."
+      },
+      {
+        text: "An administrator needs to create a point-in-time backup of a server's OS volume before a risky system update, so it can be restored instantly if something breaks.",
+        type: "EBS",
+        explanation: "This calls for Amazon EBS, via an EBS Snapshot. Snapshots are the primary mechanism for pre-change checkpoints and disaster recovery restores of block volumes."
+      }
+    ];
+
+    let currentSortIdx = 0;
+    let solvedCount = 0;
+
+    function renderSorterCard() {
+      const optionsGrid = document.getElementById('sorter-options-grid');
+      const feedbackArea = document.getElementById('sorter-feedback-area');
+      const nextContainer = document.getElementById('sorter-next-container');
+
+      if (currentSortIdx >= sorterItems.length) {
+        const missedCount = sorterItems.length - solvedCount;
+        document.getElementById('sorter-card-text').textContent = `Challenge complete! You classified ${solvedCount} of ${sorterItems.length} correctly (${solvedCount} correct, ${missedCount} incorrect).`;
+        optionsGrid.classList.add('hidden');
+        feedbackArea.classList.add('hidden');
+        nextContainer.classList.add('hidden');
+        document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+        announce(`Challenge complete! You classified ${solvedCount} of ${sorterItems.length} correctly, with ${missedCount} incorrect.`);
+        return;
+      }
+
+      const item = sorterItems[currentSortIdx];
+      document.getElementById('sorter-card-text').textContent = item.text;
+      document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+
+      // Reset UI state for the new item
+      optionsGrid.classList.remove('hidden');
+      ['sort-btn-ebs', 'sort-btn-s3', 'sort-btn-efs'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+      });
+      feedbackArea.classList.add('hidden');
+      nextContainer.classList.add('hidden');
+
+      announce(`New sorting scenario: ${item.text}`);
+    }
+
+    function submitSort(userChoice) {
+      if (currentSortIdx >= sorterItems.length) return;
+
+      const item = sorterItems[currentSortIdx];
+      const correctChoice = item.type;
+      const isCorrect = userChoice === correctChoice;
+
+      // Lock the option buttons once an answer has been submitted
+      ['sort-btn-ebs', 'sort-btn-s3', 'sort-btn-efs'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'pointer-events-none');
+      });
+
+      if (isCorrect) {
+        solvedCount++;
+      }
+      document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+
+      const feedbackArea = document.getElementById('sorter-feedback-area');
+      const feedbackTitle = document.getElementById('sorter-feedback-title');
+      const feedbackText = document.getElementById('sorter-feedback-text');
+
+      const labelMap = { EBS: "Amazon EBS", S3: "Amazon S3", EFS: "Amazon EFS" };
+
+      feedbackArea.classList.remove('hidden');
+      if (isCorrect) {
+        feedbackArea.className = "p-4 rounded-xl mt-4 bg-emerald-100 text-emerald-900 border-l-4 border-emerald-600 block";
+        feedbackTitle.textContent = "Correct!";
+        feedbackText.textContent = item.explanation;
+        announce(`Correct! Sorted as ${labelMap[userChoice]}! ${item.explanation}`);
+      } else {
+        feedbackArea.className = "p-4 rounded-xl mt-4 bg-rose-100 text-rose-900 border-l-4 border-rose-600 block";
+        feedbackTitle.textContent = `Incorrect — the correct answer is ${labelMap[correctChoice]}`;
+        feedbackText.textContent = item.explanation;
+        announce(`Incorrect. You selected ${labelMap[userChoice]}, but this workload fits ${labelMap[correctChoice]}. ${item.explanation}`);
+      }
+
+      // Reveal the Next Item control so the learner reads the explanation before moving on
+      document.getElementById('sorter-next-container').classList.remove('hidden');
+    }
+
+    function advanceSorter() {
+      currentSortIdx++;
+      renderSorterCard();
+    }
+
+    function resetSorter() {
+      currentSortIdx = 0;
+      solvedCount = 0;
+      renderSorterCard();
+      announce("Sorter challenge has been reset.");
+    }
+
+
+    // Initialization routines on window loads
+    window.onload = function() {
+      renderScenario();
+    };
+  </script>
+</body>
+</html>
