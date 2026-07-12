@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009 VPC Networking Essentials Interactive Sandbox</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- Header Banner -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="16" rx="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></rect>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M9 10v10"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009: Lesson 8 Study Companion</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">VPC Networking Essentials</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Announcement Region for Screen Readers -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main Grid Layout -->
+  <main class="flex-grow max-w-6xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6" id="main-content" role="main">
+    
+    <!-- Tab Navigation Control Panel -->
+    <nav class="lg:col-span-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col gap-2 h-fit" aria-label="Study Simulator Modes">
+      <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Learning Modes</h2>
+      
+      <button onclick="switchTab('scenario')" id="tab-scenario" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm" aria-selected="true" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+          1. Network Architecture Advisor
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Interactive</span>
+      </button>
+
+      <button onclick="switchTab('flashcards')" id="tab-flashcards" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200" aria-selected="false" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+          2. Term Flashcards
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Review</span>
+      </button>
+
+      <button onclick="switchTab('deployment-sorter')" id="tab-sorter" class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200" aria-selected="false" role="tab">
+        <span class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+          3. Traffic Gateway Sorter
+        </span>
+        <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono" aria-hidden="true">Practice</span>
+      </button>
+
+      <div class="mt-4 pt-4 border-t border-slate-100 hidden lg:block">
+        <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Keyboard Shortcuts</h3>
+        <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4" role="note">
+          <li><strong>Tab</strong>: Move selection focus</li>
+          <li><strong>Enter / Space</strong>: Activate buttons</li>
+          <li><strong>Arrow keys</strong>: Navigate flashcard deck</li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Content Workspace Container -->
+    <section class="lg:col-span-9 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 min-h-[450px] flex flex-col" aria-label="Learning Workspace">
+      
+      <!-- MODE 1: SCENARIO ANALYZER -->
+      <div id="panel-scenario" class="tab-panel block flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-black text-slate-900">VPC Network Architecture Advisor</h2>
+            <p class="text-slate-500 text-sm mt-1">Analyze real-world networking scenarios and recommend the correct VPC, subnet, gateway, or firewall solution.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-500 font-bold">Progress Dashboard</span>
+            <div class="text-sm font-extrabold text-indigo-600" id="scenario-progress-indicator">Scenario 1 of 5</div>
+          </div>
+        </div>
+
+        <!-- Scenario Scenario Container -->
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-6" id="scenario-card-container">
+          <span class="text-xs bg-indigo-200 text-indigo-800 font-bold px-2.5 py-1 rounded mb-2 inline-block" id="scenario-badge">Public vs Private Placement</span>
+          <p class="text-base text-slate-800 font-medium leading-relaxed" id="scenario-text">
+            A bank needs to decide where to place its customer financial database server within its VPC. Should this server sit in a public subnet or a private subnet?
+          </p>
+        </div>
+
+        <!-- Multiple Choice Options -->
+        <fieldset class="space-y-3 mb-6" id="options-fieldset">
+          <legend class="sr-only">Select the best solution for the scenario</legend>
+          
+          <button onclick="submitAnswer(0)" id="opt-0" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">A) Public subnet, so customers can access their balances directly.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option A</span>
+          </button>
+
+          <button onclick="submitAnswer(1)" id="opt-1" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">B) Private subnet, with no direct inbound path from the internet.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option B</span>
+          </button>
+
+          <button onclick="submitAnswer(2)" id="opt-2" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 focus:border-indigo-600 font-semibold text-slate-700 hover:bg-indigo-50/50 transition-all duration-150 flex justify-between items-center">
+            <span class="option-text">C) It doesn't matter, since Security Groups protect it either way.</span>
+            <span class="indicator text-xs font-bold text-slate-400">Select option C</span>
+          </button>
+        </fieldset>
+
+        <!-- Feedback Area -->
+        <div id="feedback-area" class="hidden p-4 rounded-xl mb-6 transition-all duration-150" role="alert">
+          <h3 class="font-bold text-lg" id="feedback-title">Correct!</h3>
+          <p class="text-sm mt-1 leading-relaxed" id="feedback-text">Explanation goes here.</p>
+        </div>
+
+        <!-- Next / Prev Controls -->
+        <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+          <button id="btn-prev-scenario" onclick="changeScenario(-1)" class="px-4 py-2 border border-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:pointer-events-none" disabled>
+            Previous Scenario
+          </button>
+          <button id="btn-next-scenario" onclick="changeScenario(1)" class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+            Next Scenario
+          </button>
+        </div>
+      </div>
+
+
+      <!-- MODE 2: TERMINOLOGY FLASHCARDS -->
+      <div id="panel-flashcards" class="tab-panel hidden flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4">
+          <h2 class="text-2xl font-black text-slate-900">Vocabulary Term Registry</h2>
+          <p class="text-slate-500 text-sm mt-1">Master the fundamental VPC networking terms covered in AWS Certified Cloud Practitioner Exams.</p>
+        </div>
+
+        <!-- Interactive Flashcard Area -->
+        <div class="flex flex-col items-center justify-center my-6 flex-grow">
+          <div 
+            id="flashcard-container" 
+            onclick="flipFlashcard()" 
+            onkeydown="handleCardKeydown(event)"
+            tabindex="0"
+            role="button"
+            aria-label="Flashcard. Press Enter or Space to Flip. Shows Front: VPC"
+            class="w-full max-w-lg bg-gradient-to-br from-slate-900 to-indigo-950 text-white min-h-[250px] p-8 rounded-3xl shadow-xl border border-slate-800 flex flex-col justify-between items-center text-center cursor-pointer transform hover:scale-[1.02] transition-all duration-150"
+          >
+            <!-- Card Front Indicator -->
+            <span class="text-xs uppercase tracking-widest text-indigo-300 font-bold bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800" id="card-side-indicator">
+              Front of Card
+            </span>
+
+            <!-- Main Dynamic Card Text -->
+            <div id="card-main-text" class="my-6">
+              <h3 class="text-2xl md:text-3xl font-extrabold tracking-wide">VPC</h3>
+              <p class="text-sm text-indigo-200 mt-2 italic">Click card or press Enter to reveal definition</p>
+            </div>
+
+            <!-- Card Flip Instruction -->
+            <span class="text-xs text-indigo-400 font-medium">
+              Card 1 of 9 • Press space to flip
+            </span>
+          </div>
+
+          <!-- Flip Controls -->
+          <div class="flex gap-4 mt-6">
+            <button onclick="navigateFlashcard(-1)" class="p-3 border border-slate-300 rounded-full hover:bg-slate-100 text-slate-700 transition" aria-label="Previous card">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="flipFlashcard()" class="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition shadow-sm">
+              Flip Card
+            </button>
+            <button onclick="navigateFlashcard(1)" class="p-3 border border-slate-300 rounded-full hover:bg-slate-100 text-slate-700 transition" aria-label="Next card">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- MODE 3: TRAFFIC GATEWAY SORTER -->
+      <div id="panel-sorter" class="tab-panel hidden flex flex-col flex-grow">
+        <div class="border-b border-slate-200 pb-4 mb-4">
+          <h2 class="text-2xl font-black text-slate-900">Traffic Gateway Sorter</h2>
+          <p class="text-slate-500 text-sm mt-1">Assign each networking need to the AWS component that solves it: Internet Gateway, NAT Gateway, or Bastion Host.</p>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 items-start mb-6">
+          <span class="text-xl" aria-hidden="true">💡</span>
+          <div>
+            <h4 class="font-bold text-indigo-900 text-sm">How to Play</h4>
+            <p class="text-xs text-indigo-950 mt-1 leading-relaxed">Read the networking need card below. Use the category selector buttons to classify it. You'll see immediately whether your answer was correct along with an explanation, then use the Next Item button to continue.</p>
+          </div>
+        </div>
+
+        <!-- Sorter Card -->
+        <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50 shadow-sm text-center my-4 flex-grow flex flex-col justify-center items-center">
+          <span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded font-bold uppercase tracking-wider mb-2 inline-block">Active Assignment</span>
+          <p class="text-lg font-bold text-slate-800 max-w-xl" id="sorter-card-text">
+            A company needs their public-facing web servers and load balancers to be reachable directly from customers browsing the internet.
+          </p>
+        </div>
+
+        <!-- Sorter Buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4" id="sorter-options-grid">
+          <button onclick="submitSort('IGW')" id="sort-btn-igw" class="px-4 py-3 bg-blue-50 text-blue-800 border-2 border-blue-200 hover:border-blue-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Internet Gateway</span>
+            <span class="text-xs font-normal text-blue-600 mt-1">Two-Way Public Access</span>
+          </button>
+          
+          <button onclick="submitSort('NAT')" id="sort-btn-nat" class="px-4 py-3 bg-purple-50 text-purple-800 border-2 border-purple-200 hover:border-purple-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">NAT Gateway</span>
+            <span class="text-xs font-normal text-purple-600 mt-1">Outbound-Only</span>
+          </button>
+
+          <button onclick="submitSort('Bastion')" id="sort-btn-bastion" class="px-4 py-3 bg-teal-50 text-teal-800 border-2 border-teal-200 hover:border-teal-500 rounded-xl font-bold transition flex flex-col items-center justify-center">
+            <span class="text-base">Bastion Host</span>
+            <span class="text-xs font-normal text-teal-600 mt-1">Secure Admin Access</span>
+          </button>
+        </div>
+
+        <!-- Sorter Feedback & Explanation Area -->
+        <div id="sorter-feedback-area" class="hidden p-4 rounded-xl mt-4 transition-all duration-150" role="alert">
+          <h3 class="font-bold text-lg" id="sorter-feedback-title">Correct!</h3>
+          <p class="text-sm mt-1 leading-relaxed" id="sorter-feedback-text">Explanation goes here.</p>
+        </div>
+
+        <!-- Next Item Control -->
+        <div id="sorter-next-container" class="hidden mt-4 flex justify-end">
+          <button type="button" onclick="advanceSorter()" id="btn-next-sort" class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+            Next Item
+          </button>
+        </div>
+
+        <!-- Sorter Score Footer -->
+        <div class="mt-6 pt-4 border-t border-slate-200 flex justify-between items-center text-sm font-bold text-slate-600">
+          <div>Solved: <span id="sorter-solved-count" class="text-indigo-600">0 / 4</span></div>
+          <button onclick="resetSorter()" class="text-xs text-slate-500 hover:text-slate-800 underline">Reset Challenge</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer Info -->
+  <footer class="max-w-6xl w-full mx-auto px-4 py-4 mt-auto flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2" role="contentinfo">
+    <p>ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+    <p class="flex items-center gap-1.5 font-bold text-slate-500">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+      WCAG 2.1 AA Compliant Active Textbook
+    </p>
+  </footer>
+
+  <script>
+    // Global Accessibility Announcer Helper
+    function announce(text) {
+      const announcer = document.getElementById('sr-announcer');
+      if (announcer) {
+        announcer.textContent = text;
+      }
+    }
+
+    // Tab Navigation Logic
+    function switchTab(mode) {
+      // Hide all panels
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(tab => {
+        tab.className = "w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        tab.setAttribute('aria-selected', 'false');
+        const dot = tab.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      const idMap = { scenario: 'tab-scenario', flashcards: 'tab-flashcards', 'deployment-sorter': 'tab-sorter' };
+      const panelMap = { scenario: 'panel-scenario', flashcards: 'panel-flashcards', 'deployment-sorter': 'panel-sorter' };
+      const announceMap = {
+        scenario: "Switched to Network Architecture Advisor mode.",
+        flashcards: "Switched to Flashcards review mode.",
+        'deployment-sorter': "Switched to Traffic Gateway Sorter game mode."
+      };
+
+      document.getElementById(panelMap[mode]).classList.remove('hidden');
+      const activeTab = document.getElementById(idMap[mode]);
+      activeTab.className = "w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeTab.setAttribute('aria-selected', 'true');
+      const activeDot = activeTab.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+      announce(announceMap[mode]);
+
+      if (mode === 'flashcards') renderFlashcard();
+      if (mode === 'deployment-sorter') renderSorterCard();
+    }
+
+    /* ==========================================
+       1. SCENARIO ANALYZER DATA & LOGIC
+       ========================================== */
+    const scenarios = [
+      {
+        badge: "Public vs Private Placement",
+        text: "A bank needs to decide where to place its customer financial database server within its VPC. Should this server sit in a public subnet or a private subnet?",
+        options: [
+          "A) Public subnet, so customers can access their balances directly.",
+          "B) Private subnet, with no direct inbound path from the internet.",
+          "C) It doesn't matter, since Security Groups protect it either way."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! Sensitive database servers belong in a private subnet with no direct inbound path from the internet — exactly the principle the MedVanguard breach violated."
+      },
+      {
+        badge: "What Makes a Subnet Public",
+        text: "An engineer attaches an Internet Gateway to a VPC, but a subnet's Route Table has no rule pointing to it. Is that subnet public or private?",
+        options: [
+          "A) Public, since the IGW is attached to the VPC.",
+          "B) Private — an IGW alone doesn't make a subnet public without a Route Table rule pointing 0.0.0.0/0 to it.",
+          "C) It becomes public automatically after 24 hours."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! Attaching an IGW doesn't automatically route traffic. A subnet is only public if its Route Table explicitly includes a rule sending 0.0.0.0/0 traffic to the Internet Gateway."
+      },
+      {
+        badge: "Outbound Updates for Private Servers",
+        text: "A database server sitting in a private subnet needs to download a critical security patch from the internet, but must never be directly reachable from outside. What should it use?",
+        options: [
+          "A) An Internet Gateway attached directly to the private subnet.",
+          "B) A NAT Gateway, allowing outbound-only traffic without permitting inbound connections.",
+          "C) A public IP address assigned to the database instance."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! A NAT Gateway lets private instances initiate outbound connections to fetch updates, while external parties can never use that same path to initiate a connection back in."
+      },
+      {
+        badge: "Stateful vs Stateless Firewalls",
+        text: "A junior engineer configures an inbound rule on a NACL allowing port 80 traffic, but the web server's response never makes it back to the customer. What is the most likely cause?",
+        options: [
+          "A) The Security Group is blocking the response.",
+          "B) The NACL is stateless and requires an explicit outbound rule to allow the response traffic back out.",
+          "C) The Route Table needs to be recreated."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! NACLs are stateless and have no memory of inbound connections — every direction of traffic must be explicitly allowed, unlike stateful Security Groups, which automatically permit return traffic."
+      },
+      {
+        badge: "Least Privilege on Security Groups",
+        text: "During testing, a database server's Security Group inbound rule was set to 0.0.0.0/0 to bypass credential errors, and was never corrected before launch — leading to a real-world breach of 45,000 patient records. What should the inbound rule have been scoped to instead?",
+        options: [
+          "A) A wide range covering the entire company's office IP block.",
+          "B) Only the specific private IP address or Security Group ID of the web server that needs to query the database.",
+          "C) Any AWS IP address, since AWS traffic is always trusted."
+        ],
+        correctIndex: 1,
+        explanation: "Correct! Applying the Principle of Least Privilege means the database's Security Group should allow inbound traffic only from the specific web server's IP or Security Group ID — never from the entire internet (0.0.0.0/0)."
+      }
+    ];
+
+    let currentScenarioIdx = 0;
+
+    function renderScenario() {
+      const s = scenarios[currentScenarioIdx];
+      document.getElementById('scenario-progress-indicator').textContent = `Scenario ${currentScenarioIdx + 1} of ${scenarios.length}`;
+      document.getElementById('scenario-badge').textContent = s.badge;
+      document.getElementById('scenario-text').textContent = s.text;
+
+      // Re-populate multiple choice options
+      for (let i = 0; i < 3; i++) {
+        const btn = document.getElementById(`opt-${i}`);
+        btn.className = "w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-blue-500 focus:border-blue-600 font-semibold text-slate-700 hover:bg-blue-50/50 transition-all duration-150 flex justify-between items-center";
+        btn.querySelector('.option-text').textContent = s.options[i];
+        btn.querySelector('.indicator').textContent = `Select Option ${String.fromCharCode(65 + i)}`;
+        btn.disabled = false;
+      }
+
+      // Hide feedback
+      const feedback = document.getElementById('feedback-area');
+      feedback.classList.add('hidden');
+
+      // Update next/prev buttons
+      document.getElementById('btn-prev-scenario').disabled = currentScenarioIdx === 0;
+      document.getElementById('btn-next-scenario').textContent = currentScenarioIdx === scenarios.length - 1 ? "Finish Test" : "Next Scenario";
+
+      announce(`Loaded Scenario ${currentScenarioIdx + 1}: ${s.text}`);
+    }
+
+    function submitAnswer(idx) {
+      const s = scenarios[currentScenarioIdx];
+      const feedback = document.getElementById('feedback-area');
+      
+      // Lock buttons
+      for (let i = 0; i < 3; i++) {
+        document.getElementById(`opt-${i}`).disabled = true;
+      }
+
+      if (idx === s.correctIndex) {
+        document.getElementById(`opt-${idx}`).className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold transition-all flex justify-between items-center";
+        feedback.className = "p-4 rounded-xl mb-6 bg-emerald-100 text-emerald-900 border-l-4 border-emerald-600 block";
+        document.getElementById('feedback-title').textContent = "Correct Recommendation!";
+        document.getElementById('feedback-text').textContent = s.explanation;
+        announce(`Correct Answer Submitted! ${s.explanation}`);
+      } else {
+        document.getElementById(`opt-${idx}`).className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-semibold transition-all flex justify-between items-center";
+        document.getElementById(`opt-${s.correctIndex}`).className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold transition-all flex justify-between items-center";
+        feedback.className = "p-4 rounded-xl mb-6 bg-rose-100 text-rose-900 border-l-4 border-rose-600 block";
+        document.getElementById('feedback-title').textContent = "Incorrect Choice";
+        document.getElementById('feedback-text').textContent = s.explanation;
+        announce(`Incorrect Option. The correct answer is ${String.fromCharCode(65 + s.correctIndex)}. ${s.explanation}`);
+      }
+    }
+
+    function changeScenario(direction) {
+      currentScenarioIdx += direction;
+      if (currentScenarioIdx >= scenarios.length) {
+        currentScenarioIdx = 0; // wrap-around reset
+        announce("Congratulations! You completed the VPC Networking test scenarios.");
+      }
+      renderScenario();
+    }
+
+
+    /* ==========================================
+       2. VOCABULARY FLASHCARDS DATA & LOGIC
+       ========================================== */
+    const flashcards = [
+      { term: "VPC", definition: "Virtual Private Cloud — your own completely isolated, private network environment hosted inside the AWS Cloud, like a fenced-in plot of digital land." },
+      { term: "CIDR", definition: "Classless Inter-Domain Routing — the notation defining the range of unique IP addresses your VPC can use, like a zip code for your cloud neighborhood." },
+      { term: "Subnet", definition: "A distinct section carved out of your VPC's address space, classified as either public (internet-facing) or private (isolated from external view)." },
+      { term: "Internet Gateway (IGW)", definition: "The single controlled entry and exit point connecting a VPC to the public internet — only one can be attached per VPC." },
+      { term: "Route Table", definition: "A digital mapping ruleset that dictates where network packets are allowed to travel; a rule of 0.0.0.0/0 → IGW is what makes a subnet truly public." },
+      { term: "NAT Gateway", definition: "A gateway deployed in a public subnet that lets private instances push outbound traffic to the internet, while blocking any inbound connection initiated from outside." },
+      { term: "Bastion Host", definition: "A hardened server in the public subnet that serves as a secure, auditable checkpoint for administrators to log in before reaching private backend resources." },
+      { term: "Security Group", definition: "A stateful firewall operating at the instance level — like a personal bouncer who remembers a visitor and automatically allows their return traffic out." },
+      { term: "NACL", definition: "Network Access Control List — a stateless firewall operating at the subnet level that checks every packet entering and leaving against numbered Allow and Deny rules." }
+    ];
+
+    let currentCardIdx = 0;
+    let isFlipped = false;
+
+    function renderFlashcard() {
+      const card = flashcards[currentCardIdx];
+      const container = document.getElementById('flashcard-container');
+      const sideInd = document.getElementById('card-side-indicator');
+      const mainText = document.getElementById('card-main-text');
+
+      if (!isFlipped) {
+        sideInd.textContent = "Concept / Term (Front)";
+        sideInd.className = "text-xs uppercase tracking-widest text-indigo-300 font-bold bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800";
+        mainText.innerHTML = `<h3 class="text-2xl md:text-3xl font-extrabold tracking-wide">${card.term}</h3><p class="text-xs text-indigo-200 mt-2 italic">Select to flip (Enter / Space)</p>`;
+        container.setAttribute('aria-label', `Flashcard ${currentCardIdx + 1} of ${flashcards.length}. Side: Front. The term is: ${card.term}. Press spacebar or click to show definition.`);
+      } else {
+        sideInd.textContent = "Vocational Definition (Back)";
+        sideInd.className = "text-xs uppercase tracking-widest text-emerald-300 font-bold bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800";
+        mainText.innerHTML = `<p class="text-base font-semibold leading-relaxed px-4">${card.definition}</p>`;
+        container.setAttribute('aria-label', `Flashcard ${currentCardIdx + 1} of ${flashcards.length}. Side: Back. The definition is: ${card.definition}. Press spacebar or click to show term.`);
+      }
+    }
+
+    function flipFlashcard() {
+      isFlipped = !isFlipped;
+      renderFlashcard();
+      const currentSide = isFlipped ? "Back: Definition" : "Front: Term";
+      announce(`Flipped to ${currentSide}.`);
+    }
+
+    function navigateFlashcard(direction) {
+      currentCardIdx += direction;
+      if (currentCardIdx >= flashcards.length) currentCardIdx = 0;
+      if (currentCardIdx < 0) currentCardIdx = flashcards.length - 1;
+      isFlipped = false;
+      renderFlashcard();
+      announce(`Showing Card ${currentCardIdx + 1} of ${flashcards.length}: ${flashcards[currentCardIdx].term}`);
+    }
+
+    function handleCardKeydown(event) {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        flipFlashcard();
+      }
+    }
+
+
+    /* ==========================================
+       3. TRAFFIC GATEWAY SORTER DATA & LOGIC
+       ========================================== */
+    const sorterItems = [
+      {
+        text: "A company needs their public-facing web servers and load balancers to be reachable directly from customers browsing the internet.",
+        type: "IGW",
+        explanation: "This calls for an Internet Gateway. It's the single controlled entry and exit point connecting the VPC to the public internet, required for any subnet to be truly public."
+      },
+      {
+        text: "A private database server needs to download OS security patches from the internet, but must never accept inbound connections initiated from outside.",
+        type: "NAT",
+        explanation: "This calls for a NAT Gateway. It allows private instances to push outbound requests out, while external parties cannot use that same path to reach back in."
+      },
+      {
+        text: "A system administrator needs a secure, auditable way to log in and perform maintenance on a private backend server, without exposing that server directly to the internet.",
+        type: "Bastion",
+        explanation: "This calls for a Bastion Host. It's a hardened server in the public subnet that serves as a security checkpoint before administrators access private resources."
+      },
+      {
+        text: "An e-commerce storefront's web servers need to be directly reachable by any customer's browser worldwide.",
+        type: "IGW",
+        explanation: "This calls for an Internet Gateway. Direct reachability from any external browser requires the IGW attached to the VPC and a Route Table rule pointing to it."
+      }
+    ];
+
+    let currentSortIdx = 0;
+    let solvedCount = 0;
+
+    function renderSorterCard() {
+      const optionsGrid = document.getElementById('sorter-options-grid');
+      const feedbackArea = document.getElementById('sorter-feedback-area');
+      const nextContainer = document.getElementById('sorter-next-container');
+
+      if (currentSortIdx >= sorterItems.length) {
+        const missedCount = sorterItems.length - solvedCount;
+        document.getElementById('sorter-card-text').textContent = `Challenge complete! You classified ${solvedCount} of ${sorterItems.length} correctly (${solvedCount} correct, ${missedCount} incorrect).`;
+        optionsGrid.classList.add('hidden');
+        feedbackArea.classList.add('hidden');
+        nextContainer.classList.add('hidden');
+        document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+        announce(`Challenge complete! You classified ${solvedCount} of ${sorterItems.length} correctly, with ${missedCount} incorrect.`);
+        return;
+      }
+
+      const item = sorterItems[currentSortIdx];
+      document.getElementById('sorter-card-text').textContent = item.text;
+      document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+
+      // Reset UI state for the new item
+      optionsGrid.classList.remove('hidden');
+      ['sort-btn-igw', 'sort-btn-nat', 'sort-btn-bastion'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+      });
+      feedbackArea.classList.add('hidden');
+      nextContainer.classList.add('hidden');
+
+      announce(`New sorting scenario: ${item.text}`);
+    }
+
+    function submitSort(userChoice) {
+      if (currentSortIdx >= sorterItems.length) return;
+
+      const item = sorterItems[currentSortIdx];
+      const correctChoice = item.type;
+      const isCorrect = userChoice === correctChoice;
+
+      // Lock the option buttons once an answer has been submitted
+      ['sort-btn-igw', 'sort-btn-nat', 'sort-btn-bastion'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'pointer-events-none');
+      });
+
+      if (isCorrect) {
+        solvedCount++;
+      }
+      document.getElementById('sorter-solved-count').textContent = `${solvedCount} / ${sorterItems.length}`;
+
+      const feedbackArea = document.getElementById('sorter-feedback-area');
+      const feedbackTitle = document.getElementById('sorter-feedback-title');
+      const feedbackText = document.getElementById('sorter-feedback-text');
+
+      const labelMap = { IGW: "Internet Gateway", NAT: "NAT Gateway", Bastion: "Bastion Host" };
+
+      feedbackArea.classList.remove('hidden');
+      if (isCorrect) {
+        feedbackArea.className = "p-4 rounded-xl mt-4 bg-emerald-100 text-emerald-900 border-l-4 border-emerald-600 block";
+        feedbackTitle.textContent = "Correct!";
+        feedbackText.textContent = item.explanation;
+        announce(`Correct! Sorted as ${labelMap[userChoice]}! ${item.explanation}`);
+      } else {
+        feedbackArea.className = "p-4 rounded-xl mt-4 bg-rose-100 text-rose-900 border-l-4 border-rose-600 block";
+        feedbackTitle.textContent = `Incorrect — the correct answer is ${labelMap[correctChoice]}`;
+        feedbackText.textContent = item.explanation;
+        announce(`Incorrect. You selected ${labelMap[userChoice]}, but this need calls for ${labelMap[correctChoice]}. ${item.explanation}`);
+      }
+
+      // Reveal the Next Item control so the learner reads the explanation before moving on
+      document.getElementById('sorter-next-container').classList.remove('hidden');
+    }
+
+    function advanceSorter() {
+      currentSortIdx++;
+      renderSorterCard();
+    }
+
+    function resetSorter() {
+      currentSortIdx = 0;
+      solvedCount = 0;
+      renderSorterCard();
+      announce("Sorter challenge has been reset.");
+    }
+
+
+    // Initialization routines on window loads
+    window.onload = function() {
+      renderScenario();
+    };
+  </script>
+</body>
+</html>

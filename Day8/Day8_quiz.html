@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 8 Quiz Portal</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="itnw1009-theme.css">
+  <style>
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+    .active-pulse {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+
+    /* Quiz-specific radio / checkbox indicators (CSS-only, no icon font needed) */
+    .qz-indicator {
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+      border: 2px solid var(--color-border-strong);
+      background: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 900;
+      color: transparent;
+      transition: all 0.15s ease;
+    }
+    .qz-indicator.qz-radio { border-radius: 9999px; }
+    .qz-indicator.qz-checkbox { border-radius: 0.3rem; }
+
+    .qz-indicator.qz-selected {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+    .qz-indicator.qz-correct {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: #fff;
+    }
+    .qz-indicator.qz-incorrect {
+      background: var(--color-rose);
+      border-color: var(--color-rose);
+      color: #fff;
+    }
+    .qz-indicator.qz-muted {
+      border-color: var(--color-border);
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Courseware Top Navigation Bar -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Graduation Cap Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.42A12.083 12.083 0 0118 18.72a12.083 12.083 0 01-12 0 12.083 12.083 0 01.84-8.14L12 14z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 8: Interactive Quiz Portal</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Interactive Mode Status Badge -->
+        <span id="nav-mode-badge" class="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span>
+          Study Mode Enabled
+        </span>
+
+        <!-- Sound Toggle Button -->
+        <button id="sound-toggle" class="p-2 rounded-lg text-indigo-300 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" aria-label="Toggle Sound Effects">
+          <span id="sound-icon" class="text-lg" aria-hidden="true">&#128266;</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8" id="main-portal">
+    
+    <!-- Sidebar / Lesson Outline Navigator -->
+    <aside class="w-full lg:w-80 shrink-0 flex flex-col gap-6">
+      
+      <!-- Instructor Welcome & Progress Card -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm transition-all duration-300">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+            PF
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-900">Professor's Sandbox</h4>
+            <p class="text-xs text-slate-500">Day 8 Review Companion</p>
+          </div>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-600 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+          "Welcome back! This diagnostic checks <strong>VPC Fundamentals</strong> (VPC, CIDR, Public &amp; Private Subnets), <strong>Gateways &amp; Routing</strong> (IGW, NAT Gateway, Route Tables), and <strong>Stateful vs. Stateless Filtering</strong> (Security Groups &amp; NACLs). Toggle between <strong>Study Mode</strong> (with immediate explanations) or <strong>Exam Mode</strong> to lock in your score."
+        </p>
+
+        <!-- Dynamic Score Progress Indicators -->
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-500">Total Completion</span>
+              <span id="progress-percent" class="text-indigo-600">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Correct</div>
+              <div id="score-correct" class="text-lg font-black text-emerald-600">0</div>
+            </div>
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Wrong</div>
+              <div id="score-wrong" class="text-lg font-black text-rose-500">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode Selection Widget -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
+          Settings &amp; Modes
+        </h3>
+        <div class="space-y-3">
+          <!-- Toggle button between study and exam modes -->
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-semibold text-slate-700">Choose Quiz Environment</label>
+            <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
+              <button id="btn-mode-study" class="py-2 text-xs font-bold rounded-lg transition-all duration-200 bg-white shadow text-indigo-600" onclick="changeMode('study')">
+                Study Mode
+              </button>
+              <button id="btn-mode-exam" class="py-2 text-xs font-bold rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-800" onclick="changeMode('exam')">
+                Exam Mode
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question List Matrix -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex-grow">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center justify-between">
+          <span>Question Navigation</span>
+          <span class="text-[10px] text-indigo-500 font-mono" id="nav-counter">1/10</span>
+        </h3>
+        <div class="grid grid-cols-5 gap-2" id="navigation-matrix">
+          <!-- Dynamically populated numbers of question maps -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Quiz Content Portal Workspace Panel -->
+    <section class="flex-grow flex flex-col gap-6" id="workspace-panel">
+      
+      <!-- Active Question Canvas Card -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex-grow flex flex-col justify-between relative transition-all duration-300" id="quiz-card">
+        
+        <!-- Welcome Splash / Quiz Intro Screen (Hidden once quiz starts) -->
+        <div id="intro-screen" class="absolute inset-0 bg-white z-10 flex flex-col justify-center items-center text-center p-8 rounded-2xl">
+          <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-3xl mb-4 active-pulse">
+            &#9889;
+          </div>
+          <h2 class="text-2xl font-black text-slate-900 mb-2">ITNW 1009: Day 8 Exam Readiness</h2>
+          <p class="text-sm text-slate-500 max-w-md mb-6 leading-relaxed">
+            Test your grasp of <strong>VPC</strong> networking fundamentals, <strong>Internet &amp; NAT Gateways</strong> with routing, and <strong>Security Groups vs. NACLs</strong> stateful/stateless filtering.
+          </p>
+          
+          <div class="flex flex-wrap justify-center gap-3 mb-6 max-w-lg">
+            <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 font-semibold">10 Real Exam Patterns</span>
+            <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 font-semibold">MC / TF / Multiple Select</span>
+            <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 font-semibold">Real-time Explanations</span>
+          </div>
+
+          <button onclick="startQuiz()" class="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl transition duration-200 shadow-lg shadow-indigo-500/20 text-sm">
+            Begin Diagnostic Quiz &rarr;
+          </button>
+        </div>
+
+        <!-- Realtime Question Card Panel -->
+        <div class="space-y-6 flex-grow">
+          
+          <!-- Question Category Tag & Types Header -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
+            <div class="flex items-center space-x-2">
+              <span id="question-index-badge" class="px-3 py-1 text-xs font-black rounded-lg bg-indigo-100 text-indigo-800 font-mono">QUESTION 01</span>
+              <span id="question-type-badge" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-slate-600 border border-slate-200 font-mono uppercase">Multiple Choice</span>
+            </div>
+            
+            <div class="flex items-center space-x-1.5 text-xs text-slate-400">
+              
+              <span id="course-domain">AWS CLF-C02 Domain 3 (Cloud Technology &amp; Services)</span>
+            </div>
+          </div>
+
+          <!-- Question Prompt Title -->
+          <div class="space-y-2">
+            <h2 id="question-prompt" class="text-base sm:text-xl font-extrabold text-slate-900 leading-snug">
+              Loading Question prompt...
+            </h2>
+          </div>
+
+          <!-- Interactive Choice Options Area -->
+          <div id="options-container" class="space-y-3.5 pt-2">
+            <!-- Dynamically Populated with Interactive Option Cards -->
+          </div>
+        </div>
+
+        <!-- Interactive Explanation/Feedback Drawer (Hidden initially, animated on check) -->
+        <div id="explanation-drawer" class="hidden mt-6 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all duration-300">
+          <div class="p-4 sm:p-5 flex gap-4">
+            <div id="explanation-icon-box" class="w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+              <span id="explanation-icon" aria-hidden="true"></span>
+            </div>
+            <div class="space-y-2">
+              <h4 id="explanation-title" class="text-sm font-black uppercase tracking-wider">CORRECT EXPLANATION</h4>
+              <p id="explanation-text" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Detail reasoning goes here...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workspace Controls Footer (Next/Check buttons) -->
+        <div class="flex items-center justify-between gap-4 mt-8 border-t border-slate-100 pt-5">
+          <button id="btn-prev" onclick="navigateQuestion(-1)" class="px-4 py-2.5 text-xs font-extrabold text-slate-500 hover:text-slate-800 transition-all duration-150 rounded-lg flex items-center gap-2" disabled>
+            &larr; Back
+          </button>
+
+          <div class="flex items-center gap-3">
+            <button id="btn-check" onclick="checkSelectedAnswers()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-lg transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 flex items-center gap-1.5">
+              Submit Answer
+            </button>
+            <button id="btn-next" onclick="navigateQuestion(1)" class="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-black rounded-lg transition-all duration-200 border border-slate-200 flex items-center gap-1.5 hidden">
+              Next Question &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Evaluation Report Summary Screen (Initially Hidden) -->
+      <div id="results-screen" class="hidden bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col gap-8 transition-all duration-300">
+        
+        <!-- Results Hub Dashboard Hero -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-slate-50 p-6 rounded-2xl border border-slate-100">
+          <div class="text-center md:text-left space-y-1">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Diagnostic Complete</span>
+            <h2 class="text-2xl font-black text-slate-900 leading-tight">Your Score Report</h2>
+            <p class="text-xs text-slate-500">ITNW 1009 VPC Networking Essentials</p>
+          </div>
+
+          <!-- Speedometer Gauge Circular Indicator -->
+          <div class="flex justify-center my-2">
+            <div class="relative w-36 h-36 flex items-center justify-center rounded-full bg-slate-100 border border-slate-200 shadow-inner">
+              <div class="text-center">
+                <div id="radial-score" class="text-3xl font-black text-slate-950">0%</div>
+                <div id="radial-fraction" class="text-xs text-slate-400 font-mono">0 / 10</div>
+              </div>
+              <svg class="absolute top-0 left-0 w-full h-full -rotate-90">
+                <circle cx="72" cy="72" r="66" stroke="currentColor" class="text-slate-200" stroke-width="6" fill="transparent"/>
+                <circle cx="72" cy="72" r="66" stroke="currentColor" id="radial-progress-circle" class="text-indigo-600 transition-all duration-1000" stroke-width="6" stroke-dasharray="414.69" stroke-dashoffset="414.69" stroke-linecap="round" fill="transparent"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Certification Readiness Rating -->
+          <div class="text-center md:text-left space-y-3">
+            <div class="inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase" id="badge-certificate-status">
+              Review Needed
+            </div>
+            <p id="feedback-message" class="text-xs text-slate-600 leading-relaxed">
+              We highly recommend reviewing the Day 8 analogies library and flashcards for VPC, subnets, gateways, Security Groups, and NACLs. Try again to push above the 80% passing threshold!
+            </p>
+          </div>
+        </div>
+
+        <!-- Competency Area Strengths Breakdown -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-black text-slate-900 flex items-center gap-2">
+            Competency Map Insights
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">VPC Fundamentals (CIDR &amp; Subnets)</span>
+                <span id="domain-vpc-score" class="text-indigo-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-vpc-bar" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Gateways &amp; Routing (IGW, NAT, Route Tables)</span>
+                <span id="domain-routing-score" class="text-indigo-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-routing-bar" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Stateful vs. Stateless Filtering (SG &amp; NACL)</span>
+                <span id="domain-security-score" class="text-teal-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-security-bar" class="bg-teal-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Applied Case Study Analysis</span>
+                <span id="domain-case-score" class="text-amber-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-case-bar" class="bg-amber-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review Detailed Questions Answers Grid list -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-black text-slate-900 flex items-center justify-between">
+            <span>Question-by-Question Evaluation Audit</span>
+            <button onclick="toggleDetailsSummary()" id="btn-toggle-summary" class="text-xs text-indigo-500 hover:underline">Expand All</button>
+          </h3>
+          <div class="space-y-3" id="results-detail-list">
+            <!-- Dynamic compilation evaluation items populate here -->
+          </div>
+        </div>
+
+        <!-- Navigation Action controls -->
+        <div class="border-t border-slate-100 pt-6 flex justify-end gap-3">
+          <button onclick="resetAndRestartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-lg transition shadow-md shadow-indigo-500/20">
+            &#8635; Try Quiz Again
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>CLF-C02 Alignment</span>
+        <span>•</span>
+        <span>Day 8 Review Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Audio Synthesis Manager (Uses Web Audio API to construct custom game sounds, zero external assets)
+    const AudioEngine = {
+      enabled: true,
+      context: null,
+      init() {
+        try {
+          this.context = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) {
+          console.warn('Audio Synthesis not supported in this environment');
+        }
+      },
+      playTone(freq, type, duration, vol) {
+        if (!this.enabled || !this.context) return;
+        try {
+          if (this.context.state === 'suspended') {
+            this.context.resume();
+          }
+          let osc = this.context.createOscillator();
+          let gain = this.context.createGain();
+          osc.connect(gain);
+          gain.connect(this.context.destination);
+          
+          osc.type = type || 'sine';
+          osc.frequency.setValueAtTime(freq, this.context.currentTime);
+          
+          gain.gain.setValueAtTime(vol || 0.1, this.context.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.context.currentTime + duration);
+          
+          osc.start();
+          osc.stop(this.context.currentTime + duration);
+        } catch (e) {}
+      },
+      correct() {
+        this.playTone(523.25, 'triangle', 0.15, 0.12); // C5
+        setTimeout(() => this.playTone(659.25, 'triangle', 0.25, 0.12), 100); // E5
+      },
+      incorrect() {
+        this.playTone(220, 'sawtooth', 0.25, 0.08); // A3
+        setTimeout(() => this.playTone(185, 'sawtooth', 0.35, 0.08), 80); // F#3
+      },
+      tap() {
+        this.playTone(330, 'sine', 0.08, 0.05); // E4
+      },
+      complete() {
+        const tones = [523.25, 659.25, 783.99, 1046.5]; // C chord arpeggio
+        tones.forEach((tone, idx) => {
+          setTimeout(() => this.playTone(tone, 'triangle', 0.4, 0.1), idx * 100);
+        });
+      }
+    };
+
+    // Day 8 Master Quiz Questions Database
+    const QUIZ_QUESTIONS = [
+      {
+        id: 1,
+        type: "mc", // Multiple Choice
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (VPC Fundamentals)",
+        category: "vpc",
+        prompt: "What is a Virtual Private Cloud (VPC)?",
+        options: [
+          { text: "A physically separate data center reserved exclusively for one customer", key: "A" },
+          { text: "A logically isolated, private section of the AWS cloud where a customer can launch resources within a network environment they fully define and control", key: "B" },
+          { text: "A type of EC2 instance family optimized for networking", key: "C" },
+          { text: "A billing report summarizing network data transfer costs", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "VPC: Your Private Campus in the Cloud",
+          correct: "Correct! A VPC is like an entire private corporate campus, logically separate from any other company's property even though many campuses might sit on the same developer's land \u2014 it's logically isolated, not physically separate hardware.",
+          incorrect: "Incorrect. A VPC does not require dedicated physical hardware, is not an instance family, and has nothing to do with billing reports. It's a logically isolated network environment on AWS's shared infrastructure."
+        }
+      },
+      {
+        id: 2,
+        type: "tf", // True / False
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (VPC Fundamentals)",
+        category: "vpc",
+        prompt: "True or False: A VPC is physically separate hardware dedicated to one customer, rather than a logical network boundary within AWS's shared infrastructure.",
+        options: [
+          { text: "True", key: "T" },
+          { text: "False", key: "F" }
+        ],
+        correct: ["F"],
+        explanation: {
+          title: "Logical Isolation, Not Physical Hardware",
+          correct: "Correct! A VPC is a logical network boundary, not dedicated physical hardware. It runs on AWS's shared underlying infrastructure while remaining logically isolated from every other customer's network.",
+          incorrect: "Incorrect. A VPC is explicitly a logical boundary, not physically separate hardware. Many customers' VPCs can run on the same shared underlying AWS infrastructure while staying completely isolated from one another."
+        }
+      },
+      {
+        id: 3,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (VPC Fundamentals)",
+        category: "vpc",
+        prompt: "What does a CIDR block, such as 10.0.0.0/16, define for a VPC or subnet?",
+        options: [
+          { text: "The physical Availability Zone where the VPC's hardware is located", key: "A" },
+          { text: "The range and total number of IP addresses available within that network, along with how the address space is structured", key: "B" },
+          { text: "The billing tier applied to network data transfer", key: "C" },
+          { text: "The list of IAM users authorized to access the VPC", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "CIDR: The Campus Numbering Plan",
+          correct: "Correct! A CIDR block is the numbering plan defining exactly how many office suites (IP addresses) can exist across the whole campus (VPC or subnet) and how they're addressed and structured.",
+          incorrect: "Incorrect. CIDR notation has nothing to do with Availability Zones, billing tiers, or IAM user lists. It strictly defines the IP address range and size available within a network."
+        }
+      },
+      {
+        id: 4,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (Gateways & Routing)",
+        category: "routing",
+        prompt: "What specifically makes a subnet \"public\" in AWS?",
+        options: [
+          { text: "It contains only EC2 instances running a public-facing website", key: "A" },
+          { text: "Its route table includes a route sending internet-bound traffic (0.0.0.0/0) directly to an Internet Gateway", key: "B" },
+          { text: "It has more than 256 available IP addresses", key: "C" },
+          { text: "It was the first subnet created inside the VPC", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "What Defines a Public Subnet",
+          correct: "Correct! A subnet is public specifically because its route table sends internet-bound traffic directly to an Internet Gateway \u2014 like a street-facing home with a driveway connecting directly to the public road.",
+          incorrect: "Incorrect. What software runs on an instance, subnet size, and creation order have nothing to do with a subnet's public/private status. It's determined entirely by the route table's configuration."
+        }
+      },
+      {
+        id: 5,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (Gateways & Routing)",
+        category: "routing",
+        prompt: "A private subnet's database servers need to download software patches from the internet without ever being directly reachable from it. Which component should be used?",
+        options: [
+          { text: "Internet Gateway", key: "A" },
+          { text: "NAT Gateway", key: "B" },
+          { text: "Security Group", key: "C" },
+          { text: "NACL", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "NAT Gateway: Outbound-Only Access",
+          correct: "Correct! A NAT Gateway is like a monitored outgoing-mail pickup window: private subnet resources can send requests out to download patches, but strangers on the street (the internet) can't use that window to initiate a connection in.",
+          incorrect: "Incorrect. An Internet Gateway allows direct bidirectional reachability, which isn't wanted here, while Security Groups and NACLs are firewalls, not the component that provides outbound-only internet access. That's specifically the NAT Gateway's job."
+        }
+      },
+      {
+        id: 6,
+        type: "tf",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (Gateways & Routing)",
+        category: "routing",
+        prompt: "True or False: An Internet Gateway by itself allows direct connections into any subnet inside a VPC, even a private one.",
+        options: [
+          { text: "True", key: "T" },
+          { text: "False", key: "F" }
+        ],
+        correct: ["F"],
+        explanation: {
+          title: "The Internet Gateway Needs a Route",
+          correct: "Correct! An Internet Gateway only enables communication for subnets whose route tables specifically route traffic to it. A private subnet with no such route remains unreachable directly from the internet, even with an IGW attached to the VPC.",
+          incorrect: "Incorrect. Attaching an IGW to a VPC does not automatically expose every subnet. Only subnets whose route tables are configured to send traffic to the IGW become directly reachable from the internet."
+        }
+      },
+      {
+        id: 7,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (Stateful vs. Stateless Filtering)",
+        category: "security",
+        prompt: "If a Security Group allows an inbound connection, must a separate rule be added to allow the response traffic back out?",
+        options: [
+          { text: "Yes, because Security Groups are stateless", key: "A" },
+          { text: "No, because Security Groups are stateful and automatically allow return traffic for an already-permitted connection", key: "B" },
+          { text: "Yes, but only for HTTPS traffic specifically", key: "C" },
+          { text: "No, because Security Groups never evaluate outbound traffic at all", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Security Groups Remember the Conversation",
+          correct: "Correct! Security Groups are stateful \u2014 like rules posted on an office door that remember the conversation. If a visitor is let in through the front, they're automatically allowed back out without a separate rule.",
+          incorrect: "Incorrect. Security Groups are stateful, not stateless, which is exactly why no separate outbound rule is needed for return traffic. They do evaluate outbound rules for new outbound-initiated connections, just not for automatic return traffic."
+        }
+      },
+      {
+        id: 8,
+        type: "ms", // Multiple Select
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services (Stateful vs. Stateless Filtering)",
+        category: "security",
+        prompt: "Which TWO of the following statements correctly describe the difference between Security Groups and NACLs? (Select TWO)",
+        options: [
+          { text: "Security Groups operate at the instance level, while NACLs operate at the subnet level", key: "A" },
+          { text: "NACLs are stateful, automatically allowing return traffic", key: "B" },
+          { text: "Security Groups are stateful, automatically allowing return traffic for a permitted connection", key: "C" },
+          { text: "NACLs only evaluate inbound traffic and never evaluate outbound traffic", key: "D" }
+        ],
+        correct: ["A", "C"],
+        explanation: {
+          title: "Security Groups vs. NACLs",
+          correct: "Correct! Security Groups are instance-level and stateful (remembering the conversation), while NACLs are subnet-level and stateless, evaluating inbound and outbound traffic separately against ordered rules without remembering prior connections.",
+          incorrect: "Incorrect. NACLs are stateless, not stateful, which is exactly why they need separate inbound AND outbound rules for the same connection \u2014 unlike Security Groups, which auto-permit return traffic."
+        }
+      },
+      {
+        id: 9,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Applied Case Analysis",
+        category: "case",
+        prompt: "In the Meridian Financial Group case study, what was the exact configuration mistake that inadvertently exposed the \"private\" database subnet to the public internet?",
+        options: [
+          { text: "The database instance's operating system was never patched", key: "A" },
+          { text: "The subnet's route table was attached with a default route pointing directly to the Internet Gateway instead of the NAT Gateway", key: "B" },
+          { text: "The Security Group was deleted entirely, leaving no rules at all", key: "C" },
+          { text: "The VPC's CIDR block was set too large", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "The Misrouted Route Table",
+          correct: "Correct! A junior network engineer accidentally attached a route table with a default route (0.0.0.0/0) pointing straight to the Internet Gateway instead of the intended NAT Gateway route, quietly making the \"private\" subnet publicly routable overnight.",
+          incorrect: "Incorrect. The case study never mentions OS patching, a deleted Security Group, or CIDR sizing as the root cause. The actual mistake was the misattached route table pointing to the wrong gateway."
+        }
+      },
+      {
+        id: 10,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Applied Case Analysis",
+        category: "case",
+        prompt: "Even though the database subnet became publicly routable, why didn't external vulnerability scanners actually manage to connect into the database itself?",
+        options: [
+          { text: "The scanners were blocked by a global AWS firewall before ever reaching any VPC", key: "A" },
+          { text: "The Security Group attached to the database instances allowed inbound traffic only from the application-tier subnet's CIDR range, rejecting the scanners' unrecognized source addresses", key: "B" },
+          { text: "The NACL had already been reconfigured to block all traffic before the scanners arrived", key: "C" },
+          { text: "The database instances happened to be powered off during the incident", key: "D" }
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "The Security Group Acted as a Safety Net",
+          correct: "Correct! Even though the network path had become technically reachable, the stateful Security Group rule \u2014 scoped narrowly to only the application-tier CIDR range \u2014 still rejected every connection attempt from the scanners' unrecognized source addresses.",
+          incorrect: "Incorrect. There is no global AWS firewall blocking all traffic, the NACL was not reconfigured during the incident, and the instances remained running. The Security Group's narrow, application-tier-only rule is what actually stopped the scanners."
+        }
+      }
+    ];
+
+    // Quiz App State Variables
+    let currentQuizMode = 'study'; // 'study' or 'exam'
+    let currentQuestionIndex = 0;
+    let selectedAnswers = []; // holds selected keys (e.g., ["A", "B"])
+    let userAnswersLog = Array(QUIZ_QUESTIONS.length).fill(null); // stores user submissions
+    let quizCompleted = false;
+
+    // Initialize Quiz Portal
+    window.onload = function() {
+      AudioEngine.init();
+      setupSoundToggle();
+      renderNavigationMatrix();
+    };
+
+    // Sound toggle settings
+    function setupSoundToggle() {
+      const btn = document.getElementById('sound-toggle');
+      const icon = document.getElementById('sound-icon');
+      btn.addEventListener('click', () => {
+        AudioEngine.enabled = !AudioEngine.enabled;
+        if (AudioEngine.enabled) {
+          icon.textContent = "\u{1F50A}"; // speaker high volume
+          AudioEngine.tap();
+        } else {
+          icon.textContent = "\u{1F507}"; // muted speaker
+        }
+      });
+    }
+
+
+    // Change quiz mode
+    function changeMode(mode) {
+      AudioEngine.tap();
+      if (userAnswersLog.some(ans => ans !== null)) {
+        const confirmChange = confirm("Changing modes mid-quiz will reset your current progress. Are you sure you want to proceed?");
+        if (!confirmChange) return;
+      }
+      currentQuizMode = mode;
+      
+      const studyBtn = document.getElementById('btn-mode-study');
+      const examBtn = document.getElementById('btn-mode-exam');
+      const navBadge = document.getElementById('nav-mode-badge');
+
+      if (mode === 'study') {
+        studyBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 bg-white shadow text-indigo-600";
+        examBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-800";
+        navBadge.innerHTML = `<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span> Study Mode Enabled`;
+        navBadge.className = "hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200";
+      } else {
+        examBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 bg-white shadow text-indigo-600";
+        studyBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-800";
+        navBadge.innerHTML = `<span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-1.5 animate-pulse"></span> Exam Simulation Mode`;
+        navBadge.className = "hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-200";
+      }
+
+      resetAndRestartQuiz();
+    }
+
+    // Start Quiz from Splash screen
+    function startQuiz() {
+      AudioEngine.tap();
+      const splash = document.getElementById('intro-screen');
+      splash.classList.add('hidden');
+      loadQuestion(0);
+    }
+
+    // Render Navigation Sidebar list
+    function renderNavigationMatrix() {
+      const container = document.getElementById('navigation-matrix');
+      container.innerHTML = '';
+      
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `nav-dot-${idx}`;
+        btn.className = getNavDotStyle(idx);
+        btn.innerText = idx + 1;
+        btn.onclick = () => {
+          if (document.getElementById('intro-screen').classList.contains('hidden')) {
+            AudioEngine.tap();
+            loadQuestion(idx);
+          }
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    // Determine sidebar navigator bullet themes
+    function getNavDotStyle(idx) {
+      const base = "h-10 text-xs font-bold rounded-lg border transition-all duration-200 flex items-center justify-center ";
+      const log = userAnswersLog[idx];
+
+      if (idx === currentQuestionIndex && document.getElementById('intro-screen').classList.contains('hidden')) {
+        return base + "bg-indigo-600 border-indigo-600 text-white shadow-md ring-2 ring-indigo-400/50";
+      }
+      
+      if (log) {
+        if (currentQuizMode === 'study') {
+          return base + (log.isCorrect 
+            ? "bg-emerald-50 text-emerald-700 border-emerald-200" 
+            : "bg-rose-50 text-rose-700 border-rose-200");
+        } else {
+          return base + "bg-slate-200 text-slate-800 border-slate-300";
+        }
+      }
+
+      return base + "bg-slate-50 text-slate-500 hover:bg-slate-100 border-slate-200";
+    }
+
+    // Load Specific Question into Viewport Card
+    function loadQuestion(idx) {
+      currentQuestionIndex = idx;
+      const question = QUIZ_QUESTIONS[idx];
+      selectedAnswers = [];
+
+      // Update question text & metadata
+      document.getElementById('question-index-badge').innerText = `QUESTION ${(idx + 1).toString().padStart(2, '0')}`;
+      
+      // Question Type Badge styling
+      const typeBadge = document.getElementById('question-type-badge');
+      if (question.type === 'mc') {
+        typeBadge.innerText = 'Multiple Choice';
+        typeBadge.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 font-mono uppercase";
+      } else if (question.type === 'tf') {
+        typeBadge.innerText = 'True / False';
+        typeBadge.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-50 text-amber-700 border border-amber-200 font-mono uppercase";
+      } else {
+        typeBadge.innerText = 'Multiple Select';
+        typeBadge.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-teal-50 text-teal-700 border border-teal-200 font-mono uppercase";
+      }
+
+      document.getElementById('course-domain').innerText = question.domain;
+      document.getElementById('question-prompt').innerText = question.prompt;
+      document.getElementById('nav-counter').innerText = `${idx + 1}/10`;
+
+      // Build Interactive Answer Options
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      const loggedAnswer = userAnswersLog[idx];
+
+      question.options.forEach(opt => {
+        const optionCard = document.createElement('div');
+        optionCard.id = `option-card-${opt.key}`;
+        
+        const shape = question.type === 'ms' ? 'qz-checkbox' : 'qz-radio';
+        let indicatorState = ''; // '', 'qz-muted', 'qz-selected', 'qz-correct', 'qz-incorrect'
+        let indicatorGlyph = '';
+        let cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition-all duration-150 bg-slate-50/50";
+
+        if (loggedAnswer) {
+          // Locked State (Answer submitted)
+          const isSelected = loggedAnswer.answers.includes(opt.key);
+          const isCorrectKey = question.correct.includes(opt.key);
+
+          if (currentQuizMode === 'study') {
+            if (isCorrectKey) {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50/50 text-emerald-900";
+              indicatorState = 'qz-correct';
+              indicatorGlyph = '&#10003;';
+            } else if (isSelected) {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-rose-500 bg-rose-50/50 text-rose-900";
+              indicatorState = 'qz-incorrect';
+              indicatorGlyph = '&#10005;';
+            } else {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 opacity-50 bg-slate-50/20";
+              indicatorState = 'qz-muted';
+            }
+          } else {
+            // Exam mode locked review
+            if (isSelected) {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/30";
+              indicatorState = 'qz-selected';
+              indicatorGlyph = question.type === 'ms' ? '&#10003;' : '';
+            } else {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 opacity-70 bg-slate-50/20";
+              indicatorState = 'qz-muted';
+            }
+          }
+        }
+
+        optionCard.className = cardStyle;
+        optionCard.onclick = () => selectOption(opt.key);
+
+        optionCard.innerHTML = `
+          <div class="pt-0.5" id="icon-container-${opt.key}">
+            <span class="qz-indicator ${shape} ${indicatorState}" id="icon-${opt.key}">${indicatorGlyph}</span>
+          </div>
+          <div class="flex-grow">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-indigo-600 font-mono">${opt.key}.</span>
+              <p class="text-sm font-medium leading-relaxed">${opt.text}</p>
+            </div>
+          </div>
+        `;
+
+        optionsContainer.appendChild(optionCard);
+      });
+
+      // Show/Hide check button and next buttons
+      const checkBtn = document.getElementById('btn-check');
+      const nextBtn = document.getElementById('btn-next');
+      const prevBtn = document.getElementById('btn-prev');
+      const explanationDrawer = document.getElementById('explanation-drawer');
+
+      prevBtn.disabled = idx === 0;
+
+      if (loggedAnswer) {
+        checkBtn.classList.add('hidden');
+        nextBtn.classList.remove('hidden');
+        if (idx === QUIZ_QUESTIONS.length - 1) {
+          nextBtn.innerHTML = `Finish Diagnostic &rarr;`;
+        } else {
+          nextBtn.innerHTML = `Next Question &rarr;`;
+        }
+
+        // Render explanation if study mode
+        if (currentQuizMode === 'study') {
+          explanationDrawer.classList.remove('hidden');
+          const isCorrect = loggedAnswer.isCorrect;
+          const box = document.getElementById('explanation-icon-box');
+          const icon = document.getElementById('explanation-icon');
+          const title = document.getElementById('explanation-title');
+          const text = document.getElementById('explanation-text');
+
+          if (isCorrect) {
+            box.className = "w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200";
+            icon.className = "text-lg font-black";
+            icon.textContent = "\u2713";
+            title.className = "text-sm font-black uppercase tracking-wider text-emerald-700";
+            title.innerText = question.explanation.title + " (Correct)";
+            text.innerText = question.explanation.correct;
+          } else {
+            box.className = "w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 border border-rose-200";
+            icon.className = "text-lg font-black";
+            icon.textContent = "\u26A0";
+            title.className = "text-sm font-black uppercase tracking-wider text-rose-700";
+            title.innerText = "Instructor Analysis (Incorrect Option)";
+            text.innerText = question.explanation.incorrect + " " + question.explanation.correct;
+          }
+        } else {
+          explanationDrawer.classList.add('hidden');
+        }
+      } else {
+        checkBtn.classList.remove('hidden');
+        nextBtn.classList.add('hidden');
+        explanationDrawer.classList.add('hidden');
+      }
+
+      // Refresh Sidebar Matrix selection
+      renderNavigationMatrix();
+    }
+
+    // Select Answer Option Interactions
+    function selectOption(key) {
+      // Guard against selected answers after submitting
+      if (userAnswersLog[currentQuestionIndex]) return;
+
+      AudioEngine.tap();
+      const question = QUIZ_QUESTIONS[currentQuestionIndex];
+
+      if (question.type === 'mc' || question.type === 'tf') {
+        // Single selection models
+        selectedAnswers = [key];
+        
+        // Deselect all other boxes
+        question.options.forEach(opt => {
+          const card = document.getElementById(`option-card-${opt.key}`);
+          const icon = document.getElementById(`icon-${opt.key}`);
+          
+          if (opt.key === key) {
+            card.className = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/50";
+            icon.className = "qz-indicator qz-radio qz-selected";
+            icon.innerHTML = '';
+          } else {
+            card.className = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition-all duration-150 bg-slate-50/50";
+            icon.className = "qz-indicator qz-radio";
+            icon.innerHTML = '';
+          }
+        });
+      } else {
+        // Multiple Selection
+        const idx = selectedAnswers.indexOf(key);
+        const card = document.getElementById(`option-card-${key}`);
+        const icon = document.getElementById(`icon-${key}`);
+
+        if (idx > -1) {
+          selectedAnswers.splice(idx, 1);
+          card.className = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition-all duration-150 bg-slate-50/50";
+          icon.className = "qz-indicator qz-checkbox";
+          icon.innerHTML = '';
+        } else {
+          selectedAnswers.push(key);
+          card.className = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/50";
+          icon.className = "qz-indicator qz-checkbox qz-selected";
+          icon.innerHTML = '&#10003;';
+        }
+      }
+    }
+
+    // Submit Answer & Calculate Accuracy
+    function checkSelectedAnswers() {
+      if (selectedAnswers.length === 0) {
+        alert("Please select at least one answer to submit.");
+        return;
+      }
+
+      const question = QUIZ_QUESTIONS[currentQuestionIndex];
+      
+      // Compare arrays
+      const isCorrect = question.correct.length === selectedAnswers.length && 
+                        question.correct.every(val => selectedAnswers.includes(val));
+
+      // Play Sound Effects based on results
+      if (isCorrect) {
+        AudioEngine.correct();
+      } else {
+        AudioEngine.incorrect();
+      }
+
+      // Log the User Answer Data
+      userAnswersLog[currentQuestionIndex] = {
+        answers: selectedAnswers,
+        isCorrect: isCorrect
+      };
+
+      // Realtime score logs
+      updateScoreDashboard();
+
+      // Reload screen state
+      loadQuestion(currentQuestionIndex);
+    }
+
+    // Progress Scores Panel Update
+    function updateScoreDashboard() {
+      let correct = 0;
+      let wrong = 0;
+      let answeredCount = 0;
+
+      userAnswersLog.forEach(ans => {
+        if (ans !== null) {
+          answeredCount++;
+          if (ans.isCorrect) correct++;
+          else wrong++;
+        }
+      });
+
+      document.getElementById('score-correct').innerText = correct;
+      document.getElementById('score-wrong').innerText = wrong;
+
+      const completionPercentage = Math.round((answeredCount / QUIZ_QUESTIONS.length) * 100);
+      document.getElementById('progress-percent').innerText = `${completionPercentage}%`;
+      document.getElementById('progress-bar').style.width = `${completionPercentage}%`;
+    }
+
+    // Question Navigation Trigger
+    function navigateQuestion(direction) {
+      AudioEngine.tap();
+      const targetIdx = currentQuestionIndex + direction;
+
+      if (targetIdx < 0) return;
+
+      if (targetIdx >= QUIZ_QUESTIONS.length) {
+        // Evaluate complete answers
+        evaluateAllQuiz();
+      } else {
+        loadQuestion(targetIdx);
+      }
+    }
+
+    // Evaluate Complete Quiz Results and transition UI
+    function evaluateAllQuiz() {
+      // Confirm all questions are answered
+      const unansweredIndices = [];
+      userAnswersLog.forEach((val, idx) => {
+        if (val === null) unansweredIndices.push(idx + 1);
+      });
+
+      if (unansweredIndices.length > 0) {
+        const confirmSkip = confirm(`You have unanswered questions: ${unansweredIndices.join(', ')}. Submit the evaluation anyway? (Unanswered questions count as wrong)`);
+        if (!confirmSkip) return;
+
+        // Auto-fill unanswered as wrong
+        QUIZ_QUESTIONS.forEach((q, idx) => {
+          if (userAnswersLog[idx] === null) {
+            userAnswersLog[idx] = {
+              answers: [],
+              isCorrect: false
+            };
+          }
+        });
+        updateScoreDashboard();
+      }
+
+      AudioEngine.complete();
+      quizCompleted = true;
+
+      // Hide quiz view, show result analytics view
+      document.getElementById('quiz-card').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+
+      // Score Calculation
+      let correctAnswers = userAnswersLog.filter(x => x.isCorrect).length;
+      let finalPercentage = Math.round((correctAnswers / QUIZ_QUESTIONS.length) * 100);
+
+      // Load results values
+      document.getElementById('radial-score').innerText = `${finalPercentage}%`;
+      document.getElementById('radial-fraction').innerText = `${correctAnswers} / ${QUIZ_QUESTIONS.length}`;
+
+      // Progress bar gauge formula: stroke-dasharray="414.69" (2 * PI * r)
+      const circleOffset = 414.69 - (414.69 * finalPercentage / 100);
+      document.getElementById('radial-progress-circle').style.strokeDashoffset = circleOffset;
+
+      // Certificate Badge styling
+      const certBadge = document.getElementById('badge-certificate-status');
+      const feedbackMsg = document.getElementById('feedback-message');
+
+      if (finalPercentage >= 90) {
+        certBadge.className = "inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-emerald-100 text-emerald-800 border border-emerald-200";
+        certBadge.innerHTML = `&#10003; Excellent Readiness`;
+        feedbackMsg.innerText = "Superb job! You have fully mastered VPC networking fundamentals, Internet and NAT Gateways, route tables, and Security Groups versus NACLs. You are on track for AWS Cloud Practitioner!";
+      } else if (finalPercentage >= 80) {
+        certBadge.className = "inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-teal-100 text-teal-800 border border-teal-200";
+        certBadge.innerHTML = `&#127891; Passing Score`;
+        feedbackMsg.innerText = "Congratulations! You have surpassed the community college standards passing threshold (80%). Maintain this pace as we advance into the Security Groups and NACL hands-on lab.";
+      } else {
+        certBadge.className = "inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-rose-100 text-rose-800 border border-rose-200";
+        certBadge.innerHTML = `&#9888; Review Required`;
+        feedbackMsg.innerText = "You fell below the academic passing limit (80%). Take a break, review the Day 8 analogies library and flashcards, and repeat this evaluation to secure your knowledge.";
+      }
+
+      // Populate Category Strengths
+      calculateCategoryScores();
+
+      // Render Detailed Evaluation review grids
+      buildResultsReviewGrid();
+    }
+
+    // Map competency indicators
+    function calculateCategoryScores() {
+      const categories = {
+        vpc: { total: 0, correct: 0 },
+        routing: { total: 0, correct: 0 },
+        security: { total: 0, correct: 0 },
+        case: { total: 0, correct: 0 }
+      };
+
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const cat = q.category;
+        const isCorr = userAnswersLog[idx]?.isCorrect;
+        
+        if (categories[cat]) {
+          categories[cat].total++;
+          if (isCorr) categories[cat].correct++;
+        }
+      });
+
+      for (let key in categories) {
+        const item = categories[key];
+        const pct = item.total > 0 ? Math.round((item.correct / item.total) * 100) : 0;
+        
+        document.getElementById(`domain-${key}-score`).innerText = `${pct}%`;
+        document.getElementById(`domain-${key}-bar`).style.width = `${pct}%`;
+      }
+    }
+
+    // Build Results Review Accordion Grid
+    function buildResultsReviewGrid() {
+      const list = document.getElementById('results-detail-list');
+      list.innerHTML = '';
+
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const userLog = userAnswersLog[idx];
+        const isCorr = userLog?.isCorrect;
+        const cardClass = isCorr 
+          ? "border border-emerald-100 bg-emerald-50/10 rounded-xl overflow-hidden"
+          : "border border-rose-100 bg-rose-50/10 rounded-xl overflow-hidden";
+        
+        const badgeClass = isCorr
+          ? "bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-black uppercase"
+          : "bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-[10px] font-black uppercase";
+        
+        const badgeText = isCorr ? "CORRECT" : "INCORRECT";
+
+        const item = document.createElement('div');
+        item.className = cardClass;
+        
+        // Format options summary strings
+        let selectedText = userLog.answers.length > 0 ? userLog.answers.sort().join(", ") : "None";
+        let correctText = q.correct.sort().join(", ");
+
+        item.innerHTML = `
+          <!-- Accordion Header -->
+          <div onclick="toggleAccordion(${idx})" class="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 transition">
+            <div class="flex items-center space-x-3 pr-2">
+              <span class="w-6 h-6 rounded-lg ${isCorr ? 'bg-emerald-500' : 'bg-rose-500'} text-white text-xs font-bold flex items-center justify-center font-mono shrink-0">${idx + 1}</span>
+              <p class="text-xs font-bold text-slate-800 line-clamp-1">${q.prompt}</p>
+            </div>
+            <div class="flex items-center space-x-2 shrink-0">
+              <span class="${badgeClass}">${badgeText}</span>
+              <span class="text-xs text-slate-400" id="accordion-arrow-${idx}">&#9660;</span>
+            </div>
+          </div>
+
+          <!-- Accordion Content (Hidden initially) -->
+          <div id="accordion-content-${idx}" class="hidden border-t border-slate-100 p-4 bg-white space-y-4 text-xs sm:text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-3 border-b border-slate-100">
+              <div>
+                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Your Selections</span>
+                <p class="text-base font-black ${isCorr ? 'text-emerald-600' : 'text-rose-500'} font-mono mt-0.5">${selectedText}</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Valid Keys</span>
+                <p class="text-base font-black text-indigo-500 font-mono mt-0.5">${correctText}</p>
+              </div>
+            </div>
+
+            <!-- Choices lists -->
+            <div class="space-y-2">
+              <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Evaluation Choices Summary</span>
+              <div class="space-y-1">
+                ${q.options.map(o => {
+                  let textClass = "text-xs";
+                  let isSelectedOpt = userLog.answers.includes(o.key);
+                  let isCorrectOpt = q.correct.includes(o.key);
+
+                  if (isCorrectOpt) textClass += " font-bold text-emerald-600";
+                  else if (isSelectedOpt) textClass += " font-bold text-rose-500";
+                  else textClass += " text-slate-500";
+
+                  const glyph = isCorrectOpt ? '&#10003;' : isSelectedOpt ? '&#10005;' : '&#8226;';
+
+                  return `
+                    <div class="flex items-center space-x-1.5 ${textClass}">
+                      <span class="text-[10px]">${glyph}</span>
+                      <span><strong>${o.key}:</strong> ${o.text}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Pedagogical analysis detail -->
+            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-100 space-y-1.5">
+              <span class="text-indigo-500 font-bold uppercase tracking-wider text-[10px] block">${q.explanation.title}</span>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                ${isCorr ? q.explanation.correct : q.explanation.incorrect + ' ' + q.explanation.correct}
+              </p>
+            </div>
+          </div>
+        `;
+
+        list.appendChild(item);
+      });
+    }
+
+    // Toggle Review list accordions
+    function toggleAccordion(idx) {
+      AudioEngine.tap();
+      const content = document.getElementById(`accordion-content-${idx}`);
+      const arrow = document.getElementById(`accordion-arrow-${idx}`);
+
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.className = "text-xs text-indigo-500";
+        arrow.innerHTML = "&#9650;";
+      } else {
+        content.classList.add('hidden');
+        arrow.className = "text-xs text-slate-400";
+        arrow.innerHTML = "&#9660;";
+      }
+    }
+
+    // Expand / Collapse all reviews
+    function toggleDetailsSummary() {
+      AudioEngine.tap();
+      const btn = document.getElementById('btn-toggle-summary');
+      const expanding = btn.innerText === "Expand All";
+
+      QUIZ_QUESTIONS.forEach((_, idx) => {
+        const content = document.getElementById(`accordion-content-${idx}`);
+        const arrow = document.getElementById(`accordion-arrow-${idx}`);
+        if (expanding) {
+          content.classList.remove('hidden');
+          arrow.className = "text-xs text-indigo-500";
+          arrow.innerHTML = "&#9650;";
+        } else {
+          content.classList.add('hidden');
+          arrow.className = "text-xs text-slate-400";
+          arrow.innerHTML = "&#9660;";
+        }
+      });
+
+      btn.innerText = expanding ? "Collapse All" : "Expand All";
+    }
+
+    // Reset Quiz state and restart
+    function resetAndRestartQuiz() {
+      AudioEngine.tap();
+      
+      // Clear logs
+      selectedAnswers = [];
+      userAnswersLog = Array(QUIZ_QUESTIONS.length).fill(null);
+      quizCompleted = false;
+
+      // Reset HUD Score counts
+      updateScoreDashboard();
+
+      // Show quiz workspace and hide results screen
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('quiz-card').classList.remove('hidden');
+
+      // Re-render navigator lists
+      renderNavigationMatrix();
+
+      // Load first question
+      loadQuestion(0);
+    }
+  </script>
+</body>
+</html>

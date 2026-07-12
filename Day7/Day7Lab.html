@@ -32,7 +32,7 @@
         </div>
         <div>
           <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 7: Cloud Storage &amp; Networking Solutions</h1>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 7: Cloud Storage Solutions — EBS, S3 &amp; Glacier</h1>
         </div>
       </div>
 
@@ -70,17 +70,17 @@
               2. Part B: S3 &amp; Glacier Sandbox
             </button>
           </li>
-          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 2 · VPC &amp; Web Server</li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 2 · EBS Snapshot &amp; Restore</li>
           <li>
-            <button onclick="activateTab('vpcbuild')" id="tab-vpcbuild" role="tab" aria-selected="false" aria-controls="panel-vpcbuild" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+            <button onclick="activateTab('ebscreate')" id="tab-ebscreate" role="tab" aria-selected="false" aria-controls="panel-ebscreate" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              3. Build the Multi-AZ VPC
+              3. Create, Attach &amp; Mount
             </button>
           </li>
           <li>
-            <button onclick="activateTab('vpcweb')" id="tab-vpcweb" role="tab" aria-selected="false" aria-controls="panel-vpcweb" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+            <button onclick="activateTab('ebssnapshot')" id="tab-ebssnapshot" role="tab" aria-selected="false" aria-controls="panel-ebssnapshot" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              4. Security Group &amp; Web Server
+              4. Snapshot &amp; Restore
             </button>
           </li>
         </ul>
@@ -440,184 +440,165 @@
         </div>
       </section>
 
-      <!-- TAB 3: BUILD THE VPC (LAB 2) -->
-      <section id="panel-vpcbuild" role="tabpanel" aria-labelledby="tab-vpcbuild" class="tab-content hidden space-y-6">
+      <!-- TAB 3: CREATE, ATTACH & MOUNT (LAB 2) -->
+      <section id="panel-ebscreate" role="tabpanel" aria-labelledby="tab-ebscreate" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 1: Build Your VPC</h2>
-          <p class="text-slate-500 text-sm mt-1">Use the "VPC and more" wizard to stand up a multi-AZ network with public and private subnets, route tables, and a NAT Gateway.</p>
+          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 1: Creating, Attaching &amp; Mounting an EBS Volume</h2>
+          <p class="text-slate-500 text-sm mt-1">Provision a fresh volume, attach it to a running instance, and configure a persistent ext3 file system on it.</p>
         </div>
 
         <div class="callout callout-indigo">
           <span class="callout-badge">Lab Overview</span>
           <p class="text-xs text-indigo-950 leading-relaxed">
-            <strong>Amazon VPC</strong> lets you launch AWS resources into a virtual network you define — closely resembling a traditional data center network, with the scalability of AWS. This lab creates a VPC spanning two Availability Zones, then configures a security group and launches an EC2 web server into it. <span class="font-semibold">Estimated time: 30 minutes.</span>
+            <strong>Amazon EBS</strong> offers persistent, network-attached storage for EC2 instances that lives independently from the life of the instance itself. Volumes are highly available and highly reliable, and can serve as an instance's boot partition or be attached as a standard block device. For extra durability, EBS lets you create point-in-time snapshots stored in Amazon S3 and replicated across multiple Availability Zones. <span class="font-semibold">Estimated time: 30 minutes.</span>
           </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="card">
+            <h5 class="font-bold text-slate-900 text-xs mb-1">Persistent &amp; General Purpose</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">Volume lifetime is independent of any particular EC2 instance. Volumes are raw, unformatted block devices usable from any operating system, ranging in size from 1 GB to 16 TB.</p>
+          </div>
+          <div class="card">
+            <h5 class="font-bold text-slate-900 text-xs mb-1">High Performance &amp; Reliability</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">EBS volumes match or exceed local EC2 drive performance, with built-in redundancy within an Availability Zone and an annual failure rate between 0.1% and 1%.</p>
+          </div>
         </div>
 
         <!-- Task 1 -->
         <div class="border border-slate-200 rounded-2xl overflow-hidden">
           <div class="bg-indigo-950 text-white px-4 py-3">
-            <h4 class="font-extrabold text-sm">Task 1: Create Your VPC with "VPC and More"</h4>
+            <h4 class="font-extrabold text-sm">Task 1: Create a New EBS Volume</h4>
           </div>
           <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
-            <p>Search for and open <strong>VPC</strong>, confirm the region reads <strong>N. Virginia (us-east-1)</strong>, choose the <strong>VPC dashboard</strong> link, then choose <strong>Create VPC</strong> (or <strong>Launch VPC Wizard</strong> if that's what appears). Select <strong>VPC and more</strong> and configure:</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Core Settings</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>Name tag auto-generation: keep Auto-generate, change value from "project" to <span class="font-mono text-indigo-700">lab</span></li>
-                  <li>IPv4 CIDR block: keep <span class="font-mono text-indigo-700">10.0.0.0/16</span></li>
-                  <li>Number of Availability Zones: <span class="font-mono text-indigo-700">1</span></li>
-                  <li>Number of public subnets: keep <span class="font-mono text-indigo-700">1</span>; private subnets: keep <span class="font-mono text-indigo-700">1</span></li>
-                </ul>
-              </div>
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Subnet CIDRs &amp; NAT</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>Expand Customize subnets CIDR blocks</li>
-                  <li>Public subnet CIDR (us-east-1a): <span class="font-mono text-indigo-700">10.0.0.0/24</span></li>
-                  <li>Private subnet CIDR (us-east-1a): <span class="font-mono text-indigo-700">10.0.1.0/24</span></li>
-                  <li>NAT gateways: <span class="font-mono text-indigo-700">In 1 AZ</span>; VPC endpoints: <span class="font-mono text-indigo-700">None</span></li>
-                  <li>Keep DNS hostnames and DNS resolution both enabled</li>
-                </ul>
-              </div>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>In the console, open <strong>EC2 → Instances</strong>. An instance named <strong>Lab</strong> has already been launched for you — note its <strong>Availability Zone</strong> (e.g., us-east-1a).</li>
+              <li>In the left pane, choose <strong>Volumes</strong>. You'll see an existing 8 GiB volume already in use by the Lab instance — this makes it easy to distinguish from the new 1 GiB volume you're about to create.</li>
+            </ol>
+            <p>Choose <strong>Create volume</strong> and configure:</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/3">Volume Type</td><td class="p-2.5 font-mono text-indigo-700">General Purpose SSD (gp2)</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Size (GiB)</td><td class="p-2.5 font-mono text-indigo-700">1</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Availability Zone</td><td class="p-2.5 text-slate-600">Same AZ as your Lab EC2 instance</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Tag</td><td class="p-2.5 text-slate-600">Key: <span class="font-mono text-indigo-700">Name</span> · Value: <span class="font-mono text-indigo-700">My Volume</span></td></tr>
+                </tbody>
+              </table>
             </div>
-            <p>Confirm the Preview panel shows VPC <span class="font-mono text-indigo-700">lab-vpc</span>, subnets <span class="font-mono text-indigo-700">lab-subnet-public1-us-east-1a</span> / <span class="font-mono text-indigo-700">lab-subnet-private1-us-east-1a</span>, route tables <span class="font-mono text-indigo-700">lab-rtb-public</span> / <span class="font-mono text-indigo-700">lab-rtb-private1-us-east-1a</span>, and network connections <span class="font-mono text-indigo-700">lab-igw</span> / <span class="font-mono text-indigo-700">lab-nat-public1-us-east-1a</span>. Choose <strong>Create VPC</strong> and wait for all resources — including the NAT Gateway — to finish provisioning before choosing <strong>View VPC</strong>.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Internet Gateway</h5>
-                <p class="text-slate-600">Allows communication between EC2 instances in your VPC and the internet. The public subnet's route table sends 0.0.0.0/0 traffic here — that's what makes it "public."</p>
-              </div>
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">NAT Gateway</h5>
-                <p class="text-slate-600">Provides internet connectivity to instances in private subnets without giving them a direct connection to the internet gateway.</p>
-              </div>
-            </div>
+            <p>Choose <strong>Create Volume</strong>. It moves from <em>Creating</em> to <em>Available</em> — refresh if needed.</p>
           </div>
         </div>
 
         <!-- Task 2 -->
         <div class="border border-slate-200 rounded-2xl overflow-hidden">
           <div class="bg-indigo-950 text-white px-4 py-3">
-            <h4 class="font-extrabold text-sm">Task 2: Create Additional Subnets in a Second AZ</h4>
+            <h4 class="font-extrabold text-sm">Task 2: Attach the Volume to an Instance</h4>
           </div>
-          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
-            <p>Subnets in multiple Availability Zones support High Availability designs. In <strong>Subnets</strong>, choose <strong>Create subnet</strong> twice:</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Second Public Subnet</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>VPC ID: lab-vpc</li>
-                  <li>Subnet name: <span class="font-mono text-indigo-700">lab-subnet-public2</span></li>
-                  <li>Availability Zone: second AZ (e.g., us-east-1b)</li>
-                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.2.0/24</span></li>
-                </ul>
-              </div>
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Second Private Subnet</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>VPC ID: lab-vpc</li>
-                  <li>Subnet name: <span class="font-mono text-indigo-700">lab-subnet-private2</span></li>
-                  <li>Availability Zone: second AZ (e.g., us-east-1b)</li>
-                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.3.0/24</span></li>
-                </ul>
-              </div>
-            </div>
-            <p>Next, associate route tables with the new subnets. In <strong>Route tables</strong>, select <span class="font-mono text-indigo-700">lab-rtb-private1-us-east-1a</span> → <strong>Routes</strong> tab — note Destination 0.0.0.0/0 targets the NAT Gateway. Choose <strong>Subnet associations → Edit subnet associations</strong>, leave <span class="font-mono text-indigo-700">lab-subnet-private1-us-east-1a</span> selected, also select <span class="font-mono text-indigo-700">lab-subnet-private2</span>, then <strong>Save associations</strong>.</p>
-            <p>Repeat for the public side: select <span class="font-mono text-indigo-700">lab-rtb-public</span> → confirm its Routes tab shows Destination 0.0.0.0/0 targeting the Internet Gateway → Subnet associations → Edit → keep <span class="font-mono text-indigo-700">lab-subnet-public1-us-east-1a</span> selected, also select <span class="font-mono text-indigo-700">lab-subnet-public2</span>, then <strong>Save associations</strong>.</p>
-            <p class="text-slate-500 italic">Your VPC now has public and private subnets configured across two Availability Zones, with both route tables properly updated.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 4: SECURITY GROUP & WEB SERVER (LAB 2) -->
-      <section id="panel-vpcweb" role="tabpanel" aria-labelledby="tab-vpcweb" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 2: Security Group &amp; Web Server Launch</h2>
-          <p class="text-slate-500 text-sm mt-1">Open HTTP access, then launch a fully bootstrapped PHP web application into your new VPC.</p>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Select <strong>My Volume</strong>, then in the <strong>Actions</strong> menu choose <strong>Attach volume</strong>.</li>
+            <li>Choose the <strong>Instance</strong> field and select <strong>Lab</strong>.</li>
+            <li>For <strong>Device Name</strong>, choose <span class="font-mono text-indigo-700">/dev/sdb</span> from the dropdown — you'll reference this device identifier again shortly.</li>
+            <li>Choose <strong>Attach volume</strong>. The volume state changes to <em>In-use</em>.</li>
+          </ol>
         </div>
 
         <!-- Task 3 -->
         <div class="border border-slate-200 rounded-2xl overflow-hidden">
           <div class="bg-indigo-950 text-white px-4 py-3">
-            <h4 class="font-extrabold text-sm">Task 3: Create a VPC Security Group</h4>
+            <h4 class="font-extrabold text-sm">Task 3: Connect to Your EC2 Instance</h4>
           </div>
           <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
-            <p>A security group acts as a virtual firewall for any instance it's attached to. In <strong>Security groups</strong>, choose <strong>Create security group</strong>:</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Basic Configuration</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>Security group name: <span class="font-mono text-indigo-700">Web Security Group</span></li>
-                  <li>Description: Enable HTTP access</li>
-                  <li>VPC: remove the default, select lab-vpc</li>
-                </ul>
-              </div>
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>Type: HTTP</li>
-                  <li>Source: Anywhere-IPv4</li>
-                  <li>Description: Permit web requests</li>
-                </ul>
-              </div>
-            </div>
-            <p>Scroll down and choose <strong>Create security group</strong>. You'll attach it to your EC2 instance next.</p>
+            <p>In EC2 → Instances, select <strong>Lab</strong>, choose <strong>Connect</strong>, then the <strong>Session Manager</strong> tab, and choose <strong>Connect</strong>. A terminal session opens in a new browser tab. Switch to the ec2-user home directory:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px]">sudo su -l ec2-user</div>
           </div>
         </div>
 
         <!-- Task 4 -->
         <div class="border border-slate-200 rounded-2xl overflow-hidden">
           <div class="bg-indigo-950 text-white px-4 py-3">
-            <h4 class="font-extrabold text-sm">Task 4: Launch a Web Server Instance</h4>
+            <h4 class="font-extrabold text-sm">Task 4: Create &amp; Configure Your File System</h4>
           </div>
-          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
-            <p>Search for and open <strong>EC2</strong>, then choose <strong>Launch instance</strong>:</p>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>You'll add the new volume as an ext3 file system mounted at <span class="font-mono text-indigo-700">/mnt/data-store</span>. First, view current storage:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px]">df -h</div>
+            <p class="text-slate-500 italic">Only the original 8 GB root volume shows up — your new volume isn't mounted yet.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Identity &amp; Compute</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>Name: <span class="font-mono text-indigo-700">Web Server 1</span></li>
-                  <li>AMI: keep default Amazon Linux → Amazon Linux 2023</li>
-                  <li>Instance type: keep default t2.micro</li>
-                  <li>Key pair: select vockey</li>
-                </ul>
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Format &amp; Create Mount Point</h5>
+                <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mb-1">sudo mkfs -t ext3 /dev/sdb<br>sudo mkdir /mnt/data-store</div>
               </div>
               <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
-                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
-                  <li>Network: lab-vpc</li>
-                  <li>Subnet: <span class="font-mono text-indigo-700">lab-subnet-public2</span> (not Private!)</li>
-                  <li>Auto-assign public IP: Enable</li>
-                  <li>Firewall: select existing → Web Security Group</li>
-                </ul>
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Mount &amp; Persist Across Reboots</h5>
+                <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mb-1">sudo mount /dev/sdb /mnt/data-store<br>echo "/dev/sdb /mnt/data-store ext3 defaults,noatime 1 2" | sudo tee -a /etc/fstab</div>
               </div>
             </div>
-            <p>Keep the default storage settings (8 GiB gp3 root volume). Expand <strong>Advanced details</strong>, scroll to <strong>User data</strong>, and paste:</p>
-            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
-<pre>#!/bin/bash
-# Install Apache Web Server and PHP
-dnf install -y httpd wget php mariadb105-server
-# Download Lab files
-wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
-unzip lab-app.zip -d /var/www/html/
-# Turn on web server
-chkconfig httpd on
-service httpd start</pre>
+            <p>View the fstab entry and confirm the volume now shows up as <span class="font-mono text-indigo-700">/dev/xvdb</span>:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px]">cat /etc/fstab<br>df -h</div>
+            <p>Finally, write and verify a test file on the mounted volume:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px]">sudo sh -c "echo some text has been written &gt; /mnt/data-store/file.txt"<br>cat /mnt/data-store/file.txt</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SNAPSHOT & RESTORE (LAB 2) -->
+      <section id="panel-ebssnapshot" role="tabpanel" aria-labelledby="tab-ebssnapshot" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 2: Snapshot Backup &amp; Restore</h2>
+          <p class="text-slate-500 text-sm mt-1">Back up your volume to a point-in-time snapshot, then prove the restore path by rebuilding a new volume from it.</p>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Create an Amazon EBS Snapshot</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Snapshots are point-in-time, consistent backups stored durably in Amazon S3. Only used storage blocks are copied, so empty blocks don't occupy snapshot space.</p>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>In the console, choose <strong>Volumes</strong> and select <strong>My Volume</strong>.</li>
+              <li>In the <strong>Actions</strong> menu, select <strong>Create snapshot</strong>. Add a tag: Key <span class="font-mono text-indigo-700">Name</span>, Value <span class="font-mono text-indigo-700">My Snapshot</span>. Choose <strong>Create snapshot</strong>.</li>
+              <li>In the left pane, choose <strong>Snapshots</strong> — status starts at <em>Pending</em> and changes to <em>Completed</em> once the backup finishes.</li>
+            </ol>
+            <p>Back in your terminal session, delete the test file and confirm it's gone — this sets up the restore demonstration:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px]">sudo rm /mnt/data-store/file.txt<br>ls /mnt/data-store/</div>
+          </div>
+        </div>
+
+        <!-- Task 6 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 6: Restore the Snapshot to a New Volume</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create a Volume from the Snapshot</h5>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>Select <strong>My Snapshot</strong>, then in the <strong>Actions</strong> menu choose <strong>Create volume from snapshot</strong>.</li>
+                <li>For <strong>Availability Zone</strong>, select the same zone you used earlier.</li>
+                <li>Add a tag: Key <span class="font-mono text-indigo-700">Name</span>, Value <span class="font-mono text-indigo-700">Restored Volume</span>, then choose <strong>Create volume</strong>.</li>
+              </ol>
+              <p class="text-slate-500 italic mt-1">When restoring from a snapshot, you can also change the volume type, size, or Availability Zone if needed.</p>
             </div>
-            <p class="text-slate-500 italic">This script runs once at first boot with root permissions — it installs Apache, PHP, and MariaDB libraries, then downloads and installs a sample PHP web application.</p>
-            <p>Choose <strong>Launch instance</strong>, then <strong>View all instances</strong>. Wait until Web Server 1 shows <strong>2/2 checks passed</strong> (refresh every ~30 seconds).</p>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Attach &amp; Mount the Restored Volume</h5>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>In <strong>Volumes</strong>, select <strong>Restored Volume</strong>, choose <strong>Actions → Attach volume</strong>, select the <strong>Lab</strong> instance, and choose device name <span class="font-mono text-indigo-700">/dev/sdc</span> (or the next available identifier). Choose <strong>Attach volume</strong> — state becomes <em>in-use</em>.</li>
+                <li>Back in your terminal, create a new mount point and mount it:</li>
+              </ol>
+              <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] mt-2">sudo mkdir /mnt/data-store2<br>sudo mount /dev/sdc /mnt/data-store2</div>
+            </div>
           </div>
         </div>
 
         <!-- Verify -->
         <div class="space-y-3">
-          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Verify the Web Server</h3>
-          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
-            <li>Select <strong>Web Server 1</strong> and copy the <strong>Public IPv4 DNS</strong> value from the Details tab.</li>
-            <li>Open a new browser tab, paste the Public DNS value, and press Enter.</li>
-            <li>You should see a web page displaying the AWS logo and instance metadata values — confirming your VPC, security group, and bootstrap script all worked together correctly.</li>
-          </ol>
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Verify the Restore</h3>
+          <div class="card">
+            <p class="text-xs text-slate-600 leading-relaxed">Confirm the restored volume contains the file you created earlier — even though you deleted it from the original volume:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-[11px] mt-2">ls /mnt/data-store2/</div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">You should see <span class="font-mono text-indigo-700">file.txt</span> — proof that the snapshot preserved the volume's state at the moment it was taken, independent of later changes to the original.</p>
+          </div>
         </div>
 
         <div class="callout callout-indigo">
@@ -635,15 +616,15 @@ service httpd start</pre>
             </div>
             <div class="card flex items-start gap-3">
               <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
-              <div><h4 class="font-bold text-slate-900 text-xs">Format Before You Mount</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">A raw block device must be formatted with a file system (like XFS) before it can be mounted — skipping this is the most common lab failure.</p></div>
+              <div><h4 class="font-bold text-slate-900 text-xs">Format Before You Mount</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">A raw block device must be formatted with a file system before it can be mounted — skipping this is the most common lab failure.</p></div>
             </div>
             <div class="card flex items-start gap-3">
               <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
-              <div><h4 class="font-bold text-slate-900 text-xs">Lifecycle Policies Automate Cost Savings</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">S3 lifecycle rules can silently migrate aging data into Glacier Deep Archive, cutting storage costs with zero ongoing manual effort.</p></div>
+              <div><h4 class="font-bold text-slate-900 text-xs">Snapshots Are Independent Backups</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Once a snapshot is taken, it preserves that point-in-time state permanently — deleting data from the live volume afterward has no effect on what's already been backed up.</p></div>
             </div>
             <div class="card flex items-start gap-3">
               <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
-              <div><h4 class="font-bold text-slate-900 text-xs">Public vs. Private Subnets Are Just Routing</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">What makes a subnet "public" or "private" is entirely defined by its route table — pointing to an Internet Gateway versus a NAT Gateway.</p></div>
+              <div><h4 class="font-bold text-slate-900 text-xs">Lifecycle Policies Automate Cost Savings</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">S3 lifecycle rules (as seen in Lab 1) can silently migrate aging data into Glacier Deep Archive, cutting storage costs with zero ongoing manual effort.</p></div>
             </div>
           </div>
         </div>

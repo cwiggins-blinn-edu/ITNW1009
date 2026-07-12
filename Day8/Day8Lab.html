@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 8 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 8: Building VPCs &amp; Launching Web Servers</h1>
+        </div>
+      </div>
+
+      <a href="Day8Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 8 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">105 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li class="pt-1 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 1 · Two-Track VPC Lab</li>
+          <li>
+            <button onclick="activateTab('guided')" id="tab-guided" role="tab" aria-selected="true" aria-controls="panel-guided" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Part 1: Guided Lab
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('sandboxlab')" id="tab-sandboxlab" role="tab" aria-selected="false" aria-controls="panel-sandboxlab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Part 2: Sandbox Lab
+            </button>
+          </li>
+          <li class="pt-3 pb-0.5 px-3 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lab 2 · VPC &amp; Web Server</li>
+          <li>
+            <button onclick="activateTab('vpcbuild')" id="tab-vpcbuild" role="tab" aria-selected="false" aria-controls="panel-vpcbuild" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Build the Multi-AZ VPC
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('vpcweb')" id="tab-vpcweb" role="tab" aria-selected="false" aria-controls="panel-vpcweb" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Security Group &amp; Web Server
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: PART 1 - GUIDED LAB -->
+      <section id="panel-guided" role="tabpanel" aria-labelledby="tab-guided" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 1, Part 1: Guided Lab — Build Your VPC &amp; Launch a Web Server</h2>
+          <p class="text-slate-500 text-sm mt-1">Follow the pre-packaged Curriculum track: build a VPC, attach an Internet Gateway, and deploy a live web server.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Two Learning Tracks</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            This lab covers two distinct environments. The <strong>Guided Lab</strong> (this tab) is a pre-packaged, step-by-step curriculum environment with automatic grading checkpoints — ideal for a structured first pass. The <strong>Sandbox Lab</strong> (next tab) is unguided, from-scratch architecture design within a $100 budget, for learners ready to engineer a secure two-tier VPC independently.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Critical Curriculum Constraints</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            Never create custom IAM Users, Groups, or root organizational policy changes — the restricted Academy Student profile blocks these and generates an Access Denied error that breaks your lab score tracker. Always attach the pre-configured <strong>LabRole</strong> IAM instance profile when launching instances or authorizing infrastructure permissions. Missing this step causes instance validation to fail.
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Access the Lab Sandbox</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Go to the <strong>Modules</strong> tab and select <strong>Lab 2</strong>.</li>
+            <li>Click <strong>Start Lab</strong>, then wait until the status icon turns from blinking amber to solid green.</li>
+            <li>Click the green <strong>AWS</strong> link to open the Management Console. Clicking before the status is green may result in a partial or failed session.</li>
+            <li>Work inside a private/incognito browser window to prevent cached credentials from interfering with the AWS Console authentication flow.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Build a Custom VPC &amp; Subnets</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create Lab-VPC</h5>
+              <p class="mb-2">Type <span class="font-mono text-indigo-700">VPC</span> in the top search bar, select the VPC dashboard link, click <strong>Create VPC</strong>, select the <strong>VPC only</strong> radio button, and configure:</p>
+              <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                <table class="w-full text-xs text-left border-collapse">
+                  <tbody class="divide-y divide-slate-100">
+                    <tr><td class="p-2.5 font-semibold text-slate-700 w-1/2">Name tag</td><td class="p-2.5 font-mono text-indigo-700">Lab-VPC</td></tr>
+                    <tr><td class="p-2.5 font-semibold text-slate-700">IPv4 CIDR input mode</td><td class="p-2.5 font-mono text-indigo-700">Manual</td></tr>
+                    <tr><td class="p-2.5 font-semibold text-slate-700">IPv4 CIDR block</td><td class="p-2.5 font-mono text-indigo-700">10.0.0.0/16</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Create Public &amp; Private Subnets</h5>
+              <p class="mb-2">Navigate to <strong>Subnets → Create subnet</strong>, select Lab-VPC from the VPC ID dropdown, then use <strong>Add new subnet</strong> to configure both in one flow:</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h5 class="font-bold text-slate-900 text-xs mb-1">Public Subnet 1</h5>
+                  <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                    <li>Subnet name: Public Subnet 1</li>
+                    <li>Availability Zone: first zone (e.g., us-east-1a)</li>
+                    <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.0.0/24</span></li>
+                  </ul>
+                  <p class="text-slate-500 italic mt-1">Hosts the web server with a public IP and internet access.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h5 class="font-bold text-slate-900 text-xs mb-1">Private Subnet 1</h5>
+                  <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                    <li>Subnet name: Private Subnet 1</li>
+                    <li>Availability Zone: same zone as Public Subnet 1</li>
+                    <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.1.0/24</span></li>
+                  </ul>
+                  <p class="text-slate-500 italic mt-1">Isolated tier for backend resources — not directly reachable from the internet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Attach an Internet Gateway</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>In the left pane, select <strong>Internet gateways</strong>. Click <strong>Create internet gateway</strong> and enter Name tag <span class="font-mono text-indigo-700">Lab-IGW</span>, then click <strong>Create</strong>.</li>
+            <li>On the success banner, click the <strong>Actions</strong> dropdown and select <strong>Attach to VPC</strong>.</li>
+            <li>In the Available VPCs list, choose <strong>Lab-VPC</strong> and click <strong>Attach internet gateway</strong>.</li>
+          </ol>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Configure Routing &amp; Public Access</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Find the route table bound to Lab-VPC in <strong>Route tables</strong> (you may rename it <em>Public Route Table</em> for clarity). Edit its routes, add destination <span class="font-mono text-indigo-700">0.0.0.0/0</span> targeting your Internet Gateway, save changes, then associate this route table with <strong>Public Subnet 1 only</strong>.</p>
+            <div class="callout callout-amber">
+              <span class="callout-badge">Do Not Associate Private Subnet 1</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Associating the private subnet with this route table would expose your backend tier directly to the public internet.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Launch a Web Server Instance</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Instance Identity</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: Web Server 1</li>
+                  <li>AMI: Amazon Linux 2023</li>
+                  <li>Instance type: t2.micro</li>
+                  <li>Key pair: proceed without a key pair</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Placement</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC: Lab-VPC</li>
+                  <li>Subnet: Public Subnet 1</li>
+                  <li>Auto-assign public IP: Enable</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Security Group</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: Web-SG</li>
+                  <li>Description: Allow HTTP traffic</li>
+                  <li>Inbound rule: HTTP / Anywhere-IPv4 (0.0.0.0/0)</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Advanced Details</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>IAM instance profile: <strong>LabRole</strong> (critical)</li>
+                  <li>User data: paste the full bootstrap script below</li>
+                </ul>
+              </div>
+            </div>
+            <p>Paste this exactly into the <strong>User data</strong> field before launching:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>#!/bin/bash
+dnf install -y httpd wget php mariadb105-server
+wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/\
+CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
+unzip lab-app.zip -d /var/www/html/
+chkconfig httpd on
+service httpd start</pre>
+            </div>
+            <div class="callout callout-amber">
+              <span class="callout-badge">Copy in Full</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Any missing line prevents the web server from starting correctly, which will cause the validation step to fail.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Validation &amp; Submission</h3>
+          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>In the EC2 Instances view, wait until Web Server 1 shows <strong>2/2 checks passed</strong>.</li>
+            <li>Click the instance row, open the details pane, and copy the <strong>Public IPv4 DNS</strong> address in full.</li>
+            <li>Paste the DNS address into a new private/incognito browser tab and press Enter — the web application should load, displaying the AWS logo and live instance metadata.</li>
+            <li>Return to the AWS Academy instruction pane and click <strong>Submit</strong> to run the automated checkpoint script and record your grade.</li>
+          </ol>
+          <div class="callout callout-indigo">
+            <span class="callout-badge">Validation Milestone: 2/2 Checks Passed</span>
+            <p class="text-xs text-indigo-950 leading-relaxed">When the web application loads with the AWS logo and live instance metadata, your route table, Internet Gateway, security group, and EC2 configuration are all correct.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PART 2 - SANDBOX LAB -->
+      <section id="panel-sandboxlab" role="tabpanel" aria-labelledby="tab-sandboxlab" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 1, Part 2: Sandbox Lab — Engineer a Two-Tier Network from Scratch</h2>
+          <p class="text-slate-500 text-sm mt-1">Design and deploy an isolated two-tier VPC with a NAT Gateway, least-privilege security groups, and a private-only test instance.</p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Sandbox Cost Controls &amp; Boundaries</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            The Sandbox Lab allocates a <strong>$100 budget cap</strong> per student. Stick strictly to services specified in the lab, always select <strong>t2.micro</strong> or <strong>t3.micro</strong> instance types, and execute the full teardown sequence immediately after validation — NAT Gateways and Elastic IPs continue billing even when idle.
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Initialize the Sandbox Environment</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Log in to your AWS Academy portal home screen and navigate to the <strong>Learner Lab</strong> section.</li>
+            <li>Click <strong>Start Lab</strong> and wait until the status circle turns solid green.</li>
+            <li>Click the <strong>AWS Console</strong> link to launch your sandbox workspace — a clean, empty AWS account with no pre-configured resources.</li>
+            <li>Keep a plain text editor open to record dynamically generated resource IDs, Elastic IPs, and gateway identifiers as you build.</li>
+          </ol>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Build a Two-Tier VPC from Scratch</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Use the <strong>VPC and more</strong> wizard, which automatically creates subnets, route tables, and an Internet Gateway in one guided flow:</p>
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700 w-1/2">Configuration mode</td><td class="p-2.5 font-mono text-indigo-700">VPC and more</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Name project prefix</td><td class="p-2.5 font-mono text-indigo-700">Sandbox-Net</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">IPv4 CIDR block</td><td class="p-2.5 font-mono text-indigo-700">192.168.0.0/16</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Availability Zones</td><td class="p-2.5 font-mono text-indigo-700">1</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Public / Private Subnets</td><td class="p-2.5 font-mono text-indigo-700">1 / 1</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">NAT Gateways &amp; VPC Endpoints</td><td class="p-2.5 font-mono text-indigo-700">None</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Expand the Subnet CIDR blocks panel to confirm the wizard assigned: Public subnet <span class="font-mono text-indigo-700">192.168.0.0/24</span>, Private subnet <span class="font-mono text-indigo-700">192.168.1.0/24</span>. NAT is set to None here deliberately — you'll configure it manually in Task 3 to control costs and understand the provisioning process.</p>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Configure an Outbound-Only NAT Gateway</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>A NAT Gateway lets private-subnet instances initiate outbound connections (e.g., software updates) while blocking inbound connections from external sources.</p>
+            <div class="callout callout-amber">
+              <span class="callout-badge">Critical Placement</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Place the NAT Gateway inside the <strong>Public Subnet</strong>, not the Private Subnet. Placing it in the wrong subnet breaks outbound routing for your private tier.</p>
+            </div>
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>Confirm <span class="font-mono text-indigo-700">Sandbox-Net-igw</span> was auto-created and attached to your VPC by the wizard.</li>
+              <li>Create a NAT Gateway named <span class="font-mono text-indigo-700">Sandbox-NAT-Gateway</span>, Subnet: <span class="font-mono text-indigo-700">Sandbox-Net-subnet-public</span>, Connectivity type: Public.</li>
+              <li>Click <strong>Allocate Elastic IP</strong> to assign a static public IP, then click <strong>Create NAT gateway</strong>. Allow up to 2 minutes for provisioning.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Engineering Private Subnet Routing</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li>Navigate to <strong>Route tables</strong> and create <span class="font-mono text-indigo-700">Private-Route-Table</span>.</li>
+            <li>Add a route for destination <span class="font-mono text-indigo-700">0.0.0.0/0</span> targeting your NAT Gateway, and save changes.</li>
+            <li>Switch to the <strong>Subnet associations</strong> tab, check only <span class="font-mono text-indigo-700">Sandbox-Net-subnet-private</span>, and save associations.</li>
+          </ol>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Implement Stateful Instance-Level Firewalls</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Create a least-privilege security group that allows only your public-subnet application tier to reach database ports, blocking all external IPs:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Security Group Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">App-DB-SG</span></li>
+                  <li>Description: Restricted database port filter</li>
+                  <li>VPC: Sandbox-Net</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Type: MySQL/Aurora (3306) or MS SQL (1433) — match your DB variant</li>
+                  <li>Source type: Custom</li>
+                  <li>Source CIDR: <span class="font-mono text-indigo-700">192.168.0.0/24</span> (Public Subnet only)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Structural Validation: Launch a Private Test Instance</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">A correctly isolated instance should have a private IP address only, with no public IP assigned.</p>
+          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>Go to the EC2 dashboard, click <strong>Launch instances</strong>, name it <span class="font-mono text-indigo-700">SandboxStorageHost</span>, and select an approved free-tier t2.micro AMI.</li>
+            <li>Under Network settings, select <strong>Sandbox-Net</strong> as the VPC, choose the Private Subnet, and set Auto-assign public IP to <strong>Disable</strong>.</li>
+            <li>Attach the existing <strong>App-DB-SG</strong> security group, and in Advanced details attach the <strong>LabRole</strong> IAM instance profile, then click <strong>Launch instance</strong>.</li>
+            <li>In the instance details pane, confirm a private IP in the <span class="font-mono text-indigo-700">192.168.1.x</span> range with <strong>no public IP</strong> — this confirms your network isolation is working correctly.</li>
+          </ol>
+        </div>
+
+        <!-- Cleanup -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Environment Deconstruction — Follow This Exact Order</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">1</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Terminate SandboxStorageHost</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">EC2 Instances → select it → Instance state → Terminate instance. Wait until status reads terminated.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">2</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Delete the NAT Gateway</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">VPC Dashboard → NAT Gateways → select Sandbox-NAT-Gateway → Actions → Delete NAT Gateway.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">3</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Release the Elastic IP</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Elastic IPs → select the NAT Gateway's IP → Actions → Release Elastic IP addresses.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 text-xs font-black flex items-center justify-center shrink-0">4</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Delete the VPC</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Select Sandbox-Net VPC → Actions → Delete VPC. This cascades to subnets, security groups, and gateway attachments.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Guided vs. Sandbox: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Guided Lab</h5><p class="text-xs text-slate-600 leading-relaxed">VPC + 2 subnets + IGW + route table + EC2 web server deployed and validated via public DNS, with the grade submitted through the Academy portal.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Sandbox Lab</h5><p class="text-xs text-slate-600 leading-relaxed">Two-tier isolated VPC with a NAT Gateway, private route table, least-privilege security group, and a private-only EC2 instance validated and torn down cleanly.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: BUILD THE VPC (LAB 2) -->
+      <section id="panel-vpcbuild" role="tabpanel" aria-labelledby="tab-vpcbuild" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 1: Build Your VPC</h2>
+          <p class="text-slate-500 text-sm mt-1">Use the "VPC and more" wizard to stand up a multi-AZ network with public and private subnets, route tables, and a NAT Gateway.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Lab Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            <strong>Amazon VPC</strong> lets you launch AWS resources into a virtual network you define — closely resembling a traditional data center network, with the scalability of AWS. This lab creates a VPC spanning two Availability Zones, then configures a security group and launches an EC2 web server into it. <span class="font-semibold">Estimated time: 30 minutes.</span>
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Create Your VPC with "VPC and More"</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Search for and open <strong>VPC</strong>, confirm the region reads <strong>N. Virginia (us-east-1)</strong>, choose the <strong>VPC dashboard</strong> link, then choose <strong>Create VPC</strong> (or <strong>Launch VPC Wizard</strong> if that's what appears). Select <strong>VPC and more</strong> and configure:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Core Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name tag auto-generation: keep Auto-generate, change value from "project" to <span class="font-mono text-indigo-700">lab</span></li>
+                  <li>IPv4 CIDR block: keep <span class="font-mono text-indigo-700">10.0.0.0/16</span></li>
+                  <li>Number of Availability Zones: <span class="font-mono text-indigo-700">1</span></li>
+                  <li>Number of public subnets: keep <span class="font-mono text-indigo-700">1</span>; private subnets: keep <span class="font-mono text-indigo-700">1</span></li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Subnet CIDRs &amp; NAT</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Expand Customize subnets CIDR blocks</li>
+                  <li>Public subnet CIDR (us-east-1a): <span class="font-mono text-indigo-700">10.0.0.0/24</span></li>
+                  <li>Private subnet CIDR (us-east-1a): <span class="font-mono text-indigo-700">10.0.1.0/24</span></li>
+                  <li>NAT gateways: <span class="font-mono text-indigo-700">In 1 AZ</span>; VPC endpoints: <span class="font-mono text-indigo-700">None</span></li>
+                  <li>Keep DNS hostnames and DNS resolution both enabled</li>
+                </ul>
+              </div>
+            </div>
+            <p>Confirm the Preview panel shows VPC <span class="font-mono text-indigo-700">lab-vpc</span>, subnets <span class="font-mono text-indigo-700">lab-subnet-public1-us-east-1a</span> / <span class="font-mono text-indigo-700">lab-subnet-private1-us-east-1a</span>, route tables <span class="font-mono text-indigo-700">lab-rtb-public</span> / <span class="font-mono text-indigo-700">lab-rtb-private1-us-east-1a</span>, and network connections <span class="font-mono text-indigo-700">lab-igw</span> / <span class="font-mono text-indigo-700">lab-nat-public1-us-east-1a</span>. Choose <strong>Create VPC</strong> and wait for all resources — including the NAT Gateway — to finish provisioning before choosing <strong>View VPC</strong>.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Internet Gateway</h5>
+                <p class="text-slate-600">Allows communication between EC2 instances in your VPC and the internet. The public subnet's route table sends 0.0.0.0/0 traffic here — that's what makes it "public."</p>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">NAT Gateway</h5>
+                <p class="text-slate-600">Provides internet connectivity to instances in private subnets without giving them a direct connection to the internet gateway.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create Additional Subnets in a Second AZ</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>Subnets in multiple Availability Zones support High Availability designs. In <strong>Subnets</strong>, choose <strong>Create subnet</strong> twice:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Second Public Subnet</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC ID: lab-vpc</li>
+                  <li>Subnet name: <span class="font-mono text-indigo-700">lab-subnet-public2</span></li>
+                  <li>Availability Zone: second AZ (e.g., us-east-1b)</li>
+                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.2.0/24</span></li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Second Private Subnet</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>VPC ID: lab-vpc</li>
+                  <li>Subnet name: <span class="font-mono text-indigo-700">lab-subnet-private2</span></li>
+                  <li>Availability Zone: second AZ (e.g., us-east-1b)</li>
+                  <li>IPv4 CIDR: <span class="font-mono text-indigo-700">10.0.3.0/24</span></li>
+                </ul>
+              </div>
+            </div>
+            <p>Next, associate route tables with the new subnets. In <strong>Route tables</strong>, select <span class="font-mono text-indigo-700">lab-rtb-private1-us-east-1a</span> → <strong>Routes</strong> tab — note Destination 0.0.0.0/0 targets the NAT Gateway. Choose <strong>Subnet associations → Edit subnet associations</strong>, leave <span class="font-mono text-indigo-700">lab-subnet-private1-us-east-1a</span> selected, also select <span class="font-mono text-indigo-700">lab-subnet-private2</span>, then <strong>Save associations</strong>.</p>
+            <p>Repeat for the public side: select <span class="font-mono text-indigo-700">lab-rtb-public</span> → confirm its Routes tab shows Destination 0.0.0.0/0 targeting the Internet Gateway → Subnet associations → Edit → keep <span class="font-mono text-indigo-700">lab-subnet-public1-us-east-1a</span> selected, also select <span class="font-mono text-indigo-700">lab-subnet-public2</span>, then <strong>Save associations</strong>.</p>
+            <p class="text-slate-500 italic">Your VPC now has public and private subnets configured across two Availability Zones, with both route tables properly updated.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SECURITY GROUP & WEB SERVER (LAB 2) -->
+      <section id="panel-vpcweb" role="tabpanel" aria-labelledby="tab-vpcweb" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">Lab 2, Part 2: Security Group &amp; Web Server Launch</h2>
+          <p class="text-slate-500 text-sm mt-1">Open HTTP access, then launch a fully bootstrapped PHP web application into your new VPC.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Create a VPC Security Group</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p>A security group acts as a virtual firewall for any instance it's attached to. In <strong>Security groups</strong>, choose <strong>Create security group</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Basic Configuration</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Security group name: <span class="font-mono text-indigo-700">Web Security Group</span></li>
+                  <li>Description: Enable HTTP access</li>
+                  <li>VPC: remove the default, select lab-vpc</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Inbound Rule</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Type: HTTP</li>
+                  <li>Source: Anywhere-IPv4</li>
+                  <li>Description: Permit web requests</li>
+                </ul>
+              </div>
+            </div>
+            <p>Scroll down and choose <strong>Create security group</strong>. You'll attach it to your EC2 instance next.</p>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 4: Launch a Web Server Instance</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>Search for and open <strong>EC2</strong>, then choose <strong>Launch instance</strong>:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Identity &amp; Compute</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Name: <span class="font-mono text-indigo-700">Web Server 1</span></li>
+                  <li>AMI: keep default Amazon Linux → Amazon Linux 2023</li>
+                  <li>Instance type: keep default t2.micro</li>
+                  <li>Key pair: select vockey</li>
+                </ul>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <h5 class="font-bold text-slate-900 text-xs mb-1">Network Settings</h5>
+                <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+                  <li>Network: lab-vpc</li>
+                  <li>Subnet: <span class="font-mono text-indigo-700">lab-subnet-public2</span> (not Private!)</li>
+                  <li>Auto-assign public IP: Enable</li>
+                  <li>Firewall: select existing → Web Security Group</li>
+                </ul>
+              </div>
+            </div>
+            <p>Keep the default storage settings (8 GiB gp3 root volume). Expand <strong>Advanced details</strong>, scroll to <strong>User data</strong>, and paste:</p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-[11px] overflow-x-auto">
+<pre>#!/bin/bash
+# Install Apache Web Server and PHP
+dnf install -y httpd wget php mariadb105-server
+# Download Lab files
+wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
+unzip lab-app.zip -d /var/www/html/
+# Turn on web server
+chkconfig httpd on
+service httpd start</pre>
+            </div>
+            <p class="text-slate-500 italic">This script runs once at first boot with root permissions — it installs Apache, PHP, and MariaDB libraries, then downloads and installs a sample PHP web application.</p>
+            <p>Choose <strong>Launch instance</strong>, then <strong>View all instances</strong>. Wait until Web Server 1 shows <strong>2/2 checks passed</strong> (refresh every ~30 seconds).</p>
+          </div>
+        </div>
+
+        <!-- Verify -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Verify the Web Server</h3>
+          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>Select <strong>Web Server 1</strong> and copy the <strong>Public IPv4 DNS</strong> value from the Details tab.</li>
+            <li>Open a new browser tab, paste the Public DNS value, and press Enter.</li>
+            <li>You should see a web page displaying the AWS logo and instance metadata values — confirming your VPC, security group, and bootstrap script all worked together correctly.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Day 8 Complete</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">Choose <strong>Submit</strong> at the top of your lab instructions to record your progress, then <strong>End Lab</strong> and confirm to tear down the sandbox.</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Day 8 Summary: Key Takeaways</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Public vs. Private Is Just Routing</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">What makes a subnet "public" or "private" is entirely defined by its route table — pointing to an Internet Gateway versus a NAT Gateway.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">NAT Gateways Must Sit in the Public Subnet</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">A NAT Gateway physically needs internet reachability itself to forward traffic on behalf of private instances — placing it in the private subnet breaks the whole chain.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Least Privilege Applies at the Port Level</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Restricting a database security group's source CIDR to just the application subnet — instead of 0.0.0.0/0 — blocks all external scanning attempts by default.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">LabRole Is Non-Negotiable</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Every instance and permission-bearing action in the Guided track depends on the pre-provisioned LabRole — skipping it is the most common cause of a failed validation checkpoint.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 8 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html – Day7Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>
