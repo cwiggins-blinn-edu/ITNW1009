@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: Day 9 Hands-On Lab Guide</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="../itnw1009-theme.css">
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- PORTAL TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Toolbox / Lab Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1h3a2 2 0 012 2v2H4V7a2 2 0 012-2h3V4z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Hands-On Lab Guide</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 9: Building a Multi-AZ Database Server with Amazon RDS</h1>
+        </div>
+      </div>
+
+      <a href="Day9Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-indigo-800 text-white font-bold px-4 py-2 rounded-xl transition text-xs shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE LAB GUIDE CONTAINER -->
+  <div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+    <!-- LEFT SIDEBAR: LAB TASK NAVIGATION -->
+    <nav class="w-full md:w-64 flex-shrink-0" aria-label="Lab Task Sections">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+        <div>
+          <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-2">Day 9 Lab Tasks</h2>
+          <div class="text-[11px] text-slate-500 px-3 bg-slate-50 py-2 rounded-lg border border-slate-100 font-mono mb-4">
+            Estimated Time: <span class="font-bold text-indigo-600">45–75 min</span>
+          </div>
+        </div>
+
+        <ul class="space-y-1" role="tablist" aria-label="Lab Sections">
+          <li>
+            <button onclick="activateTab('access')" id="tab-access" role="tab" aria-selected="true" aria-controls="panel-access" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600" aria-hidden="true"></span>
+              1. Access &amp; Secure
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('subnet')" id="tab-subnet" role="tab" aria-selected="false" aria-controls="panel-subnet" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              2. Subnet Group
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('rds')" id="tab-rds" role="tab" aria-selected="false" aria-controls="panel-rds" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              3. Provision the RDS Instance
+            </button>
+          </li>
+          <li>
+            <button onclick="activateTab('connect')" id="tab-connect" role="tab" aria-selected="false" aria-controls="panel-connect" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
+              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
+              4. Connect &amp; Validate
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+            <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Lab Environment</p>
+            <p class="text-xs font-extrabold mt-1">AWS Academy Learner Lab Sandbox</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT WORKSPACE PANEL (DYNAMIC TABS CONTAINER) -->
+    <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+
+      <div id="panels-container" class="flex-grow">
+
+      <!-- TAB 1: ACCESS & SECURE -->
+      <section id="panel-access" role="tabpanel" aria-labelledby="tab-access" class="tab-content space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">1. Accessing the Console &amp; Creating the DB Security Group</h2>
+          <p class="text-slate-500 text-sm mt-1">Lab 5: Build a Database Server — deploy a Multi-AZ MySQL database on Amazon RDS and connect it to a live web app.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">What You'll Build</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            By the end of this lab, you will have deployed a production-style, <strong>Multi-AZ relational database</strong> entirely within a private VPC — a dedicated DB security group, a multi-AZ DB subnet group, a fully managed MySQL RDS instance with automated failover, and a live Address Book web application connected to it, proving data persists across page refreshes.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Already Provisioned For You</span>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            AWS Academy automatically provisions <strong>Lab VPC</strong> (with public and private subnets), a running <strong>Web Server</strong> EC2 instance with the Address Book app pre-installed, and <strong>Web-Security-Group</strong> attached to it. Never create custom IAM Users or Groups, never modify root billing settings, and always select the <strong>LabRole</strong> profile when prompted for IAM identities.
+          </p>
+        </div>
+
+        <!-- Task 1 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 1: Access the AWS Management Console</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Start the Lab.</strong> At the top of the lab instructions panel, click <strong>Start Lab</strong>. This provisions all pre-built resources in the background.</li>
+            <li><strong>Wait for the Green Light.</strong> Watch the status indicator in the upper-left corner. Wait until the circular light next to the AWS link turns solid green.</li>
+            <li><strong>Open the Console.</strong> Click the green <strong>AWS</strong> link text. A new tab opens and automatically authenticates you — no password needed.</li>
+          </ol>
+          <div class="px-4 pb-4">
+            <div class="callout callout-amber">
+              <span class="callout-badge">Never Skip Ahead</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Never proceed past Step 1 until the status light is fully green. Starting tasks too early may result in missing resources.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 2: Create the DB Security Group (DBSG)</h4>
+          </div>
+          <div class="p-4 space-y-4 text-xs text-slate-700 leading-relaxed">
+            <p>To enforce the <strong>Principle of Least Privilege</strong>, your database must never be directly exposed to the internet. You'll create a dedicated security group that accepts MySQL traffic on Port 3306 only from the web server's security group.</p>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+              <h5 class="font-bold text-slate-900 text-xs mb-1">Traffic Flow Architecture</h5>
+              <p class="text-slate-600 mb-1">Traffic flows in one direction — inbound to the database — and only from trusted sources:</p>
+              <p class="font-mono text-indigo-700 text-[11px]">Internet → WebSG → Web Server → DBSG (3306) → RDS Instance</p>
+              <p class="text-slate-500 italic mt-1">By setting the inbound rule source to the Web-Security-Group ID (not an IP range), AWS automatically grants access to any instance belonging to that group — a dynamic, scalable, secure design pattern.</p>
+            </div>
+
+            <ol class="space-y-2 list-decimal list-inside">
+              <li>In the top search bar, type <span class="font-mono text-indigo-700">VPC</span> and select VPC. In the left navigation under Security, choose <strong>Security groups</strong>. Click <strong>Create security group</strong>.</li>
+              <li>Set Security group name: <span class="font-mono text-indigo-700">DBSG</span>; Description: <span class="font-mono text-indigo-700">DB Security Group</span>. For VPC, select <strong>Lab VPC</strong> — do not leave it on the default VPC.</li>
+              <li>Scroll to Inbound rules → click <strong>Add rule</strong>. Set Type to <strong>MySQL/Aurora (3306)</strong>. Set Source type to <strong>Custom</strong>, then search for and select <strong>Web-Security-Group</strong>.</li>
+              <li>Scroll to the bottom and click <strong>Create security group</strong>. Verify DBSG appears in the Security Groups list.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: SUBNET GROUP -->
+      <section id="panel-subnet" role="tabpanel" aria-labelledby="tab-subnet" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">2. Creating a DB Subnet Group</h2>
+          <p class="text-slate-500 text-sm mt-1">Give RDS the placement flexibility it needs to run a true Multi-AZ deployment.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Why This Matters</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            Amazon RDS uses a <strong>DB Subnet Group</strong> to determine which subnets and Availability Zones it may use when provisioning primary and standby database instances. By spanning two private subnets across two Availability Zones, you enable true Multi-AZ High Availability.
+          </p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 3: Create the DB Subnet Group</h4>
+          </div>
+          <div class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed">
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs text-left border-collapse">
+                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                  <tr><th class="p-2.5 font-bold">Field</th><th class="p-2.5 font-bold">Value</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Name</td><td class="p-2.5 font-mono text-indigo-700">lab-db-subnet-group</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Description</td><td class="p-2.5 text-slate-600">DB Subnet Group for Lab</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">VPC</td><td class="p-2.5 font-mono text-indigo-700">Lab VPC</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Availability Zones</td><td class="p-2.5 text-slate-600">Both AZs in your lab region (e.g., us-east-1a and us-east-1b)</td></tr>
+                  <tr><td class="p-2.5 font-semibold text-slate-700">Subnets</td><td class="p-2.5 text-slate-600">Both private subnets (e.g., 10.0.1.0/24 and 10.0.3.0/24)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Navigate to <strong>RDS</strong> via the global search bar → select <strong>Subnet groups</strong> in the left sidebar → click <strong>Create DB subnet group</strong>. Enter the values above, then click <strong>Create</strong> at the bottom of the form.</p>
+            <div class="callout callout-amber">
+              <span class="callout-badge">Most Common Error</span>
+              <p class="text-xs text-amber-900 leading-relaxed">Always select subnets from Lab VPC only. Selecting subnets from the default VPC is one of the most common errors in this lab and will break Multi-AZ deployment.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PROVISION THE RDS INSTANCE -->
+      <section id="panel-rds" role="tabpanel" aria-labelledby="tab-rds" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">3. Provisioning the Amazon RDS Database Instance</h2>
+          <p class="text-slate-500 text-sm mt-1">Launch a fully managed MySQL database with an automatically provisioned standby replica.</p>
+        </div>
+
+        <div class="callout callout-indigo">
+          <span class="callout-badge">Task 4 Overview</span>
+          <p class="text-xs text-indigo-950 leading-relaxed">
+            You will launch a fully managed MySQL database using <strong>Multi-AZ deployment</strong> for high availability. AWS will automatically provision a primary instance and a synchronous standby replica in a second Availability Zone.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]"><tr><th class="p-2.5 font-bold" colspan="2">Engine Options</th></tr></thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr><td class="p-2.5 font-semibold text-slate-700">Engine</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">MySQL — Standard Create</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Template</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">Dev/Test</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Availability</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">Multi-AZ DB Instance</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Instance Class</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">db.t3.micro</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]"><tr><th class="p-2.5 font-bold" colspan="2">Credentials &amp; Storage</th></tr></thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr><td class="p-2.5 font-semibold text-slate-700">DB identifier</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">lab-db</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Master username</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">main</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Master password</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">lab-password</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Storage</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">gp2, 20 GiB, no autoscaling</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]"><tr><th class="p-2.5 font-bold" colspan="2">Connectivity</th></tr></thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr><td class="p-2.5 font-semibold text-slate-700">VPC</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">Lab VPC</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Subnet group</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">lab-db-subnet-group</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Public access</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">No</td></tr>
+                <tr><td class="p-2.5 font-semibold text-slate-700">Security group</td><td class="p-2.5 font-mono text-indigo-700 text-[10px]">DBSG only</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout callout-amber">
+          <span class="callout-badge">Credentials Are Case-Sensitive</span>
+          <p class="text-xs text-amber-900 leading-relaxed">Use exactly <span class="font-mono">main</span> and <span class="font-mono">lab-password</span> — you'll re-enter these in the web application later. Also set Initial database name to <span class="font-mono">lab</span>, and uncheck Storage autoscaling, Automated backups, and Enhanced monitoring.</p>
+        </div>
+
+        <p class="text-xs text-slate-700 leading-relaxed">Under Connectivity, remove the default security group by clicking the <strong>X</strong> and select <strong>DBSG</strong> instead — this keeps your database reachable only from within the Lab VPC. When all settings are confirmed, click the orange <strong>Create database</strong> button. RDS will begin provisioning — this takes <strong>8 to 12 minutes</strong>.</p>
+
+        <!-- What's happening while you wait -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">While You Wait: What Is Multi-AZ Doing?</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Primary Instance</h5><p class="text-xs text-slate-600 leading-relaxed">AWS provisions the main MySQL instance in your first selected Availability Zone. All reads and writes flow through it during normal operation.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Synchronous Standby Replica</h5><p class="text-xs text-slate-600 leading-relaxed">A second, identical instance is provisioned in a different AZ. Every committed transaction is synchronously replicated before the write is acknowledged.</p></div>
+            <div class="card"><h5 class="font-bold text-slate-900 text-xs mb-1">Automatic Failover</h5><p class="text-xs text-slate-600 leading-relaxed">If the primary fails, RDS automatically promotes the standby — typically within 60–120 seconds — with no manual intervention required.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: CONNECT & VALIDATE -->
+      <section id="panel-connect" role="tabpanel" aria-labelledby="tab-connect" class="tab-content hidden space-y-8">
+        <div class="border-b border-slate-200 pb-4">
+          <h2 class="text-2xl font-black text-slate-900">4. Connecting the Web Application &amp; Validating the Lab</h2>
+          <p class="text-slate-500 text-sm mt-1">Wire your live Address Book application to the RDS endpoint, then confirm every checkpoint passes.</p>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="bg-indigo-950 text-white px-4 py-3">
+            <h4 class="font-extrabold text-sm">Task 5: Connect the Web Application to RDS</h4>
+          </div>
+          <ol class="p-4 space-y-3 text-xs text-slate-700 leading-relaxed list-decimal list-inside">
+            <li><strong>Copy the RDS Endpoint.</strong> In the RDS Console, click <strong>lab-db</strong>. Under the <strong>Connectivity &amp; security</strong> tab, find the Endpoint string (e.g., <span class="font-mono text-indigo-700">lab-db.c1234567890.us-east-1.rds.amazonaws.com</span>). Copy it.</li>
+            <li><strong>Get the Web Server's Public IP.</strong> Navigate to EC2 → Instances. Select the Web Server checkbox and copy the <strong>Public IPv4 address</strong> from the Details pane.</li>
+            <li><strong>Open the Web Application.</strong> Open a new browser tab, paste the Public IPv4 address, and press Enter. The Address Book application interface loads.</li>
+            <li><strong>Configure the DB Connection.</strong> Select the RDS or Configuration tab in the app. Enter Endpoint = your RDS endpoint, Database = <span class="font-mono text-indigo-700">lab</span>, Username = <span class="font-mono text-indigo-700">main</span>, Password = <span class="font-mono text-indigo-700">lab-password</span>. Click <strong>Submit</strong>.</li>
+          </ol>
+        </div>
+
+        <!-- Validation Checkpoints -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Environment Checkpoints &amp; Validation</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Before submitting your lab for grading, confirm each checkpoint below. All four must pass for full credit.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">1</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">VPC Security Group</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Inspect DBSG in the VPC Console. Confirm the inbound rule shows Port 3306 with source set to Web-Security-Group.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">2</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Multi-AZ Architecture</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Under lab-db's Connectivity &amp; security tab, confirm the primary and standby instances reside in different Availability Zones.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">3</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Database Connectivity</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">The web application displays a "Connected to RDS DB" status banner after submitting connection credentials.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-black flex items-center justify-center shrink-0">4</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Data Persistence</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Create a sample contact (e.g., Jane Doe) in the Address Book. Refresh the browser and confirm the record still appears.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submitting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Submitting for Automated Grading</h3>
+          <ol class="space-y-2 list-decimal list-inside text-xs text-slate-700 leading-relaxed">
+            <li>Return to the primary browser window showing the AWS Academy lab instructions — not the AWS Console or the web application.</li>
+            <li>Click <strong>Submit</strong> at the top of the lab interface. When prompted, click <strong>Yes</strong> to confirm.</li>
+            <li>Allow 1 to 2 minutes for the background grading script to evaluate your deployed resources. Do not close the window or restart the lab during this period.</li>
+            <li>Click <strong>Grades</strong> or view the <strong>Submission Report</strong> to see your score breakdown by task.</li>
+          </ol>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Troubleshooting Guide</h3>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px]">
+                <tr><th class="p-3 font-bold border-b border-slate-200">Symptom</th><th class="p-3 font-bold border-b border-slate-200">Root Cause</th><th class="p-3 font-bold border-b border-slate-200">Remediation</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Web App: "Connection Timeout"</td>
+                  <td class="p-3 align-top text-slate-600">DBSG inbound rule missing Port 3306, or wrong source SG selected</td>
+                  <td class="p-3 align-top text-slate-600">VPC Console → Security Groups → DBSG → Edit Inbound Rules. Verify Type = MySQL/Aurora (3306) and Source = Web-Security-Group. Save and retry.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Status stays "Creating" &gt;15 min</td>
+                  <td class="p-3 align-top text-slate-600">RDS is provisioning across multiple AZs during high classroom concurrency</td>
+                  <td class="p-3 align-top text-slate-600">Do not delete or restart the job. Allow up to 15 full minutes. Use the RDS console's refresh button to poll status.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">"Access Denied for user 'main'"</td>
+                  <td class="p-3 align-top text-slate-600">Incorrect credentials entered in the web application config form</td>
+                  <td class="p-3 align-top text-slate-600">Re-enter carefully: Username = main, Password = lab-password, Database = lab. Credentials are case-sensitive.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Cannot select subnets in Subnet Group</td>
+                  <td class="p-3 align-top text-slate-600">Subnets from the default VPC selected instead of Lab VPC private subnets</td>
+                  <td class="p-3 align-top text-slate-600">Delete the subnet group. Re-create it with VPC = Lab VPC and select private subnets 10.0.1.0/24 and 10.0.3.0/24.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 align-top text-slate-700">Console: "Access Denied" on DB create</td>
+                  <td class="p-3 align-top text-slate-600">Unauthorized engine, template, or paid feature selected (blocked by Academy SCPs)</td>
+                  <td class="p-3 align-top text-slate-600">Use MySQL, Dev/Test template, db.t3.micro, and uncheck Performance Insights and Enhanced Monitoring.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Key Concepts -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Key Concepts Recap</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Principle of Least Privilege</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Security Groups grant only the minimum access required. DBSG allows Port 3306 from one source only — the web tier.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Multi-AZ High Availability</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">By placing the primary and standby in separate AZs, RDS survives a single-zone failure with automatic failover and no data loss.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Private Database Placement</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Setting Public Access = No and using private subnets ensures the database is never reachable from the internet — only from within the VPC.</p></div>
+            </div>
+            <div class="card flex items-start gap-3">
+              <span class="text-indigo-600 text-lg font-black" aria-hidden="true">•</span>
+              <div><h4 class="font-bold text-slate-900 text-xs">Managed Service Benefits</h4><p class="text-xs text-slate-600 mt-1 leading-relaxed">Amazon RDS handles OS patching, backups, and replication automatically — freeing you to focus on application logic rather than infrastructure operations.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- end panels-container -->
+    </main>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-4">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>Day 9 Lab Suite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING LOGIC (mirrors Day1Lab.html – Day8Lab.html course player)
+    function activateTab(tabId) {
+      // Deactivate all panels
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('[role="tab"]').forEach(el => {
+        el.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200";
+        el.setAttribute('aria-selected', 'false');
+        const dot = el.querySelector('span[aria-hidden="true"]');
+        if (dot) {
+          dot.className = "w-2 h-2 rounded-full bg-transparent border border-slate-400";
+        }
+      });
+
+      // Activate clicked panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.className = "w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm";
+      activeBtn.setAttribute('aria-selected', 'true');
+      const activeDot = activeBtn.querySelector('span[aria-hidden="true"]');
+      if (activeDot) {
+        activeDot.className = "w-2 h-2 rounded-full bg-indigo-600 border border-indigo-600";
+      }
+
+      // Accessibility announcement trigger
+      const sectionName = activeBtn.textContent.trim();
+      document.getElementById('sr-alert-announcer').textContent = "Switched lab guide viewer to: " + sectionName;
+    }
+  </script>
+</body>
+</html>
