@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITNW 1009: Day 9 Courseware & Interactive Portal</title>
+  <title>ITNW 1009: Day 10 Courseware & Interactive Portal</title>
   <!-- Tailwind CSS CDN (layout/spacing utilities) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
@@ -24,14 +24,14 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
-          <!-- Inline Database Cylinder Icon -->
+          <!-- Inline Broadcast/Signal Icon representing DNS & global content delivery -->
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0-1.657 3.582-3 8-3s8 1.343 8 3-3.582 3-8 3-8-1.343-8-3zm0 0v10c0 1.657 3.582 3 8 3s8-1.343 8-3V7m-16 5c0 1.657 3.582 3 8 3s8-1.343 8-3"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.14 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
           </svg>
         </div>
         <div>
           <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 9: Databases &mdash; Relational, NoSQL &amp; Data Warehousing</h1>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 10: DNS &amp; Global Delivery Networks &mdash; Route 53 &amp; CloudFront</h1>
         </div>
       </div>
 
@@ -77,27 +77,21 @@
             </button>
           </li>
           <li>
-            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              5. Hands-On Lab Link
-            </button>
-          </li>
-          <li>
             <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              6. Vocational Case Study
+              5. Vocational Case Study
             </button>
           </li>
           <li>
             <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              7. Study Companion
+              6. Study Companion
             </button>
           </li>
           <li>
             <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              8. Mock Exam Link
+              7. Mock Exam Link
             </button>
           </li>
         </ul>
@@ -124,8 +118,8 @@
       <!-- ============================================================ -->
       <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Day 9 Lesson Overview: Picking the Right Home for Your Data</h2>
-          <p class="text-slate-500 text-sm mt-1">Relational databases with RDS and Aurora, NoSQL key-value storage with DynamoDB, and data warehousing with Amazon Redshift.</p>
+          <h2 class="text-2xl font-black text-slate-900">Day 10 Lesson Overview: Turning Names Into Networks, Instantly</h2>
+          <p class="text-slate-500 text-sm mt-1">Global DNS resolution with Amazon Route 53, intelligent traffic routing policies, and edge caching with Amazon CloudFront.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -133,24 +127,24 @@
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Differentiate Relational vs. NoSQL Databases</h3>
-              <p class="text-xs text-slate-600 mt-1">Differentiate between relational (RDS/Aurora) and NoSQL (DynamoDB) databases.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Trace a DNS Query End-to-End</h3>
+              <p class="text-xs text-slate-600 mt-1">Explain step-by-step how a DNS query travels from a web browser through Amazon Route 53 to return an IP address.</p>
             </div>
           </div>
           <!-- Objective 2 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Select the Right Database for the Job</h3>
-              <p class="text-xs text-slate-600 mt-1">Select appropriate database solutions based on schema structure and query latency thresholds.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Select the Optimal Routing Policy</h3>
+              <p class="text-xs text-slate-600 mt-1">Analyze architectural scenarios to select the optimal Route 53 routing policy (Weighted, Latency-Based, Failover, or Geolocation).</p>
             </div>
           </div>
           <!-- Objective 3 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Describe Data Warehouse Analysis with Redshift</h3>
-              <p class="text-xs text-slate-600 mt-1">Describe data warehouse analysis paradigms with Amazon Redshift.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Configure a CloudFront Distribution</h3>
+              <p class="text-xs text-slate-600 mt-1">Configure an Amazon CloudFront distribution linked to an Amazon S3 origin with optimized TTL settings and global edge caching.</p>
             </div>
           </div>
         </div>
@@ -159,15 +153,14 @@
         <div class="bg-white border border-slate-200 rounded-xl p-5">
           <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
           <div class="flex flex-wrap gap-2">
-            <span class="pill pill-light">Relational</span>
-            <span class="pill pill-light">NoSQL</span>
-            <span class="pill pill-light">RDS</span>
-            <span class="pill pill-light">DynamoDB</span>
-            <span class="pill pill-light">Amazon Aurora</span>
-            <span class="pill pill-light">Amazon Redshift</span>
-            <span class="pill pill-light">Key-Value</span>
-            <span class="pill pill-light">Provisioned Throughput</span>
-            <span class="pill pill-light">Data Warehouse</span>
+            <span class="pill pill-light">DNS</span>
+            <span class="pill pill-light">Route 53</span>
+            <span class="pill pill-light">CDN</span>
+            <span class="pill pill-light">Amazon CloudFront</span>
+            <span class="pill pill-light">Edge Location</span>
+            <span class="pill pill-light">Time-To-Live (TTL)</span>
+            <span class="pill pill-light">Failover Routing</span>
+            <span class="pill pill-light">Geolocation Routing</span>
           </div>
         </div>
 
@@ -178,14 +171,11 @@
             <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
           </div>
           <p class="text-xs text-indigo-900">
-            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify RDS engine selection and DynamoDB table configuration walkthroughs.
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify Route 53 routing policy configuration and CloudFront distribution walkthroughs.
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-            <a href="https://blinn-edu.zoom.us/rec/share/yjHtg60ThkLWqg3ARIvujIYFjt8442vRnJFgtQgQ9dnEnwQrbdn4Vgzkfb0eQkMY.oNLQOUjqo9L_R-3L?from=hub" target="_blank" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 9: Part 1 &ndash; Relational Databases: RDS &amp; Aurora</span>
-            </a>
             <a href="https://blinn-edu.zoom.us/rec/share/ATqepQUS98lViJStjeqRGOw7J9Od-o8ILDN9JIYDDdGDiDjB6EYko7hy9VtJ3xs.OlxzTK4_-xxv-Gen?from=hub" target="_blank" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 9: Part 2 &ndash; DynamoDB &amp; Redshift Lab Briefing</span>
+              <span>Day 10: Part 1 &ndash; DNS Resolution &amp; Route 53 Routing Policies</span>
             </a>
           </div>
         </div>
@@ -196,7 +186,7 @@
           <div>
             <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
             <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
-              This session targets adult non-traditional learners. Open with the "library card catalog versus lockbox claim ticket" framing before naming Relational or NoSQL &mdash; students should feel the structural difference intuitively before meeting any acronym. When introducing Redshift, emphasize that it answers big historical "how many, over what time period" questions across millions of rows, rather than quick single-record lookups, since that's the most commonly confused exam distinction with RDS.
+              This session targets adult non-traditional learners. Open with the "phone contact list versus dialing raw digits" framing before naming DNS or Route 53 &mdash; students should feel why translating names to numbers matters before meeting any acronym. When teaching CloudFront, use the recurring "local newsstand versus flying to the central warehouse" question as a running formative check, since Cache Hit versus Cache Miss is the single most commonly confused pairing on the certification exam.
             </p>
           </div>
         </div>
@@ -212,18 +202,18 @@
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🗃️</div>
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🌍</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 9 Presentation Lecture Deck</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Day 10 Presentation Lecture Deck</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Unlock the official Relational vs. NoSQL, RDS, Aurora, DynamoDB, and Redshift slide presentation with full scripted narration notes.
+              Unlock the official DNS resolution, Route 53 routing policies, and CloudFront CDN slide presentation with full scripted narration notes.
             </p>
           </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 9 lecture slide deck is live and ready for download or review.</span>
+          <div class="notice notice-pending text-left">
+            <span class="notice-title">Awaiting Upload</span>
+            Day 10 lecture slide deck link has not been configured yet. Check back before class.
           </div>
-          <a href="Day9.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day-10.pdf" target="_blank" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Presentation Slides</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -235,69 +225,64 @@
       <!-- ============================================================ -->
       <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Database &amp; Data Warehousing Analogy Library</h2>
-          <p class="text-slate-500 text-sm mt-1">Breaking down relational, NoSQL, and data warehousing concepts for learners with no prior IT background.</p>
+          <h2 class="text-2xl font-black text-slate-900">DNS &amp; Global Delivery Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down DNS resolution, routing policies, and edge caching concepts for learners with no prior IT background.</p>
         </div>
 
         <!-- Search Bar -->
         <div class="relative max-w-md">
-          <label for="analogy-search" class="sr-only">Search metaphors and technical database terms</label>
-          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., DynamoDB, Redshift, Key-Value...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical DNS and CDN terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., CloudFront, TTL, Failover...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
           <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
-          <!-- Metaphor Card 1: The Library & Card Catalog -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="relational nosql rds dynamodb amazon aurora amazon redshift key-value provisioned throughput data warehouse library card catalog">
+          <!-- Metaphor Card 1: International Directory Assistance & Local Newsstand -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="dns route 53 cdn amazon cloudfront edge location time-to-live ttl failover routing geolocation routing directory assistance newsstand">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
-              <h3 class="font-extrabold text-base">The Library &amp; Claim-Ticket Lockbox</h3>
+              <h3 class="font-extrabold text-base">The International Directory Assistance &amp; Local Newsstand</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A city library system runs a traditional structured card catalog, a flexible warehouse of labeled tote bins, an instant claim-ticket lockbox counter, a multi-branch backup network, and a dedicated research annex for big historical analysis projects.
+                Imagine living in London and wanting the daily newspaper published by a company based in Atlanta. You call a directory assistance hotline to find the paper, and instead of flying to Atlanta every morning, the publisher stocks tiny neighborhood newsstands around the world.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Relational:</strong> The traditional library card catalog, where every book record follows the exact same structured form and books relate to each other through cross-referenced fields, like an author linking to all their books.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">NoSQL:</strong> A flexible storage system of labeled tote bins, where each bin can hold a completely different mix of items with no fixed form required, prioritizing speed of retrieval over rigid structure.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">RDS:</strong> A professionally managed library service that handles all the shelving, cataloging upkeep, and backup photocopying of the catalog for you, using whichever cataloging standard (engine) you choose.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">DynamoDB:</strong> A high-speed, single-item lockbox retrieval system — hand over a claim ticket, and staff instantly return a single sealed bin, no matter how many bins exist or how busy the front desk gets.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Aurora:</strong> An upgraded version of the managed library service, automatically keeping duplicate copies across several branch locations, so if one branch closes unexpectedly, patrons are served seamlessly by the next branch.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Redshift:</strong> A dedicated research annex built for scholars running big historical analysis projects, scanning millions of records at once for patterns instead of retrieving one book at a time.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Key-Value:</strong> The claim-ticket-to-bin retrieval model itself — one unique ticket number always maps to exactly one bin of contents.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Provisioned Throughput:</strong> The number of front-desk staff pre-scheduled at the lockbox counter — enough staff and requests are served instantly; understaff it and a line forms.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Data Warehouse:</strong> The research annex's master historical archive, combining records from many branches into one consolidated collection built for large-scale analysis, not day-to-day checkouts.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">DNS / Domain Name:</strong> Calling Directory Assistance and stating the newspaper's written subscriber name, instead of already knowing its exact address.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Route 53 Hosted Zone:</strong> The master directory assistance ledger holding the official routing coordinate for every publication it manages.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Failover Routing:</strong> If the main office is closed for repairs, the dispatcher automatically hands you the emergency backup address instead.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Geolocation Routing:</strong> If you speak French, the dispatcher automatically gives you the Paris office address instead of the English one.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">CDN / Amazon CloudFront:</strong> Instead of every reader worldwide flying to the Atlanta warehouse each morning, the publisher opens thousands of tiny neighborhood newsstands around the globe.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Edge Location:</strong> One specific neighborhood newsstand stocked with copies close to local readers.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Time-To-Live (TTL):</strong> The rule stamped on each paper: "discard unsold copies after 24 hours," forcing the newsstand to request a fresh print after that time.</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Metaphor Card 2: The Amusement Park Locker & Records System -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="relational nosql rds dynamodb amazon aurora amazon redshift key-value provisioned throughput data warehouse amusement park locker wristband">
+          <!-- Metaphor Card 2: Global Chain Restaurant & Local Delivery Hubs -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="dns route 53 cdn amazon cloudfront edge location time-to-live ttl failover routing geolocation routing restaurant delivery hub weighted latency">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
-              <h3 class="font-extrabold text-base">The Amusement Park Locker &amp; Records System</h3>
+              <h3 class="font-extrabold text-base">The Global Chain Restaurant &amp; Local Delivery Hubs</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A theme park keeps a structured guest registry ledger, a flexible souvenir locker system, an instant wristband-scan retrieval counter, a multi-gate backup network, and a corporate headquarters analytics office pulling data from every park location.
+                Consider ordering food from a world-famous restaurant chain serving millions of meals daily across five continents. You dial one global phone number, and a central dispatcher intelligently decides which kitchen and which local delivery hub serves your meal.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Relational:</strong> The park's official guest registry ledger, where every guest's record follows the same structured form and can be cross-referenced by group booking ID.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">NoSQL:</strong> The park's flexible souvenir storage system, where lockers can hold wildly different combinations of items with no required format, optimized for quick grab-and-go access.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">RDS:</strong> A professional ledger-management service the park hires, handling the registry's upkeep, structure, and nightly backup copies, using whichever registry format (engine) the park selects.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">DynamoDB:</strong> The instant locker retrieval system at the entrance — scan your wristband, and the correct locker's contents pop out in a split second, whether it's a slow Tuesday or the busiest day of the year.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Aurora:</strong> An upgraded registry management service that automatically keeps duplicate copies of the guest ledger at multiple gate locations, so if one entrance gate's system goes down, another instantly takes over.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Redshift:</strong> The park's corporate headquarters analytics office, pulling attendance and sales records from every park location worldwide into one giant historical dataset to spot trends across entire seasons.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Key-Value:</strong> The wristband-scan-to-locker matching system itself — one specific wristband code always retrieves exactly one specific locker's contents.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Provisioned Throughput:</strong> The number of locker-retrieval staff and machines scheduled for a given day — enough capacity and every guest gets instant service; too little, and lines form at the lockers.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Data Warehouse:</strong> The headquarters' consolidated, season-spanning historical dataset itself, purpose-built for big-picture analysis rather than day-to-day locker retrieval.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">DNS / Route 53:</strong> Dialing one central reservation hotline number rather than needing to know which physical kitchen will prepare your food.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Failover Routing:</strong> If the main kitchen's gas line breaks, the phone system instantly shifts all incoming orders to a backup kitchen across town.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Geolocation Routing:</strong> The dispatcher detects your general region and routes your order to the branch serving your country's language and local regulations.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">CDN / Amazon CloudFront:</strong> Local neighborhood food delivery hubs that keep pre-made items close to customers instead of shipping everything from one distant kitchen.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Edge Location:</strong> One specific local warming hub in a city, holding ready-to-deliver food close to nearby customers.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Time-To-Live (TTL):</strong> The rule that a warming hub can only hold a prepared dish for so long before it must request a fresh batch from the central kitchen.</li>
                 </ul>
               </div>
             </div>
@@ -353,59 +338,79 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Databases Lab Gateway</h2>
-          <p class="text-slate-500 text-sm mt-1">Deploy an RDS instance and a DynamoDB table hands-on inside your AWS Academy sandbox.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 9 Hands-On Lab: Relational vs. NoSQL in Practice</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Launch your AWS Academy Sandbox, deploy an Amazon RDS database instance with automated backups enabled, then create a DynamoDB table and practice simple key-value item lookups.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">The Day 9 database lab guide is live, covering RDS instances and DynamoDB tables.</span>
-          </div>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="Day9Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-              <span>Launch Day 9 Hands-On Lab Guide</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </a>
-            <a href="Day9Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
-              <span>Download Day 9 Lab Guide (PDF)</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
       <!-- TAB 6: VOCATIONAL CASE STUDY -->
       <!-- ============================================================ -->
       <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: Surviving the Flash Sale</h2>
-          <p class="text-slate-500 text-sm mt-1">How CartWave migrated its product catalog to DynamoDB to absorb unpredictable traffic spikes.</p>
+          <h2 class="text-2xl font-black text-slate-900">Active Learning: Routing Showdown &amp; The Black Friday Traffic Spike</h2>
+          <p class="text-slate-500 text-sm mt-1">A Think-Pair-Share routing policy workshop, followed by a case study on surviving a 72x global traffic spike.</p>
         </div>
 
+        <!-- INTERACTIVE IN-CLASS ACTIVITY: THINK-PAIR-SHARE -->
+        <div class="bg-indigo-50 rounded-2xl p-6 border border-indigo-200 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xl" aria-hidden="true">✏️</span>
+            <h3 class="font-extrabold text-indigo-950 text-lg">Interactive In-Class Activity: The Global Latency &amp; Routing Policy Showdown</h3>
+          </div>
+          <p class="text-xs md:text-sm text-indigo-950 leading-relaxed">
+            <strong>Think-Pair-Share Scenario:</strong> You are a Junior Cloud Support Engineer for GlobeFlix, an international video streaming platform. Its master video library lives in an S3 bucket in US East (N. Virginia), and application servers run in both US East and EU (Frankfurt). Work with a partner to select the correct AWS tool or Route 53 policy for each issue below, and write out your reasoning.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="border border-indigo-200 rounded-xl p-3 bg-white">
+              <p class="text-[11px] font-extrabold text-indigo-800 uppercase tracking-wider mb-1">Issue A: Global Latency</p>
+              <p class="text-xs text-slate-700">Users in Sydney, Australia complain that browsing thumbnails and downloading trailers takes 8&ndash;12 seconds per page load.</p>
+            </div>
+            <div class="border border-indigo-200 rounded-xl p-3 bg-white">
+              <p class="text-[11px] font-extrabold text-indigo-800 uppercase tracking-wider mb-1">Issue B: Traffic Split</p>
+              <p class="text-xs text-slate-700">The team is launching a redesigned checkout page and wants 15% of real traffic on the new page while 85% stays on the old page.</p>
+            </div>
+            <div class="border border-indigo-200 rounded-xl p-3 bg-white">
+              <p class="text-[11px] font-extrabold text-indigo-800 uppercase tracking-wider mb-1">Issue C: High Availability</p>
+              <p class="text-xs text-slate-700">The primary European database server occasionally crashes during peak traffic, showing users a raw 502 error instead of a friendly maintenance page.</p>
+            </div>
+          </div>
+
+          <div class="border border-indigo-200 rounded-xl overflow-hidden bg-white">
+            <button type="button" onclick="toggleThinkPairShare()" class="w-full flex items-center justify-between p-4 bg-indigo-100/50 hover:bg-indigo-100 transition text-left" aria-expanded="false" aria-controls="think-pair-share-details">
+              <span class="font-bold text-sm text-indigo-900">📋 Instructor View: Model Answers &amp; Debrief Questions <span id="tps-arrow">&darr;</span></span>
+            </button>
+            <div id="think-pair-share-details" class="hidden p-4 space-y-4 border-t border-indigo-100 text-xs text-slate-700">
+              <div>
+                <h4 class="font-extrabold text-slate-800 uppercase tracking-wider text-[11px] mb-1.5">Model Answers</h4>
+                <ul class="space-y-1.5">
+                  <li><strong class="text-indigo-800">Issue A:</strong> Deploy an Amazon CloudFront Distribution in front of the S3 bucket. Static thumbnails and trailers will cache at Australian Edge Locations, reducing load times from seconds to milliseconds.</li>
+                  <li><strong class="text-indigo-800">Issue B:</strong> Configure a Route 53 Weighted Routing Policy, assigning a weight of 85 to the original checkout page record and a weight of 15 to the new checkout page record.</li>
+                  <li><strong class="text-indigo-800">Issue C:</strong> Implement a Route 53 Failover Routing Policy paired with Route 53 Health Checks. Set the primary record to the EU server and the secondary (failover) record to a static maintenance page hosted on S3.</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-slate-800 uppercase tracking-wider text-[11px] mb-1.5">Debrief Questions &amp; Expected Answers</h4>
+                <ul class="space-y-2">
+                  <li><strong class="text-indigo-800">Q1:</strong> In Issue A, why is placing a CloudFront distribution in front of S3 better and cheaper than setting up a second S3 bucket in Australia with Cross-Region Replication?
+                    <br><strong class="text-emerald-700">Expected Answer:</strong> CloudFront utilizes over 600+ Edge Locations globally, far more than AWS Regions, automatically manages caching, and incurs lower data transfer costs than S3 direct downloads.
+                  </li>
+                  <li><strong class="text-indigo-800">Q2:</strong> In Issue B, if we use Weighted Routing (85/15), does a single customer who refreshes their page 10 times see the new page exactly 1.5 times?
+                    <br><strong class="text-emerald-700">Expected Answer:</strong> No. DNS responses are cached locally by browsers and resolvers based on TTL. Weighted routing applies globally across incoming new DNS resolution requests, not per individual browser click stream.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOCATIONAL CASE STUDY -->
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
-          <h3 class="font-extrabold text-slate-900 text-lg">CartWave's Flash Sale Meltdown</h3>
+          <h3 class="font-extrabold text-slate-900 text-lg">Vocational Case Study: Streaming Under Fire &mdash; The Global Traffic Spike</h3>
           <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
             <p>
-              CartWave, a mid-sized online retailer, ran its entire product catalog service on a single Amazon RDS relational database, which handled everyday browsing traffic without any trouble. The catalog service's job was simple: given a product ID, look up that product's name, price, and inventory count. But every time CartWave ran a major flash sale or a product went viral on social media, traffic to the catalog service spiked without warning, and the relational database's fixed connection pool and disk-bound query performance buckled under the sudden load. During the company's biggest sale of the previous year, the catalog pages slowed to a crawl and then went fully offline for nearly twenty minutes at the exact moment thousands of customers were trying to check prices and add items to their carts.
+              In November 2024, GlobeNews 24, a digital media outlet, covered a sudden, high-stakes international breaking news event. Within twenty minutes, concurrent online viewers spiked from a standard baseline of 25,000 users to over 1.8 million global streaming connections. Because the company's legacy web infrastructure routed all user traffic directly through Route 53 Simple Routing straight to their Application Load Balancer (ALB) and EC2 instance origin fleet in N. Virginia, every single client browser repeatedly requested the homepage assets, live stream video manifests, and breaking news graphics directly from the central servers.
             </p>
             <p>
-              In the post-incident review, the engineering team took a hard look at what the catalog service actually needed to do. Nearly every request was the same simple pattern: given one specific product ID, return that one product's details &mdash; a classic key-value access pattern, not a complex relational query joining multiple tables. The team migrated the catalog service to Amazon DynamoDB, configuring the table to automatically scale its throughput capacity to absorb sudden traffic surges without anyone needing to manually resize a server in the middle of a sale.
+              Within thirty minutes of the traffic surge, the origin EC2 instance fleet experienced CPU utilization spikes reaching 100%. Although Auto Scaling policies attempted to launch additional instances, the sheer volume of international TCP handshakes and incoming HTTP requests overwhelmed the Application Load Balancer's capacity to handle un-cached static assets. Outbound AWS Data Transfer Out costs skyrocketed exponentially due to cross-continental raw bandwidth consumption, and international viewers in Europe, Asia, and South America began experiencing severe packet loss, HTTP 504 Gateway Timeouts, and infinite video buffering loops.
             </p>
             <p>
-              During the next major flash sale, catalog traffic spiked to roughly forty times its normal volume within minutes as a promotional post went viral. DynamoDB handled the surge seamlessly, returning product lookups in single-digit milliseconds throughout the entire event with no manual intervention. Meanwhile, CartWave's checkout and order-processing service &mdash; which genuinely needed strict relational integrity to track inventory counts and financial transactions accurately &mdash; remained on Amazon RDS, since that workload's structure and consistency requirements were still a better fit for a relational database. The result was a hybrid architecture where each database type was matched to the actual shape and demands of its workload, rather than forcing everything into a single one-size-fits-all database.
+              To halt the catastrophic outage, the lead Cloud Operations Engineer executed an emergency architectural remediation. The engineer provisioned an Amazon CloudFront distribution linked to the ALB origin, enabled aggressive edge caching with a 5-minute Default Time-To-Live (TTL) for video segment manifests, configured Origin Access Control (OAC), and updated the Route 53 domain apex record using an Alias Record pointing directly to the new CloudFront edge endpoint. Within six minutes of DNS propagation, CloudFront Edge Locations absorbed 94.2% of all incoming request traffic. CPU utilization on the origin EC2 fleet plummeted from 100% back down to 18%, bandwidth costs dropped by over 60%, and global stream latency stabilized under 150 milliseconds worldwide.
             </p>
           </div>
         </div>
@@ -416,34 +421,34 @@
 
           <div class="space-y-4 text-xs">
             <div class="space-y-1.5">
-              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why was the catalog lookup workload actually a better fit for a key-value NoSQL model than the original relational setup?</label>
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why did routing traffic through the ALB directly to the Auto Scaling group fail during the massive spike, and how did CloudFront resolve it?</label>
               <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">Nearly every request was a simple "get one product by ID" lookup, matching a key-value access pattern rather than requiring complex relational joins</option>
-                <option value="B">Relational databases cannot store product names or prices at all</option>
-                <option value="C">NoSQL databases are always faster than relational databases regardless of the workload</option>
+                <option value="A">Every request required full server-side processing across long distances; CloudFront absorbed 94.2% of requests as fast Cache Hits at Edge Locations, preventing origin CPU overload</option>
+                <option value="B">The ALB had an incorrect security group rule, and CloudFront fixed it by encrypting all traffic</option>
+                <option value="C">Auto Scaling groups cannot be used with Application Load Balancers, so CloudFront replaced the ALB entirely</option>
               </select>
               <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-2" class="font-bold text-slate-800">2. Why did CartWave keep its checkout and order-processing service on Amazon RDS instead of migrating everything to DynamoDB?</label>
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. How does caching static and media assets at a CloudFront Edge Location impact a company's monthly AWS bill compared to serving those assets directly from EC2 or S3?</label>
               <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">That workload genuinely needed strict relational integrity for tracking inventory counts and financial transactions accurately</option>
-                <option value="B">DynamoDB cannot be used for any part of an e-commerce platform</option>
-                <option value="C">RDS is always cheaper than DynamoDB for every workload</option>
+                <option value="A">CloudFront-to-client data transfer is tier-discounted, and CloudFront-to-origin transfer within AWS is free, significantly lowering total cost compared to direct Data Transfer Out from EC2/ALB</option>
+                <option value="B">CloudFront always costs more than serving directly from an origin, regardless of traffic volume</option>
+                <option value="C">Caching content at Edge Locations has no effect on data transfer costs at all</option>
               </select>
               <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-3" class="font-bold text-slate-800">3. What role did DynamoDB's scalable throughput capacity play in absorbing the 40x traffic spike without manual intervention?</label>
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. If a corrected breaking-news headline graphic needs to replace a stale cached image, what two technical solutions can engineers use to fix the stale content problem?</label>
               <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">It allowed the table's read and write capacity to automatically absorb the sudden surge without an engineer manually resizing anything mid-sale</option>
-                <option value="B">It required the engineering team to manually double the server size the moment the sale began</option>
-                <option value="C">It had no effect on performance during the sale</option>
+                <option value="A">Run a CloudFront Invalidation to purge the specific file path, or use object versioning/cache-busting by renaming the file and updating the HTML reference</option>
+                <option value="B">Wait for the origin S3 bucket to automatically notify CloudFront the moment any file changes</option>
+                <option value="C">Delete and rebuild the entire CloudFront distribution every time a single file changes</option>
               </select>
               <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
             </div>
@@ -461,38 +466,38 @@
             <p><strong>Correct answers:</strong> 1-A, 2-A, 3-A.</p>
             <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
             <ul class="list-disc pl-4 space-y-1">
-              <li><strong>Access Pattern Recognition:</strong> Student correctly identifies that simple "get by ID" lookups match a key-value access pattern, and explains why that pattern fits NoSQL better than a relational join-heavy structure.</li>
-              <li><strong>Hybrid Architecture Reasoning:</strong> Student explains why the checkout/order-processing workload's need for relational integrity justified keeping it on RDS, rather than assuming one database type is universally superior.</li>
-              <li><strong>Throughput Scaling Understanding:</strong> Student explains how DynamoDB's scalable capacity absorbed the sudden traffic spike without requiring manual server resizing mid-event.</li>
-              <li><strong>Root Cause Awareness:</strong> Student connects the original outage to the relational database's fixed connection pool and disk-bound performance under sudden, unpredictable load.</li>
-              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., key-value, relational integrity, throughput capacity, schema).</li>
+              <li><strong>Origin vs. Edge Offloading:</strong> Student correctly explains that ALB/EC2 Auto Scaling failed because every request required full server-side processing and long-distance transmission, and explicitly identifies that CloudFront absorbed 94.2% of incoming requests as fast Cache Hits, preventing origin CPU overload.</li>
+              <li><strong>AWS Cost Dynamics:</strong> Student correctly highlights that Data Transfer Out directly from EC2/ALB is charged at higher standard regional rates, while CloudFront-to-client transfer is tier-discounted and CloudFront-to-origin transfer within AWS is free.</li>
+              <li><strong>Cache Invalidation &amp; TTL Management:</strong> Student identifies the "stale content" problem caused by active TTL caching, and proposes both a CloudFront Invalidation and an object versioning/cache-busting solution.</li>
+              <li><strong>Layered Reasoning:</strong> Student connects the Route 53 Alias Record update to the CloudFront rollout, rather than treating DNS and CDN changes as unrelated fixes.</li>
+              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., Cache Hit Ratio, Data Transfer Out, Origin Access Control, Alias Record).</li>
             </ul>
           </div>
         </div>
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 7: LESSON 9 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- TAB 7: LESSON 10 STUDY COMPANION (LINK PLACEHOLDER) -->
       <!-- ============================================================ -->
       <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lesson 9 Study Companion</h2>
-          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 9 relational, NoSQL, and data warehousing material.</p>
+          <h2 class="text-2xl font-black text-slate-900">Lesson 10 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 10 DNS and global delivery network material.</p>
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
           <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Lesson 9: Databases &mdash; Relational, NoSQL &amp; Data Warehousing</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 10: DNS &amp; Global Delivery Networks &mdash; Route 53 &amp; CloudFront</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Review key terms, database-selection scenario practice, and a database-type sorting game tailored to reinforce Day 9 material.
+              Review key terms, routing-policy scenario practice, and a DNS/CDN component sorting game tailored to reinforce Day 10 material.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
             <span class="text-emerald-600">Study companion is live and ready for review.</span>
           </div>
-          <a href="Lesson_9_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Lesson_10_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Study Companion</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -513,14 +518,14 @@
           <div class="space-y-2">
             <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Test your proficiency in Relational vs. NoSQL databases, RDS, Amazon Aurora, DynamoDB, Amazon Redshift, Key-Value access, Provisioned Throughput, and Data Warehousing.
+              Test your proficiency in DNS, Route 53, CDN, Amazon CloudFront, Edge Locations, TTL, Failover Routing, and Geolocation Routing.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 9 mock quiz is live and ready to take.</span>
+            <span class="text-emerald-600">Day 10 mock quiz is live and ready to take.</span>
           </div>
-          <a href="Day9_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day10_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Certification Exam Simulator</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -594,76 +599,68 @@
        ========================================================== */
     const cardData = [
       {
-        term: "Relational",
-        definition: "A database model that organizes data into structured tables with predefined columns, where relationships between tables are enforced through keys, and complex queries can join multiple tables together.",
-        analogy: "The traditional library card catalog, where every book record follows the exact same structured form and relates to other records through cross-referenced fields.",
-        scenario: "A technician designs a relational schema for an order-processing system so customer, order, and inventory tables can be joined together with guaranteed data integrity.",
-        quiz: "What enforces relationships between different tables in a relational database?",
-        answer: "Keys (such as primary and foreign keys) enforce and define the relationships between different tables."
+        term: "DNS",
+        definition: "The Domain Name System: the Internet's global directory service that translates human-readable domain names, like mycompany.com, into the numeric IP addresses computers use to communicate.",
+        analogy: "Calling Directory Assistance and stating a publication's written subscriber name instead of already knowing its exact address.",
+        scenario: "A technician explains that typing aws.amazon.com triggers a DNS lookup that ultimately returns a numeric IP address the browser uses to connect.",
+        quiz: "What does DNS translate a human-readable domain name into?",
+        answer: "A numeric IP address, which is what computers actually use to locate and communicate with each other over the internet."
       },
       {
-        term: "NoSQL",
-        definition: "A category of non-relational databases designed for flexible, schema-less data storage, optimized for fast reads and writes at massive scale rather than complex multi-table joins.",
-        analogy: "A flexible storage system of labeled tote bins, where each bin can hold a completely different mix of items with no fixed form required.",
-        scenario: "A developer chooses a NoSQL database for a product catalog because each item's attributes vary widely and the workload is dominated by simple, fast lookups.",
-        quiz: "Does a NoSQL database require every record to follow the exact same fixed schema?",
-        answer: "No. NoSQL databases are generally schema-flexible, allowing different records to have different structures."
+        term: "Route 53",
+        definition: "AWS's highly available, scalable managed DNS web service, named after port 53, the standard networking port where DNS operates.",
+        analogy: "The master directory assistance ledger holding the official routing coordinate for every publication it manages.",
+        scenario: "A technician creates a Hosted Zone in Route 53 to manage all the DNS records for a company's domain.",
+        quiz: "Why is the service named 'Route 53' specifically?",
+        answer: "Because port 53 is the standard TCP/UDP networking port where DNS queries operate across all networking equipment."
       },
       {
-        term: "RDS",
-        definition: "Amazon Relational Database Service: a managed service that handles the setup, patching, and automated backups of relational database engines like MySQL, PostgreSQL, or SQL Server.",
-        analogy: "A professionally managed library service that handles all the shelving, cataloging upkeep, and backup photocopying of the catalog for you.",
-        scenario: "A technician launches an RDS instance and enables automated daily backups, so the database can be restored to any point within the retention window.",
-        quiz: "What administrative burden does RDS remove from a database administrator?",
-        answer: "RDS automates tasks like patching, backups, and infrastructure management that would otherwise require manual administration."
+        term: "CDN",
+        definition: "Content Delivery Network: a globally distributed network of proxy servers that cache content close to end users, reducing the physical distance data must travel.",
+        analogy: "Opening thousands of tiny neighborhood newsstands around the globe instead of making every reader fly to one central warehouse.",
+        scenario: "A company adopts a CDN to reduce load times for international customers who were previously fetching every asset from a single distant origin server.",
+        quiz: "What problem does a CDN primarily solve?",
+        answer: "It reduces latency caused by physical distance, by caching content at locations closer to end users instead of serving everything from one distant origin."
       },
       {
-        term: "DynamoDB",
-        definition: "Amazon's fully managed NoSQL key-value and document database, designed for consistent, single-digit millisecond performance at any scale.",
-        analogy: "A high-speed, single-item lockbox retrieval system — hand over a claim ticket, and staff instantly return the correct sealed bin.",
-        scenario: "An engineering team migrates a catalog lookup service to DynamoDB so it can absorb sudden, unpredictable traffic spikes without manual server resizing.",
-        quiz: "What kind of query pattern is DynamoDB best suited for?",
-        answer: "Simple, fast lookups by a known key (a key-value access pattern), rather than complex multi-table relational joins."
+        term: "Amazon CloudFront",
+        definition: "AWS's low-latency, high-speed Content Delivery Network service, integrated with AWS global infrastructure and utilizing over 600 Edge Locations worldwide.",
+        analogy: "The company's own global network of local newsstands, each stocked with copies close to its own readers.",
+        scenario: "An engineer provisions a CloudFront distribution linked to an S3 origin so static assets are cached and served from Edge Locations near each customer.",
+        quiz: "What AWS resource types can serve as a CloudFront origin?",
+        answer: "Common origins include an Amazon S3 bucket, an EC2 instance, or an Elastic Load Balancer serving the original content."
       },
       {
-        term: "Amazon Aurora",
-        definition: "A MySQL- and PostgreSQL-compatible relational database engine built by AWS for higher performance and availability, automatically replicating data across multiple Availability Zones.",
-        analogy: "An upgraded managed library service that automatically keeps duplicate copies across several branch locations, so one branch closing doesn't interrupt service.",
-        scenario: "A company migrates its production database to Aurora to gain automatic multi-AZ replication and faster failover than a standard RDS engine alone provides.",
-        quiz: "What key availability advantage does Aurora typically offer over a standard single-AZ relational setup?",
-        answer: "Aurora automatically replicates data across multiple Availability Zones, providing higher availability and faster failover."
+        term: "Edge Location",
+        definition: "A CloudFront site, more numerous than AWS Regions, used to cache and deliver content physically closer to end users.",
+        analogy: "One specific neighborhood newsstand stocked with copies close to local readers, rather than the distant central warehouse.",
+        scenario: "A customer in Sydney receives a cached image instantly from a nearby Edge Location instead of waiting for it to travel from a Virginia origin server.",
+        quiz: "What happens when a requested file is not yet cached at the nearest Edge Location?",
+        answer: "This is called a Cache Miss: CloudFront fetches the file from the origin, stores a copy at that Edge Location, and delivers it to the user."
       },
       {
-        term: "Amazon Redshift",
-        definition: "AWS's fully managed data warehouse service, optimized for running large-scale analytical queries across massive historical datasets rather than everyday transactional lookups.",
-        analogy: "A dedicated research annex built for scholars running big historical analysis projects, scanning millions of records at once for patterns.",
-        scenario: "A data analyst loads years of sales data into Redshift to run a company-wide trend analysis across every region and product line at once.",
-        quiz: "Is Amazon Redshift designed for quick single-record lookups, or large-scale historical analysis?",
-        answer: "Large-scale historical analysis. Redshift is a data warehouse optimized for complex analytical queries across massive datasets, not fast single-record retrieval."
+        term: "Time-To-Live (TTL)",
+        definition: "A setting that controls how long a file remains cached at a CloudFront Edge Location before the edge checks back with the origin for updates.",
+        analogy: "The rule stamped on each newspaper: discard unsold copies after 24 hours, forcing the newsstand to request a fresh print after that time.",
+        scenario: "An engineer lowers a video manifest's TTL to 5 minutes during a breaking news event, so updates propagate to edge caches faster than the default 24-hour setting.",
+        quiz: "What happens once a cached object's TTL expires?",
+        answer: "The Edge Location will check back with the origin server to see if the content has changed before serving it again."
       },
       {
-        term: "Key-Value",
-        definition: "A simple data access pattern where each unique key maps directly to one stored value or item, enabling extremely fast lookups without needing to search or join other data.",
-        analogy: "The claim-ticket-to-bin retrieval model itself — one unique ticket number always maps to exactly one bin of contents.",
-        scenario: "A developer designs a session-storage system around key-value access, using each user's session ID as the key to instantly retrieve their session data.",
-        quiz: "What makes a key-value lookup so fast compared to a relational join?",
-        answer: "A key-value lookup retrieves a single item directly by its unique key, without needing to search across or join multiple tables."
+        term: "Failover Routing",
+        definition: "A Route 53 routing policy that uses health checks to automatically redirect DNS traffic to a backup resource if the primary resource becomes unhealthy.",
+        analogy: "If the main restaurant kitchen's gas line breaks, the phone system instantly shifts all incoming orders to a backup kitchen across town.",
+        scenario: "A technician configures a Failover routing policy so that if the primary EU database server crashes, traffic automatically shifts to a static maintenance page hosted on S3.",
+        quiz: "What AWS mechanism does Failover Routing rely on to detect a problem with the primary resource?",
+        answer: "Route 53 Health Checks, which continuously monitor the primary resource and trigger the failover when it becomes unhealthy."
       },
       {
-        term: "Provisioned Throughput",
-        definition: "A capacity setting (used in services like DynamoDB) that defines how many read and write operations per second a table can handle, which can be manually set or automatically scaled.",
-        analogy: "The number of front-desk staff pre-scheduled at the lockbox counter — enough staff and requests are served instantly; understaff it and a line forms.",
-        scenario: "A technician configures a DynamoDB table's provisioned throughput to automatically scale up during a scheduled flash sale event and back down afterward.",
-        quiz: "What happens if a table's provisioned throughput is set too low for the actual traffic it receives?",
-        answer: "Requests can be throttled or delayed, since the table cannot process more read/write operations per second than its provisioned capacity allows."
-      },
-      {
-        term: "Data Warehouse",
-        definition: "A centralized repository that consolidates large volumes of historical data from multiple sources, structured specifically to support large-scale reporting and analytical queries.",
-        analogy: "The research annex's master historical archive, combining records from many branches into one consolidated collection built for large-scale analysis.",
-        scenario: "A company loads data from its sales, marketing, and support systems into a single Redshift data warehouse to build a unified company-wide performance dashboard.",
-        quiz: "Is a data warehouse typically optimized for fast day-to-day transactions, or for large-scale historical analysis?",
-        answer: "Large-scale historical analysis. A data warehouse is built to support complex reporting and analytics across consolidated historical data, not fast individual transactions."
+        term: "Geolocation Routing",
+        definition: "A Route 53 routing policy that directs traffic based on the physical geographic location (country, state, or continent) of the user making the request.",
+        analogy: "If a customer calls from France, the dispatcher automatically routes them to the Paris office instead of the English-speaking one.",
+        scenario: "A technician configures Geolocation routing so European users are served content from the EU application server, satisfying local privacy regulations.",
+        quiz: "What determines which resource a user is routed to under a Geolocation Routing policy?",
+        answer: "The physical geographic location of the user making the request, such as their country, state, or continent."
       }
     ];
 
@@ -759,6 +756,24 @@
     renderFlashcardUI();
 
     /* ==========================================================
+       THINK-PAIR-SHARE INSTRUCTOR VIEW TOGGLE
+       ========================================================== */
+    function toggleThinkPairShare() {
+      const details = document.getElementById('think-pair-share-details');
+      const arrow = document.getElementById('tps-arrow');
+      const btn = details.previousElementSibling;
+      if (details.classList.contains('hidden')) {
+        details.classList.remove('hidden');
+        arrow.innerHTML = "&uarr;";
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        details.classList.add('hidden');
+        arrow.innerHTML = "&darr;";
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    /* ==========================================================
        CASE STUDY LOGIC
        ========================================================== */
     function evaluateCaseChoice(qNum) {
@@ -768,26 +783,26 @@
 
       if (qNum === 1) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Nearly every request was a simple 'get one product by ID' lookup — a textbook key-value access pattern, not a job requiring complex relational joins.";
+          feedback.textContent = "Correct! Every request needed full server-side processing over long distances; CloudFront absorbed 94.2% of requests as fast Cache Hits at Edge Locations, preventing origin CPU overload.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Reread the second paragraph and consider what the catalog service's actual query pattern looked like.";
+          feedback.textContent = "Incorrect. Reread the first two paragraphs and consider what happened to the origin fleet's CPU utilization and why.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 2) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Checkout and order processing genuinely needed strict relational integrity for inventory and financial transaction accuracy, which is a strength of RDS.";
+          feedback.textContent = "Correct! CloudFront-to-client transfer is tier-discounted, and CloudFront-to-origin transfer within AWS is free, significantly lowering total cost compared to direct Data Transfer Out.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider what specific requirement made the checkout workload still a good fit for a relational database.";
+          feedback.textContent = "Incorrect. Reread the third paragraph and consider how bandwidth costs changed after CloudFront was introduced.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 3) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Scalable provisioned throughput let the table automatically absorb the sudden 40x surge without any engineer manually resizing anything during the sale.";
+          feedback.textContent = "Correct! A CloudFront Invalidation or object versioning/cache-busting are the two standard fixes for stale cached content at Edge Locations.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider what happens automatically to a DynamoDB table's capacity when it's configured to scale with demand.";
+          feedback.textContent = "Incorrect. Consider what tools exist specifically to force an Edge Location to refresh a stale cached file.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       }

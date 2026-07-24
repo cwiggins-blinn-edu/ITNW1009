@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITNW 1009: Day 9 Courseware & Interactive Portal</title>
+  <title>ITNW 1009: Day 12 Courseware & Interactive Portal</title>
   <!-- Tailwind CSS CDN (layout/spacing utilities) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
@@ -24,14 +24,14 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
-          <!-- Inline Database Cylinder Icon -->
+          <!-- Inline Dashboard/Ledger Icon representing monitoring & auditing -->
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0-1.657 3.582-3 8-3s8 1.343 8 3-3.582 3-8 3-8-1.343-8-3zm0 0v10c0 1.657 3.582 3 8 3s8-1.343 8-3V7m-16 5c0 1.657 3.582 3 8 3s8-1.343 8-3"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
           </svg>
         </div>
         <div>
           <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 9: Databases &mdash; Relational, NoSQL &amp; Data Warehousing</h1>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 12: Continuous Monitoring &amp; Auditing &mdash; CloudWatch, CloudTrail &amp; Config</h1>
         </div>
       </div>
 
@@ -77,27 +77,21 @@
             </button>
           </li>
           <li>
-            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              5. Hands-On Lab Link
-            </button>
-          </li>
-          <li>
             <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              6. Vocational Case Study
+              5. Vocational Case Study
             </button>
           </li>
           <li>
             <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              7. Study Companion
+              6. Study Companion
             </button>
           </li>
           <li>
             <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              8. Mock Exam Link
+              7. Mock Exam Link
             </button>
           </li>
         </ul>
@@ -124,8 +118,8 @@
       <!-- ============================================================ -->
       <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Day 9 Lesson Overview: Picking the Right Home for Your Data</h2>
-          <p class="text-slate-500 text-sm mt-1">Relational databases with RDS and Aurora, NoSQL key-value storage with DynamoDB, and data warehousing with Amazon Redshift.</p>
+          <h2 class="text-2xl font-black text-slate-900">Day 12 Lesson Overview: Knowing Both How It Runs and Who Touched It</h2>
+          <p class="text-slate-500 text-sm mt-1">Operational monitoring with Amazon CloudWatch, API activity auditing with AWS CloudTrail, and configuration compliance tracking with AWS Config.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -133,24 +127,24 @@
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Differentiate Relational vs. NoSQL Databases</h3>
-              <p class="text-xs text-slate-600 mt-1">Differentiate between relational (RDS/Aurora) and NoSQL (DynamoDB) databases.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Categorize Monitoring vs. Auditing Tools</h3>
+              <p class="text-xs text-slate-600 mt-1">Differentiate between operational health tracking (CloudWatch), API activity auditing (CloudTrail), and resource configuration tracking (AWS Config).</p>
             </div>
           </div>
           <!-- Objective 2 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Select the Right Database for the Job</h3>
-              <p class="text-xs text-slate-600 mt-1">Select appropriate database solutions based on schema structure and query latency thresholds.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Configure Automated CloudWatch Alarms</h3>
+              <p class="text-xs text-slate-600 mt-1">Set up CloudWatch alarms based on performance metrics to trigger notifications or drive Auto Scaling responses.</p>
             </div>
           </div>
           <!-- Objective 3 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Describe Data Warehouse Analysis with Redshift</h3>
-              <p class="text-xs text-slate-600 mt-1">Describe data warehouse analysis paradigms with Amazon Redshift.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Analyze Security Audit Logs</h3>
+              <p class="text-xs text-slate-600 mt-1">Interrogate CloudTrail event histories and AWS Config timelines to identify unauthorized changes and perform root-cause analysis.</p>
             </div>
           </div>
         </div>
@@ -159,15 +153,14 @@
         <div class="bg-white border border-slate-200 rounded-xl p-5">
           <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
           <div class="flex flex-wrap gap-2">
-            <span class="pill pill-light">Relational</span>
-            <span class="pill pill-light">NoSQL</span>
-            <span class="pill pill-light">RDS</span>
-            <span class="pill pill-light">DynamoDB</span>
-            <span class="pill pill-light">Amazon Aurora</span>
-            <span class="pill pill-light">Amazon Redshift</span>
-            <span class="pill pill-light">Key-Value</span>
-            <span class="pill pill-light">Provisioned Throughput</span>
-            <span class="pill pill-light">Data Warehouse</span>
+            <span class="pill pill-light">Monitoring</span>
+            <span class="pill pill-light">Auditing</span>
+            <span class="pill pill-light">Amazon CloudWatch</span>
+            <span class="pill pill-light">AWS CloudTrail</span>
+            <span class="pill pill-light">AWS Config</span>
+            <span class="pill pill-light">Metric Filter</span>
+            <span class="pill pill-light">CloudWatch Alarm</span>
+            <span class="pill pill-light">API Event</span>
           </div>
         </div>
 
@@ -178,14 +171,11 @@
             <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
           </div>
           <p class="text-xs text-indigo-900">
-            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify RDS engine selection and DynamoDB table configuration walkthroughs.
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify CloudWatch alarm setup and CloudTrail/Config investigation walkthroughs.
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-            <a href="https://blinn-edu.zoom.us/rec/share/yjHtg60ThkLWqg3ARIvujIYFjt8442vRnJFgtQgQ9dnEnwQrbdn4Vgzkfb0eQkMY.oNLQOUjqo9L_R-3L?from=hub" target="_blank" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 9: Part 1 &ndash; Relational Databases: RDS &amp; Aurora</span>
-            </a>
             <a href="https://blinn-edu.zoom.us/rec/share/ATqepQUS98lViJStjeqRGOw7J9Od-o8ILDN9JIYDDdGDiDjB6EYko7hy9VtJ3xs.OlxzTK4_-xxv-Gen?from=hub" target="_blank" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 9: Part 2 &ndash; DynamoDB &amp; Redshift Lab Briefing</span>
+              <span>Day 12: Part 1 &ndash; CloudWatch Metrics, Logs &amp; Alarms</span>
             </a>
           </div>
         </div>
@@ -196,7 +186,7 @@
           <div>
             <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
             <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
-              This session targets adult non-traditional learners. Open with the "library card catalog versus lockbox claim ticket" framing before naming Relational or NoSQL &mdash; students should feel the structural difference intuitively before meeting any acronym. When introducing Redshift, emphasize that it answers big historical "how many, over what time period" questions across millions of rows, rather than quick single-record lookups, since that's the most commonly confused exam distinction with RDS.
+              This session targets adult non-traditional learners. Open with the "speedometer versus security camera" framing before naming any service &mdash; students should feel the difference between knowing a system is unhealthy and knowing who caused it. Use the recurring summary table drill ("performance question? CloudWatch. Who did it? CloudTrail. Is it compliant? Config.") as a running formative check throughout lecture, since this three-way distinction is the single most commonly confused grouping on the certification exam.
             </p>
           </div>
         </div>
@@ -212,18 +202,18 @@
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🗃️</div>
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📡</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 9 Presentation Lecture Deck</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Day 12 Presentation Lecture Deck</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Unlock the official Relational vs. NoSQL, RDS, Aurora, DynamoDB, and Redshift slide presentation with full scripted narration notes.
+              Unlock the official CloudWatch, CloudTrail, and AWS Config slide presentation with full scripted narration notes.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 9 lecture slide deck is live and ready for download or review.</span>
+            <span class="text-emerald-600">Day 12 lecture slide deck is live and ready for download or review.</span>
           </div>
-          <a href="Day9.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day-12.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Presentation Slides</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -235,69 +225,61 @@
       <!-- ============================================================ -->
       <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Database &amp; Data Warehousing Analogy Library</h2>
-          <p class="text-slate-500 text-sm mt-1">Breaking down relational, NoSQL, and data warehousing concepts for learners with no prior IT background.</p>
+          <h2 class="text-2xl font-black text-slate-900">Monitoring &amp; Auditing Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down CloudWatch, CloudTrail, and AWS Config concepts for learners with no prior IT background.</p>
         </div>
 
         <!-- Search Bar -->
         <div class="relative max-w-md">
-          <label for="analogy-search" class="sr-only">Search metaphors and technical database terms</label>
-          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., DynamoDB, Redshift, Key-Value...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical monitoring and auditing terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., CloudTrail, Metric Filter, API Event...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
           <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
-          <!-- Metaphor Card 1: The Library & Card Catalog -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="relational nosql rds dynamodb amazon aurora amazon redshift key-value provisioned throughput data warehouse library card catalog">
+          <!-- Metaphor Card 1: The High-Security Commercial Bank -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="monitoring auditing amazon cloudwatch aws cloudtrail aws config metric filter cloudwatch alarm api event bank vault">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
-              <h3 class="font-extrabold text-base">The Library &amp; Claim-Ticket Lockbox</h3>
+              <h3 class="font-extrabold text-base">The High-Security Commercial Bank</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A city library system runs a traditional structured card catalog, a flexible warehouse of labeled tote bins, an instant claim-ticket lockbox counter, a multi-branch backup network, and a dedicated research annex for big historical analysis projects.
+                Imagine managing a high-security bank vault. Building sensors track the environment in real time, security cameras and sign-in ledgers record every visitor, and a master blueprint tracks the vault's physical structure over time.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Relational:</strong> The traditional library card catalog, where every book record follows the exact same structured form and books relate to each other through cross-referenced fields, like an author linking to all their books.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">NoSQL:</strong> A flexible storage system of labeled tote bins, where each bin can hold a completely different mix of items with no fixed form required, prioritizing speed of retrieval over rigid structure.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">RDS:</strong> A professionally managed library service that handles all the shelving, cataloging upkeep, and backup photocopying of the catalog for you, using whichever cataloging standard (engine) you choose.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">DynamoDB:</strong> A high-speed, single-item lockbox retrieval system — hand over a claim ticket, and staff instantly return a single sealed bin, no matter how many bins exist or how busy the front desk gets.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Aurora:</strong> An upgraded version of the managed library service, automatically keeping duplicate copies across several branch locations, so if one branch closes unexpectedly, patrons are served seamlessly by the next branch.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Redshift:</strong> A dedicated research annex built for scholars running big historical analysis projects, scanning millions of records at once for patterns instead of retrieving one book at a time.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Key-Value:</strong> The claim-ticket-to-bin retrieval model itself — one unique ticket number always maps to exactly one bin of contents.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Provisioned Throughput:</strong> The number of front-desk staff pre-scheduled at the lockbox counter — enough staff and requests are served instantly; understaff it and a line forms.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Data Warehouse:</strong> The research annex's master historical archive, combining records from many branches into one consolidated collection built for large-scale analysis, not day-to-day checkouts.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Monitoring / Amazon CloudWatch:</strong> The environmental sensors inside the bank measuring server-room temperature, vault air pressure, power consumption, and teller queue length in real time.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Auditing / AWS CloudTrail:</strong> The time-stamped video recording system and front-desk sign-in ledger, recording every person who enters the building, every keycard swipe, and every transaction a manager signs.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Config:</strong> The master architectural blueprint and safe inventory registry, tracking the vault's physical structural state over time, such as when a lock was upgraded from 3-bolt to 5-bolt.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">CloudWatch Alarm:</strong> The automated fire sprinkler and alarm bell that triggers the moment a sensor reading crosses a dangerous threshold.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">API Event:</strong> A specific physical action, like a keycard swipe or a safe handle turn, performed by an authorized individual.</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Metaphor Card 2: The Amusement Park Locker & Records System -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="relational nosql rds dynamodb amazon aurora amazon redshift key-value provisioned throughput data warehouse amusement park locker wristband">
+          <!-- Metaphor Card 2: The Smart Office Building Security & Facilities Team -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="monitoring auditing amazon cloudwatch aws cloudtrail aws config metric filter cloudwatch alarm api event office building facilities badge">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
-              <h3 class="font-extrabold text-base">The Amusement Park Locker &amp; Records System</h3>
+              <h3 class="font-extrabold text-base">The Smart Office Building Security &amp; Facilities Team</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A theme park keeps a structured guest registry ledger, a flexible souvenir locker system, an instant wristband-scan retrieval counter, a multi-gate backup network, and a corporate headquarters analytics office pulling data from every park location.
+                Imagine a modern office tower with a live sensor dashboard, a badge-swipe security log at every door, and a facilities office that tracks every renovation and permit change to the building over time.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Relational:</strong> The park's official guest registry ledger, where every guest's record follows the same structured form and can be cross-referenced by group booking ID.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">NoSQL:</strong> The park's flexible souvenir storage system, where lockers can hold wildly different combinations of items with no required format, optimized for quick grab-and-go access.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">RDS:</strong> A professional ledger-management service the park hires, handling the registry's upkeep, structure, and nightly backup copies, using whichever registry format (engine) the park selects.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">DynamoDB:</strong> The instant locker retrieval system at the entrance — scan your wristband, and the correct locker's contents pop out in a split second, whether it's a slow Tuesday or the busiest day of the year.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Aurora:</strong> An upgraded registry management service that automatically keeps duplicate copies of the guest ledger at multiple gate locations, so if one entrance gate's system goes down, another instantly takes over.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Redshift:</strong> The park's corporate headquarters analytics office, pulling attendance and sales records from every park location worldwide into one giant historical dataset to spot trends across entire seasons.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Key-Value:</strong> The wristband-scan-to-locker matching system itself — one specific wristband code always retrieves exactly one specific locker's contents.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Provisioned Throughput:</strong> The number of locker-retrieval staff and machines scheduled for a given day — enough capacity and every guest gets instant service; too little, and lines form at the lockers.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Data Warehouse:</strong> The headquarters' consolidated, season-spanning historical dataset itself, purpose-built for big-picture analysis rather than day-to-day locker retrieval.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Monitoring / Amazon CloudWatch:</strong> The building's real-time sensor dashboard tracking elevator status, HVAC temperature, and foot traffic counters as they happen.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Auditing / AWS CloudTrail:</strong> The front desk's visitor sign-in ledger and badge-swipe log, recording exactly who entered which door, from where, and at what time.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Config:</strong> The facilities department's permit and renovation history file, tracking every physical change made to the building's layout over time and whether each change still meets code.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">CloudWatch Alarm:</strong> The automatic sprinkler and alarm system that triggers the moment a sensor crosses a dangerous threshold, without waiting for a person to notice.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">API Event:</strong> Any specific badge swipe or button press action performed by an occupant, captured the instant it happens.</li>
                 </ul>
               </div>
             </div>
@@ -353,59 +335,25 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Databases Lab Gateway</h2>
-          <p class="text-slate-500 text-sm mt-1">Deploy an RDS instance and a DynamoDB table hands-on inside your AWS Academy sandbox.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 9 Hands-On Lab: Relational vs. NoSQL in Practice</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Launch your AWS Academy Sandbox, deploy an Amazon RDS database instance with automated backups enabled, then create a DynamoDB table and practice simple key-value item lookups.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">The Day 9 database lab guide is live, covering RDS instances and DynamoDB tables.</span>
-          </div>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="Day9Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-              <span>Launch Day 9 Hands-On Lab Guide</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </a>
-            <a href="Day9Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
-              <span>Download Day 9 Lab Guide (PDF)</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
       <!-- TAB 6: VOCATIONAL CASE STUDY -->
       <!-- ============================================================ -->
       <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: Surviving the Flash Sale</h2>
-          <p class="text-slate-500 text-sm mt-1">How CartWave migrated its product catalog to DynamoDB to absorb unpredictable traffic spikes.</p>
+          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: The 2:14 AM Configuration Drift</h2>
+          <p class="text-slate-500 text-sm mt-1">How three layered tools worked together to detect, trace, and auto-remediate an unauthorized security group change.</p>
         </div>
 
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
-          <h3 class="font-extrabold text-slate-900 text-lg">CartWave's Flash Sale Meltdown</h3>
+          <h3 class="font-extrabold text-slate-900 text-lg">LedgerPoint's Overnight Security Group Exposure</h3>
           <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
             <p>
-              CartWave, a mid-sized online retailer, ran its entire product catalog service on a single Amazon RDS relational database, which handled everyday browsing traffic without any trouble. The catalog service's job was simple: given a product ID, look up that product's name, price, and inventory count. But every time CartWave ran a major flash sale or a product went viral on social media, traffic to the catalog service spiked without warning, and the relational database's fixed connection pool and disk-bound query performance buckled under the sudden load. During the company's biggest sale of the previous year, the catalog pages slowed to a crawl and then went fully offline for nearly twenty minutes at the exact moment thousands of customers were trying to check prices and add items to their carts.
+              One Monday morning, the on-call engineer at LedgerPoint, a small fintech startup, received an Amazon CloudWatch alarm indicating unusually high outbound network traffic from an EC2 instance that normally sat idle overnight. The metric alone was useful but incomplete: it confirmed something had changed, but gave no indication of what had caused it or whether it was intentional.
             </p>
             <p>
-              In the post-incident review, the engineering team took a hard look at what the catalog service actually needed to do. Nearly every request was the same simple pattern: given one specific product ID, return that one product's details &mdash; a classic key-value access pattern, not a complex relational query joining multiple tables. The team migrated the catalog service to Amazon DynamoDB, configuring the table to automatically scale its throughput capacity to absorb sudden traffic surges without anyone needing to manually resize a server in the middle of a sale.
+              To investigate further, the engineer turned to AWS CloudTrail. The event history revealed that at 2:14 AM, an IAM user's credentials had been used to modify a security group, opening a previously restricted port to the entire internet (0.0.0.0/0). CloudTrail's record included the exact IAM principal, timestamp, and source IP address, immediately narrowing the investigation from "something is wrong" to "who did this, and when."
             </p>
             <p>
-              During the next major flash sale, catalog traffic spiked to roughly forty times its normal volume within minutes as a promotional post went viral. DynamoDB handled the surge seamlessly, returning product lookups in single-digit milliseconds throughout the entire event with no manual intervention. Meanwhile, CartWave's checkout and order-processing service &mdash; which genuinely needed strict relational integrity to track inventory counts and financial transactions accurately &mdash; remained on Amazon RDS, since that workload's structure and consistency requirements were still a better fit for a relational database. The result was a hybrid architecture where each database type was matched to the actual shape and demands of its workload, rather than forcing everything into a single one-size-fits-all database.
+              Cross-referencing AWS Config's resource timeline confirmed the security group had been fully compliant just hours earlier, and flagged the change as non-compliant within seconds of it occurring. Because a Config Rule had been assigned to automatically remediate any security group exposing SSH or RDP to the open internet, AWS Config reverted the rule to its prior compliant state less than two minutes after detecting the drift &mdash; well before a slower, purely manual investigation could have responded. The post-incident review credited the layered visibility of all three tools working together: CloudWatch flagged that something was wrong, CloudTrail identified exactly who caused it, and AWS Config both recorded the change and automatically fixed it.
             </p>
           </div>
         </div>
@@ -416,34 +364,34 @@
 
           <div class="space-y-4 text-xs">
             <div class="space-y-1.5">
-              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why was the catalog lookup workload actually a better fit for a key-value NoSQL model than the original relational setup?</label>
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why didn't the CloudWatch alarm alone tell the engineer who made the change or why it happened?</label>
               <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">Nearly every request was a simple "get one product by ID" lookup, matching a key-value access pattern rather than requiring complex relational joins</option>
-                <option value="B">Relational databases cannot store product names or prices at all</option>
-                <option value="C">NoSQL databases are always faster than relational databases regardless of the workload</option>
+                <option value="A">CloudWatch tracks operational metrics like network traffic; it has no visibility into which user or API call caused the change, which is CloudTrail's job</option>
+                <option value="B">CloudWatch alarms only fire once a day, so the alert was too delayed to be useful</option>
+                <option value="C">CloudWatch cannot monitor network traffic at all, only CPU and memory</option>
               </select>
               <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-2" class="font-bold text-slate-800">2. Why did CartWave keep its checkout and order-processing service on Amazon RDS instead of migrating everything to DynamoDB?</label>
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. What specific piece of forensic information did CloudTrail provide that neither CloudWatch nor AWS Config could have supplied on their own?</label>
               <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">That workload genuinely needed strict relational integrity for tracking inventory counts and financial transactions accurately</option>
-                <option value="B">DynamoDB cannot be used for any part of an e-commerce platform</option>
-                <option value="C">RDS is always cheaper than DynamoDB for every workload</option>
+                <option value="A">The exact IAM principal, timestamp, and source IP address responsible for the specific API call that made the change</option>
+                <option value="B">The current CPU utilization of the affected EC2 instance</option>
+                <option value="C">Whether the resource was currently compliant with company security standards</option>
               </select>
               <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-3" class="font-bold text-slate-800">3. What role did DynamoDB's scalable throughput capacity play in absorbing the 40x traffic spike without manual intervention?</label>
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. Why was AWS Config, rather than CloudTrail, the tool responsible for actually reverting the non-compliant security group?</label>
               <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">It allowed the table's read and write capacity to automatically absorb the sudden surge without an engineer manually resizing anything mid-sale</option>
-                <option value="B">It required the engineering team to manually double the server size the moment the sale began</option>
-                <option value="C">It had no effect on performance during the sale</option>
+                <option value="A">AWS Config evaluates resource configurations against defined rules and can trigger automated remediation, while CloudTrail only records historical activity logs</option>
+                <option value="B">CloudTrail cannot record security group changes at all</option>
+                <option value="C">AWS Config and CloudTrail are actually the same underlying service with two different names</option>
               </select>
               <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
             </div>
@@ -461,38 +409,38 @@
             <p><strong>Correct answers:</strong> 1-A, 2-A, 3-A.</p>
             <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
             <ul class="list-disc pl-4 space-y-1">
-              <li><strong>Access Pattern Recognition:</strong> Student correctly identifies that simple "get by ID" lookups match a key-value access pattern, and explains why that pattern fits NoSQL better than a relational join-heavy structure.</li>
-              <li><strong>Hybrid Architecture Reasoning:</strong> Student explains why the checkout/order-processing workload's need for relational integrity justified keeping it on RDS, rather than assuming one database type is universally superior.</li>
-              <li><strong>Throughput Scaling Understanding:</strong> Student explains how DynamoDB's scalable capacity absorbed the sudden traffic spike without requiring manual server resizing mid-event.</li>
-              <li><strong>Root Cause Awareness:</strong> Student connects the original outage to the relational database's fixed connection pool and disk-bound performance under sudden, unpredictable load.</li>
-              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., key-value, relational integrity, throughput capacity, schema).</li>
+              <li><strong>Tool Boundary Recognition:</strong> Student correctly explains that CloudWatch's role is limited to operational metrics and does not include identity or API-level forensic detail.</li>
+              <li><strong>CloudTrail Forensic Detail:</strong> Student identifies that CloudTrail specifically supplies the IAM principal, timestamp, and source IP tied to the exact API call that caused the change.</li>
+              <li><strong>AWS Config Remediation Role:</strong> Student explains that AWS Config evaluates configuration state against rules and can trigger automated remediation, distinguishing it from CloudTrail's purely historical logging role.</li>
+              <li><strong>Layered Defense Reasoning:</strong> Student connects all three tools into a single coherent narrative — CloudWatch detects, CloudTrail attributes, Config remediates — rather than treating them as interchangeable.</li>
+              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., IAM Principal, API Event, Config Rule, auto-remediation).</li>
             </ul>
           </div>
         </div>
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 7: LESSON 9 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- TAB 7: LESSON 12 STUDY COMPANION (LINK PLACEHOLDER) -->
       <!-- ============================================================ -->
       <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lesson 9 Study Companion</h2>
-          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 9 relational, NoSQL, and data warehousing material.</p>
+          <h2 class="text-2xl font-black text-slate-900">Lesson 12 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 12 monitoring and auditing material.</p>
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
           <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Lesson 9: Databases &mdash; Relational, NoSQL &amp; Data Warehousing</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 12: Continuous Monitoring &amp; Auditing</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Review key terms, database-selection scenario practice, and a database-type sorting game tailored to reinforce Day 9 material.
+              Review key terms, "which tool answers this question" scenario practice, and a service-sorting game tailored to reinforce Day 12 material.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
             <span class="text-emerald-600">Study companion is live and ready for review.</span>
           </div>
-          <a href="Lesson_9_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Lesson_12_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Study Companion</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -513,14 +461,14 @@
           <div class="space-y-2">
             <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Test your proficiency in Relational vs. NoSQL databases, RDS, Amazon Aurora, DynamoDB, Amazon Redshift, Key-Value access, Provisioned Throughput, and Data Warehousing.
+              Test your proficiency in Monitoring, Auditing, Amazon CloudWatch, AWS CloudTrail, AWS Config, Metric Filters, CloudWatch Alarms, and API Events.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 9 mock quiz is live and ready to take.</span>
+            <span class="text-emerald-600">Day 12 mock quiz is live and ready to take.</span>
           </div>
-          <a href="Day9_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day12_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Certification Exam Simulator</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -594,76 +542,68 @@
        ========================================================== */
     const cardData = [
       {
-        term: "Relational",
-        definition: "A database model that organizes data into structured tables with predefined columns, where relationships between tables are enforced through keys, and complex queries can join multiple tables together.",
-        analogy: "The traditional library card catalog, where every book record follows the exact same structured form and relates to other records through cross-referenced fields.",
-        scenario: "A technician designs a relational schema for an order-processing system so customer, order, and inventory tables can be joined together with guaranteed data integrity.",
-        quiz: "What enforces relationships between different tables in a relational database?",
-        answer: "Keys (such as primary and foreign keys) enforce and define the relationships between different tables."
+        term: "Monitoring",
+        definition: "The real-time collection, tracking, and visualization of operational metrics and performance health markers across cloud resources.",
+        analogy: "The environmental sensors inside a bank measuring temperature, pressure, and power consumption in real time.",
+        scenario: "An engineer watches a live dashboard of CPU, memory, and network metrics to confirm a system is healthy during a traffic spike.",
+        quiz: "What kind of question does monitoring primarily answer?",
+        answer: "Whether a system is currently healthy and performing as expected, based on real-time operational metrics."
       },
       {
-        term: "NoSQL",
-        definition: "A category of non-relational databases designed for flexible, schema-less data storage, optimized for fast reads and writes at massive scale rather than complex multi-table joins.",
-        analogy: "A flexible storage system of labeled tote bins, where each bin can hold a completely different mix of items with no fixed form required.",
-        scenario: "A developer chooses a NoSQL database for a product catalog because each item's attributes vary widely and the workload is dominated by simple, fast lookups.",
-        quiz: "Does a NoSQL database require every record to follow the exact same fixed schema?",
-        answer: "No. NoSQL databases are generally schema-flexible, allowing different records to have different structures."
+        term: "Auditing",
+        definition: "Recording, logging, and inspecting historical API activity and user actions to maintain security, governance, and compliance.",
+        analogy: "The time-stamped video recording system and visitor sign-in ledger that records exactly who entered and when.",
+        scenario: "A security team reviews an audit log to determine which IAM user deleted a critical S3 bucket overnight.",
+        quiz: "What kind of question does auditing primarily answer?",
+        answer: "Who did what, on which resource, from where, and when — establishing accountability for past actions."
       },
       {
-        term: "RDS",
-        definition: "Amazon Relational Database Service: a managed service that handles the setup, patching, and automated backups of relational database engines like MySQL, PostgreSQL, or SQL Server.",
-        analogy: "A professionally managed library service that handles all the shelving, cataloging upkeep, and backup photocopying of the catalog for you.",
-        scenario: "A technician launches an RDS instance and enables automated daily backups, so the database can be restored to any point within the retention window.",
-        quiz: "What administrative burden does RDS remove from a database administrator?",
-        answer: "RDS automates tasks like patching, backups, and infrastructure management that would otherwise require manual administration."
+        term: "Amazon CloudWatch",
+        definition: "AWS's monitoring and observability service that collects logs, metrics, and events from AWS infrastructure and applications, and can trigger automated actions.",
+        analogy: "The building's live sensor dashboard tracking temperature, elevator status, and foot traffic as it happens.",
+        scenario: "A technician configures a CloudWatch Alarm that automatically launches additional EC2 instances when CPU utilization stays above 60% for 3 minutes.",
+        quiz: "Can Amazon CloudWatch trigger automated actions, or does it only display dashboards?",
+        answer: "It can trigger automated actions, such as sending notifications or driving Auto Scaling responses, not just display dashboards."
       },
       {
-        term: "DynamoDB",
-        definition: "Amazon's fully managed NoSQL key-value and document database, designed for consistent, single-digit millisecond performance at any scale.",
-        analogy: "A high-speed, single-item lockbox retrieval system — hand over a claim ticket, and staff instantly return the correct sealed bin.",
-        scenario: "An engineering team migrates a catalog lookup service to DynamoDB so it can absorb sudden, unpredictable traffic spikes without manual server resizing.",
-        quiz: "What kind of query pattern is DynamoDB best suited for?",
-        answer: "Simple, fast lookups by a known key (a key-value access pattern), rather than complex multi-table relational joins."
+        term: "AWS CloudTrail",
+        definition: "A governance and compliance service that records API calls, user actions, and administrative activity across an AWS account as an immutable event history.",
+        analogy: "The security camera footage and badge-swipe log recording exactly who entered which door and when.",
+        scenario: "An investigator uses CloudTrail to discover that IAM user 'DevJohn' executed a DeleteBucket API call from a specific IP address at 3:15 AM.",
+        quiz: "What core question does AWS CloudTrail answer?",
+        answer: "Who performed what action, on which resource, from where, and when."
       },
       {
-        term: "Amazon Aurora",
-        definition: "A MySQL- and PostgreSQL-compatible relational database engine built by AWS for higher performance and availability, automatically replicating data across multiple Availability Zones.",
-        analogy: "An upgraded managed library service that automatically keeps duplicate copies across several branch locations, so one branch closing doesn't interrupt service.",
-        scenario: "A company migrates its production database to Aurora to gain automatic multi-AZ replication and faster failover than a standard RDS engine alone provides.",
-        quiz: "What key availability advantage does Aurora typically offer over a standard single-AZ relational setup?",
-        answer: "Aurora automatically replicates data across multiple Availability Zones, providing higher availability and faster failover."
+        term: "AWS Config",
+        definition: "A service that continuously monitors, records, and evaluates the configuration state and compliance of AWS resources over time, and can trigger auto-remediation.",
+        analogy: "The facilities department's permit and renovation history file tracking every physical change made to a building's layout over time.",
+        scenario: "A compliance officer uses AWS Config's timeline to see that a security group was compliant at 10:00 AM but became non-compliant at 10:05 AM after an unauthorized change.",
+        quiz: "How does AWS Config differ from AWS CloudTrail?",
+        answer: "AWS Config tracks a resource's configuration state and compliance over time, while CloudTrail records the historical API activity that caused changes."
       },
       {
-        term: "Amazon Redshift",
-        definition: "AWS's fully managed data warehouse service, optimized for running large-scale analytical queries across massive historical datasets rather than everyday transactional lookups.",
-        analogy: "A dedicated research annex built for scholars running big historical analysis projects, scanning millions of records at once for patterns.",
-        scenario: "A data analyst loads years of sales data into Redshift to run a company-wide trend analysis across every region and product line at once.",
-        quiz: "Is Amazon Redshift designed for quick single-record lookups, or large-scale historical analysis?",
-        answer: "Large-scale historical analysis. Redshift is a data warehouse optimized for complex analytical queries across massive datasets, not fast single-record retrieval."
+        term: "Metric Filter",
+        definition: "A rule used in CloudWatch Logs to extract numerical metrics from plain-text log data, enabling graphing or alarm evaluation based on log content.",
+        analogy: "A rule that counts every time the word 'incident' appears in a security guard's daily notebook, turning text into a trackable number.",
+        scenario: "A technician creates a Metric Filter that counts every '500 Internal Server Error' entry in a web server log, feeding that count into a CloudWatch Alarm.",
+        quiz: "What does a Metric Filter convert unstructured text logs into?",
+        answer: "A numerical metric that can be graphed on a dashboard or evaluated by a CloudWatch Alarm."
       },
       {
-        term: "Key-Value",
-        definition: "A simple data access pattern where each unique key maps directly to one stored value or item, enabling extremely fast lookups without needing to search or join other data.",
-        analogy: "The claim-ticket-to-bin retrieval model itself — one unique ticket number always maps to exactly one bin of contents.",
-        scenario: "A developer designs a session-storage system around key-value access, using each user's session ID as the key to instantly retrieve their session data.",
-        quiz: "What makes a key-value lookup so fast compared to a relational join?",
-        answer: "A key-value lookup retrieves a single item directly by its unique key, without needing to search across or join multiple tables."
+        term: "CloudWatch Alarm",
+        definition: "An automated rule that monitors a single metric over a specified time period and performs an action, such as sending a notification, when a defined threshold is crossed.",
+        analogy: "The automatic fire sprinkler and alarm bell that triggers the moment a sensor reading crosses a dangerous threshold.",
+        scenario: "An administrator configures a CloudWatch Alarm to notify the on-call team the moment error counts exceed 50 within one minute.",
+        quiz: "What must be defined for a CloudWatch Alarm to trigger?",
+        answer: "A specific metric, a time period, and a threshold value that, when crossed, causes the alarm to trigger its configured action."
       },
       {
-        term: "Provisioned Throughput",
-        definition: "A capacity setting (used in services like DynamoDB) that defines how many read and write operations per second a table can handle, which can be manually set or automatically scaled.",
-        analogy: "The number of front-desk staff pre-scheduled at the lockbox counter — enough staff and requests are served instantly; understaff it and a line forms.",
-        scenario: "A technician configures a DynamoDB table's provisioned throughput to automatically scale up during a scheduled flash sale event and back down afterward.",
-        quiz: "What happens if a table's provisioned throughput is set too low for the actual traffic it receives?",
-        answer: "Requests can be throttled or delayed, since the table cannot process more read/write operations per second than its provisioned capacity allows."
-      },
-      {
-        term: "Data Warehouse",
-        definition: "A centralized repository that consolidates large volumes of historical data from multiple sources, structured specifically to support large-scale reporting and analytical queries.",
-        analogy: "The research annex's master historical archive, combining records from many branches into one consolidated collection built for large-scale analysis.",
-        scenario: "A company loads data from its sales, marketing, and support systems into a single Redshift data warehouse to build a unified company-wide performance dashboard.",
-        quiz: "Is a data warehouse typically optimized for fast day-to-day transactions, or for large-scale historical analysis?",
-        answer: "Large-scale historical analysis. A data warehouse is built to support complex reporting and analytics across consolidated historical data, not fast individual transactions."
+        term: "API Event",
+        definition: "A recorded action triggered when a user, service, or script makes a request to interact with an AWS service via the Management Console, CLI, or SDK.",
+        analogy: "A specific keycard swipe or safe handle turn — a single, discrete physical action performed by an authorized individual.",
+        scenario: "Every click in the AWS Management Console, every CLI command, and every SDK call generates an underlying API Event that CloudTrail can record.",
+        quiz: "Does clicking a button in the AWS Management Console generate an API Event?",
+        answer: "Yes. Every console click, CLI command, and SDK call triggers an underlying API Event."
       }
     ];
 
@@ -768,26 +708,26 @@
 
       if (qNum === 1) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Nearly every request was a simple 'get one product by ID' lookup — a textbook key-value access pattern, not a job requiring complex relational joins.";
+          feedback.textContent = "Correct! CloudWatch tracks operational metrics like network traffic, but has no visibility into which user or API call caused the change — that's CloudTrail's job.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Reread the second paragraph and consider what the catalog service's actual query pattern looked like.";
+          feedback.textContent = "Incorrect. Reread the first paragraph and consider exactly what a CloudWatch alarm can and cannot tell you.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 2) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Checkout and order processing genuinely needed strict relational integrity for inventory and financial transaction accuracy, which is a strength of RDS.";
+          feedback.textContent = "Correct! CloudTrail specifically supplied the IAM principal, timestamp, and source IP tied to the exact API call that made the change.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider what specific requirement made the checkout workload still a good fit for a relational database.";
+          feedback.textContent = "Incorrect. Reread the second paragraph and consider what specific forensic detail CloudTrail's event history included.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 3) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Scalable provisioned throughput let the table automatically absorb the sudden 40x surge without any engineer manually resizing anything during the sale.";
+          feedback.textContent = "Correct! AWS Config evaluates configuration state against defined rules and can trigger auto-remediation, while CloudTrail only records historical activity.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider what happens automatically to a DynamoDB table's capacity when it's configured to scale with demand.";
+          feedback.textContent = "Incorrect. Consider which of the two tools is actually designed to evaluate compliance and take corrective action.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       }

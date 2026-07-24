@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITNW 1009: Day 9 Courseware & Interactive Portal</title>
+  <title>ITNW 1009: Day 11 Courseware & Interactive Portal</title>
   <!-- Tailwind CSS CDN (layout/spacing utilities) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
@@ -24,14 +24,14 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
-          <!-- Inline Database Cylinder Icon -->
+          <!-- Inline Temple Pillars Icon representing the Well-Architected Framework -->
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0-1.657 3.582-3 8-3s8 1.343 8 3-3.582 3-8 3-8-1.343-8-3zm0 0v10c0 1.657 3.582 3 8 3s8-1.343 8-3V7m-16 5c0 1.657 3.582 3 8 3s8-1.343 8-3"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M4 21V8l8-5 8 5v13M9 21V8m6 13V8M4 8h16"></path>
           </svg>
         </div>
         <div>
           <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 9: Databases &mdash; Relational, NoSQL &amp; Data Warehousing</h1>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Day 11: Cloud Architecture &amp; The AWS Well-Architected Framework</h1>
         </div>
       </div>
 
@@ -77,27 +77,21 @@
             </button>
           </li>
           <li>
-            <button onclick="activateTab('lab')" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
-              <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              5. Hands-On Lab Link
-            </button>
-          </li>
-          <li>
             <button onclick="activateTab('casestudy')" id="tab-casestudy" role="tab" aria-selected="false" aria-controls="panel-casestudy" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              6. Vocational Case Study
+              5. Vocational Case Study
             </button>
           </li>
           <li>
             <button onclick="activateTab('studycompanion')" id="tab-studycompanion" role="tab" aria-selected="false" aria-controls="panel-studycompanion" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              7. Study Companion
+              6. Study Companion
             </button>
           </li>
           <li>
             <button onclick="activateTab('exam')" id="tab-exam" role="tab" aria-selected="false" aria-controls="panel-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200">
               <span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>
-              8. Mock Exam Link
+              7. Mock Exam Link
             </button>
           </li>
         </ul>
@@ -105,9 +99,9 @@
         <div class="pt-4 border-t border-slate-100">
           <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
             <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Target Exam Domain</p>
-            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 3 (Cloud Technology &amp; Services)</p>
+            <p class="text-xs font-extrabold mt-1">CLF-C02 Domain 1 (Cloud Concepts)</p>
             <div class="w-full bg-indigo-950 rounded-full h-1.5 mt-2">
-              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 100%"></div>
+              <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 45%"></div>
             </div>
           </div>
         </div>
@@ -124,8 +118,8 @@
       <!-- ============================================================ -->
       <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Day 9 Lesson Overview: Picking the Right Home for Your Data</h2>
-          <p class="text-slate-500 text-sm mt-1">Relational databases with RDS and Aurora, NoSQL key-value storage with DynamoDB, and data warehousing with Amazon Redshift.</p>
+          <h2 class="text-2xl font-black text-slate-900">Day 11 Lesson Overview: Thinking Like a Cloud Architect</h2>
+          <p class="text-slate-500 text-sm mt-1">The AWS Well-Architected Framework's six pillars, High Availability vs. Fault Tolerance, Disaster Recovery metrics, and AWS Trusted Advisor.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -133,24 +127,24 @@
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">01</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Differentiate Relational vs. NoSQL Databases</h3>
-              <p class="text-xs text-slate-600 mt-1">Differentiate between relational (RDS/Aurora) and NoSQL (DynamoDB) databases.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Explain the Six Well-Architected Pillars</h3>
+              <p class="text-xs text-slate-600 mt-1">Describe how Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability work together.</p>
             </div>
           </div>
           <!-- Objective 2 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">02</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Select the Right Database for the Job</h3>
-              <p class="text-xs text-slate-600 mt-1">Select appropriate database solutions based on schema structure and query latency thresholds.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Differentiate HA, Fault Tolerance &amp; DR Strategy</h3>
+              <p class="text-xs text-slate-600 mt-1">Distinguish High Availability from Fault Tolerance, and select an appropriate Disaster Recovery strategy using RTO and RPO targets.</p>
             </div>
           </div>
           <!-- Objective 3 -->
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-3">
             <span class="text-indigo-600 text-xl font-black" aria-hidden="true">03</span>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">Describe Data Warehouse Analysis with Redshift</h3>
-              <p class="text-xs text-slate-600 mt-1">Describe data warehouse analysis paradigms with Amazon Redshift.</p>
+              <h3 class="font-bold text-slate-900 text-sm">Audit an Architecture with Trusted Advisor</h3>
+              <p class="text-xs text-slate-600 mt-1">Use AWS Trusted Advisor's five check categories to identify architectural risk before it causes an outage.</p>
             </div>
           </div>
         </div>
@@ -159,15 +153,16 @@
         <div class="bg-white border border-slate-200 rounded-xl p-5">
           <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3">Key Vocabulary This Session</h3>
           <div class="flex flex-wrap gap-2">
-            <span class="pill pill-light">Relational</span>
-            <span class="pill pill-light">NoSQL</span>
-            <span class="pill pill-light">RDS</span>
-            <span class="pill pill-light">DynamoDB</span>
-            <span class="pill pill-light">Amazon Aurora</span>
-            <span class="pill pill-light">Amazon Redshift</span>
-            <span class="pill pill-light">Key-Value</span>
-            <span class="pill pill-light">Provisioned Throughput</span>
-            <span class="pill pill-light">Data Warehouse</span>
+            <span class="pill pill-light">Well-Architected Framework</span>
+            <span class="pill pill-light">Operational Excellence</span>
+            <span class="pill pill-light">Security (Pillar)</span>
+            <span class="pill pill-light">Reliability</span>
+            <span class="pill pill-light">Performance Efficiency</span>
+            <span class="pill pill-light">Cost Optimization</span>
+            <span class="pill pill-light">Sustainability</span>
+            <span class="pill pill-light">High Availability (HA)</span>
+            <span class="pill pill-light">Fault Tolerance (FT)</span>
+            <span class="pill pill-light">RTO &amp; RPO</span>
           </div>
         </div>
 
@@ -178,14 +173,11 @@
             <h3 class="font-extrabold text-indigo-950 text-base">Class Zoom Recordings Gateway</h3>
           </div>
           <p class="text-xs text-indigo-900">
-            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify RDS engine selection and DynamoDB table configuration walkthroughs.
+            Recorded video sessions will be posted here dynamically within 24 hours of class completion. Review these recordings to verify the six-pillar framework walkthrough and the Trusted Advisor audit demo.
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-            <a href="https://blinn-edu.zoom.us/rec/share/yjHtg60ThkLWqg3ARIvujIYFjt8442vRnJFgtQgQ9dnEnwQrbdn4Vgzkfb0eQkMY.oNLQOUjqo9L_R-3L?from=hub" target="_blank" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 9: Part 1 &ndash; Relational Databases: RDS &amp; Aurora</span>
-            </a>
             <a href="https://blinn-edu.zoom.us/rec/share/ATqepQUS98lViJStjeqRGOw7J9Od-o8ILDN9JIYDDdGDiDjB6EYko7hy9VtJ3xs.OlxzTK4_-xxv-Gen?from=hub" target="_blank" class="flex items-center justify-between p-3.5 bg-white border border-indigo-100 rounded-lg hover:bg-indigo-50/50 transition font-bold text-xs text-indigo-700">
-              <span>Day 9: Part 2 &ndash; DynamoDB &amp; Redshift Lab Briefing</span>
+              <span>Day 11: Part 1 &ndash; The Six Well-Architected Pillars</span>
             </a>
           </div>
         </div>
@@ -196,7 +188,7 @@
           <div>
             <h4 class="font-bold text-indigo-900 text-sm">Instructor Delivery Insights</h4>
             <p class="text-xs text-indigo-950 mt-1 leading-relaxed">
-              This session targets adult non-traditional learners. Open with the "library card catalog versus lockbox claim ticket" framing before naming Relational or NoSQL &mdash; students should feel the structural difference intuitively before meeting any acronym. When introducing Redshift, emphasize that it answers big historical "how many, over what time period" questions across millions of rows, rather than quick single-record lookups, since that's the most commonly confused exam distinction with RDS.
+              This session targets adult non-traditional learners. Draw the Greek temple with six pillars on the board before naming any pillar individually &mdash; students should see that a weak pillar risks the whole roof before memorizing labels. When teaching High Availability versus Fault Tolerance, use the running "hospital versus retail store" question throughout lecture, since that cost/reliability trade-off is the single most commonly confused pairing on the certification exam.
             </p>
           </div>
         </div>
@@ -212,18 +204,18 @@
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🗃️</div>
+          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🏛️</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 9 Presentation Lecture Deck</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Day 11 Presentation Lecture Deck</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Unlock the official Relational vs. NoSQL, RDS, Aurora, DynamoDB, and Redshift slide presentation with full scripted narration notes.
+              Unlock the official Well-Architected Framework, HA vs. FT, Disaster Recovery, and Trusted Advisor slide presentation with full scripted narration notes.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 9 lecture slide deck is live and ready for download or review.</span>
+            <span class="text-emerald-600">Day 11 lecture slide deck is live and ready for download or review.</span>
           </div>
-          <a href="Day9.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day-11.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Presentation Slides</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -235,69 +227,63 @@
       <!-- ============================================================ -->
       <section id="panel-analogies" role="tabpanel" aria-labelledby="tab-analogies" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Database &amp; Data Warehousing Analogy Library</h2>
-          <p class="text-slate-500 text-sm mt-1">Breaking down relational, NoSQL, and data warehousing concepts for learners with no prior IT background.</p>
+          <h2 class="text-2xl font-black text-slate-900">Cloud Architecture Analogy Library</h2>
+          <p class="text-slate-500 text-sm mt-1">Breaking down the Well-Architected Framework, HA/FT, and Disaster Recovery concepts for learners with no prior IT background.</p>
         </div>
 
         <!-- Search Bar -->
         <div class="relative max-w-md">
-          <label for="analogy-search" class="sr-only">Search metaphors and technical database terms</label>
-          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., DynamoDB, Redshift, Key-Value...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
+          <label for="analogy-search" class="sr-only">Search metaphors and technical architecture terms</label>
+          <input type="text" id="analogy-search" oninput="filterAnalogies()" placeholder="Search analogies (e.g., RTO, Fault Tolerance, Trusted Advisor...)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-indigo-500 text-sm">
           <div class="absolute left-3.5 top-3 text-slate-400" aria-hidden="true">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analogies-grid">
-          <!-- Metaphor Card 1: The Library & Card Catalog -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="relational nosql rds dynamodb amazon aurora amazon redshift key-value provisioned throughput data warehouse library card catalog">
+          <!-- Metaphor Card 1: Commercial Restaurant Operations Model -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="well-architected framework operational excellence security reliability performance efficiency cost optimization sustainability high availability fault tolerance rto rpo trusted advisor restaurant kitchen">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor A</span>
-              <h3 class="font-extrabold text-base">The Library &amp; Claim-Ticket Lockbox</h3>
+              <h3 class="font-extrabold text-base">The Commercial Restaurant Operations Model</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A city library system runs a traditional structured card catalog, a flexible warehouse of labeled tote bins, an instant claim-ticket lockbox counter, a multi-branch backup network, and a dedicated research annex for big historical analysis projects.
+                Imagine managing a high-end, 24/7 commercial restaurant. It cannot simply serve good food; it requires clean kitchen operations, strict safety procedures, fast preparation, budget management, dynamic seating, and waste reduction &mdash; all balanced at once.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Relational:</strong> The traditional library card catalog, where every book record follows the exact same structured form and books relate to each other through cross-referenced fields, like an author linking to all their books.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">NoSQL:</strong> A flexible storage system of labeled tote bins, where each bin can hold a completely different mix of items with no fixed form required, prioritizing speed of retrieval over rigid structure.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">RDS:</strong> A professionally managed library service that handles all the shelving, cataloging upkeep, and backup photocopying of the catalog for you, using whichever cataloging standard (engine) you choose.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">DynamoDB:</strong> A high-speed, single-item lockbox retrieval system — hand over a claim ticket, and staff instantly return a single sealed bin, no matter how many bins exist or how busy the front desk gets.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Aurora:</strong> An upgraded version of the managed library service, automatically keeping duplicate copies across several branch locations, so if one branch closes unexpectedly, patrons are served seamlessly by the next branch.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Redshift:</strong> A dedicated research annex built for scholars running big historical analysis projects, scanning millions of records at once for patterns instead of retrieving one book at a time.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Key-Value:</strong> The claim-ticket-to-bin retrieval model itself — one unique ticket number always maps to exactly one bin of contents.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Provisioned Throughput:</strong> The number of front-desk staff pre-scheduled at the lockbox counter — enough staff and requests are served instantly; understaff it and a line forms.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Data Warehouse:</strong> The research annex's master historical archive, combining records from many branches into one consolidated collection built for large-scale analysis, not day-to-day checkouts.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Well-Architected Framework:</strong> The complete restaurant management standard balancing food hygiene (Security), smooth kitchen prep (Operational Excellence), quick fulfillment (Performance), pricing margins (Cost Optimization), reliable equipment (Reliability), and minimal food waste (Sustainability).</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">High Availability:</strong> Multiple cooking lines and shift chefs &mdash; if one line cook steps away, a second cook immediately covers the tickets, causing only a brief delay.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Fault Tolerance:</strong> Dual uninterruptible gas and electrical lines running continuously, so if the main power dies, zero appliances shut down and not a single degree of heat is lost.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">RTO:</strong> The manager's target timer after a dining room water leak &mdash; "shut off the pipe, mop the floor, and reseat guests within 15 minutes."</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">RPO:</strong> The duplicate carbon-copy ticket pad kept by cooks &mdash; if the electronic order screen crashes, only the last five minutes of orders are lost and can be rebuilt.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Trusted Advisor:</strong> The surprise health and financial auditor who checks if the freezer door was left unlatched or a burner is running with no pan, handing the owner a color-coded checklist.</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Metaphor Card 2: The Amusement Park Locker & Records System -->
-          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="relational nosql rds dynamodb amazon aurora amazon redshift key-value provisioned throughput data warehouse amusement park locker wristband">
+          <!-- Metaphor Card 2: Commercial Airline Operations Model -->
+          <div class="border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col bg-white" data-terms="well-architected framework operational excellence security reliability performance efficiency cost optimization sustainability high availability fault tolerance rto rpo trusted advisor airline aircraft">
             <div class="bg-indigo-900 text-white p-4">
               <span class="text-[10px] bg-indigo-800 text-indigo-300 font-bold px-2 py-0.5 rounded uppercase tracking-wider block w-fit mb-1">Metaphor B</span>
-              <h3 class="font-extrabold text-base">The Amusement Park Locker &amp; Records System</h3>
+              <h3 class="font-extrabold text-base">The Modern Commercial Airline Operations Model</h3>
             </div>
             <div class="p-5 flex-grow space-y-4">
               <p class="text-xs text-slate-600 leading-relaxed">
-                A theme park keeps a structured guest registry ledger, a flexible souvenir locker system, an instant wristband-scan retrieval counter, a multi-gate backup network, and a corporate headquarters analytics office pulling data from every park location.
+                Consider a commercial passenger airline operating daily flights across global routes, governed by strict standardized safety rules covering maintenance, security, fuel efficiency, crew checklists, and engine performance.
               </p>
               <div class="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-2">Abstract Concept Map</h4>
                 <ul class="space-y-1.5 text-xs text-slate-700 divide-y divide-slate-100">
-                  <li class="pt-1.5"><strong class="text-indigo-700">Relational:</strong> The park's official guest registry ledger, where every guest's record follows the same structured form and can be cross-referenced by group booking ID.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">NoSQL:</strong> The park's flexible souvenir storage system, where lockers can hold wildly different combinations of items with no required format, optimized for quick grab-and-go access.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">RDS:</strong> A professional ledger-management service the park hires, handling the registry's upkeep, structure, and nightly backup copies, using whichever registry format (engine) the park selects.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">DynamoDB:</strong> The instant locker retrieval system at the entrance — scan your wristband, and the correct locker's contents pop out in a split second, whether it's a slow Tuesday or the busiest day of the year.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Aurora:</strong> An upgraded registry management service that automatically keeps duplicate copies of the guest ledger at multiple gate locations, so if one entrance gate's system goes down, another instantly takes over.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Amazon Redshift:</strong> The park's corporate headquarters analytics office, pulling attendance and sales records from every park location worldwide into one giant historical dataset to spot trends across entire seasons.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Key-Value:</strong> The wristband-scan-to-locker matching system itself — one specific wristband code always retrieves exactly one specific locker's contents.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Provisioned Throughput:</strong> The number of locker-retrieval staff and machines scheduled for a given day — enough capacity and every guest gets instant service; too little, and lines form at the lockers.</li>
-                  <li class="pt-1.5"><strong class="text-indigo-700">Data Warehouse:</strong> The headquarters' consolidated, season-spanning historical dataset itself, purpose-built for big-picture analysis rather than day-to-day locker retrieval.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Well-Architected Framework:</strong> The FAA's commercial aviation guidelines covering maintenance (Reliability), cabin security screening (Security), fuel balance (Cost/Sustainability), crew checklists (Operational Excellence), and engine performance (Performance Efficiency).</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">High Availability:</strong> A standby aircraft parked at the adjacent gate &mdash; if the scheduled plane has a minor issue, passengers transfer and reach their destination with minimal delay.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">Fault Tolerance:</strong> Redundant flight computers, independent hydraulic channels, and multiple jet engines &mdash; if one engine fails mid-flight, the aircraft sustains full altitude and power without passengers noticing.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">RTO:</strong> The airline's ground maintenance turnaround target &mdash; "swap the tire and certify the plane for takeoff within 30 minutes."</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">RPO:</strong> Satellite-synced passenger manifests ensuring the airline knows exactly who boarded up to one minute before a terminal power loss.</li>
+                  <li class="pt-1.5"><strong class="text-indigo-700">AWS Trusted Advisor:</strong> The automated aircraft telemetry scanner that continuously reports back to ground maintenance, flagging yellow warnings for worn tires and red alerts for uncalibrated radar sensors.</li>
                 </ul>
               </div>
             </div>
@@ -353,59 +339,67 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 5: HANDS-ON LAB GATEWAY (LINK PLACEHOLDER) -->
-      <!-- ============================================================ -->
-      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Databases Lab Gateway</h2>
-          <p class="text-slate-500 text-sm mt-1">Deploy an RDS instance and a DynamoDB table hands-on inside your AWS Academy sandbox.</p>
-        </div>
-
-        <div class="text-center py-12 max-w-xl mx-auto space-y-6">
-          <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">🛠️</div>
-          <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Day 9 Hands-On Lab: Relational vs. NoSQL in Practice</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Launch your AWS Academy Sandbox, deploy an Amazon RDS database instance with automated backups enabled, then create a DynamoDB table and practice simple key-value item lookups.
-            </p>
-          </div>
-          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
-            <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">The Day 9 database lab guide is live, covering RDS instances and DynamoDB tables.</span>
-          </div>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="Day9Lab.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
-              <span>Launch Day 9 Hands-On Lab Guide</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </a>
-            <a href="Day9Lab.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-indigo-200 text-indigo-700 font-bold px-6 py-3 rounded-xl transition text-sm shadow-sm">
-              <span>Download Day 9 Lab Guide (PDF)</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================ -->
       <!-- TAB 6: VOCATIONAL CASE STUDY -->
       <!-- ============================================================ -->
       <section id="panel-casestudy" role="tabpanel" aria-labelledby="tab-casestudy" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Vocational Case Study: Surviving the Flash Sale</h2>
-          <p class="text-slate-500 text-sm mt-1">How CartWave migrated its product catalog to DynamoDB to absorb unpredictable traffic spikes.</p>
+          <h2 class="text-2xl font-black text-slate-900">Active Learning: Architecture Audit Workshop &amp; MegaCart's Outage</h2>
+          <p class="text-slate-500 text-sm mt-1">A Think-Pair-Share architecture audit of Apex Retail, followed by a case study on MegaCart Retail's Cyber Monday collapse.</p>
         </div>
 
+        <!-- INTERACTIVE IN-CLASS ACTIVITY: THINK-PAIR-SHARE -->
+        <div class="bg-indigo-50 rounded-2xl p-6 border border-indigo-200 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xl" aria-hidden="true">✏️</span>
+            <h3 class="font-extrabold text-indigo-950 text-lg">Interactive In-Class Activity: Architecture Optimization &amp; Audit Scenario</h3>
+          </div>
+          <p class="text-xs md:text-sm text-indigo-950 leading-relaxed">
+            <strong>Think-Pair-Share Scenario:</strong> You have been hired as Junior Cloud Architects by Apex Retail, a rapidly growing online clothing boutique. During a recent holiday flash sale, their web application suffered a severe 4-hour outage, costing $150,000 in lost sales. Their current design: a single public EC2 instance stores both app code and uploaded product images on its local EBS volume, backed by a Single-AZ RDS database with automated backups disabled to save $15/month, and developers deploy updates by SSH-ing directly into the live server. Work with a partner to identify which Well-Architected pillars are violated and sketch a modernized target architecture.
+          </p>
+
+          <div class="border border-indigo-200 rounded-xl overflow-hidden bg-white">
+            <button type="button" onclick="toggleThinkPairShare()" class="w-full flex items-center justify-between p-4 bg-indigo-100/50 hover:bg-indigo-100 transition text-left" aria-expanded="false" aria-controls="think-pair-share-details">
+              <span class="font-bold text-sm text-indigo-900">📋 Instructor View: Pillar Violations, Target Architecture &amp; Trusted Advisor Findings <span id="tps-arrow">&darr;</span></span>
+            </button>
+            <div id="think-pair-share-details" class="hidden p-4 space-y-4 border-t border-indigo-100 text-xs text-slate-700">
+              <div>
+                <h4 class="font-extrabold text-slate-800 uppercase tracking-wider text-[11px] mb-1.5">Pillar Violations Mapping</h4>
+                <ul class="space-y-1.5">
+                  <li><strong class="text-indigo-800">Operational Excellence:</strong> Manual code deployments directly on the live production server via SSH, with no automated deployment pipeline or rollback mechanism.</li>
+                  <li><strong class="text-indigo-800">Security:</strong> Public exposure of the web server with direct, unrestricted access and no clear subnet isolation for the database.</li>
+                  <li><strong class="text-indigo-800">Reliability:</strong> Multiple single points of failure (one EC2 instance, one Single-AZ RDS instance) with no automated backups or Auto Scaling.</li>
+                  <li><strong class="text-indigo-800">Performance Efficiency:</strong> Static product images stored on local server storage instead of being offloaded to S3 and a CloudFront CDN.</li>
+                  <li><strong class="text-indigo-800">Cost Optimization:</strong> The risk of a $150,000 outage far outweighs the short-sighted $15/month savings from disabling database backups.</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-slate-800 uppercase tracking-wider text-[11px] mb-1.5">Re-Architected Target Solution</h4>
+                <p>Place an Application Load Balancer across two Availability Zones; put EC2 web servers into a Multi-AZ Auto Scaling Group in private subnets; move product images to S3 integrated with CloudFront; and upgrade the database to a Multi-AZ RDS deployment with automated daily snapshots.</p>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-slate-800 uppercase tracking-wider text-[11px] mb-1.5">Expected Trusted Advisor Findings</h4>
+                <ul class="space-y-1.5">
+                  <li><strong class="text-rose-700">Fault Tolerance [Red]:</strong> Single RDS instance without Multi-AZ enabled; no Auto Scaling group detected.</li>
+                  <li><strong class="text-amber-700">Security [Yellow]:</strong> Security group permits unrestricted SSH (port 22) access to production web instances.</li>
+                  <li><strong class="text-emerald-700">Cost Optimization / Service Limits [Green]:</strong> Compute capacity within standard limits, but flagging unutilized static resource risk.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOCATIONAL CASE STUDY -->
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
-          <h3 class="font-extrabold text-slate-900 text-lg">CartWave's Flash Sale Meltdown</h3>
+          <h3 class="font-extrabold text-slate-900 text-lg">Vocational Case Study: Minimizing Downtime at MegaCart Retail</h3>
           <div class="space-y-3 text-xs md:text-sm text-slate-700 leading-relaxed">
             <p>
-              CartWave, a mid-sized online retailer, ran its entire product catalog service on a single Amazon RDS relational database, which handled everyday browsing traffic without any trouble. The catalog service's job was simple: given a product ID, look up that product's name, price, and inventory count. But every time CartWave ran a major flash sale or a product went viral on social media, traffic to the catalog service spiked without warning, and the relational database's fixed connection pool and disk-bound query performance buckled under the sudden load. During the company's biggest sale of the previous year, the catalog pages slowed to a crawl and then went fully offline for nearly twenty minutes at the exact moment thousands of customers were trying to check prices and add items to their carts.
+              MegaCart Retail, an online e-commerce distributor carrying over 50,000 product SKUs, experienced a catastrophic system collapse during its annual Cyber Monday sales campaign. At 12:00 PM, user traffic spiked to ten times normal capacity. The monolithic application server, running on a single oversized Amazon EC2 instance, suffered CPU starvation as memory usage hit 100%. Because the application wrote customer session data directly to local server RAM, restarting the frozen instance wiped out thousands of active shopping carts. The resulting five-hour blackout led to an estimated loss of $420,000 in unfulfilled purchases and a flood of negative customer reviews.
             </p>
             <p>
-              In the post-incident review, the engineering team took a hard look at what the catalog service actually needed to do. Nearly every request was the same simple pattern: given one specific product ID, return that one product's details &mdash; a classic key-value access pattern, not a complex relational query joining multiple tables. The team migrated the catalog service to Amazon DynamoDB, configuring the table to automatically scale its throughput capacity to absorb sudden traffic surges without anyone needing to manually resize a server in the middle of a sale.
+              A post-incident review conducted by lead cloud engineers revealed severe structural misconfigurations across the infrastructure. The web server was locked into a single Availability Zone without an Auto Scaling policy or Elastic Load Balancer. Product images, CSS style sheets, and promotional banners were served directly from the compute instance's attached EBS volume, saturating disk I/O channels and starving database connection pools. The database was running on an unmanaged, single-instance database engine with only manual weekly backups, and the team had routinely ignored AWS Trusted Advisor notification emails warning that database storage space was over 85% full and that no read replicas were configured to offload customer catalog search queries.
             </p>
             <p>
-              During the next major flash sale, catalog traffic spiked to roughly forty times its normal volume within minutes as a promotional post went viral. DynamoDB handled the surge seamlessly, returning product lookups in single-digit milliseconds throughout the entire event with no manual intervention. Meanwhile, CartWave's checkout and order-processing service &mdash; which genuinely needed strict relational integrity to track inventory counts and financial transactions accurately &mdash; remained on Amazon RDS, since that workload's structure and consistency requirements were still a better fit for a relational database. The result was a hybrid architecture where each database type was matched to the actual shape and demands of its workload, rather than forcing everything into a single one-size-fits-all database.
+              Following the incident, the engineering team re-architected the platform around Well-Architected principles: an Application Load Balancer distributing traffic across two Availability Zones, static assets offloaded to Amazon S3 with CloudFront caching in front, a Multi-AZ RDS deployment with automated daily snapshots, and a new standing policy to act on every AWS Trusted Advisor Security and Fault Tolerance warning within one business day instead of ignoring them. During the following year's Cyber Monday, traffic spiked to twelve times normal volume without a single minute of downtime, and leadership credited the shift from treating architecture as a one-time build to treating it as a continuously audited, self-healing system.
             </p>
           </div>
         </div>
@@ -416,34 +410,34 @@
 
           <div class="space-y-4 text-xs">
             <div class="space-y-1.5">
-              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Why was the catalog lookup workload actually a better fit for a key-value NoSQL model than the original relational setup?</label>
+              <label for="case-dropdown-1" class="font-bold text-slate-800">1. Which single design decision was most responsible for wiping out thousands of active shopping carts during the restart, and which pillar did it violate?</label>
               <select id="case-dropdown-1" onchange="evaluateCaseChoice(1)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">Nearly every request was a simple "get one product by ID" lookup, matching a key-value access pattern rather than requiring complex relational joins</option>
-                <option value="B">Relational databases cannot store product names or prices at all</option>
-                <option value="C">NoSQL databases are always faster than relational databases regardless of the workload</option>
+                <option value="A">Writing customer session data directly to the single instance's local RAM, violating the Reliability pillar by creating a single point of failure for session state</option>
+                <option value="B">Using Amazon EC2 at all, since EC2 should never be used for e-commerce applications</option>
+                <option value="C">Choosing a database engine that supports SQL queries instead of a NoSQL engine</option>
               </select>
               <p id="case-feedback-1" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-2" class="font-bold text-slate-800">2. Why did CartWave keep its checkout and order-processing service on Amazon RDS instead of migrating everything to DynamoDB?</label>
+              <label for="case-dropdown-2" class="font-bold text-slate-800">2. Why did ignoring AWS Trusted Advisor's warnings about database storage and missing read replicas contribute directly to the outage?</label>
               <select id="case-dropdown-2" onchange="evaluateCaseChoice(2)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">That workload genuinely needed strict relational integrity for tracking inventory counts and financial transactions accurately</option>
-                <option value="B">DynamoDB cannot be used for any part of an e-commerce platform</option>
-                <option value="C">RDS is always cheaper than DynamoDB for every workload</option>
+                <option value="A">Trusted Advisor had already flagged the exact reliability and capacity risks that later caused the collapse, giving the team advance warning they failed to act on</option>
+                <option value="B">Trusted Advisor warnings are only informational and have no connection to actual system reliability</option>
+                <option value="C">Read replicas would have had no effect on database performance during a traffic spike</option>
               </select>
               <p id="case-feedback-2" class="hidden mt-1 font-bold"></p>
             </div>
 
             <div class="space-y-1.5 border-t pt-3">
-              <label for="case-dropdown-3" class="font-bold text-slate-800">3. What role did DynamoDB's scalable throughput capacity play in absorbing the 40x traffic spike without manual intervention?</label>
+              <label for="case-dropdown-3" class="font-bold text-slate-800">3. Why does moving static assets onto S3 and CloudFront improve both Performance Efficiency and Reliability at the same time?</label>
               <select id="case-dropdown-3" onchange="evaluateCaseChoice(3)" class="w-full sm:w-auto p-2 rounded border border-slate-300">
                 <option value="">Select your diagnostic answer...</option>
-                <option value="A">It allowed the table's read and write capacity to automatically absorb the sudden surge without an engineer manually resizing anything mid-sale</option>
-                <option value="B">It required the engineering team to manually double the server size the moment the sale began</option>
-                <option value="C">It had no effect on performance during the sale</option>
+                <option value="A">It offloads disk I/O and bandwidth away from the application server (improving performance) while removing a dependency that could otherwise fail alongside the app server (improving reliability)</option>
+                <option value="B">S3 and CloudFront only affect billing costs and have no impact on performance or reliability</option>
+                <option value="C">Static assets must always stay on the same server as the application for the site to load correctly</option>
               </select>
               <p id="case-feedback-3" class="hidden mt-1 font-bold"></p>
             </div>
@@ -461,38 +455,38 @@
             <p><strong>Correct answers:</strong> 1-A, 2-A, 3-A.</p>
             <p><strong>Model Solution Checklist (Grading Rubric):</strong></p>
             <ul class="list-disc pl-4 space-y-1">
-              <li><strong>Access Pattern Recognition:</strong> Student correctly identifies that simple "get by ID" lookups match a key-value access pattern, and explains why that pattern fits NoSQL better than a relational join-heavy structure.</li>
-              <li><strong>Hybrid Architecture Reasoning:</strong> Student explains why the checkout/order-processing workload's need for relational integrity justified keeping it on RDS, rather than assuming one database type is universally superior.</li>
-              <li><strong>Throughput Scaling Understanding:</strong> Student explains how DynamoDB's scalable capacity absorbed the sudden traffic spike without requiring manual server resizing mid-event.</li>
-              <li><strong>Root Cause Awareness:</strong> Student connects the original outage to the relational database's fixed connection pool and disk-bound performance under sudden, unpredictable load.</li>
-              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., key-value, relational integrity, throughput capacity, schema).</li>
+              <li><strong>Root Cause Identification:</strong> Student correctly identifies local-RAM session storage on a single instance as the Reliability failure that destroyed shopping cart data, rather than blaming the choice of EC2 or database engine broadly.</li>
+              <li><strong>Proactive Monitoring Awareness:</strong> Student explains that Trusted Advisor had already surfaced the exact risks (storage capacity, missing read replicas) that later caused the outage, illustrating the cost of ignoring automated warnings.</li>
+              <li><strong>Dual-Pillar Reasoning:</strong> Student explains how offloading static assets to S3/CloudFront simultaneously improves Performance Efficiency (reduced I/O and bandwidth load) and Reliability (removes a coupled point of failure).</li>
+              <li><strong>Continuous Architecture Mindset:</strong> Student recognizes the organizational lesson — treating architecture review as ongoing rather than a one-time build — as central to preventing a repeat incident.</li>
+              <li><strong>Vocabulary Accuracy:</strong> Student uses appropriate professional technical terminology throughout their answers (e.g., single point of failure, Multi-AZ, Auto Scaling Group, read replica).</li>
             </ul>
           </div>
         </div>
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 7: LESSON 9 STUDY COMPANION (LINK PLACEHOLDER) -->
+      <!-- TAB 7: LESSON 11 STUDY COMPANION (LINK PLACEHOLDER) -->
       <!-- ============================================================ -->
       <section id="panel-studycompanion" role="tabpanel" aria-labelledby="tab-studycompanion" class="tab-content hidden space-y-6">
         <div class="border-b border-slate-200 pb-4">
-          <h2 class="text-2xl font-black text-slate-900">Lesson 9 Study Companion</h2>
-          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 9 relational, NoSQL, and data warehousing material.</p>
+          <h2 class="text-2xl font-black text-slate-900">Lesson 11 Study Companion</h2>
+          <p class="text-slate-500 text-sm mt-1">Interactive review companion covering Day 11 Well-Architected Framework and resilience material.</p>
         </div>
 
         <div class="text-center py-12 max-w-xl mx-auto space-y-6">
           <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📚</div>
           <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">Lesson 9: Databases &mdash; Relational, NoSQL &amp; Data Warehousing</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Lesson 11: Cloud Architecture &amp; The AWS Well-Architected Framework</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Review key terms, database-selection scenario practice, and a database-type sorting game tailored to reinforce Day 9 material.
+              Review key terms, pillar-matching scenario practice, and an HA-versus-FT sorting game tailored to reinforce Day 11 material.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
             <span class="text-emerald-600">Study companion is live and ready for review.</span>
           </div>
-          <a href="Lesson_9_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Lesson_11_study_companion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Study Companion</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -513,14 +507,14 @@
           <div class="space-y-2">
             <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Mock Assessment</h3>
             <p class="text-xs text-slate-500 leading-relaxed">
-              Test your proficiency in Relational vs. NoSQL databases, RDS, Amazon Aurora, DynamoDB, Amazon Redshift, Key-Value access, Provisioned Throughput, and Data Warehousing.
+              Test your proficiency in the Well-Architected Framework's six pillars, High Availability, Fault Tolerance, RTO, RPO, and AWS Trusted Advisor.
             </p>
           </div>
           <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
             <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
-            <span class="text-emerald-600">Day 9 mock quiz is live and ready to take.</span>
+            <span class="text-emerald-600">Day 11 mock quiz is live and ready to take.</span>
           </div>
-          <a href="Day9_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <a href="Day11_quiz.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
             <span>Launch Certification Exam Simulator</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -594,76 +588,84 @@
        ========================================================== */
     const cardData = [
       {
-        term: "Relational",
-        definition: "A database model that organizes data into structured tables with predefined columns, where relationships between tables are enforced through keys, and complex queries can join multiple tables together.",
-        analogy: "The traditional library card catalog, where every book record follows the exact same structured form and relates to other records through cross-referenced fields.",
-        scenario: "A technician designs a relational schema for an order-processing system so customer, order, and inventory tables can be joined together with guaranteed data integrity.",
-        quiz: "What enforces relationships between different tables in a relational database?",
-        answer: "Keys (such as primary and foreign keys) enforce and define the relationships between different tables."
+        term: "Well-Architected Framework",
+        definition: "AWS's formal guide, developed by reviewing thousands of real-world architectures, providing a consistent approach to evaluate cloud systems across six core pillars.",
+        analogy: "The complete restaurant management standard balancing hygiene, kitchen prep, fulfillment speed, pricing, equipment reliability, and food waste all at once.",
+        scenario: "A cloud architect runs a Well-Architected Review against a client's application before launch to catch weak pillars before they cause an outage.",
+        quiz: "How many core pillars make up the AWS Well-Architected Framework?",
+        answer: "Six: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability."
       },
       {
-        term: "NoSQL",
-        definition: "A category of non-relational databases designed for flexible, schema-less data storage, optimized for fast reads and writes at massive scale rather than complex multi-table joins.",
-        analogy: "A flexible storage system of labeled tote bins, where each bin can hold a completely different mix of items with no fixed form required.",
-        scenario: "A developer chooses a NoSQL database for a product catalog because each item's attributes vary widely and the workload is dominated by simple, fast lookups.",
-        quiz: "Does a NoSQL database require every record to follow the exact same fixed schema?",
-        answer: "No. NoSQL databases are generally schema-flexible, allowing different records to have different structures."
+        term: "Operational Excellence",
+        definition: "The Well-Architected pillar focused on running and monitoring systems to deliver business value, treating operations as code, and continually improving processes based on lessons learned from failures.",
+        analogy: "Automating kitchen prep checklists and logging every recipe change, instead of relying on memory and manual steps that can fail silently.",
+        scenario: "A DevOps engineer automates deployments through a pipeline instead of manually SSH-ing into production servers to replace files.",
+        quiz: "What does 'performing operations as code' mean under the Operational Excellence pillar?",
+        answer: "Automating deployments, changes, and monitoring through code and pipelines rather than manual, ad-hoc administrative steps."
       },
       {
-        term: "RDS",
-        definition: "Amazon Relational Database Service: a managed service that handles the setup, patching, and automated backups of relational database engines like MySQL, PostgreSQL, or SQL Server.",
-        analogy: "A professionally managed library service that handles all the shelving, cataloging upkeep, and backup photocopying of the catalog for you.",
-        scenario: "A technician launches an RDS instance and enables automated daily backups, so the database can be restored to any point within the retention window.",
-        quiz: "What administrative burden does RDS remove from a database administrator?",
-        answer: "RDS automates tasks like patching, backups, and infrastructure management that would otherwise require manual administration."
+        term: "Security (Well-Architected Pillar)",
+        definition: "The Well-Architected pillar focused on protecting data, systems, and assets through risk assessment and mitigation strategies, including least privilege access and encryption.",
+        analogy: "Food hygiene standards and locked storage rooms that keep both customers and inventory safe.",
+        scenario: "An architect applies the Principle of Least Privilege to a new microservice's IAM Role, granting only the exact permissions it needs.",
+        quiz: "What two key practices define the Security pillar mentioned in this lesson?",
+        answer: "Applying the Principle of Least Privilege and encrypting data both at rest and in transit."
       },
       {
-        term: "DynamoDB",
-        definition: "Amazon's fully managed NoSQL key-value and document database, designed for consistent, single-digit millisecond performance at any scale.",
-        analogy: "A high-speed, single-item lockbox retrieval system — hand over a claim ticket, and staff instantly return the correct sealed bin.",
-        scenario: "An engineering team migrates a catalog lookup service to DynamoDB so it can absorb sudden, unpredictable traffic spikes without manual server resizing.",
-        quiz: "What kind of query pattern is DynamoDB best suited for?",
-        answer: "Simple, fast lookups by a known key (a key-value access pattern), rather than complex multi-table relational joins."
+        term: "Reliability",
+        definition: "The Well-Architected pillar describing a workload's ability to perform its intended function correctly and consistently, including automatically recovering from failure and scaling horizontally.",
+        analogy: "Multiple cooking lines so if one line cook steps away, dinner service never actually halts.",
+        scenario: "An architect distributes an application across multiple Availability Zones so a single facility failure doesn't take the whole system offline.",
+        quiz: "What does 'scaling horizontally' mean in the context of Reliability?",
+        answer: "Adding more instances side-by-side to share the load, rather than relying on one single, larger machine."
       },
       {
-        term: "Amazon Aurora",
-        definition: "A MySQL- and PostgreSQL-compatible relational database engine built by AWS for higher performance and availability, automatically replicating data across multiple Availability Zones.",
-        analogy: "An upgraded managed library service that automatically keeps duplicate copies across several branch locations, so one branch closing doesn't interrupt service.",
-        scenario: "A company migrates its production database to Aurora to gain automatic multi-AZ replication and faster failover than a standard RDS engine alone provides.",
-        quiz: "What key availability advantage does Aurora typically offer over a standard single-AZ relational setup?",
-        answer: "Aurora automatically replicates data across multiple Availability Zones, providing higher availability and faster failover."
+        term: "Performance Efficiency",
+        definition: "The Well-Architected pillar focused on using computing resources efficiently to meet requirements as demand changes and technology evolves, including choosing serverless options and caching where appropriate.",
+        analogy: "Choosing the fastest, most appropriate kitchen tool for each dish instead of using one oversized oven for everything.",
+        scenario: "An architect replaces an oversized, always-on database server with a serverless DynamoDB table that scales automatically with demand.",
+        quiz: "What does the Performance Efficiency pillar encourage regarding placing content near users?",
+        answer: "Using Edge Locations and CloudFront CDNs to place assets physically closer to end users for faster delivery."
       },
       {
-        term: "Amazon Redshift",
-        definition: "AWS's fully managed data warehouse service, optimized for running large-scale analytical queries across massive historical datasets rather than everyday transactional lookups.",
-        analogy: "A dedicated research annex built for scholars running big historical analysis projects, scanning millions of records at once for patterns.",
-        scenario: "A data analyst loads years of sales data into Redshift to run a company-wide trend analysis across every region and product line at once.",
-        quiz: "Is Amazon Redshift designed for quick single-record lookups, or large-scale historical analysis?",
-        answer: "Large-scale historical analysis. Redshift is a data warehouse optimized for complex analytical queries across massive datasets, not fast single-record retrieval."
+        term: "Cost Optimization",
+        definition: "The Well-Architected pillar focused on running systems to deliver maximum business value at the lowest price point, by adopting a consumption model and eliminating unattached or idle resources.",
+        analogy: "Watching pricing margins and cutting food waste so the restaurant stays profitable without sacrificing quality.",
+        scenario: "An administrator terminates dozens of unattached EBS volumes and idle EC2 instances that were quietly running unused over a long weekend.",
+        quiz: "What is a common Cost Optimization mistake mentioned in this lesson?",
+        answer: "Leaving unattached storage volumes or oversized instances running idle, quietly increasing the monthly bill for no business benefit."
       },
       {
-        term: "Key-Value",
-        definition: "A simple data access pattern where each unique key maps directly to one stored value or item, enabling extremely fast lookups without needing to search or join other data.",
-        analogy: "The claim-ticket-to-bin retrieval model itself — one unique ticket number always maps to exactly one bin of contents.",
-        scenario: "A developer designs a session-storage system around key-value access, using each user's session ID as the key to instantly retrieve their session data.",
-        quiz: "What makes a key-value lookup so fast compared to a relational join?",
-        answer: "A key-value lookup retrieves a single item directly by its unique key, without needing to search across or join multiple tables."
+        term: "Sustainability",
+        definition: "The newest Well-Architected pillar, focused on minimizing the environmental impact of running cloud workloads through maximum resource utilization and efficient data lifecycle management.",
+        analogy: "Reducing food waste and running fewer, more efficient ovens rather than many half-empty ones.",
+        scenario: "An architect uses S3 lifecycle rules to move rarely-accessed cold data into low-energy archival storage like Glacier, reducing the environmental footprint.",
+        quiz: "How does right-sizing resources support the Sustainability pillar?",
+        answer: "Running fewer, more highly-utilized instances instead of many idle ones reduces wasted energy consumption."
       },
       {
-        term: "Provisioned Throughput",
-        definition: "A capacity setting (used in services like DynamoDB) that defines how many read and write operations per second a table can handle, which can be manually set or automatically scaled.",
-        analogy: "The number of front-desk staff pre-scheduled at the lockbox counter — enough staff and requests are served instantly; understaff it and a line forms.",
-        scenario: "A technician configures a DynamoDB table's provisioned throughput to automatically scale up during a scheduled flash sale event and back down afterward.",
-        quiz: "What happens if a table's provisioned throughput is set too low for the actual traffic it receives?",
-        answer: "Requests can be throttled or delayed, since the table cannot process more read/write operations per second than its provisioned capacity allows."
+        term: "High Availability (HA)",
+        definition: "A design goal where a system remains operational and accessible with minimal downtime, typically allowing brief failover pauses, achieved cost-effectively without full hardware redundancy.",
+        analogy: "A standby aircraft parked at the next gate — passengers transfer with a short delay, but the flight still reaches its destination.",
+        scenario: "An architect configures an Elastic Load Balancer to redirect traffic to a healthy instance in Zone B if the instance in Zone A fails, accepting a brief page refresh.",
+        quiz: "Does High Availability guarantee zero downtime with no interruption at all?",
+        answer: "No. HA permits brief failover pauses or delays, unlike Fault Tolerance, which aims for zero downtime and zero state loss."
       },
       {
-        term: "Data Warehouse",
-        definition: "A centralized repository that consolidates large volumes of historical data from multiple sources, structured specifically to support large-scale reporting and analytical queries.",
-        analogy: "The research annex's master historical archive, combining records from many branches into one consolidated collection built for large-scale analysis.",
-        scenario: "A company loads data from its sales, marketing, and support systems into a single Redshift data warehouse to build a unified company-wide performance dashboard.",
-        quiz: "Is a data warehouse typically optimized for fast day-to-day transactions, or for large-scale historical analysis?",
-        answer: "Large-scale historical analysis. A data warehouse is built to support complex reporting and analytics across consolidated historical data, not fast individual transactions."
+        term: "Fault Tolerance (FT)",
+        definition: "A design goal where a system is built with full hardware redundancy so that if a component fails, the system continues functioning with zero downtime and zero loss of operational state — at significantly higher cost than HA.",
+        analogy: "Redundant flight computers and multiple jet engines — if one engine fails mid-flight, the aircraft doesn't lose altitude or power at all.",
+        scenario: "A hospital's life-support monitoring network is built with full active-active redundant hardware, since even a momentary interruption is unacceptable.",
+        quiz: "Why is Fault Tolerance significantly more expensive to implement than High Availability?",
+        answer: "Fault Tolerance requires complete duplicate, synchronized hardware running in parallel at all times, rather than simply redirecting traffic after a brief failure."
+      },
+      {
+        term: "RTO & RPO",
+        definition: "Recovery Time Objective (RTO): the maximum acceptable downtime after a failure. Recovery Point Objective (RPO): the maximum acceptable amount of data loss, measured in time, since the last clean backup.",
+        analogy: "RTO is the manager's target to reopen a flooded dining room within 15 minutes; RPO is the carbon-copy ticket pad that limits data loss to just the last five minutes of orders.",
+        scenario: "A company sets an RPO of 5 minutes, requiring continuous database replication, and an RTO of 30 seconds, requiring an active-active Multi-Site disaster recovery strategy.",
+        quiz: "Which DR strategy — Backup & Restore or Multi-Site Active-Active — offers the lowest RTO and RPO, and at what tradeoff?",
+        answer: "Multi-Site Active-Active offers near-zero RTO and RPO, but at significantly higher cost than the cheaper, slower Backup & Restore strategy."
       }
     ];
 
@@ -759,6 +761,24 @@
     renderFlashcardUI();
 
     /* ==========================================================
+       THINK-PAIR-SHARE INSTRUCTOR VIEW TOGGLE
+       ========================================================== */
+    function toggleThinkPairShare() {
+      const details = document.getElementById('think-pair-share-details');
+      const arrow = document.getElementById('tps-arrow');
+      const btn = details.previousElementSibling;
+      if (details.classList.contains('hidden')) {
+        details.classList.remove('hidden');
+        arrow.innerHTML = "&uarr;";
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        details.classList.add('hidden');
+        arrow.innerHTML = "&darr;";
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    /* ==========================================================
        CASE STUDY LOGIC
        ========================================================== */
     function evaluateCaseChoice(qNum) {
@@ -768,26 +788,26 @@
 
       if (qNum === 1) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Nearly every request was a simple 'get one product by ID' lookup — a textbook key-value access pattern, not a job requiring complex relational joins.";
+          feedback.textContent = "Correct! Writing session data only to one instance's local RAM created a single point of failure, a direct Reliability pillar violation that destroyed the shopping carts on restart.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Reread the second paragraph and consider what the catalog service's actual query pattern looked like.";
+          feedback.textContent = "Incorrect. Reread the first paragraph and focus on exactly where session data was being stored.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 2) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Checkout and order processing genuinely needed strict relational integrity for inventory and financial transaction accuracy, which is a strength of RDS.";
+          feedback.textContent = "Correct! Trusted Advisor had already flagged the storage capacity and missing read replica risks well before the outage occurred.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider what specific requirement made the checkout workload still a good fit for a relational database.";
+          feedback.textContent = "Incorrect. Reread the second paragraph and consider what Trusted Advisor had already warned the team about.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       } else if (qNum === 3) {
         if (drop.value === 'A') {
-          feedback.textContent = "Correct! Scalable provisioned throughput let the table automatically absorb the sudden 40x surge without any engineer manually resizing anything during the sale.";
+          feedback.textContent = "Correct! Offloading static assets reduces load on the app server (Performance Efficiency) while removing a shared point of failure (Reliability) at the same time.";
           feedback.className = "text-xs mt-1 text-emerald-700 font-bold";
         } else {
-          feedback.textContent = "Incorrect. Consider what happens automatically to a DynamoDB table's capacity when it's configured to scale with demand.";
+          feedback.textContent = "Incorrect. Consider how removing static asset handling from the application server affects both speed and failure risk.";
           feedback.className = "text-xs mt-1 text-rose-700 font-bold";
         }
       }
