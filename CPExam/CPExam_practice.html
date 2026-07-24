@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITNW 1009: AWS CLF-C02 Practice Exam (65 Questions)</title>
+  <!-- Tailwind CSS CDN (layout/spacing utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+  <link rel="stylesheet" href="itnw1009-theme.css">
+  <style>
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+    .active-pulse {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+
+    /* Quiz-specific radio / checkbox indicators (CSS-only, no icon font needed) */
+    .qz-indicator {
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+      border: 2px solid var(--color-border-strong);
+      background: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 900;
+      color: transparent;
+      transition: all 0.15s ease;
+    }
+    .qz-indicator.qz-radio { border-radius: 9999px; }
+    .qz-indicator.qz-checkbox { border-radius: 0.3rem; }
+
+    .qz-indicator.qz-selected {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+    .qz-indicator.qz-correct {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: #fff;
+    }
+    .qz-indicator.qz-incorrect {
+      background: var(--color-rose);
+      border-color: var(--color-rose);
+      color: #fff;
+    }
+    .qz-indicator.qz-muted {
+      border-color: var(--color-border);
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- ACCESSIBILITY SKIP NAVIGATION LINK -->
+  <a href="#main-portal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-4 focus:rounded-lg focus:shadow-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ARIA LIVE ANNOUNCER REGION FOR SCREEN READERS -->
+  <div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Courseware Top Navigation Bar -->
+  <header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+          <!-- Inline Graduation Cap Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.42A12.083 12.083 0 0118 18.72a12.083 12.083 0 01-12 0 12.083 12.083 0 01.84-8.14L12 14z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">AWS Certified Cloud Practitioner: Full Practice Exam</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Interactive Mode Status Badge -->
+        <span id="nav-mode-badge" class="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span>
+          Study Mode Enabled
+        </span>
+
+        <!-- Sound Toggle Button -->
+        <button id="sound-toggle" class="p-2 rounded-lg text-indigo-300 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" aria-label="Toggle Sound Effects">
+          <span id="sound-icon" class="text-lg" aria-hidden="true">&#128266;</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8" id="main-portal">
+    
+    <!-- Sidebar / Lesson Outline Navigator -->
+    <aside class="w-full lg:w-80 shrink-0 flex flex-col gap-6">
+      
+      <!-- Instructor Welcome & Progress Card -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm transition-all duration-300">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+            PF
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-900">Professor's Sandbox</h4>
+            <p class="text-xs text-slate-500">CLF-C02 Full Practice Exam</p>
+          </div>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-600 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+          "Welcome back! This 65-question diagnostic spans all four official AWS Certified Cloud Practitioner domains: <strong>Cloud Concepts</strong>, <strong>Security &amp; Compliance</strong>, <strong>Cloud Technology &amp; Services</strong>, and <strong>Billing, Pricing &amp; Support</strong>. Toggle between <strong>Study Mode</strong> (with immediate explanations) or <strong>Exam Mode</strong> to lock in your score."
+        </p>
+
+        <!-- Dynamic Score Progress Indicators -->
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-500">Total Completion</span>
+              <span id="progress-percent" class="text-indigo-600">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Correct</div>
+              <div id="score-correct" class="text-lg font-black text-emerald-600">0</div>
+            </div>
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Wrong</div>
+              <div id="score-wrong" class="text-lg font-black text-rose-500">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode Selection Widget -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
+          Settings &amp; Modes
+        </h3>
+        <div class="space-y-3">
+          <!-- Toggle button between study and exam modes -->
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-semibold text-slate-700">Choose Quiz Environment</label>
+            <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
+              <button id="btn-mode-study" class="py-2 text-xs font-bold rounded-lg transition-all duration-200 bg-white shadow text-indigo-600" onclick="changeMode('study')">
+                Study Mode
+              </button>
+              <button id="btn-mode-exam" class="py-2 text-xs font-bold rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-800" onclick="changeMode('exam')">
+                Exam Mode
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question List Matrix -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex-grow">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center justify-between">
+          <span>Question Navigation</span>
+          <span class="text-[10px] text-indigo-500 font-mono" id="nav-counter">1/65</span>
+        </h3>
+        <div class="grid grid-cols-5 gap-2" id="navigation-matrix">
+          <!-- Dynamically populated numbers of question maps -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Quiz Content Portal Workspace Panel -->
+    <section class="flex-grow flex flex-col gap-6" id="workspace-panel">
+      
+      <!-- Active Question Canvas Card -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex-grow flex flex-col justify-between relative transition-all duration-300" id="quiz-card">
+        
+        <!-- Welcome Splash / Quiz Intro Screen (Hidden once quiz starts) -->
+        <div id="intro-screen" class="absolute inset-0 bg-white z-10 flex flex-col justify-center items-center text-center p-8 rounded-2xl">
+          <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-3xl mb-4 active-pulse">
+            &#9889;
+          </div>
+          <h2 class="text-2xl font-black text-slate-900 mb-2">AWS CLF-C02 Full Practice Exam</h2>
+          <p class="text-sm text-slate-500 max-w-md mb-6 leading-relaxed">
+            65 questions spanning all four official exam domains: <strong>Cloud Concepts</strong>, <strong>Security &amp; Compliance</strong>, <strong>Cloud Technology &amp; Services</strong>, and <strong>Billing, Pricing &amp; Support</strong>.
+          </p>
+          
+          <div class="flex flex-wrap justify-center gap-3 mb-6 max-w-lg">
+            <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 font-semibold">65 Real Exam Patterns</span>
+            <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 font-semibold">4 Official Domains</span>
+            <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 font-semibold">Real-time Explanations</span>
+          </div>
+
+          <button onclick="startQuiz()" class="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl transition duration-200 shadow-lg shadow-indigo-500/20 text-sm">
+            Begin Practice Exam &rarr;
+          </button>
+        </div>
+
+        <!-- Realtime Question Card Panel -->
+        <div class="space-y-6 flex-grow">
+          
+          <!-- Question Category Tag & Types Header -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
+            <div class="flex items-center space-x-2">
+              <span id="question-index-badge" class="px-3 py-1 text-xs font-black rounded-lg bg-indigo-100 text-indigo-800 font-mono">QUESTION 01</span>
+              <span id="question-type-badge" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-slate-600 border border-slate-200 font-mono uppercase">Multiple Choice</span>
+            </div>
+            
+            <div class="flex items-center space-x-1.5 text-xs text-slate-400">
+              
+              <span id="course-domain">AWS CLF-C02 Domain 1: Cloud Concepts</span>
+            </div>
+          </div>
+
+          <!-- Question Prompt Title -->
+          <div class="space-y-2">
+            <h2 id="question-prompt" class="text-base sm:text-xl font-extrabold text-slate-900 leading-snug">
+              Loading Question prompt...
+            </h2>
+          </div>
+
+          <!-- Interactive Choice Options Area -->
+          <div id="options-container" class="space-y-3.5 pt-2">
+            <!-- Dynamically Populated with Interactive Option Cards -->
+          </div>
+        </div>
+
+        <!-- Interactive Explanation/Feedback Drawer (Hidden initially, animated on check) -->
+        <div id="explanation-drawer" class="hidden mt-6 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all duration-300">
+          <div class="p-4 sm:p-5 flex gap-4">
+            <div id="explanation-icon-box" class="w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+              <span id="explanation-icon" aria-hidden="true"></span>
+            </div>
+            <div class="space-y-2">
+              <h4 id="explanation-title" class="text-sm font-black uppercase tracking-wider">CORRECT EXPLANATION</h4>
+              <p id="explanation-text" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Detail reasoning goes here...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workspace Controls Footer (Next/Check buttons) -->
+        <div class="flex items-center justify-between gap-4 mt-8 border-t border-slate-100 pt-5">
+          <button id="btn-prev" onclick="navigateQuestion(-1)" class="px-4 py-2.5 text-xs font-extrabold text-slate-500 hover:text-slate-800 transition-all duration-150 rounded-lg flex items-center gap-2" disabled>
+            &larr; Back
+          </button>
+
+          <div class="flex items-center gap-3">
+            <button id="btn-check" onclick="checkSelectedAnswers()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-lg transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 flex items-center gap-1.5">
+              Submit Answer
+            </button>
+            <button id="btn-next" onclick="navigateQuestion(1)" class="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-black rounded-lg transition-all duration-200 border border-slate-200 flex items-center gap-1.5 hidden">
+              Next Question &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Evaluation Report Summary Screen (Initially Hidden) -->
+      <div id="results-screen" class="hidden bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col gap-8 transition-all duration-300">
+        
+        <!-- Results Hub Dashboard Hero -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-slate-50 p-6 rounded-2xl border border-slate-100">
+          <div class="text-center md:text-left space-y-1">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Diagnostic Complete</span>
+            <h2 class="text-2xl font-black text-slate-900 leading-tight">Your Score Report</h2>
+            <p class="text-xs text-slate-500">AWS Certified Cloud Practitioner — CLF-C02 Full Practice Exam</p>
+          </div>
+
+          <!-- Speedometer Gauge Circular Indicator -->
+          <div class="flex justify-center my-2">
+            <div class="relative w-36 h-36 flex items-center justify-center rounded-full bg-slate-100 border border-slate-200 shadow-inner">
+              <div class="text-center">
+                <div id="radial-score" class="text-3xl font-black text-slate-950">0%</div>
+                <div id="radial-fraction" class="text-xs text-slate-400 font-mono">0 / 10</div>
+              </div>
+              <svg class="absolute top-0 left-0 w-full h-full -rotate-90">
+                <circle cx="72" cy="72" r="66" stroke="currentColor" class="text-slate-200" stroke-width="6" fill="transparent"/>
+                <circle cx="72" cy="72" r="66" stroke="currentColor" id="radial-progress-circle" class="text-indigo-600 transition-all duration-1000" stroke-width="6" stroke-dasharray="414.69" stroke-dashoffset="414.69" stroke-linecap="round" fill="transparent"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Certification Readiness Rating -->
+          <div class="text-center md:text-left space-y-3">
+            <div class="inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase" id="badge-certificate-status">
+              Review Needed
+            </div>
+            <p id="feedback-message" class="text-xs text-slate-600 leading-relaxed">
+              We highly recommend reviewing the Lecture Slides and Flashcards for your weakest domain below. Try again to push above the 80% passing threshold!
+            </p>
+          </div>
+        </div>
+
+        <!-- Competency Area Strengths Breakdown -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-black text-slate-900 flex items-center gap-2">
+            Competency Map Insights
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Domain 1: Cloud Concepts</span>
+                <span id="domain-concepts-score" class="text-indigo-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-concepts-bar" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Domain 2: Security &amp; Compliance</span>
+                <span id="domain-security-score" class="text-blue-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-security-bar" class="bg-blue-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Domain 3: Cloud Technology &amp; Services</span>
+                <span id="domain-tech-score" class="text-teal-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-tech-bar" class="bg-teal-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="border border-slate-100 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-600">Domain 4: Billing, Pricing &amp; Support</span>
+                <span id="domain-billing-score" class="text-amber-500">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="domain-billing-bar" class="bg-amber-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review Detailed Questions Answers Grid list -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-black text-slate-900 flex items-center justify-between">
+            <span>Question-by-Question Evaluation Audit</span>
+            <button onclick="toggleDetailsSummary()" id="btn-toggle-summary" class="text-xs text-indigo-500 hover:underline">Expand All</button>
+          </h3>
+          <div class="space-y-3" id="results-detail-list">
+            <!-- Dynamic compilation evaluation items populate here -->
+          </div>
+        </div>
+
+        <!-- Navigation Action controls -->
+        <div class="border-t border-slate-100 pt-6 flex justify-end gap-3">
+          <button onclick="resetAndRestartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-lg transition shadow-md shadow-indigo-500/20">
+            &#8635; Try Quiz Again
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+      <div class="flex justify-center space-x-4 text-xs font-medium text-slate-400">
+        <span>WCAG 2.1 AA Compliant</span>
+        <span>•</span>
+        <span>CLF-C02 Alignment</span>
+        <span>•</span>
+        <span>65-Question Full Practice Exam</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Audio Synthesis Manager (Uses Web Audio API to construct custom game sounds, zero external assets)
+    const AudioEngine = {
+      enabled: true,
+      context: null,
+      init() {
+        try {
+          this.context = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) {
+          console.warn('Audio Synthesis not supported in this environment');
+        }
+      },
+      playTone(freq, type, duration, vol) {
+        if (!this.enabled || !this.context) return;
+        try {
+          if (this.context.state === 'suspended') {
+            this.context.resume();
+          }
+          let osc = this.context.createOscillator();
+          let gain = this.context.createGain();
+          osc.connect(gain);
+          gain.connect(this.context.destination);
+          
+          osc.type = type || 'sine';
+          osc.frequency.setValueAtTime(freq, this.context.currentTime);
+          
+          gain.gain.setValueAtTime(vol || 0.1, this.context.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.context.currentTime + duration);
+          
+          osc.start();
+          osc.stop(this.context.currentTime + duration);
+        } catch (e) {}
+      },
+      correct() {
+        this.playTone(523.25, 'triangle', 0.15, 0.12); // C5
+        setTimeout(() => this.playTone(659.25, 'triangle', 0.25, 0.12), 100); // E5
+      },
+      incorrect() {
+        this.playTone(220, 'sawtooth', 0.25, 0.08); // A3
+        setTimeout(() => this.playTone(185, 'sawtooth', 0.35, 0.08), 80); // F#3
+      },
+      tap() {
+        this.playTone(330, 'sine', 0.08, 0.05); // E4
+      },
+      complete() {
+        const tones = [523.25, 659.25, 783.99, 1046.5]; // C chord arpeggio
+        tones.forEach((tone, idx) => {
+          setTimeout(() => this.playTone(tone, 'triangle', 0.4, 0.1), idx * 100);
+        });
+      }
+    };
+
+    // AWS CLF-C02 Master Practice Exam Question Database (65 Questions, All 4 Domains)
+    const QUIZ_QUESTIONS = [
+      {
+        id: 1,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which combination of characteristics is part of the NIST definition of cloud computing?",
+        options: [
+          { text: "On-Demand Self-Service, Broad Network Access, Resource Pooling, Rapid Elasticity, and Measured Service", key: "A" },
+          { text: "Fixed Provisioning, Narrow Network Access, Single Tenancy, Manual Scaling, and Flat-Rate Billing", key: "B" },
+          { text: "CapEx-only Billing, Physical Racking, and Manual Failover", key: "C" },
+          { text: "Only Rapid Elasticity and Measured Service", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "NIST's Five Characteristics",
+          correct: "Correct! The five NIST-defined characteristics are On-Demand Self-Service, Broad Network Access, Resource Pooling, Rapid Elasticity, and Measured Service — all five together define cloud computing.",
+          incorrect: "Incorrect. Option B describes a traditional on-premises model, and Options C and D are incomplete or contradict cloud characteristics entirely."
+        }
+      },
+      {
+        id: 2,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A company currently spends millions of dollars purchasing physical servers years before they are needed. What cloud value proposition directly addresses this problem?",
+        options: [
+          { text: "Trading CapEx for OpEx", key: "A" },
+          { text: "Increasing speed of innovation", key: "B" },
+          { text: "Going global in minutes", key: "C" },
+          { text: "Stopping guessing capacity", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "CapEx to OpEx",
+          correct: "Correct! Replacing large upfront capital purchases (CapEx) with variable, pay-as-you-go operational spending (OpEx) is the value proposition that directly targets this scenario.",
+          incorrect: "Incorrect. While 'stop guessing capacity' is related, the scenario specifically describes upfront purchasing behavior, which maps most directly to trading CapEx for OpEx. The other options describe unrelated value propositions like innovation speed and global reach."
+        }
+      },
+      {
+        id: 3,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A company purchased far more server hardware than it ever ended up needing. What problem does this describe?",
+        options: [
+          { text: "Under-provisioning", key: "A" },
+          { text: "Over-provisioning", key: "B" },
+          { text: "Rapid elasticity", key: "C" },
+          { text: "Measured service", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Over-Provisioning",
+          correct: "Correct! Over-provisioning describes purchasing more capacity than is actually needed, wasting budget on idle hardware.",
+          incorrect: "Incorrect. Under-provisioning is the opposite problem (too little capacity), and rapid elasticity and measured service are cloud characteristics, not the described problem."
+        }
+      },
+      {
+        id: 4,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which AWS infrastructure component consists of one or more discrete data centers with independent power and networking, used to build fault-tolerant applications?",
+        options: [
+          { text: "Region", key: "A" },
+          { text: "Edge Location", key: "B" },
+          { text: "Availability Zone", key: "C" },
+          { text: "Point of Presence", key: "D" },
+        ],
+        correct: ["C"],
+        explanation: {
+          title: "Availability Zones",
+          correct: "Correct! An Availability Zone is one or more discrete data centers with independent infrastructure, and deploying across multiple AZs is the core technique for building highly available applications.",
+          incorrect: "Incorrect. A Region is a larger geographic grouping of multiple AZs, and Edge Locations/Points of Presence are used for content caching, not for hosting fault-tolerant primary workloads."
+        }
+      },
+      {
+        id: 5,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A company must keep customer data physically stored within a specific country due to local law. What consideration is this?",
+        options: [
+          { text: "Latency", key: "A" },
+          { text: "Data Sovereignty", key: "B" },
+          { text: "Total Cost of Ownership", key: "C" },
+          { text: "Rapid Elasticity", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Data Sovereignty",
+          correct: "Correct! Data Sovereignty refers to legal requirements that data be stored and processed within specific geographic or national boundaries.",
+          incorrect: "Incorrect. Latency concerns speed of access, TCO concerns overall cost comparisons, and Rapid Elasticity concerns scaling — none address legal residency requirements for data."
+        }
+      },
+      {
+        id: 6,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which of the following is the PRIMARY benefit of deploying an application across multiple Availability Zones?",
+        options: [
+          { text: "Lower monthly billing", key: "A" },
+          { text: "Increased High Availability by removing a single point of failure", key: "B" },
+          { text: "Automatic currency conversion", key: "C" },
+          { text: "Unlimited free data transfer", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Multi-AZ for High Availability",
+          correct: "Correct! Spreading resources across multiple AZs removes a single point of failure, which is the primary driver of High Availability design.",
+          incorrect: "Incorrect. Multi-AZ deployments do not inherently lower billing, and they have nothing to do with currency conversion or free data transfer."
+        }
+      },
+      {
+        id: 7,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "How many pillars make up the AWS Well-Architected Framework?",
+        options: [
+          { text: "Four", key: "A" },
+          { text: "Five", key: "B" },
+          { text: "Six", key: "C" },
+          { text: "Eight", key: "D" },
+        ],
+        correct: ["C"],
+        explanation: {
+          title: "Six Pillars",
+          correct: "Correct! The Well-Architected Framework consists of six pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability.",
+          incorrect: "Incorrect. The framework specifically has six pillars, not four, five, or eight — Sustainability was added as the sixth pillar."
+        }
+      },
+      {
+        id: 8,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A system continues operating correctly with zero perceptible impact to users even after a server component fails. This describes:",
+        options: [
+          { text: "High Availability", key: "A" },
+          { text: "Fault Tolerance", key: "B" },
+          { text: "Elasticity", key: "C" },
+          { text: "Data Sovereignty", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Fault Tolerance vs. High Availability",
+          correct: "Correct! Fault Tolerance specifically means the system keeps functioning correctly through a failure with no noticeable disruption, a stronger guarantee than simple high availability.",
+          incorrect: "Incorrect. High Availability minimizes downtime but may still involve brief disruption; Elasticity concerns scaling, and Data Sovereignty concerns legal data residency, neither of which describe uninterrupted operation through failure."
+        }
+      },
+      {
+        id: 9,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A disaster recovery plan states the business can tolerate losing no more than 10 minutes of data. Which metric does this describe?",
+        options: [
+          { text: "RTO", key: "A" },
+          { text: "RPO", key: "B" },
+          { text: "TCO", key: "C" },
+          { text: "SLA", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Recovery Point Objective",
+          correct: "Correct! RPO (Recovery Point Objective) measures the maximum acceptable data loss, measured in time since the last successful backup.",
+          incorrect: "Incorrect. RTO measures downtime duration, not data loss; TCO measures overall cost; and SLA is a general service commitment document, not this specific data-loss metric."
+        }
+      },
+      {
+        id: 10,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which disaster recovery strategy keeps a scaled-down but fully functional copy of the environment always running in a second Region, ready to scale up quickly?",
+        options: [
+          { text: "Backup and Restore", key: "A" },
+          { text: "Pilot Light", key: "B" },
+          { text: "Warm Standby", key: "C" },
+          { text: "Multi-Site Active-Active", key: "D" },
+        ],
+        correct: ["C"],
+        explanation: {
+          title: "Warm Standby Strategy",
+          correct: "Correct! Warm Standby keeps a smaller-scale, fully functional version of the full environment always running, allowing it to be scaled up quickly during failover.",
+          incorrect: "Incorrect. Backup and Restore has no running environment at all until recovery begins; Pilot Light keeps only core services running; Multi-Site Active-Active runs full production capacity in both locations simultaneously, which is a heavier and costlier strategy than described."
+        }
+      },
+      {
+        id: 11,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which pillar of the Well-Architected Framework focuses on running and monitoring systems to deliver business value and continuously improve processes?",
+        options: [
+          { text: "Operational Excellence", key: "A" },
+          { text: "Performance Efficiency", key: "B" },
+          { text: "Cost Optimization", key: "C" },
+          { text: "Security", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Operational Excellence",
+          correct: "Correct! Operational Excellence focuses on running and monitoring systems, automating changes, and continuously improving processes and procedures.",
+          incorrect: "Incorrect. Performance Efficiency focuses on using resources efficiently, Cost Optimization on managing spend, and Security on protecting systems and data — none focus specifically on operational process improvement."
+        }
+      },
+      {
+        id: 12,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which pillar specifically addresses minimizing environmental impact from running cloud workloads?",
+        options: [
+          { text: "Reliability", key: "A" },
+          { text: "Sustainability", key: "B" },
+          { text: "Security", key: "C" },
+          { text: "Operational Excellence", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "The Sustainability Pillar",
+          correct: "Correct! Sustainability is the pillar focused on minimizing the environmental impacts of running cloud workloads, such as right-sizing resources to reduce energy waste.",
+          incorrect: "Incorrect. Reliability concerns recovering from failures, Security concerns protecting data and systems, and Operational Excellence concerns process improvement — none address environmental impact directly."
+        }
+      },
+      {
+        id: 13,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A company wants to expand its application to serve customers in Asia with minimal latency, without building any new physical data centers. Which cloud benefit does this represent?",
+        options: [
+          { text: "Going global in minutes", key: "A" },
+          { text: "Trading CapEx for OpEx", key: "B" },
+          { text: "Increasing speed and agility", key: "C" },
+          { text: "Stopping spending money on running data centers", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Going Global in Minutes",
+          correct: "Correct! AWS's global footprint of Regions lets companies deploy into new geographic markets within minutes rather than constructing physical infrastructure.",
+          incorrect: "Incorrect. This scenario is specifically about geographic expansion, not about spending models (CapEx/OpEx), general agility, or the elimination of maintenance costs, even though those are also valid cloud benefits."
+        }
+      },
+      {
+        id: 14,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which of the following is an example of Total Cost of Ownership (TCO) that is often overlooked when comparing on-premises to cloud hosting?",
+        options: [
+          { text: "Only the price of the server hardware", key: "A" },
+          { text: "Staffing, facilities, cooling, and maintenance costs", key: "B" },
+          { text: "The AWS monthly invoice total", key: "C" },
+          { text: "The price of a single software license", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Hidden TCO Costs",
+          correct: "Correct! TCO must include indirect costs such as staffing, real estate, cooling, and maintenance — not just the sticker price of hardware — to fairly compare on-premises versus cloud options.",
+          incorrect: "Incorrect. Options A, C, and D each represent only a single line-item cost, not the full, comprehensive picture that TCO analysis requires."
+        }
+      },
+      {
+        id: 15,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "Which term describes the delay between a user's action and the system's response, and is a key factor in choosing an AWS Region?",
+        options: [
+          { text: "Durability", key: "A" },
+          { text: "Latency", key: "B" },
+          { text: "Elasticity", key: "C" },
+          { text: "Throughput", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Latency",
+          correct: "Correct! Latency is the time delay between a request and its response, and choosing a nearby Region reduces this delay for end users.",
+          incorrect: "Incorrect. Durability concerns data loss protection, Elasticity concerns scaling, and Throughput concerns data volume over time — none describe response delay specifically."
+        }
+      },
+      {
+        id: 16,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 1: Cloud Concepts",
+        category: "concepts",
+        prompt: "A company wants to quickly test an idea, fail fast if it doesn't work, and move to the next idea without large upfront investment. Which cloud benefit supports this?",
+        options: [
+          { text: "Increased speed and agility", key: "A" },
+          { text: "Data Sovereignty", key: "B" },
+          { text: "Six Pillars of the Well-Architected Framework", key: "C" },
+          { text: "NACLs", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Speed and Agility",
+          correct: "Correct! The cloud's low upfront cost and rapid provisioning let teams experiment quickly and pivot without large capital risk, which is the increased speed and agility benefit.",
+          incorrect: "Incorrect. Data Sovereignty is a legal/compliance concept, the Well-Architected Framework is a design guide, and NACLs are a networking security control — none specifically describe rapid experimentation."
+        }
+      },
+      {
+        id: 17,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Under the AWS Shared Responsibility Model, who is responsible for patching the operating system on a customer's EC2 instance?",
+        options: [
+          { text: "AWS", key: "A" },
+          { text: "The customer", key: "B" },
+          { text: "Neither party", key: "C" },
+          { text: "AWS Support only", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Security IN the Cloud",
+          correct: "Correct! The customer is responsible for security IN the cloud, which includes guest operating system patching, application software, and configuration on EC2 instances.",
+          incorrect: "Incorrect. AWS is responsible for the physical infrastructure and hypervisor (security OF the cloud), not the customer's guest OS. Both 'neither party' and 'AWS Support only' are incorrect since responsibility clearly falls to the customer."
+        }
+      },
+      {
+        id: 18,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Under the Shared Responsibility Model, which of the following is always AWS's responsibility?",
+        options: [
+          { text: "Customer data encryption choices", key: "A" },
+          { text: "Physical security of data centers", key: "B" },
+          { text: "IAM user permissions", key: "C" },
+          { text: "Guest operating system configuration", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Security OF the Cloud",
+          correct: "Correct! AWS is always responsible for the physical security of its data centers and global infrastructure, which is security OF the cloud.",
+          incorrect: "Incorrect. Data encryption choices, IAM permissions, and guest OS configuration all fall under the customer's responsibility, security IN the cloud."
+        }
+      },
+      {
+        id: 19,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "An administrator wants to grant an application running on EC2 temporary permissions to read from an S3 bucket without embedding permanent credentials. What should be used?",
+        options: [
+          { text: "An IAM User with an access key hardcoded in the application", key: "A" },
+          { text: "An IAM Role attached to the EC2 instance", key: "B" },
+          { text: "Root account credentials", key: "C" },
+          { text: "A publicly readable S3 bucket policy", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "IAM Roles for Temporary Access",
+          correct: "Correct! An IAM Role provides temporary, automatically rotated credentials to the EC2 instance, avoiding the security risk of embedding permanent keys.",
+          incorrect: "Incorrect. Hardcoding a permanent access key is a security risk, using root credentials violates least privilege, and making the bucket public would expose the data to everyone, not just the intended application."
+        }
+      },
+      {
+        id: 20,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "What is the principle of granting a user only the exact permissions required to perform their job, and nothing more?",
+        options: [
+          { text: "Least Privilege", key: "A" },
+          { text: "Broad Network Access", key: "B" },
+          { text: "Resource Pooling", key: "C" },
+          { text: "Elastic Scaling", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Least Privilege",
+          correct: "Correct! Least Privilege means granting only the minimum permissions necessary, reducing the potential blast radius if credentials are compromised.",
+          incorrect: "Incorrect. Broad Network Access and Resource Pooling are NIST cloud characteristics unrelated to permission scoping, and Elastic Scaling concerns capacity, not access control."
+        }
+      },
+      {
+        id: 21,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which IAM feature is a JSON document that explicitly defines allowed or denied actions on specific resources?",
+        options: [
+          { text: "IAM Group", key: "A" },
+          { text: "IAM Policy", key: "B" },
+          { text: "IAM Role", key: "C" },
+          { text: "Security Group", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "IAM Policies",
+          correct: "Correct! An IAM Policy is the JSON document that explicitly grants or denies specific actions on specific resources.",
+          incorrect: "Incorrect. A Group is simply a collection of users, a Role is an assumable identity, and a Security Group is a network-level firewall — none of these are the JSON permission document itself."
+        }
+      },
+      {
+        id: 22,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "What additional layer of security requires a user to provide a time-based code from a mobile device in addition to their password?",
+        options: [
+          { text: "MFA", key: "A" },
+          { text: "NACL", key: "B" },
+          { text: "VPC Peering", key: "C" },
+          { text: "CIDR", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Multi-Factor Authentication",
+          correct: "Correct! MFA requires a second verification factor, such as a time-based one-time code, in addition to a password.",
+          incorrect: "Incorrect. NACLs and CIDR relate to network addressing/filtering, and VPC Peering connects two networks — none of these relate to user authentication."
+        }
+      },
+      {
+        id: 23,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which AWS service is purpose-built to protect against Distributed Denial of Service (DDoS) attacks?",
+        options: [
+          { text: "AWS Shield", key: "A" },
+          { text: "Amazon Macie", key: "B" },
+          { text: "AWS Config", key: "C" },
+          { text: "Amazon Redshift", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Shield",
+          correct: "Correct! AWS Shield is specifically designed to detect and mitigate DDoS attacks against AWS resources.",
+          incorrect: "Incorrect. Macie discovers sensitive data, Config audits resource configuration, and Redshift is a data warehouse — none defend against DDoS traffic floods."
+        }
+      },
+      {
+        id: 24,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service filters malicious HTTP requests, such as SQL injection attempts, before they reach a web application?",
+        options: [
+          { text: "AWS WAF", key: "A" },
+          { text: "Amazon GuardDuty", key: "B" },
+          { text: "AWS Trusted Advisor", key: "C" },
+          { text: "Amazon Inspector", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS WAF",
+          correct: "Correct! AWS WAF (Web Application Firewall) filters incoming HTTP/HTTPS requests using customizable rules to block malicious patterns like SQL injection.",
+          incorrect: "Incorrect. GuardDuty detects threats after the fact by analyzing logs, Trusted Advisor gives best-practice recommendations, and Inspector scans for vulnerabilities — none actively filter live web traffic in real time like WAF."
+        }
+      },
+      {
+        id: 25,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service continuously analyzes account activity, network traffic, and DNS logs to detect malicious or unauthorized behavior?",
+        options: [
+          { text: "Amazon GuardDuty", key: "A" },
+          { text: "AWS Artifact", key: "B" },
+          { text: "AWS Config", key: "C" },
+          { text: "Amazon CloudFront", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon GuardDuty",
+          correct: "Correct! GuardDuty is a continuous threat-detection service that analyzes multiple log sources to flag suspicious or unauthorized activity.",
+          incorrect: "Incorrect. AWS Artifact provides compliance documents, AWS Config tracks resource configuration state, and CloudFront is a CDN — none perform ongoing threat detection like GuardDuty."
+        }
+      },
+      {
+        id: 26,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service automatically scans EC2 instances and container images for known software vulnerabilities?",
+        options: [
+          { text: "Amazon Inspector", key: "A" },
+          { text: "AWS Shield", key: "B" },
+          { text: "Amazon Route 53", key: "C" },
+          { text: "AWS Lambda", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon Inspector",
+          correct: "Correct! Amazon Inspector automatically scans workloads for known software vulnerabilities and unintended network exposure.",
+          incorrect: "Incorrect. Shield defends against DDoS, Route 53 is DNS routing, and Lambda is serverless compute — none scan for vulnerabilities."
+        }
+      },
+      {
+        id: 27,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service discovers and classifies sensitive data, such as PII, stored in Amazon S3 buckets?",
+        options: [
+          { text: "Amazon Macie", key: "A" },
+          { text: "AWS CloudTrail", key: "B" },
+          { text: "Amazon EFS", key: "C" },
+          { text: "AWS Config", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon Macie",
+          correct: "Correct! Amazon Macie uses machine learning to discover and classify sensitive data, such as personally identifiable information, within S3.",
+          incorrect: "Incorrect. CloudTrail logs API activity, EFS is a file storage service, and Config audits resource configuration — none classify sensitive data content."
+        }
+      },
+      {
+        id: 28,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "A company needs downloadable compliance reports, such as SOC or ISO certifications, to satisfy an auditor. Which AWS service provides this?",
+        options: [
+          { text: "AWS Artifact", key: "A" },
+          { text: "Amazon GuardDuty", key: "B" },
+          { text: "AWS WAF", key: "C" },
+          { text: "Amazon Route 53", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Artifact",
+          correct: "Correct! AWS Artifact is the self-service portal for downloading AWS's compliance reports and agreements, such as SOC and ISO certifications.",
+          incorrect: "Incorrect. GuardDuty performs threat detection, WAF filters traffic, and Route 53 is DNS — none provide compliance documentation."
+        }
+      },
+      {
+        id: 29,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service aggregates security findings from GuardDuty, Inspector, and Macie into a single centralized dashboard?",
+        options: [
+          { text: "AWS Security Hub", key: "A" },
+          { text: "AWS Config", key: "B" },
+          { text: "AWS CloudTrail", key: "C" },
+          { text: "Amazon CloudWatch", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Security Hub",
+          correct: "Correct! AWS Security Hub aggregates and prioritizes security findings from multiple AWS security services into one central view.",
+          incorrect: "Incorrect. Config tracks configuration compliance, CloudTrail logs API events, and CloudWatch monitors performance metrics — none consolidate security findings the way Security Hub does."
+        }
+      },
+      {
+        id: 30,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which firewall type operates at the individual EC2 instance level and is stateful, automatically allowing return traffic for an approved request?",
+        options: [
+          { text: "Security Group", key: "A" },
+          { text: "NACL", key: "B" },
+          { text: "AWS WAF", key: "C" },
+          { text: "Route Table", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Stateful Security Groups",
+          correct: "Correct! Security Groups operate at the instance level and are stateful, meaning return traffic for an allowed request is automatically permitted.",
+          incorrect: "Incorrect. NACLs operate at the subnet level and are stateless, requiring explicit inbound and outbound rules; WAF filters HTTP traffic, and Route Tables direct traffic paths rather than filtering it."
+        }
+      },
+      {
+        id: 31,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which firewall type is stateless, applies at the subnet boundary, and requires explicit rules for both inbound and outbound traffic?",
+        options: [
+          { text: "Security Group", key: "A" },
+          { text: "NACL", key: "B" },
+          { text: "IAM Policy", key: "C" },
+          { text: "AWS Shield", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Stateless NACLs",
+          correct: "Correct! A Network Access Control List (NACL) is stateless and applies at the subnet level, requiring explicit rules for both directions of traffic.",
+          incorrect: "Incorrect. Security Groups are stateful and apply at the instance level; IAM Policies control account permissions, not network traffic; and AWS Shield defends against DDoS rather than filtering general traffic."
+        }
+      },
+      {
+        id: 32,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service continuously records API activity in an AWS account, answering 'who did what, and when' during a security investigation?",
+        options: [
+          { text: "AWS CloudTrail", key: "A" },
+          { text: "Amazon CloudWatch", key: "B" },
+          { text: "AWS Config", key: "C" },
+          { text: "Amazon Route 53", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS CloudTrail",
+          correct: "Correct! CloudTrail specifically logs every API call made within an account, making it the tool used to investigate who took a specific action and when.",
+          incorrect: "Incorrect. CloudWatch focuses on performance metrics and alarms, Config tracks configuration state and compliance drift, and Route 53 is DNS routing — none provide the detailed API activity audit trail that CloudTrail does."
+        }
+      },
+      {
+        id: 33,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "Which service continuously evaluates whether AWS resources comply with defined configuration rules, flagging configuration drift?",
+        options: [
+          { text: "AWS Config", key: "A" },
+          { text: "AWS CloudTrail", key: "B" },
+          { text: "AWS Trusted Advisor", key: "C" },
+          { text: "AWS Shield", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Config",
+          correct: "Correct! AWS Config continuously assesses, audits, and evaluates resource configurations against desired rules, flagging any drift from your compliance baseline.",
+          incorrect: "Incorrect. CloudTrail logs discrete API events rather than continuously assessing configuration state, Trusted Advisor gives point-in-time best-practice checks, and Shield defends against DDoS rather than auditing configuration."
+        }
+      },
+      {
+        id: 34,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "What is the term for the collection of laws, regulations, and industry standards that dictate how an organization must handle data?",
+        options: [
+          { text: "Compliance", key: "A" },
+          { text: "Elasticity", key: "B" },
+          { text: "Durability", key: "C" },
+          { text: "Latency", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Compliance",
+          correct: "Correct! Compliance describes adherence to legal, regulatory, and industry data-handling requirements.",
+          incorrect: "Incorrect. Elasticity concerns scaling, Durability concerns data preservation, and Latency concerns response time — none relate to legal or regulatory adherence."
+        }
+      },
+      {
+        id: 35,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 2: Security & Compliance",
+        category: "security",
+        prompt: "A VPC's private subnet contains database servers that must never be directly reachable from the internet but still need outbound patch downloads. What should be configured?",
+        options: [
+          { text: "Attach an Internet Gateway directly to the private subnet", key: "A" },
+          { text: "Route outbound traffic through a NAT Gateway in a public subnet", key: "B" },
+          { text: "Make the subnet's route table point to 0.0.0.0/0 via the Internet Gateway", key: "C" },
+          { text: "Disable the VPC's route table entirely", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "NAT Gateway for Private Subnets",
+          correct: "Correct! Routing outbound traffic through a NAT Gateway located in a public subnet lets private resources reach the internet for updates while remaining unreachable from inbound internet connections.",
+          incorrect: "Incorrect. Attaching an Internet Gateway directly, or routing 0.0.0.0/0 to it, would make the subnet effectively public and directly reachable, which violates the requirement. Disabling the route table would break all connectivity, including required outbound access."
+        }
+      },
+      {
+        id: 36,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "What is the template called that defines the operating system and pre-installed software used to launch an EC2 instance?",
+        options: [
+          { text: "AMI", key: "A" },
+          { text: "CIDR block", key: "B" },
+          { text: "Launch Template only", key: "C" },
+          { text: "Security Group", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon Machine Image",
+          correct: "Correct! An AMI (Amazon Machine Image) is the template containing the OS and software configuration used to launch EC2 instances.",
+          incorrect: "Incorrect. A CIDR block defines IP address ranges, a Launch Template references an AMI but is not the image itself, and a Security Group is a network firewall, not an OS template."
+        }
+      },
+      {
+        id: 37,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which EC2 pricing option provides the steepest discount but can be interrupted by AWS with short notice?",
+        options: [
+          { text: "On-Demand", key: "A" },
+          { text: "Reserved Instance", key: "B" },
+          { text: "Spot Instance", key: "C" },
+          { text: "Savings Plan", key: "D" },
+        ],
+        correct: ["C"],
+        explanation: {
+          title: "Spot Instances",
+          correct: "Correct! Spot Instances use spare AWS capacity at the deepest discount, but can be reclaimed by AWS with short notice, making them best for interruption-tolerant workloads.",
+          incorrect: "Incorrect. On-Demand has no discount or commitment, and Reserved Instances/Savings Plans offer discounts for a 1- or 3-year commitment but are never interrupted like Spot Instances."
+        }
+      },
+      {
+        id: 38,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which service automatically distributes incoming application traffic across multiple EC2 instances?",
+        options: [
+          { text: "Elastic Load Balancer", key: "A" },
+          { text: "Amazon Route 53", key: "B" },
+          { text: "Amazon CloudFront", key: "C" },
+          { text: "AWS Config", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Elastic Load Balancer",
+          correct: "Correct! An Elastic Load Balancer distributes incoming traffic evenly across multiple EC2 instances to improve availability and performance.",
+          incorrect: "Incorrect. Route 53 handles DNS routing, CloudFront caches content at edge locations, and Config audits configuration — none distribute live application traffic among instances the way an ELB does."
+        }
+      },
+      {
+        id: 39,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "An Auto Scaling Group needs a blueprint that defines the instance type, AMI, and security group to use whenever it launches a new instance. What provides this blueprint?",
+        options: [
+          { text: "A Launch Template", key: "A" },
+          { text: "An IAM Role", key: "B" },
+          { text: "A Route Table", key: "C" },
+          { text: "A CloudWatch Alarm", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Launch Templates",
+          correct: "Correct! A Launch Template defines the configuration details — such as AMI, instance type, and security group — used every time the Auto Scaling Group launches a new instance.",
+          incorrect: "Incorrect. An IAM Role grants permissions, a Route Table directs network traffic, and a CloudWatch Alarm triggers on a metric threshold — none define the instance launch configuration."
+        }
+      },
+      {
+        id: 40,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS compute service lets code run in response to events without the customer provisioning or managing any servers?",
+        options: [
+          { text: "AWS Lambda", key: "A" },
+          { text: "Amazon EC2 Reserved Instances", key: "B" },
+          { text: "Amazon RDS", key: "C" },
+          { text: "Amazon Redshift", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Lambda",
+          correct: "Correct! AWS Lambda is a serverless compute service that automatically runs code in response to events, with no server provisioning required by the customer.",
+          incorrect: "Incorrect. EC2 Reserved Instances still require managing a virtual server, RDS is a managed database, and Redshift is a data warehouse — none are the serverless, event-driven compute service Lambda is."
+        }
+      },
+      {
+        id: 41,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS service orchestrates and manages Docker containers across a cluster of resources?",
+        options: [
+          { text: "Amazon ECS", key: "A" },
+          { text: "Amazon S3", key: "B" },
+          { text: "AWS Config", key: "C" },
+          { text: "Amazon Route 53", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon ECS",
+          correct: "Correct! Amazon ECS (Elastic Container Service) is a fully managed container orchestration service for running and scaling Docker containers.",
+          incorrect: "Incorrect. S3 is object storage, Config tracks configuration compliance, and Route 53 is DNS — none orchestrate container deployment."
+        }
+      },
+      {
+        id: 42,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which serverless launch type runs containers without requiring the customer to provision or manage the underlying EC2 instances?",
+        options: [
+          { text: "AWS Fargate", key: "A" },
+          { text: "EC2 Dedicated Hosts", key: "B" },
+          { text: "Amazon EBS", key: "C" },
+          { text: "Amazon Glacier", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Fargate",
+          correct: "Correct! AWS Fargate is the serverless compute engine for containers, removing the need to provision or manage EC2 instances directly.",
+          incorrect: "Incorrect. EC2 Dedicated Hosts still require managing physical server allocation, EBS is block storage, and Glacier is archival storage — none run containers serverlessly."
+        }
+      },
+      {
+        id: 43,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "An application is broken into small, independently deployable services that each perform one specific function. What architecture pattern is this?",
+        options: [
+          { text: "Microservices", key: "A" },
+          { text: "Monolithic architecture", key: "B" },
+          { text: "CapEx architecture", key: "C" },
+          { text: "Single Point of Failure design", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Microservices Architecture",
+          correct: "Correct! Microservices architecture breaks an application into small, independently deployable services, often containerized, that each handle one specific function.",
+          incorrect: "Incorrect. Monolithic architecture is the opposite approach (one large tightly coupled application); CapEx architecture and Single Point of Failure design are not architecture patterns describing this concept."
+        }
+      },
+      {
+        id: 44,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS storage service allows many EC2 instances across multiple Availability Zones to mount and share the same file system simultaneously?",
+        options: [
+          { text: "Amazon EFS", key: "A" },
+          { text: "Amazon EBS", key: "B" },
+          { text: "AWS Snowball", key: "C" },
+          { text: "Amazon Glacier Deep Archive", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon EFS",
+          correct: "Correct! Amazon EFS (Elastic File System) provides shared, elastic file storage that many EC2 instances can mount and access at the same time.",
+          incorrect: "Incorrect. EBS attaches to only one instance at a time, Snowball is a physical data transfer device, and Glacier Deep Archive is for infrequently accessed archival objects, not shared active file access."
+        }
+      },
+      {
+        id: 45,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "A company needs the lowest possible storage cost for compliance records that must be retained for 7 years and are almost never accessed. Which storage class fits best?",
+        options: [
+          { text: "S3 Standard", key: "A" },
+          { text: "S3 Glacier Deep Archive", key: "B" },
+          { text: "Amazon EBS Provisioned IOPS", key: "C" },
+          { text: "Amazon EFS Standard", key: "D" },
+        ],
+        correct: ["B"],
+        explanation: {
+          title: "Glacier Deep Archive",
+          correct: "Correct! S3 Glacier Deep Archive offers the lowest-cost storage class, purpose-built for rarely accessed, long-term retention data such as compliance records.",
+          incorrect: "Incorrect. S3 Standard is priced for frequently accessed data, EBS Provisioned IOPS is a costly high-performance block storage option, and EFS Standard is priced for active shared file access — none suit rarely accessed archival data as cost-effectively."
+        }
+      },
+      {
+        id: 46,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "What is the measure called that describes how reliably data is preserved without loss over time, often expressed as a number of nines?",
+        options: [
+          { text: "Durability", key: "A" },
+          { text: "Availability", key: "B" },
+          { text: "Latency", key: "C" },
+          { text: "Elasticity", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Durability",
+          correct: "Correct! Durability measures the likelihood that stored data will not be lost or corrupted over time, such as Amazon S3's eleven nines of durability.",
+          incorrect: "Incorrect. Availability measures uptime/accessibility rather than data loss risk, Latency measures response delay, and Elasticity measures scaling behavior."
+        }
+      },
+      {
+        id: 47,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which type of database organizes data into structured tables with fixed schemas and defined relationships?",
+        options: [
+          { text: "Relational Database", key: "A" },
+          { text: "NoSQL Database", key: "B" },
+          { text: "Object Storage", key: "C" },
+          { text: "Data Lake", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Relational Databases",
+          correct: "Correct! Relational databases use structured tables with fixed schemas and enforce relationships between tables.",
+          incorrect: "Incorrect. NoSQL databases are schema-less/flexible, Object Storage stores unstructured files rather than structured records, and a Data Lake stores raw data of many formats, not structured relational tables."
+        }
+      },
+      {
+        id: 48,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS database service is fully managed, serverless, and offers single-digit millisecond performance using a flexible key-value/document model?",
+        options: [
+          { text: "Amazon DynamoDB", key: "A" },
+          { text: "Amazon RDS", key: "B" },
+          { text: "Amazon Redshift", key: "C" },
+          { text: "Amazon Aurora", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon DynamoDB",
+          correct: "Correct! Amazon DynamoDB is a fully managed, serverless NoSQL database offering single-digit millisecond latency at virtually any scale.",
+          incorrect: "Incorrect. RDS and Aurora are relational database services with fixed schemas, and Redshift is a data warehouse for large-scale analytics rather than fast key-value lookups."
+        }
+      },
+      {
+        id: 49,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS service is purpose-built as a data warehouse for large-scale analytics rather than everyday transactional workloads?",
+        options: [
+          { text: "Amazon Redshift", key: "A" },
+          { text: "Amazon RDS", key: "B" },
+          { text: "Amazon DynamoDB", key: "C" },
+          { text: "Amazon EBS", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon Redshift",
+          correct: "Correct! Amazon Redshift is AWS's data warehouse service, optimized for complex analytical queries across very large datasets.",
+          incorrect: "Incorrect. RDS and DynamoDB are optimized for fast, everyday transactional workloads rather than large-scale analytics, and EBS is block storage, not a database at all."
+        }
+      },
+      {
+        id: 50,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "A database administrator enables a feature that maintains a synchronized standby replica of an RDS database in a second Availability Zone. What is this feature called?",
+        options: [
+          { text: "Multi-AZ", key: "A" },
+          { text: "Read Replica only", key: "B" },
+          { text: "Provisioned Throughput", key: "C" },
+          { text: "S3 Lifecycle Policy", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Multi-AZ Deployments",
+          correct: "Correct! Multi-AZ deployments maintain a synchronized standby replica in a second Availability Zone specifically for automatic failover during an outage.",
+          incorrect: "Incorrect. A Read Replica is typically used for scaling read traffic, not automatic failover; Provisioned Throughput relates to DynamoDB capacity; and Lifecycle Policy manages S3 objects, not database replication."
+        }
+      },
+      {
+        id: 51,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "What system translates a human-readable domain name, such as example.com, into the numeric IP address computers use to communicate?",
+        options: [
+          { text: "DNS", key: "A" },
+          { text: "CIDR", key: "B" },
+          { text: "VPC Peering", key: "C" },
+          { text: "NAT", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "DNS",
+          correct: "Correct! DNS (Domain Name System) translates human-readable domain names into the numeric IP addresses used for network communication.",
+          incorrect: "Incorrect. CIDR defines IP address ranges, VPC Peering connects two networks, and NAT translates private addresses for outbound traffic — none perform domain-name-to-IP translation like DNS."
+        }
+      },
+      {
+        id: 52,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS service is the managed DNS offering that also supports routing policies like Failover and Geolocation Routing?",
+        options: [
+          { text: "Amazon Route 53", key: "A" },
+          { text: "Amazon CloudFront", key: "B" },
+          { text: "AWS Direct Connect", key: "C" },
+          { text: "Amazon VPC", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon Route 53",
+          correct: "Correct! Amazon Route 53 is AWS's managed DNS service and supports advanced routing policies such as Failover Routing and Geolocation Routing.",
+          incorrect: "Incorrect. CloudFront is a CDN, Direct Connect is a dedicated network link, and VPC is a private virtual network — none provide the DNS resolution and routing policies that Route 53 does."
+        }
+      },
+      {
+        id: 53,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS service caches content at globally distributed edge locations to reduce latency for end users?",
+        options: [
+          { text: "Amazon CloudFront", key: "A" },
+          { text: "Amazon RDS", key: "B" },
+          { text: "AWS Config", key: "C" },
+          { text: "Amazon EBS", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon CloudFront",
+          correct: "Correct! Amazon CloudFront is AWS's content delivery network (CDN), caching content at edge locations physically closer to end users.",
+          incorrect: "Incorrect. RDS is a database, Config tracks configuration compliance, and EBS is block storage — none cache or accelerate content delivery."
+        }
+      },
+      {
+        id: 54,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "A CloudFront distribution's cached content expires and must be re-fetched from the origin. What setting controls how long content stays cached before this happens?",
+        options: [
+          { text: "TTL (Time-To-Live)", key: "A" },
+          { text: "RTO", key: "B" },
+          { text: "CIDR", key: "C" },
+          { text: "IAM Policy", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "TTL",
+          correct: "Correct! TTL (Time-To-Live) defines how long cached content remains valid at an edge location before it must be refreshed from the origin.",
+          incorrect: "Incorrect. RTO is a disaster recovery metric, CIDR defines IP address ranges, and an IAM Policy governs permissions — none control content cache expiration."
+        }
+      },
+      {
+        id: 55,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "A company wants requests automatically routed to a healthy backup resource if the primary resource becomes unavailable. Which Route 53 routing policy fits this need?",
+        options: [
+          { text: "Failover Routing", key: "A" },
+          { text: "Geolocation Routing", key: "B" },
+          { text: "Simple Routing", key: "C" },
+          { text: "Weighted Routing at a fixed 50/50 split forever", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Failover Routing",
+          correct: "Correct! Failover Routing automatically directs traffic to a healthy backup resource if health checks detect that the primary resource is unavailable.",
+          incorrect: "Incorrect. Geolocation Routing directs users based on location rather than health, Simple Routing has no health-check logic, and a fixed 50/50 Weighted split doesn't react to an outage the way Failover Routing does."
+        }
+      },
+      {
+        id: 56,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which AWS service collects metrics and logs from resources to support performance monitoring and can trigger alarms on thresholds?",
+        options: [
+          { text: "Amazon CloudWatch", key: "A" },
+          { text: "AWS CloudTrail", key: "B" },
+          { text: "AWS Config", key: "C" },
+          { text: "AWS Artifact", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Amazon CloudWatch",
+          correct: "Correct! Amazon CloudWatch collects performance metrics and logs and can trigger CloudWatch Alarms when a threshold is crossed.",
+          incorrect: "Incorrect. CloudTrail logs discrete API events for auditing, Config tracks configuration compliance, and Artifact provides compliance documents — none provide the real-time performance metrics and alarms CloudWatch does."
+        }
+      },
+      {
+        id: 57,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 3: Cloud Technology & Services",
+        category: "tech",
+        prompt: "Which VPC component allows resources within a public subnet to communicate directly with the public internet?",
+        options: [
+          { text: "Internet Gateway", key: "A" },
+          { text: "NAT Gateway", key: "B" },
+          { text: "NACL", key: "C" },
+          { text: "Security Group", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Internet Gateway",
+          correct: "Correct! An Internet Gateway (IGW) attaches to a VPC and enables direct, two-way communication between a public subnet's resources and the internet.",
+          incorrect: "Incorrect. A NAT Gateway supports outbound-only traffic for private subnets, and NACLs and Security Groups filter traffic but do not themselves provide the internet connection path."
+        }
+      },
+      {
+        id: 58,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "Which AWS tool lets a customer estimate the monthly cost of a proposed architecture before deploying it?",
+        options: [
+          { text: "AWS Pricing Calculator", key: "A" },
+          { text: "AWS Trusted Advisor", key: "B" },
+          { text: "AWS Budgets", key: "C" },
+          { text: "AWS Cost Explorer", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Pricing Calculator",
+          correct: "Correct! The AWS Pricing Calculator lets customers model and estimate the cost of a proposed architecture before it is deployed.",
+          incorrect: "Incorrect. Trusted Advisor reviews existing accounts for best practices, AWS Budgets tracks and alerts on spending thresholds, and Cost Explorer visualizes historical and forecasted spend — none are designed for pre-deployment cost estimation the way the Pricing Calculator is."
+        }
+      },
+      {
+        id: 59,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "Which AWS tool allows a customer to set custom cost and usage thresholds and receive alerts when they are approached or exceeded?",
+        options: [
+          { text: "AWS Budgets", key: "A" },
+          { text: "AWS Pricing Calculator", key: "B" },
+          { text: "Amazon CloudWatch Logs", key: "C" },
+          { text: "AWS Artifact", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Budgets",
+          correct: "Correct! AWS Budgets lets customers define custom cost or usage thresholds and receive automated alerts as those thresholds are approached or exceeded.",
+          incorrect: "Incorrect. The Pricing Calculator estimates cost before deployment rather than monitoring live spend, CloudWatch Logs stores log data rather than budget thresholds, and Artifact provides compliance reports, not billing alerts."
+        }
+      },
+      {
+        id: 60,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "A company wants a visual breakdown of its historical AWS spending by service, with the ability to forecast future costs. Which tool provides this?",
+        options: [
+          { text: "AWS Cost Explorer", key: "A" },
+          { text: "AWS Trusted Advisor", key: "B" },
+          { text: "Amazon Inspector", key: "C" },
+          { text: "AWS WAF", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "AWS Cost Explorer",
+          correct: "Correct! AWS Cost Explorer provides visual reports of historical spend broken down by service, along with cost forecasting features.",
+          incorrect: "Incorrect. Trusted Advisor gives point-in-time best-practice recommendations rather than detailed spend visualization, and Inspector/WAF are security tools unrelated to cost analysis."
+        }
+      },
+      {
+        id: 61,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "Which AWS Support Plan tier includes access to a designated Technical Account Manager (TAM)?",
+        options: [
+          { text: "Basic Support", key: "A" },
+          { text: "Developer Support", key: "B" },
+          { text: "Enterprise Support", key: "C" },
+          { text: "Business Support", key: "D" },
+        ],
+        correct: ["C"],
+        explanation: {
+          title: "Enterprise Support and the TAM",
+          correct: "Correct! Only the Enterprise Support plan includes a dedicated Technical Account Manager (TAM) who provides proactive architectural guidance.",
+          incorrect: "Incorrect. Basic and Developer Support offer limited or business-hours-only guidance without a TAM, and Business Support offers 24/7 technical support but still does not include a dedicated TAM."
+        }
+      },
+      {
+        id: 62,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "Which AWS Support Plan is included automatically and free with every AWS account?",
+        options: [
+          { text: "Basic Support", key: "A" },
+          { text: "Developer Support", key: "B" },
+          { text: "Business Support", key: "C" },
+          { text: "Enterprise Support", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Basic Support Plan",
+          correct: "Correct! Basic Support is included automatically and free with every AWS account, offering access to documentation, forums, and some service checks.",
+          incorrect: "Incorrect. Developer, Business, and Enterprise Support are all paid tiers with additional benefits like technical support and faster response times, not the free default plan."
+        }
+      },
+      {
+        id: 63,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "A company signs a long-term contract locking in a discounted hourly compute rate in exchange for committing to a consistent amount of usage over 1 or 3 years. What pricing model is this?",
+        options: [
+          { text: "Savings Plans", key: "A" },
+          { text: "Spot Instance pricing", key: "B" },
+          { text: "Basic Support", key: "C" },
+          { text: "Data transfer pricing", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Savings Plans",
+          correct: "Correct! Savings Plans offer discounted rates in exchange for committing to a consistent amount of compute usage over a 1- or 3-year term.",
+          incorrect: "Incorrect. Spot Instance pricing has no commitment and can be interrupted, Basic Support is a support tier unrelated to compute discounts, and data transfer pricing charges for network egress, not compute commitment discounts."
+        }
+      },
+      {
+        id: 64,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "Which factor generally increases AWS data transfer charges the most?",
+        options: [
+          { text: "Transferring data out of AWS to the internet", key: "A" },
+          { text: "Transferring data into AWS from the internet", key: "B" },
+          { text: "Transferring data between two S3 buckets in the exact same Region", key: "C" },
+          { text: "Viewing the AWS Billing Dashboard", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Outbound Data Transfer Costs",
+          correct: "Correct! Data transferred OUT of AWS to the public internet typically incurs the highest charges, while data transferred IN is usually free.",
+          incorrect: "Incorrect. Inbound data transfer is typically free, transfers within the same Region are usually free or minimal, and simply viewing the Billing Dashboard incurs no charge at all."
+        }
+      },
+      {
+        id: 65,
+        type: "mc",
+        domain: "AWS CLF-C02 Domain 4: Billing, Pricing & Support",
+        category: "billing",
+        prompt: "A startup founder wants free guidance from AWS on right-sizing infrastructure but cannot afford a paid support plan. Which free tool can still provide some cost, security, and performance recommendations?",
+        options: [
+          { text: "AWS Trusted Advisor's Core Checks", key: "A" },
+          { text: "A dedicated Technical Account Manager", key: "B" },
+          { text: "24/7 phone support", key: "C" },
+          { text: "An assigned Solutions Architect", key: "D" },
+        ],
+        correct: ["A"],
+        explanation: {
+          title: "Trusted Advisor Core Checks",
+          correct: "Correct! Trusted Advisor's core checks are available for free to all customers and provide basic cost, security, and performance recommendations even without a paid support plan.",
+          incorrect: "Incorrect. A dedicated TAM, 24/7 phone support, and an assigned Solutions Architect are all benefits reserved for paid support tiers, not available for free."
+        }
+      },
+    ];
+
+    // Quiz App State Variables
+    let currentQuizMode = 'study'; // 'study' or 'exam'
+    let currentQuestionIndex = 0;
+    let selectedAnswers = []; // holds selected keys (e.g., ["A", "B"])
+    let userAnswersLog = Array(QUIZ_QUESTIONS.length).fill(null); // stores user submissions
+    let quizCompleted = false;
+
+    // Initialize Quiz Portal
+    window.onload = function() {
+      AudioEngine.init();
+      setupSoundToggle();
+      renderNavigationMatrix();
+    };
+
+    // Sound toggle settings
+    function setupSoundToggle() {
+      const btn = document.getElementById('sound-toggle');
+      const icon = document.getElementById('sound-icon');
+      btn.addEventListener('click', () => {
+        AudioEngine.enabled = !AudioEngine.enabled;
+        if (AudioEngine.enabled) {
+          icon.textContent = "\u{1F50A}"; // speaker high volume
+          AudioEngine.tap();
+        } else {
+          icon.textContent = "\u{1F507}"; // muted speaker
+        }
+      });
+    }
+
+
+    // Change quiz mode
+    function changeMode(mode) {
+      AudioEngine.tap();
+      if (userAnswersLog.some(ans => ans !== null)) {
+        const confirmChange = confirm("Changing modes mid-quiz will reset your current progress. Are you sure you want to proceed?");
+        if (!confirmChange) return;
+      }
+      currentQuizMode = mode;
+      
+      const studyBtn = document.getElementById('btn-mode-study');
+      const examBtn = document.getElementById('btn-mode-exam');
+      const navBadge = document.getElementById('nav-mode-badge');
+
+      if (mode === 'study') {
+        studyBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 bg-white shadow text-indigo-600";
+        examBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-800";
+        navBadge.innerHTML = `<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span> Study Mode Enabled`;
+        navBadge.className = "hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200";
+      } else {
+        examBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 bg-white shadow text-indigo-600";
+        studyBtn.className = "py-2 text-xs font-bold rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-800";
+        navBadge.innerHTML = `<span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-1.5 animate-pulse"></span> Exam Simulation Mode`;
+        navBadge.className = "hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-200";
+      }
+
+      resetAndRestartQuiz();
+    }
+
+    // Start Quiz from Splash screen
+    function startQuiz() {
+      AudioEngine.tap();
+      const splash = document.getElementById('intro-screen');
+      splash.classList.add('hidden');
+      loadQuestion(0);
+    }
+
+    // Render Navigation Sidebar list
+    function renderNavigationMatrix() {
+      const container = document.getElementById('navigation-matrix');
+      container.innerHTML = '';
+      
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `nav-dot-${idx}`;
+        btn.className = getNavDotStyle(idx);
+        btn.innerText = idx + 1;
+        btn.onclick = () => {
+          if (document.getElementById('intro-screen').classList.contains('hidden')) {
+            AudioEngine.tap();
+            loadQuestion(idx);
+          }
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    // Determine sidebar navigator bullet themes
+    function getNavDotStyle(idx) {
+      const base = "h-10 text-xs font-bold rounded-lg border transition-all duration-200 flex items-center justify-center ";
+      const log = userAnswersLog[idx];
+
+      if (idx === currentQuestionIndex && document.getElementById('intro-screen').classList.contains('hidden')) {
+        return base + "bg-indigo-600 border-indigo-600 text-white shadow-md ring-2 ring-indigo-400/50";
+      }
+      
+      if (log) {
+        if (currentQuizMode === 'study') {
+          return base + (log.isCorrect 
+            ? "bg-emerald-50 text-emerald-700 border-emerald-200" 
+            : "bg-rose-50 text-rose-700 border-rose-200");
+        } else {
+          return base + "bg-slate-200 text-slate-800 border-slate-300";
+        }
+      }
+
+      return base + "bg-slate-50 text-slate-500 hover:bg-slate-100 border-slate-200";
+    }
+
+    // Load Specific Question into Viewport Card
+    function loadQuestion(idx) {
+      currentQuestionIndex = idx;
+      const question = QUIZ_QUESTIONS[idx];
+      selectedAnswers = [];
+
+      // Update question text & metadata
+      document.getElementById('question-index-badge').innerText = `QUESTION ${(idx + 1).toString().padStart(2, '0')}`;
+      
+      // Question Type Badge styling
+      const typeBadge = document.getElementById('question-type-badge');
+      if (question.type === 'mc') {
+        typeBadge.innerText = 'Multiple Choice';
+        typeBadge.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 font-mono uppercase";
+      } else if (question.type === 'tf') {
+        typeBadge.innerText = 'True / False';
+        typeBadge.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-50 text-amber-700 border border-amber-200 font-mono uppercase";
+      } else {
+        typeBadge.innerText = 'Multiple Select';
+        typeBadge.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-teal-50 text-teal-700 border border-teal-200 font-mono uppercase";
+      }
+
+      document.getElementById('course-domain').innerText = question.domain;
+      document.getElementById('question-prompt').innerText = question.prompt;
+      document.getElementById('nav-counter').innerText = `${idx + 1}/${QUIZ_QUESTIONS.length}`;
+
+      // Build Interactive Answer Options
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      const loggedAnswer = userAnswersLog[idx];
+
+      question.options.forEach(opt => {
+        const optionCard = document.createElement('div');
+        optionCard.id = `option-card-${opt.key}`;
+        
+        const shape = question.type === 'ms' ? 'qz-checkbox' : 'qz-radio';
+        let indicatorState = ''; // '', 'qz-muted', 'qz-selected', 'qz-correct', 'qz-incorrect'
+        let indicatorGlyph = '';
+        let cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition-all duration-150 bg-slate-50/50";
+
+        if (loggedAnswer) {
+          // Locked State (Answer submitted)
+          const isSelected = loggedAnswer.answers.includes(opt.key);
+          const isCorrectKey = question.correct.includes(opt.key);
+
+          if (currentQuizMode === 'study') {
+            if (isCorrectKey) {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50/50 text-emerald-900";
+              indicatorState = 'qz-correct';
+              indicatorGlyph = '&#10003;';
+            } else if (isSelected) {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-rose-500 bg-rose-50/50 text-rose-900";
+              indicatorState = 'qz-incorrect';
+              indicatorGlyph = '&#10005;';
+            } else {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 opacity-50 bg-slate-50/20";
+              indicatorState = 'qz-muted';
+            }
+          } else {
+            // Exam mode locked review
+            if (isSelected) {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/30";
+              indicatorState = 'qz-selected';
+              indicatorGlyph = question.type === 'ms' ? '&#10003;' : '';
+            } else {
+              cardStyle = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 opacity-70 bg-slate-50/20";
+              indicatorState = 'qz-muted';
+            }
+          }
+        }
+
+        optionCard.className = cardStyle;
+        optionCard.onclick = () => selectOption(opt.key);
+
+        optionCard.innerHTML = `
+          <div class="pt-0.5" id="icon-container-${opt.key}">
+            <span class="qz-indicator ${shape} ${indicatorState}" id="icon-${opt.key}">${indicatorGlyph}</span>
+          </div>
+          <div class="flex-grow">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-indigo-600 font-mono">${opt.key}.</span>
+              <p class="text-sm font-medium leading-relaxed">${opt.text}</p>
+            </div>
+          </div>
+        `;
+
+        optionsContainer.appendChild(optionCard);
+      });
+
+      // Show/Hide check button and next buttons
+      const checkBtn = document.getElementById('btn-check');
+      const nextBtn = document.getElementById('btn-next');
+      const prevBtn = document.getElementById('btn-prev');
+      const explanationDrawer = document.getElementById('explanation-drawer');
+
+      prevBtn.disabled = idx === 0;
+
+      if (loggedAnswer) {
+        checkBtn.classList.add('hidden');
+        nextBtn.classList.remove('hidden');
+        if (idx === QUIZ_QUESTIONS.length - 1) {
+          nextBtn.innerHTML = `Finish Diagnostic &rarr;`;
+        } else {
+          nextBtn.innerHTML = `Next Question &rarr;`;
+        }
+
+        // Render explanation if study mode
+        if (currentQuizMode === 'study') {
+          explanationDrawer.classList.remove('hidden');
+          const isCorrect = loggedAnswer.isCorrect;
+          const box = document.getElementById('explanation-icon-box');
+          const icon = document.getElementById('explanation-icon');
+          const title = document.getElementById('explanation-title');
+          const text = document.getElementById('explanation-text');
+
+          if (isCorrect) {
+            box.className = "w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200";
+            icon.className = "text-lg font-black";
+            icon.textContent = "\u2713";
+            title.className = "text-sm font-black uppercase tracking-wider text-emerald-700";
+            title.innerText = question.explanation.title + " (Correct)";
+            text.innerText = question.explanation.correct;
+          } else {
+            box.className = "w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 border border-rose-200";
+            icon.className = "text-lg font-black";
+            icon.textContent = "\u26A0";
+            title.className = "text-sm font-black uppercase tracking-wider text-rose-700";
+            title.innerText = "Instructor Analysis (Incorrect Option)";
+            text.innerText = question.explanation.incorrect + " " + question.explanation.correct;
+          }
+        } else {
+          explanationDrawer.classList.add('hidden');
+        }
+      } else {
+        checkBtn.classList.remove('hidden');
+        nextBtn.classList.add('hidden');
+        explanationDrawer.classList.add('hidden');
+      }
+
+      // Refresh Sidebar Matrix selection
+      renderNavigationMatrix();
+    }
+
+    // Select Answer Option Interactions
+    function selectOption(key) {
+      // Guard against selected answers after submitting
+      if (userAnswersLog[currentQuestionIndex]) return;
+
+      AudioEngine.tap();
+      const question = QUIZ_QUESTIONS[currentQuestionIndex];
+
+      if (question.type === 'mc' || question.type === 'tf') {
+        // Single selection models
+        selectedAnswers = [key];
+        
+        // Deselect all other boxes
+        question.options.forEach(opt => {
+          const card = document.getElementById(`option-card-${opt.key}`);
+          const icon = document.getElementById(`icon-${opt.key}`);
+          
+          if (opt.key === key) {
+            card.className = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/50";
+            icon.className = "qz-indicator qz-radio qz-selected";
+            icon.innerHTML = '';
+          } else {
+            card.className = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition-all duration-150 bg-slate-50/50";
+            icon.className = "qz-indicator qz-radio";
+            icon.innerHTML = '';
+          }
+        });
+      } else {
+        // Multiple Selection
+        const idx = selectedAnswers.indexOf(key);
+        const card = document.getElementById(`option-card-${key}`);
+        const icon = document.getElementById(`icon-${key}`);
+
+        if (idx > -1) {
+          selectedAnswers.splice(idx, 1);
+          card.className = "flex items-start gap-3.5 p-4 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition-all duration-150 bg-slate-50/50";
+          icon.className = "qz-indicator qz-checkbox";
+          icon.innerHTML = '';
+        } else {
+          selectedAnswers.push(key);
+          card.className = "flex items-start gap-3.5 p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/50";
+          icon.className = "qz-indicator qz-checkbox qz-selected";
+          icon.innerHTML = '&#10003;';
+        }
+      }
+    }
+
+    // Submit Answer & Calculate Accuracy
+    function checkSelectedAnswers() {
+      if (selectedAnswers.length === 0) {
+        alert("Please select at least one answer to submit.");
+        return;
+      }
+
+      const question = QUIZ_QUESTIONS[currentQuestionIndex];
+      
+      // Compare arrays
+      const isCorrect = question.correct.length === selectedAnswers.length && 
+                        question.correct.every(val => selectedAnswers.includes(val));
+
+      // Play Sound Effects based on results
+      if (isCorrect) {
+        AudioEngine.correct();
+      } else {
+        AudioEngine.incorrect();
+      }
+
+      // Log the User Answer Data
+      userAnswersLog[currentQuestionIndex] = {
+        answers: selectedAnswers,
+        isCorrect: isCorrect
+      };
+
+      // Realtime score logs
+      updateScoreDashboard();
+
+      // Reload screen state
+      loadQuestion(currentQuestionIndex);
+    }
+
+    // Progress Scores Panel Update
+    function updateScoreDashboard() {
+      let correct = 0;
+      let wrong = 0;
+      let answeredCount = 0;
+
+      userAnswersLog.forEach(ans => {
+        if (ans !== null) {
+          answeredCount++;
+          if (ans.isCorrect) correct++;
+          else wrong++;
+        }
+      });
+
+      document.getElementById('score-correct').innerText = correct;
+      document.getElementById('score-wrong').innerText = wrong;
+
+      const completionPercentage = Math.round((answeredCount / QUIZ_QUESTIONS.length) * 100);
+      document.getElementById('progress-percent').innerText = `${completionPercentage}%`;
+      document.getElementById('progress-bar').style.width = `${completionPercentage}%`;
+    }
+
+    // Question Navigation Trigger
+    function navigateQuestion(direction) {
+      AudioEngine.tap();
+      const targetIdx = currentQuestionIndex + direction;
+
+      if (targetIdx < 0) return;
+
+      if (targetIdx >= QUIZ_QUESTIONS.length) {
+        // Evaluate complete answers
+        evaluateAllQuiz();
+      } else {
+        loadQuestion(targetIdx);
+      }
+    }
+
+    // Evaluate Complete Quiz Results and transition UI
+    function evaluateAllQuiz() {
+      // Confirm all questions are answered
+      const unansweredIndices = [];
+      userAnswersLog.forEach((val, idx) => {
+        if (val === null) unansweredIndices.push(idx + 1);
+      });
+
+      if (unansweredIndices.length > 0) {
+        const confirmSkip = confirm(`You have unanswered questions: ${unansweredIndices.join(', ')}. Submit the evaluation anyway? (Unanswered questions count as wrong)`);
+        if (!confirmSkip) return;
+
+        // Auto-fill unanswered as wrong
+        QUIZ_QUESTIONS.forEach((q, idx) => {
+          if (userAnswersLog[idx] === null) {
+            userAnswersLog[idx] = {
+              answers: [],
+              isCorrect: false
+            };
+          }
+        });
+        updateScoreDashboard();
+      }
+
+      AudioEngine.complete();
+      quizCompleted = true;
+
+      // Hide quiz view, show result analytics view
+      document.getElementById('quiz-card').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+
+      // Score Calculation
+      let correctAnswers = userAnswersLog.filter(x => x.isCorrect).length;
+      let finalPercentage = Math.round((correctAnswers / QUIZ_QUESTIONS.length) * 100);
+
+      // Load results values
+      document.getElementById('radial-score').innerText = `${finalPercentage}%`;
+      document.getElementById('radial-fraction').innerText = `${correctAnswers} / ${QUIZ_QUESTIONS.length}`;
+
+      // Progress bar gauge formula: stroke-dasharray="414.69" (2 * PI * r)
+      const circleOffset = 414.69 - (414.69 * finalPercentage / 100);
+      document.getElementById('radial-progress-circle').style.strokeDashoffset = circleOffset;
+
+      // Certificate Badge styling
+      const certBadge = document.getElementById('badge-certificate-status');
+      const feedbackMsg = document.getElementById('feedback-message');
+
+      if (finalPercentage >= 90) {
+        certBadge.className = "inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-emerald-100 text-emerald-800 border border-emerald-200";
+        certBadge.innerHTML = `&#10003; Excellent Readiness`;
+        feedbackMsg.innerText = "Superb job! You have fully mastered material across all four AWS Certified Cloud Practitioner domains. You are on track and exam-ready for the CLF-C02 certification!";
+      } else if (finalPercentage >= 80) {
+        certBadge.className = "inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-teal-100 text-teal-800 border border-teal-200";
+        certBadge.innerHTML = `&#127891; Passing Score`;
+        feedbackMsg.innerText = "Congratulations! You have surpassed the community college standards passing threshold (80%). Review the Competency Map below to find and reinforce any remaining weak spots.";
+      } else {
+        certBadge.className = "inline-flex px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-rose-100 text-rose-800 border border-rose-200";
+        certBadge.innerHTML = `&#9888; Review Required`;
+        feedbackMsg.innerText = "You fell below the 80% passing threshold. Take a break, review the Lecture Slides and Flashcards for your weakest domain shown below, and repeat this evaluation to secure your knowledge.";
+      }
+
+      // Populate Category Strengths
+      calculateCategoryScores();
+
+      // Render Detailed Evaluation review grids
+      buildResultsReviewGrid();
+    }
+
+    // Map competency indicators
+    function calculateCategoryScores() {
+      const categories = {
+        concepts: { total: 0, correct: 0 },
+        security: { total: 0, correct: 0 },
+        tech: { total: 0, correct: 0 },
+        billing: { total: 0, correct: 0 }
+      };
+
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const cat = q.category;
+        const isCorr = userAnswersLog[idx]?.isCorrect;
+        
+        if (categories[cat]) {
+          categories[cat].total++;
+          if (isCorr) categories[cat].correct++;
+        }
+      });
+
+      for (let key in categories) {
+        const item = categories[key];
+        const pct = item.total > 0 ? Math.round((item.correct / item.total) * 100) : 0;
+        
+        document.getElementById(`domain-${key}-score`).innerText = `${pct}%`;
+        document.getElementById(`domain-${key}-bar`).style.width = `${pct}%`;
+      }
+    }
+
+    // Build Results Review Accordion Grid
+    function buildResultsReviewGrid() {
+      const list = document.getElementById('results-detail-list');
+      list.innerHTML = '';
+
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const userLog = userAnswersLog[idx];
+        const isCorr = userLog?.isCorrect;
+        const cardClass = isCorr 
+          ? "border border-emerald-100 bg-emerald-50/10 rounded-xl overflow-hidden"
+          : "border border-rose-100 bg-rose-50/10 rounded-xl overflow-hidden";
+        
+        const badgeClass = isCorr
+          ? "bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-black uppercase"
+          : "bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-[10px] font-black uppercase";
+        
+        const badgeText = isCorr ? "CORRECT" : "INCORRECT";
+
+        const item = document.createElement('div');
+        item.className = cardClass;
+        
+        // Format options summary strings
+        let selectedText = userLog.answers.length > 0 ? userLog.answers.sort().join(", ") : "None";
+        let correctText = q.correct.sort().join(", ");
+
+        item.innerHTML = `
+          <!-- Accordion Header -->
+          <div onclick="toggleAccordion(${idx})" class="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 transition">
+            <div class="flex items-center space-x-3 pr-2">
+              <span class="w-6 h-6 rounded-lg ${isCorr ? 'bg-emerald-500' : 'bg-rose-500'} text-white text-xs font-bold flex items-center justify-center font-mono shrink-0">${idx + 1}</span>
+              <p class="text-xs font-bold text-slate-800 line-clamp-1">${q.prompt}</p>
+            </div>
+            <div class="flex items-center space-x-2 shrink-0">
+              <span class="${badgeClass}">${badgeText}</span>
+              <span class="text-xs text-slate-400" id="accordion-arrow-${idx}">&#9660;</span>
+            </div>
+          </div>
+
+          <!-- Accordion Content (Hidden initially) -->
+          <div id="accordion-content-${idx}" class="hidden border-t border-slate-100 p-4 bg-white space-y-4 text-xs sm:text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-3 border-b border-slate-100">
+              <div>
+                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Your Selections</span>
+                <p class="text-base font-black ${isCorr ? 'text-emerald-600' : 'text-rose-500'} font-mono mt-0.5">${selectedText}</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Valid Keys</span>
+                <p class="text-base font-black text-indigo-500 font-mono mt-0.5">${correctText}</p>
+              </div>
+            </div>
+
+            <!-- Choices lists -->
+            <div class="space-y-2">
+              <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Evaluation Choices Summary</span>
+              <div class="space-y-1">
+                ${q.options.map(o => {
+                  let textClass = "text-xs";
+                  let isSelectedOpt = userLog.answers.includes(o.key);
+                  let isCorrectOpt = q.correct.includes(o.key);
+
+                  if (isCorrectOpt) textClass += " font-bold text-emerald-600";
+                  else if (isSelectedOpt) textClass += " font-bold text-rose-500";
+                  else textClass += " text-slate-500";
+
+                  const glyph = isCorrectOpt ? '&#10003;' : isSelectedOpt ? '&#10005;' : '&#8226;';
+
+                  return `
+                    <div class="flex items-center space-x-1.5 ${textClass}">
+                      <span class="text-[10px]">${glyph}</span>
+                      <span><strong>${o.key}:</strong> ${o.text}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Pedagogical analysis detail -->
+            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-100 space-y-1.5">
+              <span class="text-indigo-500 font-bold uppercase tracking-wider text-[10px] block">${q.explanation.title}</span>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                ${isCorr ? q.explanation.correct : q.explanation.incorrect + ' ' + q.explanation.correct}
+              </p>
+            </div>
+          </div>
+        `;
+
+        list.appendChild(item);
+      });
+    }
+
+    // Toggle Review list accordions
+    function toggleAccordion(idx) {
+      AudioEngine.tap();
+      const content = document.getElementById(`accordion-content-${idx}`);
+      const arrow = document.getElementById(`accordion-arrow-${idx}`);
+
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.className = "text-xs text-indigo-500";
+        arrow.innerHTML = "&#9650;";
+      } else {
+        content.classList.add('hidden');
+        arrow.className = "text-xs text-slate-400";
+        arrow.innerHTML = "&#9660;";
+      }
+    }
+
+    // Expand / Collapse all reviews
+    function toggleDetailsSummary() {
+      AudioEngine.tap();
+      const btn = document.getElementById('btn-toggle-summary');
+      const expanding = btn.innerText === "Expand All";
+
+      QUIZ_QUESTIONS.forEach((_, idx) => {
+        const content = document.getElementById(`accordion-content-${idx}`);
+        const arrow = document.getElementById(`accordion-arrow-${idx}`);
+        if (expanding) {
+          content.classList.remove('hidden');
+          arrow.className = "text-xs text-indigo-500";
+          arrow.innerHTML = "&#9650;";
+        } else {
+          content.classList.add('hidden');
+          arrow.className = "text-xs text-slate-400";
+          arrow.innerHTML = "&#9660;";
+        }
+      });
+
+      btn.innerText = expanding ? "Collapse All" : "Expand All";
+    }
+
+    // Reset Quiz state and restart
+    function resetAndRestartQuiz() {
+      AudioEngine.tap();
+      
+      // Clear logs
+      selectedAnswers = [];
+      userAnswersLog = Array(QUIZ_QUESTIONS.length).fill(null);
+      quizCompleted = false;
+
+      // Reset HUD Score counts
+      updateScoreDashboard();
+
+      // Show quiz workspace and hide results screen
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('quiz-card').classList.remove('hidden');
+
+      // Re-render navigator lists
+      renderNavigationMatrix();
+
+      // Load first question
+      loadQuestion(0);
+    }
+  </script>
+</body>
+</html>

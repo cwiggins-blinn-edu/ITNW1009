@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITNW 1009: AWS Cloud Practitioner Courseware &amp; Exam Portal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Shared ITNW 1009 design system (focus ring, scrollbar, flip-card mechanics, tokens) -->
+<link rel="stylesheet" href="itnw1009-theme.css">
+<style>
+/* ==========================================================================
+   PORTAL-SPECIFIC ADDITIONS (not already covered by itnw1009-theme.css)
+   ========================================================================== */
+.option-btn.is-selected{border-color:var(--color-primary);background:var(--color-primary-light);color:var(--color-primary-darker);}
+.qz-indicator{width:1.25rem;height:1.25rem;flex-shrink:0;border:2px solid var(--color-border-strong);background:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:transparent;border-radius:9999px;transition:all .15s ease;}
+.qz-indicator.qz-selected{background:var(--color-primary);border-color:var(--color-primary);color:#fff;}
+.qz-indicator.qz-correct{background:var(--color-success);border-color:var(--color-success);color:#fff;}
+.qz-indicator.qz-incorrect{background:var(--color-rose);border-color:var(--color-rose);color:#fff;}
+@keyframes pulse-ring{0%{transform:scale(.95);opacity:.5;}50%{transform:scale(1.05);opacity:.8;}100%{transform:scale(.95);opacity:.5;}}
+.active-pulse{animation:pulse-ring 2s infinite ease-in-out;}
+.sandbox-card{border:2px dashed var(--color-border-strong);border-radius:var(--radius-lg);padding:1rem;cursor:pointer;transition:all .15s ease;background:var(--color-surface);}
+.sandbox-card:hover{border-color:var(--color-blue);background:var(--color-blue-light);}
+.sandbox-card.correct-drop{border-style:solid;border-color:var(--color-success);background:var(--color-success-light);}
+.sandbox-card.incorrect-drop{border-style:solid;border-color:var(--color-rose);background:var(--color-rose-light);}
+</style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+<a href="#main-portal" class="skip-link sr-only focus:not-sr-only">Skip to main content</a>
+<div id="sr-alert-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<header class="bg-indigo-950 text-white shadow-md border-b border-indigo-900 sticky top-0 z-40" role="banner">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-inner flex items-center justify-center text-white" aria-hidden="true">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+      </div>
+      <div>
+        <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs block">ITNW 1009 • Course Player</span>
+        <h1 class="text-lg md:text-xl font-extrabold tracking-tight">AWS Certified Cloud Practitioner (CLF-C02): Full Course Portal</h1>
+      </div>
+    </div>
+    <span class="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
+      <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse" aria-hidden="true"></span> Days 1–12 Loaded
+    </span>
+  </div>
+</header>
+
+<div class="max-w-7xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6" id="main-portal">
+
+  <!-- SIDEBAR -->
+  <nav class="w-full md:w-64 flex-shrink-0" aria-label="Student Learning Modules">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24 space-y-4">
+      <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-3 mb-1">Course Navigation</h2>
+      <ul class="space-y-1" role="tablist" aria-label="Course Sections" id="nav-tab-list">
+        <li><button data-tab="overview" role="tab" aria-selected="true" aria-controls="panel-overview" id="tab-overview" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-50 text-indigo-900 shadow-sm nav-btn"><span class="w-2 h-2 rounded-full bg-indigo-600" aria-hidden="true"></span>1. Overview</button></li>
+        <li><button data-tab="lecture" role="tab" aria-selected="false" aria-controls="panel-lecture" id="tab-lecture" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200 nav-btn"><span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>2. Lecture Slides (Days 1–12)</button></li>
+        <li><button data-tab="flashcards" role="tab" aria-selected="false" aria-controls="panel-flashcards" id="tab-flashcards" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200 nav-btn"><span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>3. Flashcards (60 Terms)</button></li>
+        <li><button data-tab="sandbox" role="tab" aria-selected="false" aria-controls="panel-sandbox" id="tab-sandbox" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200 nav-btn"><span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>4. Sandbox Simulator</button></li>
+        <li><button data-tab="labs" role="tab" aria-selected="false" aria-controls="panel-labs" id="tab-labs" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200 nav-btn"><span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>5. Guided Labs (Days 1–12)</button></li>
+        <li><button data-tab="exam" role="tab" aria-selected="false" aria-controls="panel-exam" id="tab-exam" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 text-sm hover:bg-slate-50 transition-all duration-200 nav-btn"><span class="w-2 h-2 rounded-full bg-transparent border border-slate-400" aria-hidden="true"></span>6. Practice Exam (65 Q)</button></li>
+      </ul>
+      <div class="pt-4 border-t border-slate-100">
+        <div class="bg-indigo-900 text-white p-3 rounded-xl shadow-sm text-center">
+          <p class="text-[11px] text-indigo-300 font-bold uppercase tracking-wider">Certification Target</p>
+          <p class="text-xs font-extrabold mt-1">AWS CLF-C02, All 4 Domains</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN WORKSPACE -->
+  <main id="workspace-panel" class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[600px] flex flex-col justify-between">
+    <div id="panels-container" class="flex-grow">
+
+    <!-- ============ TAB 1: OVERVIEW ============ -->
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tab-content space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-black text-slate-900">Course &amp; Certification Overview</h2>
+        <p class="text-slate-500 text-sm mt-1">A single, offline-ready courseware player covering Days 1–12 of ITNW 1009 and the four official AWS Certified Cloud Practitioner (CLF-C02) exam domains.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+          <h3 class="font-bold text-slate-900 text-sm">Domain 1: Cloud Concepts — 24%</h3>
+          <p class="text-xs text-slate-600 mt-1">Value proposition, deployment/service models, Well-Architected Framework. Covered Days 1, 2, 11.</p>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+          <h3 class="font-bold text-slate-900 text-sm">Domain 2: Security &amp; Compliance — 30%</h3>
+          <p class="text-xs text-slate-600 mt-1">Shared Responsibility Model, IAM, security services, monitoring/audit tooling. Covered Days 3, 4, 8, 12.</p>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+          <h3 class="font-bold text-slate-900 text-sm">Domain 3: Cloud Technology &amp; Services — 34%</h3>
+          <p class="text-xs text-slate-600 mt-1">Compute, containers, storage, networking, databases, DNS/CDN. Covered Days 5, 6, 7, 8, 9, 10.</p>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+          <h3 class="font-bold text-slate-900 text-sm">Domain 4: Billing, Pricing &amp; Support — 12%</h3>
+          <p class="text-xs text-slate-600 mt-1">CapEx vs. OpEx, Pricing Calculator, Support Plans, cost management tools.</p>
+        </div>
+      </div>
+      <div class="callout callout-indigo p-4 rounded-r-xl border-l-4" style="border-left-color:var(--color-primary);background:var(--color-primary-light);">
+        <span class="callout-badge" style="background:var(--color-primary-tint);color:var(--color-primary-darker);display:inline-block;padding:.25rem .75rem;border-radius:.5rem;font-weight:700;font-size:.7rem;">HOW TO USE THIS PORTAL</span>
+        <p class="text-sm text-slate-700 mt-2 leading-relaxed">Start with <strong>Lecture Slides</strong> to review the Day 1–12 concept summaries, drill vocabulary in <strong>Flashcards</strong>, practice applying concepts in the <strong>Sandbox Simulator</strong>, review <strong>Guided Labs</strong> for hands-on skills, then sit the full <strong>65-question Practice Exam</strong> to check your certification readiness.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" role="list" aria-label="Portal accessibility features">
+        <div class="border border-slate-200 rounded-xl p-3 text-center" role="listitem"><span class="text-2xl" aria-hidden="true">⌨️</span><p class="text-xs font-bold text-slate-700 mt-1">Full Keyboard Navigation</p></div>
+        <div class="border border-slate-200 rounded-xl p-3 text-center" role="listitem"><span class="text-2xl" aria-hidden="true">🔊</span><p class="text-xs font-bold text-slate-700 mt-1">Screen-Reader Labeled</p></div>
+        <div class="border border-slate-200 rounded-xl p-3 text-center" role="listitem"><span class="text-2xl" aria-hidden="true">🌓</span><p class="text-xs font-bold text-slate-700 mt-1">WCAG 2.1 AA Contrast</p></div>
+      </div>
+    </section>
+
+    <!-- ============ TAB 2: LECTURE SLIDES ============ -->
+    <section id="panel-lecture" role="tabpanel" aria-labelledby="tab-lecture" class="tab-content hidden space-y-4">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-black text-slate-900">Lecture Slide Library — Days 1 through 12</h2>
+        <p class="text-slate-500 text-sm mt-1">Click any day to expand its condensed lecture notes, key diagram description, and vocabulary focus.</p>
+      </div>
+      <div id="lecture-accordion" class="space-y-3"></div>
+    </section>
+
+    <!-- ============ TAB 3: FLASHCARDS ============ -->
+    <section id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards" class="tab-content hidden space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>
+          <h2 class="text-2xl font-black text-slate-900">Terminology Study Flashcards</h2>
+          <p class="text-slate-500 text-sm mt-1">60 vocabulary terms drawn from Day 1–12 lessons. Click or press Enter/Space to flip.</p>
+        </div>
+        <label for="day-filter" class="sr-only">Filter flashcards by day</label>
+        <select id="day-filter" onchange="filterFlashcardsByDay()" class="text-xs font-bold border border-slate-300 rounded-lg px-3 py-2 bg-white text-slate-700">
+          <option value="all">All Days (60 cards)</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col items-center gap-4">
+        <div id="active-card-flipper" class="flashcard w-full max-w-xl" style="height:340px;" tabindex="0" role="button"
+             aria-label="Vocabulary flashcard. Press Enter or Space to flip." onclick="flipCard()">
+          <!-- FRONT FACE -->
+          <div id="card-face-front" class="flashcard-face flashcard-front">
+            <div class="flex justify-between items-start">
+              <span class="pill pill-dark">Term <span id="card-day-badge-front"></span></span>
+              <span id="card-index-count" class="text-xs text-indigo-300 font-mono">Card 1 of 60</span>
+            </div>
+            <div class="flex-grow flex items-center justify-center text-center">
+              <h3 id="flash-card-term" class="text-3xl font-black text-white"></h3>
+            </div>
+            <p class="text-center text-xs text-indigo-300 font-semibold">Click card or press Space/Enter to reveal definition</p>
+          </div>
+          <!-- BACK FACE -->
+          <div id="card-face-back" class="flashcard-face flashcard-back hidden">
+            <table class="w-full text-left border-collapse">
+              <caption class="sr-only">Definition, analogy, workplace context, and self-check quiz for this vocabulary term.</caption>
+              <tbody class="text-xs sm:text-sm">
+                <tr class="border-b border-slate-200"><th scope="row" class="align-top font-black text-indigo-700 pr-3 py-1.5 whitespace-nowrap">Term:</th><td id="flash-card-back-term" class="py-1.5 font-bold"></td></tr>
+                <tr class="border-b border-slate-200"><th scope="row" class="align-top font-black text-indigo-700 pr-3 py-1.5">Definition:</th><td id="flash-card-definition" class="py-1.5"></td></tr>
+                <tr class="border-b border-slate-200"><th scope="row" class="align-top font-black text-indigo-700 pr-3 py-1.5">Analogy:</th><td id="flash-card-analogy" class="py-1.5 italic"></td></tr>
+                <tr class="border-b border-slate-200"><th scope="row" class="align-top font-black text-indigo-700 pr-3 py-1.5">Workplace Use:</th><td id="flash-card-scenario" class="py-1.5"></td></tr>
+                <tr><th scope="row" class="align-top font-black text-indigo-700 pr-3 py-1.5">Checkpoint:</th><td class="py-1.5">
+                  <p id="flash-card-quiz" class="mb-2"></p>
+                  <button onclick="revealCardQuizAnswer(event)" class="btn btn-secondary text-xs px-3 py-1.5 rounded-lg border border-slate-300 font-bold hover:bg-slate-100">Show Answer</button>
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button onclick="prevCard()" class="px-4 py-2.5 rounded-lg border border-slate-300 font-bold text-sm text-slate-700 hover:bg-slate-100" aria-label="Previous flashcard">&larr; Prev</button>
+          <button onclick="flipCard()" class="px-4 py-2.5 rounded-lg bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700">Flip Card</button>
+          <button onclick="nextCard()" class="px-4 py-2.5 rounded-lg border border-slate-300 font-bold text-sm text-slate-700 hover:bg-slate-100" aria-label="Next flashcard">Next &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAB 4: SANDBOX SIMULATOR ============ -->
+    <section id="panel-sandbox" role="tabpanel" aria-labelledby="tab-sandbox" class="tab-content hidden space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-black text-slate-900">Architecture Scenario Sandbox Simulator</h2>
+        <p class="text-slate-500 text-sm mt-1">Read the workplace scenario, then select the AWS service or concept that best solves it. This mirrors real technician decision-making and reuses Day 1–12 vocabulary.</p>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6" role="group" aria-labelledby="sandbox-scenario-heading">
+        <div class="flex justify-between items-center mb-3">
+          <span id="sandbox-round-count" class="text-xs font-bold text-indigo-600 font-mono">Scenario 1 of 12</span>
+          <span id="sandbox-score" class="text-xs font-bold text-slate-500" aria-live="polite">Score: 0 / 0</span>
+        </div>
+        <h3 id="sandbox-scenario-heading" class="text-lg font-extrabold text-slate-900 mb-4">Loading scenario…</h3>
+        <div id="sandbox-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="list" aria-label="Answer choices"></div>
+        <div id="sandbox-feedback" class="hidden mt-4 p-4 rounded-xl text-sm" aria-live="polite"></div>
+        <div class="flex justify-end mt-4">
+          <button id="sandbox-next-btn" onclick="sandboxNext()" class="hidden px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700">Next Scenario &rarr;</button>
+          <button id="sandbox-restart-btn" onclick="sandboxRestart()" class="hidden px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700">Restart Simulator</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAB 5: GUIDED LABS ============ -->
+    <section id="panel-labs" role="tabpanel" aria-labelledby="tab-labs" class="tab-content hidden space-y-4">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-black text-slate-900">Guided Lab Companion — Days 1 through 12</h2>
+        <p class="text-slate-500 text-sm mt-1">Condensed objectives and step outlines for each hands-on lab. Use alongside your full lab manual documents.</p>
+      </div>
+      <div id="labs-accordion" class="space-y-3"></div>
+    </section>
+
+    <!-- ============ TAB 6: PRACTICE EXAM (65 Q) — LINKS TO STANDALONE FILE ============ -->
+    <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" class="tab-content hidden space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-black text-slate-900">AWS Practice Certification Hub</h2>
+        <p class="text-slate-500 text-sm mt-1">Review core exam patterns and take the full practice exam in its own dedicated quiz portal.</p>
+      </div>
+
+      <div class="text-center py-12 max-w-xl mx-auto space-y-6">
+        <div class="bg-indigo-50 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" aria-hidden="true">📝</div>
+        <div class="space-y-2">
+          <h3 class="text-xl font-extrabold text-slate-900">AWS Certified Cloud Practitioner Full Practice Exam</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            65 questions spanning all four official CLF-C02 domains: Cloud Concepts, Security &amp; Compliance, Cloud Technology &amp; Services, and Billing, Pricing &amp; Support. Includes Study Mode with instant rationales and Exam Mode for a timed-style self-check, plus a full domain-by-domain score report.
+          </p>
+        </div>
+        <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-left">
+          <span class="font-bold text-emerald-700 block mb-1">Ready to View</span>
+          <span class="text-emerald-600">The 65-question practice exam is live and ready to take.</span>
+        </div>
+        <a href="CPExam_practice.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm shadow-md">
+          <span>Launch Certification Exam Simulator</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </a>
+      </div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<footer class="bg-white border-t border-slate-200 py-6 mt-4">
+  <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+    <p class="text-xs text-slate-500 font-semibold">ITNW 1009 • Fundamentals of Cloud and AI • Community College Curriculum</p>
+    <div class="flex justify-center flex-wrap space-x-4 text-xs font-medium text-slate-400">
+      <span>WCAG 2.1 AA Compliant</span><span>•</span><span>CLF-C02 Alignment</span><span>•</span><span>Days 1–12 Consolidated Portal</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================================
+   TAB NAVIGATION
+   ========================================================================== */
+function activateTab(name){
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.getElementById('panel-' + name).classList.remove('hidden');
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    const active = btn.dataset.tab === name;
+    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    btn.className = 'w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 nav-btn ' +
+      (active ? 'bg-indigo-50 text-indigo-900 shadow-sm' : 'font-medium text-slate-600 hover:bg-slate-50');
+    const dot = btn.querySelector('span');
+    dot.className = active ? 'w-2 h-2 rounded-full bg-indigo-600' : 'w-2 h-2 rounded-full bg-transparent border border-slate-400';
+  });
+  document.getElementById('sr-alert-announcer').textContent = 'Navigated to ' + name + ' section.';
+}
+document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => activateTab(btn.dataset.tab)));
+
+/* ==========================================================================
+   LECTURE LIBRARY DATA (Days 1-12)
+   ========================================================================== */
+const LECTURES = [
+{day:1, title:"Cloud Concepts & AWS Value Proposition", domain:"Domain 1: Cloud Concepts",
+ body:"Cloud computing is the on-demand delivery of IT resources over the internet with pay-as-you-go pricing. The five characteristics defined by NIST are On-Demand Self-Service, Broad Network Access, Resource Pooling, Rapid Elasticity, and Measured Service. The AWS value proposition rests on trading CapEx (upfront hardware purchases) for OpEx (variable, consumption-based spend), eliminating both under-provisioning (crashes from too little capacity) and over-provisioning (wasted budget from too much capacity).",
+ alt:"[Alt Text Description for screen readers: A balance scale diagram. The left side, labeled Traditional Data Center, is weighed down by icons of physical servers and a large invoice representing CapEx. The right side, labeled AWS Cloud, is lighter and shows a dial/gauge representing Measured Service and elastic scaling, representing OpEx.]"},
+{day:2, title:"AWS Global Infrastructure", domain:"Domain 1: Cloud Concepts",
+ body:"AWS infrastructure is organized into Regions (independent geographic areas containing multiple data centers), Availability Zones or AZs (one or more discrete data centers within a Region, isolated from failures in other AZs but connected by high-speed private networking), Edge Locations, and Points of Presence used for content caching and DNS. Choosing a Region involves weighing Latency to end users, Data Sovereignty and compliance law, available services, and cost, all of which factor into the Total Cost of Ownership (TCO) comparison against on-premises hosting.",
+ alt:"[Alt Text Description for screen readers: A world map showing several labeled Region pins, each pin expanding into a cluster of three small building icons representing multiple Availability Zones connected by dotted lines representing low-latency private links.]"},
+{day:3, title:"Identity & Access Management (IAM) and Shared Responsibility", domain:"Domain 2: Security & Compliance",
+ body:"The Shared Responsibility Model divides duties: AWS is responsible for Security OF the Cloud (physical data centers, hardware, global infrastructure), while the customer is responsible for Security IN the Cloud (data, IAM configuration, operating system patches, network controls). IAM lets administrators create IAM Users (people or applications), organize them into IAM Groups, and attach IAM Policies (JSON documents defining allowed or denied actions) following the Least Privilege principle, granting a Principal only the access it needs. IAM Roles provide temporary, assumable credentials instead of long-term keys, and MFA adds a second verification factor beyond a password.",
+ alt:"[Alt Text Description for screen readers: A horizontal dividing line labeled Shared Responsibility Model. Above the line, labeled AWS Responsibility, are icons of a data center building, a server rack, and networking cables. Below the line, labeled Customer Responsibility, are icons of a padlock representing data, a person representing IAM users, and a document representing configuration.]"},
+{day:4, title:"AWS Security, Detection & Compliance Services", domain:"Domain 2: Security & Compliance",
+ body:"AWS offers a layered toolkit of managed security services: AWS Shield defends against DDoS attacks, AWS WAF filters malicious web traffic using rule sets, Amazon GuardDuty performs continuous threat detection by analyzing logs for suspicious behavior, Amazon Inspector automatically scans workloads for software vulnerabilities, Amazon Macie discovers and protects sensitive data such as PII in Amazon S3, AWS Trusted Advisor offers best-practice checks across cost, performance, security, and fault tolerance, AWS Artifact provides on-demand access to compliance reports, and AWS Security Hub aggregates findings from these services into a single dashboard.",
+ alt:"[Alt Text Description for screen readers: A shield icon at the perimeter labeled AWS Shield and WAF blocking an arrow representing a DDoS attack, with a magnifying glass icon inside the perimeter labeled GuardDuty and Inspector scanning a server icon for threats and vulnerabilities.]"},
+{day:5, title:"Amazon EC2 and Compute Fundamentals", domain:"Domain 3: Cloud Technology & Services",
+ body:"Amazon EC2 (Elastic Compute Cloud) provides resizable virtual servers launched from an AMI (Amazon Machine Image), which acts as a template containing the operating system and pre-installed software. EC2 pricing options include On-Demand (pay by the second/hour with no commitment), Reserved Instances and Savings Plans (discounted rates for 1 or 3-year commitments), and Spot Instances (steep discounts on spare capacity that can be interrupted). An Elastic Load Balancer (ELB) distributes incoming traffic across multiple instances, while an Auto Scaling Group (ASG), built from a Launch Template, automatically adds or removes instances to match demand.",
+ alt:"[Alt Text Description for screen readers: A diagram showing an Elastic Load Balancer icon at the top distributing three arrows of incoming traffic evenly down to three EC2 instance icons inside a dashed box labeled Auto Scaling Group, with a fourth grayed-out instance icon showing where the group could expand.]"},
+{day:6, title:"Serverless Computing & Containers", domain:"Domain 3: Cloud Technology & Services",
+ body:"Serverless computing, exemplified by AWS Lambda, lets code run in response to Event-Driven triggers without the customer managing any underlying servers, billing only for actual execution time. Containers package an application with its dependencies into a portable Container Image; Amazon ECS and Amazon EKS orchestrate groups of containers, and AWS Fargate is a serverless launch type that runs containers without provisioning EC2 instances directly. This container-based approach supports Microservices architecture, where an application is broken into small, independently deployable services.",
+ alt:"[Alt Text Description for screen readers: Three shipping-container icons of different sizes labeled Microservice A, B, and C, all sitting on a conveyor belt labeled Amazon ECS or EKS Orchestration, with a cloud icon underneath labeled AWS Fargate representing no visible servers.]"},
+{day:7, title:"AWS Storage Services", domain:"Domain 3: Cloud Technology & Services",
+ body:"AWS storage divides into Block Storage such as Amazon EBS (Elastic Block Store), which attaches to a single EC2 instance like a virtual hard drive, and Object Storage such as Amazon S3, which stores files as objects inside an S3 Bucket with virtually unlimited scalability and eleven nines of Durability. Amazon EFS offers shared, elastic file storage mountable by many instances simultaneously. An S3 Lifecycle Policy automatically transitions older objects to cheaper storage classes such as Glacier Deep Archive for long-term archival.",
+ alt:"[Alt Text Description for screen readers: Three storage icons side by side: a single hard drive icon labeled EBS attached to one server; a filing cabinet with many folders labeled S3 Bucket Object Storage; and a shared folder icon labeled EFS connected to three servers at once.]"},
+{day:8, title:"Amazon VPC & Networking Fundamentals", domain:"Domain 2: Security & Compliance / Domain 3: Technology",
+ body:"Amazon VPC (Virtual Private Cloud) is a logically isolated, customer-defined network within AWS, sized using a CIDR block. Within a VPC, Public Subnets route traffic through an Internet Gateway (IGW) to reach the internet, while Private Subnets have no direct internet route and instead reach outbound resources through a NAT Gateway. Traffic flow between subnets is directed by Route Tables. Security is enforced at two layers: Security Groups act as a stateful virtual firewall around individual instances, while a NACL (Network Access Control List) is a stateless firewall applied at the subnet boundary.",
+ alt:"[Alt Text Description for screen readers: A rectangle labeled VPC containing two smaller rectangles: a Public Subnet connected upward to an Internet Gateway icon, and a Private Subnet connected to a NAT Gateway icon inside the public subnet, which then connects onward to the Internet Gateway.]"},
+{day:9, title:"AWS Database Services", domain:"Domain 3: Cloud Technology & Services",
+ body:"Relational databases organize data into structured tables with defined schemas and relationships, managed on AWS through Amazon RDS (supporting engines like MySQL and PostgreSQL) or Amazon Aurora, AWS's high-performance, MySQL/PostgreSQL-compatible engine. NoSQL databases such as Amazon DynamoDB use flexible, schema-less key-value or document models built for massive scale and single-digit millisecond latency, with capacity measured by Provisioned Throughput. Amazon Redshift is a Data Warehouse built for large-scale analytics rather than transactional workloads. Multi-AZ deployments replicate a database into a second Availability Zone for automatic failover.",
+ alt:"[Alt Text Description for screen readers: Two contrasting icons: on the left, a neat spreadsheet grid labeled Relational RDS/Aurora with rows and columns; on the right, a loose collection of differently shaped document icons labeled NoSQL DynamoDB, illustrating flexible schema versus fixed schema.]"},
+{day:10, title:"DNS & Content Delivery", domain:"Domain 3: Cloud Technology & Services",
+ body:"DNS (Domain Name System) translates human-readable domain names into IP addresses; Amazon Route 53 is AWS's managed DNS service, supporting routing policies such as Failover Routing (directs traffic to a healthy backup resource) and Geolocation Routing (directs users to the nearest or most appropriate resource). A CDN (Content Delivery Network) like Amazon CloudFront caches content at Edge Locations physically closer to end users, reducing latency; content remains cached until its TTL (Time-To-Live) expires, at which point a Cache Miss forces the edge location to fetch fresh content from the origin.",
+ alt:"[Alt Text Description for screen readers: A globe icon at the center labeled Origin Server, surrounded by several smaller Edge Location icons at the globe's edge, each with a short arrow pointing to a nearby user icon, illustrating cached content served closer to end users.]"},
+{day:11, title:"The AWS Well-Architected Framework & Resiliency", domain:"Domain 1: Cloud Concepts",
+ body:"The AWS Well-Architected Framework rests on six pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability. Within Reliability, High Availability (HA) means a system remains accessible with minimal downtime by removing single points of failure, while Fault Tolerance (FT) means the system keeps operating correctly even after a component fails, with no perceptible impact to the end user. Disaster recovery strategy is measured with RTO (Recovery Time Objective, how long restoration may take) and RPO (Recovery Point Objective, how much data loss in time is acceptable), guiding choices from Backup & Restore up through Warm Standby to Multi-Site Active-Active.",
+ alt:"[Alt Text Description for screen readers: A Greek temple illustration with six labeled pillars—Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability—all supporting a single roof labeled Well-Architected Workload.]"},
+{day:12, title:"Monitoring, Auditing & Governance", domain:"Domain 2: Security & Compliance",
+ body:"Amazon CloudWatch collects Metrics and logs for performance monitoring and can trigger a CloudWatch Alarm when a threshold is breached. AWS CloudTrail records every API Event made in an account for security auditing and after-the-fact investigation, answering 'who did what, and when.' AWS Config continuously assesses, audits, and evaluates resource configurations against desired Config Rules, flagging drift from your organization's compliance baseline.",
+ alt:"[Alt Text Description for screen readers: A control-room dashboard illustration with three monitors: the left monitor labeled CloudWatch shows a live performance graph and an alarm bell icon; the center monitor labeled CloudTrail shows a scrolling log list of user actions; the right monitor labeled Config shows a checklist with a red flag next to one non-compliant item.]"}
+];
+
+function renderLectureAccordion(){
+  const wrap = document.getElementById('lecture-accordion');
+  LECTURES.forEach((l,i) => {
+    const div = document.createElement('div');
+    div.className = "border border-slate-200 rounded-xl overflow-hidden";
+    div.innerHTML = `
+      <h3>
+        <button class="w-full flex justify-between items-center p-4 text-left bg-slate-50 hover:bg-slate-100 transition" aria-expanded="false" aria-controls="lecture-body-${i}" onclick="toggleLecture(${i})">
+          <span class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white text-xs font-black flex items-center justify-center">D${l.day}</span>
+            <span class="font-bold text-sm text-slate-800">${l.title}</span>
+          </span>
+          <span class="text-xs text-slate-400" id="lecture-arrow-${i}" aria-hidden="true">&#9660;</span>
+        </button>
+      </h3>
+      <div id="lecture-body-${i}" class="hidden p-5 space-y-3 border-t border-slate-100">
+        <span class="pill pill-light">${l.domain}</span>
+        <p class="text-sm text-slate-700 leading-relaxed">${l.body}</p>
+        <p class="text-xs text-slate-500 italic bg-slate-50 border border-slate-100 p-3 rounded-lg">${l.alt}</p>
+      </div>`;
+    wrap.appendChild(div);
+  });
+}
+function toggleLecture(i){
+  const body = document.getElementById('lecture-body-'+i);
+  const arrow = document.getElementById('lecture-arrow-'+i);
+  const btn = arrow.closest('button');
+  const opening = body.classList.contains('hidden');
+  body.classList.toggle('hidden');
+  arrow.innerHTML = opening ? "&#9650;" : "&#9660;";
+  btn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+}
+renderLectureAccordion();
+
+/* ==========================================================================
+   GUIDED LABS DATA
+   ========================================================================== */
+const LABS = [
+{day:1, title:"Foundations Discovery Lab", objectives:"Sign in to the AWS Management Console, explore the Billing dashboard, and identify examples of CapEx vs. OpEx spending patterns in a sample invoice.", steps:["Log in to the AWS Console with a lab IAM user.","Navigate to Billing & Cost Management and locate the current month's estimated charges.","Identify which listed services represent pay-as-you-go OpEx spend.","Record findings in the lab worksheet."]},
+{day:2, title:"Global Infrastructure Mapping Lab", objectives:"Use the AWS Region selector to compare service availability and estimate latency impact across two Regions.", steps:["Open the Region dropdown in the Console.","Switch between two Regions and note which services are unavailable in each.","Use the AWS latency test page to compare round-trip times.","Document which Region minimizes latency for a sample user base."]},
+{day:3, title:"IAM Lab: Users, Groups, Roles & Policies", objectives:"Create least-privilege IAM users and groups, attach a custom JSON policy, and enable MFA.", steps:["Create a new IAM Group named Developers.","Attach an AWS-managed least-privilege policy to the group.","Create an IAM User, add to the group, and enable a virtual MFA device.","Test access by attempting an action outside the policy's permissions and confirm it is denied."]},
+{day:4, title:"Security Services Lab", objectives:"Enable Amazon GuardDuty and review AWS Trusted Advisor security checks.", steps:["Enable GuardDuty in the account.","Review any sample or existing findings in the GuardDuty console.","Open AWS Trusted Advisor and review the Security category checks.","Record two recommended remediation actions."]},
+{day:5, title:"EC2 Lab: Launch & Auto Scale", objectives:"Launch an EC2 instance from an AMI, attach it to a Load Balancer, and configure an Auto Scaling Group.", steps:["Launch an EC2 instance using a standard Amazon Linux AMI.","Create a Launch Template based on that instance's configuration.","Create an Auto Scaling Group using the template with a minimum of 2 and maximum of 4 instances.","Attach an Application Load Balancer and verify traffic distributes across instances."]},
+{day:6, title:"Lambda Serverless Lab", objectives:"Deploy an event-driven AWS Lambda function and trigger it from an S3 upload event.", steps:["Create a new Lambda function using a supported runtime.","Configure an S3 bucket event notification to trigger the function on object upload.","Upload a test file and confirm the function executed via CloudWatch Logs.","Review the billed execution duration."]},
+{day:7, title:"Storage Lab: EBS, S3 & Lifecycle Policies", objectives:"Create an S3 bucket, upload objects, and configure a lifecycle rule to transition data to Glacier Deep Archive.", steps:["Create an S3 bucket with versioning enabled.","Upload sample objects.","Create a Lifecycle Policy to transition objects older than 30 days to Glacier Deep Archive.","Create and attach an additional EBS volume to an EC2 instance for comparison."]},
+{day:8, title:"VPC Networking Lab", objectives:"Build a custom VPC with public and private subnets, an Internet Gateway, and a NAT Gateway.", steps:["Create a VPC with a /16 CIDR block.","Create one public and one private subnet in different Availability Zones.","Attach an Internet Gateway and update the public subnet's route table.","Deploy a NAT Gateway in the public subnet and route the private subnet's outbound traffic through it."]},
+{day:9, title:"Database Services Lab", objectives:"Launch an Amazon RDS instance and a DynamoDB table, comparing relational vs. NoSQL data models.", steps:["Launch a Multi-AZ Amazon RDS MySQL instance.","Create a DynamoDB table with an on-demand provisioned throughput mode.","Insert sample records into both and compare query behavior.","Document differences in schema flexibility."]},
+{day:10, title:"Route 53 & CloudFront Lab", objectives:"Configure a CloudFront distribution in front of an S3 origin and review DNS routing options in Route 53.", steps:["Create an S3 bucket to serve as a CloudFront origin.","Create a CloudFront distribution pointing to that origin.","Review the default TTL setting and cache behavior.","Explore Route 53 routing policy options including Failover and Geolocation Routing."]},
+{day:11, title:"Well-Architected Review Lab", objectives:"Run a Well-Architected Tool review against a sample workload and record RTO/RPO targets.", steps:["Open the AWS Well-Architected Tool console.","Define a sample workload and answer the Reliability pillar questions.","Identify high-risk issues flagged by the tool.","Define target RTO and RPO values for the sample workload and select a matching DR strategy."]},
+{day:12, title:"Monitoring & Governance Lab", objectives:"Configure a CloudWatch Alarm, review CloudTrail event history, and evaluate an AWS Config rule.", steps:["Create a CloudWatch Alarm on EC2 CPU utilization.","Trigger a load test and confirm the alarm state changes.","Open CloudTrail Event History and locate the alarm-related API calls.","Enable an AWS Config managed rule and review its compliance status."]}
+];
+function renderLabsAccordion(){
+  const wrap = document.getElementById('labs-accordion');
+  LABS.forEach((l,i) => {
+    const div = document.createElement('div');
+    div.className = "border border-slate-200 rounded-xl overflow-hidden";
+    div.innerHTML = `
+      <h3>
+        <button class="w-full flex justify-between items-center p-4 text-left bg-slate-50 hover:bg-slate-100 transition" aria-expanded="false" aria-controls="lab-body-${i}" onclick="toggleLab(${i})">
+          <span class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-teal-600 text-white text-xs font-black flex items-center justify-center">D${l.day}</span>
+            <span class="font-bold text-sm text-slate-800">${l.title}</span>
+          </span>
+          <span class="text-xs text-slate-400" id="lab-arrow-${i}" aria-hidden="true">&#9660;</span>
+        </button>
+      </h3>
+      <div id="lab-body-${i}" class="hidden p-5 space-y-3 border-t border-slate-100">
+        <p class="text-sm text-slate-700"><strong>Objective:</strong> ${l.objectives}</p>
+        <ol class="list-decimal list-inside text-sm text-slate-600 space-y-1">
+          ${l.steps.map(s => `<li>${s}</li>`).join('')}
+        </ol>
+      </div>`;
+    wrap.appendChild(div);
+  });
+}
+function toggleLab(i){
+  const body = document.getElementById('lab-body-'+i);
+  const arrow = document.getElementById('lab-arrow-'+i);
+  const btn = arrow.closest('button');
+  const opening = body.classList.contains('hidden');
+  body.classList.toggle('hidden');
+  arrow.innerHTML = opening ? "&#9650;" : "&#9660;";
+  btn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+}
+renderLabsAccordion();
+
+/* ==========================================================================
+   FLASHCARD DATA (60 TERMS, DAYS 1-12)
+   ========================================================================== */
+const cardData = [
+{day:1, term:"On-Demand Self-Service", definition:"The ability to provision computing resources automatically without requiring human interaction with a provider.", analogy:"Like using a vending machine instead of asking an attendant to fetch your snack.", scenario:"A technician spins up a new test server through the Console at midnight without submitting a ticket or waiting for IT approval.", quiz:"Which NIST characteristic lets a user provision a server without a phone call to a vendor?", answer:"On-Demand Self-Service."},
+{day:1, term:"Rapid Elasticity", definition:"The capability to automatically scale resources up or down quickly to match demand.", analogy:"Like an accordion that expands and contracts to fit the music.", scenario:"An e-commerce site automatically adds servers during a flash sale, then removes them once traffic returns to normal.", quiz:"What term describes automatically scaling capacity to match a sudden traffic spike?", answer:"Rapid Elasticity."},
+{day:1, term:"Measured Service", definition:"A cloud characteristic where resource usage is monitored, controlled, and billed based on actual consumption.", analogy:"Like an electric utility meter that only charges for the power you actually use.", scenario:"A billing administrator reviews a monthly AWS invoice itemized by exact compute-hours and storage-gigabytes consumed.", quiz:"Which NIST characteristic ensures customers pay only for what they use?", answer:"Measured Service."},
+{day:1, term:"CapEx (Capital Expenditure)", definition:"Large upfront investments in physical assets like servers, made before any revenue is generated from them.", analogy:"Like buying a delivery truck outright before you have any packages to deliver.", scenario:"A traditional data center manager must purchase and install physical servers years in advance to guess future demand.", quiz:"What type of spending requires a large upfront purchase of physical hardware?", answer:"CapEx (Capital Expenditure)."},
+{day:1, term:"OpEx (Operational Expenditure)", definition:"Ongoing, variable spending for services as they are consumed, rather than a large upfront purchase.", analogy:"Like leasing a delivery van month-to-month instead of buying it outright.", scenario:"A cloud administrator pays a variable monthly AWS bill that rises and falls with actual usage.", quiz:"What type of spending model does AWS's pay-as-you-go pricing represent?", answer:"OpEx (Operational Expenditure)."},
+{day:2, term:"Region", definition:"A physical geographic location around the world where AWS clusters multiple data centers.", analogy:"Like a metropolitan area that contains several distinct neighborhoods.", scenario:"A compliance officer selects a specific Region to keep customer data within a required country's borders.", quiz:"What is the largest geographic building block of AWS's global infrastructure called?", answer:"A Region."},
+{day:2, term:"Availability Zone", definition:"One or more discrete, physically separate data centers within a Region, each with independent power, cooling, and networking.", analogy:"Like separate buildings on the same block, each with its own backup generator so one building's outage doesn't affect the other.", scenario:"An architect deploys duplicate servers across two Availability Zones so a single data center failure won't take down the application.", quiz:"What is the name for an isolated data center location within a Region used for high availability?", answer:"An Availability Zone (AZ)."},
+{day:2, term:"Edge Location", definition:"A smaller AWS site used to cache content physically closer to end users for faster delivery.", analogy:"Like a local vending machine stocked near customers instead of shipping every snack from a central warehouse.", scenario:"A CDN technician confirms that video content is being served from a nearby edge location instead of the distant origin server.", quiz:"What AWS site type caches content close to end users to reduce latency?", answer:"An Edge Location."},
+{day:2, term:"Latency", definition:"The time delay between a user's request and the system's response, usually measured in milliseconds.", analogy:"Like the delay between saying something on a video call and the other person hearing it.", scenario:"A network engineer chooses a closer AWS Region specifically to reduce page load latency for a regional customer base.", quiz:"What term describes the delay between a request and its response?", answer:"Latency."},
+{day:2, term:"TCO (Total Cost of Ownership)", definition:"A full financial comparison of all direct and indirect costs of running infrastructure on-premises versus in the cloud.", analogy:"Like comparing the true cost of owning a car (gas, insurance, repairs) versus just its sticker price.", scenario:"A finance manager builds a TCO report showing that moving to AWS saves money once staffing and maintenance costs are included.", quiz:"What analysis captures all direct and indirect costs when comparing on-premises versus cloud hosting?", answer:"Total Cost of Ownership (TCO)."},
+{day:3, term:"Shared Responsibility Model", definition:"The division of security duties between AWS, which secures the cloud infrastructure, and the customer, who secures what they put in the cloud.", analogy:"Like an apartment building where the landlord secures the building's locks and structure, but the tenant is responsible for locking their own apartment door.", scenario:"A security auditor confirms that AWS patches the physical hypervisor while the customer's team is responsible for patching their own EC2 operating system.", quiz:"What model defines that AWS secures 'of' the cloud while the customer secures 'in' the cloud?", answer:"The Shared Responsibility Model."},
+{day:3, term:"IAM Role", definition:"A set of temporary permissions that can be assumed by a user, application, or AWS service without long-term credentials.", analogy:"Like a visitor badge that grants building access only while you're on-site, rather than a permanent employee key.", scenario:"A developer configures an EC2 instance to assume an IAM Role so the application can read from S3 without embedding a permanent access key.", quiz:"What IAM feature grants temporary, assumable permissions instead of permanent credentials?", answer:"An IAM Role."},
+{day:3, term:"IAM Policy", definition:"A JSON document that explicitly defines which actions are allowed or denied on which AWS resources.", analogy:"Like a written contract that spells out exactly which rooms in a building you're allowed to enter.", scenario:"An administrator attaches a custom IAM Policy that allows read-only access to a single S3 bucket and nothing else.", quiz:"What is the formal name for the JSON document that grants or denies IAM permissions?", answer:"An IAM Policy."},
+{day:3, term:"MFA (Multi-Factor Authentication)", definition:"A security method requiring a second form of verification in addition to a password.", analogy:"Like needing both a house key and a alarm code to get inside, not just the key alone.", scenario:"A security-conscious administrator requires all root account logins to provide an MFA code from a mobile app.", quiz:"What security control requires a second verification factor beyond a password?", answer:"Multi-Factor Authentication (MFA)."},
+{day:3, term:"Least Privilege", definition:"The security principle of granting only the minimum permissions needed to perform a required task, nothing more.", analogy:"Like giving a hotel housekeeper a key that only opens the rooms they clean, not the manager's office.", scenario:"An IAM administrator writes a policy that grants a billing clerk read-only access to invoices but blocks access to EC2 or S3.", quiz:"What principle says a user should be given only the exact permissions needed for their job?", answer:"Least Privilege."},
+{day:4, term:"AWS Shield", definition:"A managed service that protects AWS resources against Distributed Denial of Service (DDoS) attacks.", analogy:"Like a bouncer at a club entrance who blocks a flood of fake customers trying to overwhelm the doorway.", scenario:"A network engineer confirms AWS Shield automatically absorbed a volumetric traffic flood aimed at the company's public website.", quiz:"What AWS service specifically defends against DDoS attacks?", answer:"AWS Shield."},
+{day:4, term:"AWS WAF", definition:"A web application firewall that filters and blocks malicious HTTP/HTTPS requests using customizable rules.", analogy:"Like a metal detector at an entrance that screens visitors for specific prohibited items before they get inside.", scenario:"A developer configures a WAF rule to block requests containing known SQL-injection patterns before they reach the application.", quiz:"What service filters malicious web traffic using rule-based conditions?", answer:"AWS WAF (Web Application Firewall)."},
+{day:4, term:"Amazon GuardDuty", definition:"A threat detection service that continuously monitors account activity and network logs for malicious or unauthorized behavior.", analogy:"Like a security guard reviewing camera footage overnight for anything suspicious, even when no alarm was triggered.", scenario:"A security analyst receives a GuardDuty finding indicating an EC2 instance is communicating with a known malicious IP address.", quiz:"What service continuously analyzes logs for suspicious account activity?", answer:"Amazon GuardDuty."},
+{day:4, term:"AWS Trusted Advisor", definition:"A tool that inspects an AWS account and provides real-time recommendations across cost, performance, security, and fault tolerance.", analogy:"Like a home inspector who walks through a house and hands you a checklist of things to fix.", scenario:"A cost analyst reviews Trusted Advisor's cost optimization checks to find idle, unattached resources that are wasting money.", quiz:"What tool provides best-practice recommendations across cost, security, and performance categories?", answer:"AWS Trusted Advisor."},
+{day:4, term:"Compliance", definition:"Adherence to laws, regulations, and industry standards governing how data must be handled and protected.", analogy:"Like following building codes and fire-safety inspections to legally operate a restaurant.", scenario:"A healthcare company downloads a HIPAA compliance report from AWS Artifact before signing off on a new workload.", quiz:"What term describes meeting legal and regulatory requirements for data handling?", answer:"Compliance."},
+{day:5, term:"Amazon EC2", definition:"A service providing resizable virtual servers, called instances, in the AWS cloud.", analogy:"Like renting a fully equipped computer by the hour instead of buying and maintaining your own.", scenario:"A developer launches an EC2 instance to host a web application for a weekend hackathon, then terminates it afterward.", quiz:"What AWS service provides resizable virtual compute servers?", answer:"Amazon EC2 (Elastic Compute Cloud)."},
+{day:5, term:"Spot Instance", definition:"Spare EC2 compute capacity offered at a steep discount, which can be reclaimed by AWS with short notice.", analogy:"Like buying a standby airline ticket at a discount, knowing you might get bumped if a full-fare passenger needs the seat.", scenario:"A data scientist runs a batch analytics job on Spot Instances to cut compute costs, since brief interruptions don't affect the result.", quiz:"What EC2 pricing option offers the deepest discount but can be interrupted?", answer:"Spot Instance."},
+{day:5, term:"AMI (Amazon Machine Image)", definition:"A template containing the operating system, application server, and software configuration used to launch an EC2 instance.", analogy:"Like a pre-made recipe card that tells the kitchen exactly how to build a dish every single time.", scenario:"An engineer creates a custom AMI with pre-installed security patches so every new server launches already hardened.", quiz:"What is the template called that defines the OS and software used to launch an EC2 instance?", answer:"An AMI (Amazon Machine Image)."},
+{day:5, term:"Elastic Load Balancer", definition:"A service that automatically distributes incoming application traffic across multiple EC2 instances.", analogy:"Like a host at a restaurant who seats new customers evenly across all open tables instead of overloading one section.", scenario:"An operations engineer places an Elastic Load Balancer in front of an Auto Scaling Group so traffic spreads evenly as instances scale.", quiz:"What service spreads incoming traffic across multiple EC2 instances?", answer:"Elastic Load Balancer (ELB)."},
+{day:5, term:"Auto Scaling Group", definition:"A collection of EC2 instances that automatically grows or shrinks based on demand or defined schedules.", analogy:"Like a restaurant that calls in extra staff during the dinner rush and sends them home once the rush ends.", scenario:"A retail company configures an Auto Scaling Group to double its instance count automatically during a holiday sales event.", quiz:"What feature automatically adds or removes EC2 instances to match demand?", answer:"An Auto Scaling Group (ASG)."},
+{day:6, term:"Serverless", definition:"A computing model where the cloud provider manages the underlying servers, and the customer only manages code.", analogy:"Like ordering food delivery and never having to see or manage the restaurant's kitchen.", scenario:"A developer builds a serverless image-resizing feature using Lambda, never provisioning or patching a single server.", quiz:"What computing model removes the need for the customer to manage or provision servers directly?", answer:"Serverless computing."},
+{day:6, term:"AWS Lambda", definition:"A serverless compute service that runs code in response to events and automatically manages the compute resources.", analogy:"Like a light switch that turns on exactly when needed and turns off automatically once the task is done.", scenario:"A developer configures a Lambda function that automatically resizes any image uploaded to an S3 bucket.", quiz:"What AWS service lets code run in response to events without managing servers?", answer:"AWS Lambda."},
+{day:6, term:"Container", definition:"A lightweight, standalone package that bundles an application with everything it needs to run consistently across environments.", analogy:"Like a shipping container that holds the exact same cargo whether it's loaded on a truck, train, or ship.", scenario:"A DevOps engineer packages an application into a container so it behaves identically on a laptop and in production.", quiz:"What packaging technology bundles an app with its dependencies for consistent deployment?", answer:"A Container."},
+{day:6, term:"Amazon ECS", definition:"A fully managed container orchestration service for running and scaling Docker containers on AWS.", analogy:"Like a shipping yard dispatcher who decides which crane loads which container onto which ship.", scenario:"A platform team uses Amazon ECS to automatically place and scale dozens of microservice containers across a cluster.", quiz:"What AWS service orchestrates and manages Docker containers at scale?", answer:"Amazon ECS (Elastic Container Service)."},
+{day:6, term:"AWS Fargate", definition:"A serverless compute engine for containers that removes the need to provision or manage the underlying EC2 instances.", analogy:"Like renting a fully staffed food truck instead of hiring cooks and buying your own truck.", scenario:"A small team runs their containerized app on AWS Fargate so they never have to patch or size the underlying servers.", quiz:"What serverless launch type runs containers without managing EC2 instances directly?", answer:"AWS Fargate."},
+{day:7, term:"Object Storage", definition:"A storage architecture that manages data as discrete objects, each with data, metadata, and a unique identifier, rather than as files in a folder hierarchy.", analogy:"Like a warehouse using barcode-tagged bins instead of a traditional filing cabinet with nested folders.", scenario:"A media company stores millions of video files as objects in S3 rather than on a traditional file server.", quiz:"What storage architecture manages data as objects with unique identifiers instead of a file hierarchy?", answer:"Object Storage."},
+{day:7, term:"Amazon S3", definition:"AWS's scalable object storage service, offering high durability for storing and retrieving any amount of data.", analogy:"Like an enormous, endlessly expandable storage warehouse that never runs out of space.", scenario:"A backup administrator stores nightly database backups in an Amazon S3 bucket rather than on local disks.", quiz:"What AWS service provides highly durable, scalable object storage?", answer:"Amazon S3 (Simple Storage Service)."},
+{day:7, term:"S3 Lifecycle Policy", definition:"A rule that automatically transitions or expires S3 objects between storage classes over time to reduce cost.", analogy:"Like automatically moving old paperwork from your desk drawer to a cheaper off-site storage unit after a year.", scenario:"A compliance officer sets a Lifecycle Policy to move records older than 90 days into Glacier Deep Archive.", quiz:"What S3 feature automatically moves aging data to cheaper storage tiers?", answer:"An S3 Lifecycle Policy."},
+{day:7, term:"Amazon EFS", definition:"A fully managed, scalable, shared file storage system that can be mounted by multiple EC2 instances at the same time.", analogy:"Like a shared network drive that several coworkers' computers can all open and edit simultaneously.", scenario:"A rendering farm uses Amazon EFS so 50 EC2 instances can read and write shared project files concurrently.", quiz:"What AWS storage service allows many EC2 instances to share the same file system simultaneously?", answer:"Amazon EFS (Elastic File System)."},
+{day:7, term:"Durability", definition:"A measure of how reliably data is preserved over time without loss or corruption, often expressed in nines.", analogy:"Like a vault so well-built that the odds of your valuables being lost are nearly zero over decades.", scenario:"An engineer explains that Amazon S3's eleven nines of durability means a stored object is extremely unlikely to ever be lost.", quiz:"What term describes the likelihood that stored data will not be lost over time?", answer:"Durability."},
+{day:8, term:"Amazon VPC", definition:"A logically isolated, customer-defined virtual network within AWS where resources are launched.", analogy:"Like fencing off your own private lot within a huge shared industrial park.", scenario:"A network architect designs a VPC with separate subnets to isolate a company's web tier from its database tier.", quiz:"What AWS service lets a customer define an isolated, private virtual network?", answer:"Amazon VPC (Virtual Private Cloud)."},
+{day:8, term:"CIDR Block", definition:"A notation defining a range of IP addresses available within a network, such as a VPC or subnet.", analogy:"Like the range of house numbers assigned to a specific street.", scenario:"A network engineer allocates a /24 CIDR block to a subnet, providing 256 usable IP addresses for future instances.", quiz:"What notation defines the range of IP addresses assigned to a VPC or subnet?", answer:"A CIDR block."},
+{day:8, term:"Internet Gateway", definition:"A VPC component that allows communication between resources in a VPC and the public internet.", analogy:"Like the single front door of a gated community that connects residents to the outside street.", scenario:"An administrator attaches an Internet Gateway to a VPC so instances in the public subnet can reach the internet.", quiz:"What VPC component enables communication between a VPC and the public internet?", answer:"An Internet Gateway (IGW)."},
+{day:8, term:"NAT Gateway", definition:"A managed service that allows instances in a private subnet to initiate outbound internet traffic while remaining unreachable from the internet.", analogy:"Like a one-way mail slot: a private subnet resident can send a letter out, but strangers outside can't push mail in.", scenario:"A developer routes a private subnet's outbound software update traffic through a NAT Gateway so those servers stay hidden from inbound internet access.", quiz:"What service allows private subnet resources to reach the internet without being directly reachable from it?", answer:"A NAT Gateway."},
+{day:8, term:"Security Group", definition:"A stateful virtual firewall that controls inbound and outbound traffic at the individual EC2 instance level.", analogy:"Like a personal bodyguard who checks every single visitor trying to reach one specific person.", scenario:"An administrator configures a Security Group to allow inbound traffic only on port 443 for a web server instance.", quiz:"What stateful firewall operates at the individual instance level in AWS?", answer:"A Security Group."},
+{day:9, term:"Relational Database", definition:"A database that organizes data into structured tables with rows and columns, connected through defined relationships.", analogy:"Like a well-organized spreadsheet with fixed columns that always store the same type of information.", scenario:"An accounting team stores customer invoices in a relational database because the transactions need fixed, structured formatting.", quiz:"What type of database stores data in structured tables with predefined schemas?", answer:"A Relational Database."},
+{day:9, term:"NoSQL Database", definition:"A flexible, schema-less database designed for massive scale, high-speed reads/writes, and varied or changing data structures.", analogy:"Like a junk drawer that can hold any shape of item without needing pre-labeled compartments.", scenario:"A gaming company stores fast-changing player session data in a NoSQL database to handle millions of rapid updates.", quiz:"What type of database uses a flexible, schema-less structure suited for massive scale?", answer:"A NoSQL Database."},
+{day:9, term:"Amazon RDS", definition:"A managed service that simplifies setting up, operating, and scaling a relational database in the cloud.", analogy:"Like hiring a property manager to handle a rental building's plumbing and maintenance so you don't have to.", scenario:"A startup launches an Amazon RDS MySQL instance instead of manually installing and patching a database server themselves.", quiz:"What AWS service is a fully managed relational database offering?", answer:"Amazon RDS (Relational Database Service)."},
+{day:9, term:"Amazon DynamoDB", definition:"AWS's fully managed, serverless NoSQL key-value and document database offering single-digit millisecond performance at any scale.", analogy:"Like an instantly searchable lost-and-found ledger that can handle millions of entries without slowing down.", scenario:"A mobile app team uses DynamoDB to store user session data because it needs to scale instantly during viral growth.", quiz:"What AWS service is a fully managed, serverless NoSQL database?", answer:"Amazon DynamoDB."},
+{day:9, term:"Multi-AZ", definition:"A database deployment configuration that maintains a synchronized standby replica in a second Availability Zone for automatic failover.", analogy:"Like keeping an identical spare car parked at a second garage in case the main car breaks down.", scenario:"A database administrator enables Multi-AZ on an RDS instance so the database automatically fails over if its primary AZ goes down.", quiz:"What RDS deployment option maintains a standby replica in a second Availability Zone?", answer:"Multi-AZ."},
+{day:10, term:"DNS", definition:"A system that translates human-readable domain names into the numeric IP addresses computers use to communicate.", analogy:"Like a phone book that converts a person's name into their actual phone number.", scenario:"A support technician troubleshoots a website outage by checking whether DNS is correctly resolving the domain to its server's IP address.", quiz:"What system translates domain names into IP addresses?", answer:"DNS (Domain Name System)."},
+{day:10, term:"Amazon Route 53", definition:"AWS's scalable, managed DNS web service used to route end-user requests to AWS or external resources.", analogy:"Like an air traffic control tower directing incoming planes (users) to the correct available runway (server).", scenario:"A network engineer configures Route 53 with a Failover routing policy so traffic automatically shifts to a backup region if the primary fails.", quiz:"What AWS service provides managed DNS and traffic routing?", answer:"Amazon Route 53."},
+{day:10, term:"CDN", definition:"A globally distributed network of servers that caches and delivers content from locations closer to the end user.", analogy:"Like opening local branch bakeries near customers instead of shipping every loaf of bread from one central bakery.", scenario:"A streaming service uses a CDN to cache popular videos at edge locations near viewers, cutting load times significantly.", quiz:"What term describes a distributed network that caches content closer to end users?", answer:"A CDN (Content Delivery Network)."},
+{day:10, term:"Amazon CloudFront", definition:"AWS's managed content delivery network service that caches content at edge locations worldwide.", analogy:"Like a chain of local pop-up shops that all stock the same popular product near different neighborhoods.", scenario:"A web team configures Amazon CloudFront in front of their S3 bucket to speed up image loading for global visitors.", quiz:"What AWS service provides content delivery network (CDN) caching at edge locations?", answer:"Amazon CloudFront."},
+{day:10, term:"TTL (Time-To-Live)", definition:"A setting that defines how long cached content remains valid before it must be refreshed from the origin.", analogy:"Like an expiration date on a carton of milk, after which it must be replaced with a fresh one.", scenario:"A developer lowers a CloudFront distribution's TTL so updated content propagates to users faster after a deployment.", quiz:"What setting controls how long cached content stays valid before refreshing?", answer:"TTL (Time-To-Live)."},
+{day:11, term:"AWS Well-Architected Framework", definition:"A set of guiding best practices, organized into six pillars, for designing and operating reliable, secure, efficient, and cost-effective cloud workloads.", analogy:"Like a building code checklist that ensures every new structure is safe, efficient, and built to last.", scenario:"A solutions architect runs a Well-Architected Framework review before launch to catch design gaps across all six pillars.", quiz:"What framework organizes cloud best practices into six pillars?", answer:"The AWS Well-Architected Framework."},
+{day:11, term:"High Availability", definition:"A design approach that removes single points of failure so a system stays accessible with minimal downtime.", analogy:"Like a hospital with a backup generator so the lights never truly go out during a power failure.", scenario:"An architect deploys web servers across two Availability Zones to achieve High Availability if one zone experiences an outage.", quiz:"What design goal minimizes downtime by removing single points of failure?", answer:"High Availability (HA)."},
+{day:11, term:"Fault Tolerance", definition:"The built-in capability of a system to keep operating correctly even after a component fails, with no noticeable disruption to users.", analogy:"Like a multi-engine airplane that can still fly safely even if one engine fails mid-flight.", scenario:"An engineer designs a Fault Tolerant storage system so a single disk failure causes zero data loss or downtime.", quiz:"What describes a system continuing to operate correctly even after a component fails?", answer:"Fault Tolerance (FT)."},
+{day:11, term:"RTO", definition:"Recovery Time Objective: the maximum acceptable amount of time a system can be down before it must be restored.", analogy:"Like a promise that the power company will restore your electricity within four hours of an outage.", scenario:"A disaster recovery plan sets an RTO of 15 minutes, requiring the backup environment to be fully operational within that window.", quiz:"What metric defines the maximum acceptable downtime before a system must be restored?", answer:"RTO (Recovery Time Objective)."},
+{day:11, term:"RPO", definition:"Recovery Point Objective: the maximum acceptable amount of data loss measured in time since the last backup.", analogy:"Like knowing your last save-game checkpoint was five minutes before a crash, so you only lose five minutes of progress.", scenario:"A database team configures backups every 5 minutes to meet a strict RPO required by the business.", quiz:"What metric defines the maximum acceptable data loss measured in time?", answer:"RPO (Recovery Point Objective)."},
+{day:12, term:"Amazon CloudWatch", definition:"A monitoring service that collects metrics and logs from AWS resources and applications for observability.", analogy:"Like a car's dashboard that continuously displays speed, fuel, and engine temperature.", scenario:"An operations engineer builds a CloudWatch dashboard to watch CPU utilization across an entire Auto Scaling Group.", quiz:"What AWS service collects metrics and logs for monitoring resources?", answer:"Amazon CloudWatch."},
+{day:12, term:"AWS CloudTrail", definition:"A service that records and logs every API call and action made within an AWS account for auditing and security investigation.", analogy:"Like a building's security camera log that records every person who badged through every door.", scenario:"A security investigator uses CloudTrail to determine exactly which IAM user deleted a critical S3 bucket and when.", quiz:"What AWS service records API activity for auditing 'who did what, and when'?", answer:"AWS CloudTrail."},
+{day:12, term:"AWS Config", definition:"A service that continuously assesses, audits, and records the configuration of AWS resources against defined rules.", analogy:"Like a building inspector who repeatedly re-checks that every room still meets code, flagging any unauthorized changes.", scenario:"A compliance team enables an AWS Config rule to automatically flag any S3 bucket that becomes publicly accessible.", quiz:"What AWS service continuously audits resource configurations against compliance rules?", answer:"AWS Config."},
+{day:12, term:"CloudWatch Alarm", definition:"A CloudWatch feature that triggers a notification or automated action when a monitored metric crosses a defined threshold.", analogy:"Like a smoke detector that sounds only once the smoke level crosses a dangerous threshold.", scenario:"An administrator sets a CloudWatch Alarm to automatically notify the on-call team if CPU utilization exceeds 90 percent for five minutes.", quiz:"What CloudWatch feature triggers a notification when a metric crosses a set threshold?", answer:"A CloudWatch Alarm."},
+{day:12, term:"Metric", definition:"A time-ordered set of data points representing the performance or health of a resource, such as CPU usage or request count.", analogy:"Like a fitness tracker's step count, logged every minute throughout the day.", scenario:"A developer graphs the request-count metric in CloudWatch to identify the exact moment traffic began spiking.", quiz:"What term describes a time-ordered performance data point tracked by CloudWatch?", answer:"A Metric."}
+];
+
+let currentCardIndex = 0;
+let cardIsFlipped = false;
+let activeCardSet = cardData;
+
+function populateDayFilter(){
+  const sel = document.getElementById('day-filter');
+  for(let d=1; d<=12; d++){
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = "Day " + d + " only";
+    sel.appendChild(opt);
+  }
+}
+function filterFlashcardsByDay(){
+  const val = document.getElementById('day-filter').value;
+  activeCardSet = (val === 'all') ? cardData : cardData.filter(c => c.day == val);
+  currentCardIndex = 0;
+  cardIsFlipped = false;
+  renderFlashcardUI();
+}
+
+function renderFlashcardUI(){
+  if(activeCardSet.length === 0){ activeCardSet = cardData; }
+  const card = activeCardSet[currentCardIndex];
+  const flipper = document.getElementById('active-card-flipper');
+  const front = document.getElementById('card-face-front');
+  const back = document.getElementById('card-face-back');
+
+  document.getElementById('flash-card-term').textContent = card.term;
+  document.getElementById('card-day-badge-front').textContent = "· Day " + card.day;
+  document.getElementById('card-index-count').textContent = `Card ${currentCardIndex + 1} of ${activeCardSet.length}`;
+
+  document.getElementById('flash-card-back-term').textContent = card.term;
+  document.getElementById('flash-card-definition').textContent = card.definition;
+  document.getElementById('flash-card-analogy').textContent = card.analogy;
+  document.getElementById('flash-card-scenario').textContent = card.scenario;
+  document.getElementById('flash-card-quiz').innerHTML = `<span class="font-extrabold text-slate-700">Quiz Checkpoint:</span> <span class="block text-slate-600 italic">${card.quiz}</span>`;
+
+  const revealFace = (showEl, hideEl) => {
+    hideEl.classList.add('hidden');
+    showEl.classList.remove('hidden');
+    showEl.classList.remove('flip-face-anim');
+    void showEl.offsetWidth;
+    showEl.classList.add('flip-face-anim');
+  };
+  if(cardIsFlipped){
+    revealFace(back, front);
+    flipper.setAttribute('aria-label', `Vocabulary Flashcard. Back side showing definition for: ${card.term}. Definition: ${card.definition}. Click or press space to flip back.`);
+  } else {
+    revealFace(front, back);
+    flipper.setAttribute('aria-label', `Vocabulary Flashcard. Front side. Term: ${card.term}. Click or press space to flip and see details.`);
+  }
+}
+function flipCard(){ cardIsFlipped = !cardIsFlipped; renderFlashcardUI(); }
+function prevCard(){
+  currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : activeCardSet.length - 1;
+  cardIsFlipped = false; renderFlashcardUI();
+}
+function nextCard(){
+  currentCardIndex = (currentCardIndex < activeCardSet.length - 1) ? currentCardIndex + 1 : 0;
+  cardIsFlipped = false; renderFlashcardUI();
+}
+function revealCardQuizAnswer(e){
+  e.stopPropagation();
+  const card = activeCardSet[currentCardIndex];
+  document.getElementById('sr-alert-announcer').textContent = "Quiz answer revealed: " + card.answer;
+  document.getElementById('flash-card-quiz').innerHTML = `<span class="text-indigo-800 font-bold block">Correct Answer:</span> ${card.answer}`;
+}
+document.getElementById('active-card-flipper').addEventListener('keydown', function(event){
+  if(event.key === ' ' || event.key === 'Enter'){ event.preventDefault(); flipCard(); }
+});
+populateDayFilter();
+renderFlashcardUI();
+
+/* ==========================================================================
+   SANDBOX SIMULATOR
+   ========================================================================== */
+const SANDBOX_SCENARIOS = [
+{ scenario:"A retail client's website traffic triples every Black Friday, then drops back to normal by Monday. They want to avoid both crashes and wasted server spend.", options:["Auto Scaling Group","A single oversized EC2 instance running year-round","A permanently purchased physical server","Amazon Glacier Deep Archive"], correctIndex:0, explanation:"Correct! An Auto Scaling Group automatically adds capacity for the spike and removes it afterward, solving both under-provisioning and over-provisioning." },
+{ scenario:"A hospital must guarantee that patient records are only viewed by staff who strictly need them for their specific role.", options:["Disabling all IAM policies", "A Least Privilege IAM policy", "Sharing one shared admin login for all staff", "Public S3 bucket access"], correctIndex:1, explanation:"Correct! Least Privilege IAM policies ensure each staff member only gets the exact permissions required for their role, protecting sensitive patient data." },
+{ scenario:"A startup wants to run a nightly batch analytics job that can tolerate being interrupted, at the lowest possible compute cost.", options:["On-Demand Instance", "Reserved Instance", "Spot Instance", "Dedicated Host"], correctIndex:2, explanation:"Correct! Spot Instances offer the deepest discount on spare capacity, which is ideal for interruption-tolerant batch workloads." },
+{ scenario:"A media company needs to store 50 years of archival video footage that will almost never be accessed, at the lowest possible storage cost.", options:["Amazon EBS", "S3 Glacier Deep Archive", "Amazon EFS", "Amazon RDS"], correctIndex:1, explanation:"Correct! S3 Glacier Deep Archive is purpose-built for rarely accessed, long-term archival data at the lowest S3 storage cost." },
+{ scenario:"A company wants its private database servers to download security patches from the internet, without ever being directly reachable from the internet.", options:["Internet Gateway", "NAT Gateway", "Public Subnet only", "Security Group with all ports open"], correctIndex:1, explanation:"Correct! A NAT Gateway allows private subnet resources to initiate outbound connections while remaining unreachable from inbound internet traffic." },
+{ scenario:"An application needs millisecond-fast reads and writes for rapidly changing player session data in a mobile game with unpredictable schema needs.", options:["Amazon RDS", "Amazon Redshift", "Amazon DynamoDB", "Amazon EBS"], correctIndex:2, explanation:"Correct! DynamoDB's flexible NoSQL model and single-digit millisecond performance are ideal for rapidly changing, high-scale session data." },
+{ scenario:"A global video streaming company wants to reduce buffering by serving popular content from locations physically closer to viewers.", options:["Amazon CloudFront", "Amazon VPC", "AWS Config", "Amazon Redshift"], correctIndex:0, explanation:"Correct! Amazon CloudFront is AWS's CDN, caching content at edge locations closer to end users to reduce latency and buffering." },
+{ scenario:"A compliance officer needs to determine exactly which employee deleted a critical production database and at what time.", options:["Amazon CloudWatch", "AWS CloudTrail", "AWS Trusted Advisor", "Amazon GuardDuty"], correctIndex:1, explanation:"Correct! AWS CloudTrail logs every API call made in an account, making it the right tool to investigate who performed a specific action and when." },
+{ scenario:"An architect must design a workload so it keeps running with zero perceptible disruption even if one server component suddenly fails.", options:["High Availability alone", "Fault Tolerance", "A single EC2 instance with no backups", "Manual failover after a support ticket"], correctIndex:1, explanation:"Correct! Fault Tolerance specifically means the system continues operating correctly through a failure with no noticeable impact to users." },
+{ scenario:"A finance team wants to see a full picture of all direct and indirect costs before deciding whether to migrate from an on-premises data center to AWS.", options:["A Total Cost of Ownership (TCO) analysis", "A single server invoice", "An IAM policy review", "A CloudWatch dashboard"], correctIndex:0, explanation:"Correct! A TCO analysis captures the full direct and indirect cost comparison needed to justify a cloud migration decision." },
+{ scenario:"A small dev team wants to run containerized microservices without provisioning or patching any EC2 instances themselves.", options:["AWS Fargate", "A traditional on-premises server", "Amazon EC2 Reserved Instances only", "Amazon Redshift"], correctIndex:0, explanation:"Correct! AWS Fargate is the serverless container launch type that removes the need to provision or manage underlying EC2 instances." },
+{ scenario:"A business requires that after a regional outage, the recovery environment must be fully running within 15 minutes, and cannot lose more than 5 minutes of data.", options:["Setting an RTO of 15 minutes and RPO of 5 minutes with a Warm Standby strategy", "Ignoring disaster recovery planning entirely", "Backing up once per month", "Running everything from a single Availability Zone"], correctIndex:0, explanation:"Correct! Defining a 15-minute RTO and 5-minute RPO, paired with a Warm Standby strategy, directly meets the stated recovery time and data loss requirements." }
+];
+let sandboxIndex = 0, sandboxScore = 0, sandboxAttempted = 0, sandboxAnswered = false;
+
+function renderSandbox(){
+  const s = SANDBOX_SCENARIOS[sandboxIndex];
+  document.getElementById('sandbox-round-count').textContent = `Scenario ${sandboxIndex+1} of ${SANDBOX_SCENARIOS.length}`;
+  document.getElementById('sandbox-scenario-heading').textContent = s.scenario;
+  document.getElementById('sandbox-score').textContent = `Score: ${sandboxScore} / ${sandboxAttempted}`;
+  const optWrap = document.getElementById('sandbox-options');
+  optWrap.innerHTML = '';
+  sandboxAnswered = false;
+  document.getElementById('sandbox-feedback').classList.add('hidden');
+  document.getElementById('sandbox-next-btn').classList.add('hidden');
+  document.getElementById('sandbox-restart-btn').classList.add('hidden');
+
+  s.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = "sandbox-card text-left text-sm font-semibold text-slate-700";
+    btn.setAttribute('role','listitem');
+    btn.textContent = opt;
+    btn.onclick = () => sandboxAnswer(idx, btn);
+    optWrap.appendChild(btn);
+  });
+}
+function sandboxAnswer(idx, btnEl){
+  if(sandboxAnswered) return;
+  sandboxAnswered = true;
+  sandboxAttempted++;
+  const s = SANDBOX_SCENARIOS[sandboxIndex];
+  const correct = idx === s.correctIndex;
+  if(correct) sandboxScore++;
+  document.querySelectorAll('#sandbox-options button').forEach((b,i) => {
+    if(i === s.correctIndex) b.classList.add('correct-drop');
+    else if(i === idx) b.classList.add('incorrect-drop');
+  });
+  const fb = document.getElementById('sandbox-feedback');
+  fb.classList.remove('hidden');
+  fb.className = "mt-4 p-4 rounded-xl text-sm " + (correct ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-rose-50 text-rose-800 border border-rose-200");
+  fb.textContent = (correct ? "Correct! " : "Not quite. ") + s.explanation;
+  document.getElementById('sandbox-score').textContent = `Score: ${sandboxScore} / ${sandboxAttempted}`;
+  document.getElementById('sr-alert-announcer').textContent = correct ? "Correct answer." : "Incorrect answer. See explanation.";
+  if(sandboxIndex < SANDBOX_SCENARIOS.length - 1){
+    document.getElementById('sandbox-next-btn').classList.remove('hidden');
+  } else {
+    document.getElementById('sandbox-restart-btn').classList.remove('hidden');
+  }
+}
+function sandboxNext(){ sandboxIndex++; renderSandbox(); }
+function sandboxRestart(){ sandboxIndex = 0; sandboxScore = 0; sandboxAttempted = 0; renderSandbox(); }
+renderSandbox();
+
+</script>
+</body>
+</html>
